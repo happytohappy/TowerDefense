@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TableManager : MonoBehaviour
+public partial class TableManager : MonoBehaviour
 {
     public void Init()
     {
