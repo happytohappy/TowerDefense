@@ -50,18 +50,18 @@ public class UIWindowGame : UIWindowBase
         m_delete.SetActive(true);
     }
 
-    public void OnClickCreate()
-    {
-        GameController.GetInstance.OnCreate();
-    }
+    //public void OnClickCreate()
+    //{
+    //    GameController.GetInstance.OnCreate();
+    //}
 
-    public void OnClickUpgrade()
-    {
-        GameController.GetInstance.OnUpgrade();
-    }
+    //public void OnClickUpgrade()
+    //{
+    //    GameController.GetInstance.OnUpgrade();
+    //}
 
-    public void OnClickDelete()
-    {
-        GameController.GetInstance.OnDelete();
-    }
+    //public void OnClickDelete()
+    //{
+    //    GameController.GetInstance.OnDelete();
+    //}
 }

@@ -72,7 +72,7 @@ public class Monster : PawnBase
 
     public override void Enter_Die()
     {
-        GameController.GetInstance.Gold += 10; 
+        //GameController.GetInstance.Gold += 10; 
 
         m_agent.velocity = Vector3.zero;
         m_agent.isStopped = true;
@@ -93,6 +93,6 @@ public class Monster : PawnBase
 
         Managers.Resource.Destroy(this.gameObject);
 
-        GameController.GetInstance.Monsters.Remove(this);
+        //GameController.GetInstance.Monsters.Remove(this);
     }
 }

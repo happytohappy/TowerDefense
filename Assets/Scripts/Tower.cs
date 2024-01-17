@@ -46,24 +46,26 @@ public class Tower : PawnBase
 
     private bool NearMonsterSearch()
     {
-        var nearDis = float.MaxValue;
-        foreach (var monster in GameController.GetInstance.Monsters)
-        {
-            if (monster.GetState == FSM_STATE.None || monster.GetState == FSM_STATE.Die)
-                continue;
+        return false;
 
-            var dis = Vector3.Distance(monster.transform.position, this.transform.position);
-            if (dis > m_attack_range)
-                continue;
+        //var nearDis = float.MaxValue;
+        //foreach (var monster in GameController.GetInstance.Monsters)
+        //{
+        //    if (monster.GetState == FSM_STATE.None || monster.GetState == FSM_STATE.Die)
+        //        continue;
 
-            if (dis < nearDis)
-            {
-                nearDis = dis;
-                m_target_monster = monster;
-            }
-        }
+        //    var dis = Vector3.Distance(monster.transform.position, this.transform.position);
+        //    if (dis > m_attack_range)
+        //        continue;
 
-        return m_target_monster != null;
+        //    if (dis < nearDis)
+        //    {
+        //        nearDis = dis;
+        //        m_target_monster = monster;
+        //    }
+        //}
+
+        //return m_target_monster != null;
     }
 
     private void OnAttack()
