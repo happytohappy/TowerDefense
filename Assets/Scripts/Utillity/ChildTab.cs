@@ -3,14 +3,10 @@ using UnityEngine.UI;
 
 public class ChildTab : MonoBehaviour
 {
-    [SerializeField]
-    private Image m_NormalSprite = null;
-    [SerializeField]
-    private Image m_SelectSprite = null;
-    [SerializeField]
-    private GameObject m_ActiveObject = null;
-    [SerializeField]
-    private int m_BtnNumber = 0;
+    [SerializeField] private Image m_NormalSprite = null;
+    [SerializeField] private Image m_SelectSprite = null;
+    [SerializeField] private GameObject m_ActiveObject = null;
+    [SerializeField] private int m_BtnNumber = 0;
 
     public Image NormalSprite { get { return m_NormalSprite; } }
     public Image SelectSprite { get { return m_SelectSprite; } }

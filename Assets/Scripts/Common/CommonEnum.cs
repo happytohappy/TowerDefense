@@ -6,6 +6,9 @@ public enum WindowID
     UIWindowMain,
     UIWindowGame,
     UIPopupGame,
+    UIPopupShop,
+    UIPopupReward,
+    UIPopupQuest,
 }
 
 [System.Flags]

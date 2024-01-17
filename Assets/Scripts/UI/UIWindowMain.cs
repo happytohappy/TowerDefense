@@ -17,4 +17,18 @@ public class UIWindowMain : UIWindowBase
     {
         Managers.UI.OpenWindow(WindowID.UIPopupGame);
     }
+
+    public void OnClickShop(int in_tab_number)
+    {
+        var ui = Managers.UI.OpenWindow(WindowID.UIPopupShop) as UIPopupShop;
+        if (ui == null)
+            return;
+
+        ui.ParentTab.SelectTab(in_tab_number);
+    }
+
+    public void OnClickReward()
+    {
+        Managers.UI.OpenWindow(WindowID.UIPopupReward);
+    }
 }
