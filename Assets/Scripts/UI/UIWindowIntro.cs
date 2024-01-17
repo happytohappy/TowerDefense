@@ -15,7 +15,8 @@ public class UIWindowIntro : UIWindowBase
 
     public void OnClickMain()
     {
-        // 로딩이 필요할 경우
+        Managers.UI.Clear();
+
         LoadingParam param = new LoadingParam();
         param.SceneIndex = 1;
         param.NextWindow = WindowID.UIWindowMain;

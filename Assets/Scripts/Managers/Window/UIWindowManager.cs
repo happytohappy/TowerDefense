@@ -95,6 +95,12 @@ public class UIWindowManager : MonoBehaviour
         llist_Window.Clear();
 
         for (int i = 0; i < Managers.UICanvas.transform.childCount; i++)
-            Destroy(Managers.UICanvas.transform.GetChild(i));
+        {
+            var ui = Managers.UICanvas.transform.GetChild(i);
+            if (ui == null || ui.name.Equals("Widget"))
+                continue;
+
+            Destroy(ui.gameObject);
+        }
     }
 }

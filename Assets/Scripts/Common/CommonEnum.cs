@@ -4,7 +4,8 @@ public enum WindowID
     UIWindowLoading,
     UIWindowIntro,
     UIWindowMain,
-    UIWindowGame
+    UIWindowGame,
+    UIPopupGame,
 }
 
 [System.Flags]

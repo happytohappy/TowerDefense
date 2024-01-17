@@ -1,5 +1,3 @@
-using UnityEngine.SceneManagement;
-
 public class UIWindowMain : UIWindowBase
 {
     public override void Awake()
@@ -17,9 +15,6 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickGame()
     {
-        // 로딩이 필요 없는 경우
-        SceneManager.LoadScene(2);
-
-        Managers.UI.OpenWindow(WindowID.UIWindowGame);
+        Managers.UI.OpenWindow(WindowID.UIPopupGame);
     }
 }
