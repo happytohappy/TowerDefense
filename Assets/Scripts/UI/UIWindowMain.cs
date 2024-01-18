@@ -31,4 +31,19 @@ public class UIWindowMain : UIWindowBase
     {
         Managers.UI.OpenWindow(WindowID.UIPopupReward);
     }
+
+    public void OnClickQuest()
+    {
+        Managers.UI.OpenWindow(WindowID.UIPopupQuest);
+    }
+
+    public void OnClickSetting()
+    {
+        Managers.UI.OpenWindow(WindowID.UIPopupSetting);
+    }
+
+    public void OnClickTown()
+    {
+        Managers.UI.OpenWindow(WindowID.UIPopupTown);
+    }
 }

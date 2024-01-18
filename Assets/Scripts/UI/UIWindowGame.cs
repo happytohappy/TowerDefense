@@ -50,6 +50,11 @@ public class UIWindowGame : UIWindowBase
         m_delete.SetActive(true);
     }
 
+    public void OnClickPause()
+    {
+        Managers.UI.OpenWindow(WindowID.UIPopupPause);
+    }
+
     //public void OnClickCreate()
     //{
     //    GameController.GetInstance.OnCreate();
