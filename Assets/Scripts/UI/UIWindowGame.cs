@@ -55,6 +55,16 @@ public class UIWindowGame : UIWindowBase
         Managers.UI.OpenWindow(WindowID.UIPopupPause);
     }
 
+    public void OnClickWave()
+    {
+        GameController.GetInstance.MonsterSpawn();
+    }
+
+    public void OnClickCreateTower()
+    {
+        GameController.GetInstance.TowerSpawn();
+    }
+
     //public void OnClickCreate()
     //{
     //    GameController.GetInstance.OnCreate();

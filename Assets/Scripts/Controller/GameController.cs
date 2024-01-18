@@ -83,38 +83,12 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            var emptyLand = LandInfo.Where(x => x.Value.m_build == false).ToList();
-            if (emptyLand.Count == 0)
-            {
-                Debug.LogError("ºó ¶¥ÀÌ ¾ø´Ù¿ä.");
-            }
-            else
-            {
-                var ran = UnityEngine.Random.Range(1, 3);
-                var heroData = Managers.Table.GetHeroData(ran);
-
-                var go = Managers.Resource.Instantiate(heroData.m_path);
-                if (go == null)
-                    return;
-
-                var tower = go.GetComponent<Tower>();
-                tower.GetHeroData = heroData;
-
-                var rand = emptyLand[UnityEngine.Random.Range(0, emptyLand.Count)];
-                go.transform.SetParent(rand.Value.m_trans.transform);
-                go.transform.localPosition = new Vector3(0f, 1f, 0f);
-                rand.Value.m_tower_object = go;
-                rand.Value.m_build = true;
-            }
+            TowerSpawn();
         }
 
         if (Input.GetKeyDown(KeyCode.W))
         {
-            if (m_wave == false)
-                return;
-
-            m_wave = false;
-            StartCoroutine(CoSpawn());
+            MonsterSpawn();
         }
 
         //if (Input.GetMouseButtonDown(0))
@@ -151,7 +125,43 @@ public class GameController : MonoBehaviour
         //}
     }
 
-    private IEnumerator CoSpawn()
+    public void TowerSpawn()
+    {
+        var emptyLand = LandInfo.Where(x => x.Value.m_build == false).ToList();
+        if (emptyLand.Count == 0)
+        {
+            Debug.LogError("ºó ¶¥ÀÌ ¾ø´Ù¿ä.");
+        }
+        else
+        {
+            var ran = UnityEngine.Random.Range(1, 3);
+            var heroData = Managers.Table.GetHeroData(ran);
+
+            var go = Managers.Resource.Instantiate(heroData.m_path);
+            if (go == null)
+                return;
+
+            var tower = go.GetComponent<Tower>();
+            tower.GetHeroData = heroData;
+
+            var rand = emptyLand[UnityEngine.Random.Range(0, emptyLand.Count)];
+            go.transform.SetParent(rand.Value.m_trans.transform);
+            go.transform.localPosition = new Vector3(0f, 1f, 0f);
+            rand.Value.m_tower_object = go;
+            rand.Value.m_build = true;
+        }
+    }
+
+    public void MonsterSpawn()
+    {
+        if (m_wave == false)
+            return;
+
+        m_wave = false;
+        StartCoroutine(CoMonsterSpawn());
+    }
+
+    private IEnumerator CoMonsterSpawn()
     {
         if (m_monster_index > 2)
             m_monster_index = 1;
