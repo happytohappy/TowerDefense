@@ -122,7 +122,7 @@ public static partial class Util
 
     public static HPBar CreateHP(Transform in_transform, float in_curr_hp, float in_max_hp, Vector3 in_scale, Vector3 in_offset, bool in_active = false)
     {
-        var go = Managers.Resource.Instantiate("Item/HPBar", Managers.Widget);
+        var go = Managers.Resource.Instantiate("Item/HPBar", new Vector3(9999f, 9999f, 9999f), Managers.Widget);
         var hpBar = go.GetComponent<HPBar>();
         if (hpBar == null)
             return null;

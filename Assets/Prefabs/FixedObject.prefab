@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7100788007353462657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8472783496322571409}
+  - component: {fileID: 5125309276226988771}
+  m_Layer: 0
+  m_Name: Table
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8472783496322571409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100788007353462657}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7972433157254808894}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5125309276226988771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100788007353462657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e304cf02b1714e648a4931447c25ae88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7972433155179740564
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +304,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 193
+    m_Bits: 2147483647
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -779,7 +823,7 @@ Transform:
   - {fileID: 7972433155702678642}
   - {fileID: 7972433155179740571}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7972433156850696895
 MonoBehaviour:
@@ -912,6 +956,7 @@ Transform:
   m_Children:
   - {fileID: 7972433157280380584}
   - {fileID: 7972433155771006667}
+  - {fileID: 8472783496322571409}
   - {fileID: 7972433157192860554}
   - {fileID: 7972433156858142210}
   m_Father: {fileID: 7972433156850696894}
@@ -934,7 +979,7 @@ MonoBehaviour:
   m_WorldCam: {fileID: 7972433155546660961}
   m_UICam: {fileID: 7972433155911334276}
   m_UI: {fileID: 7972433157280380585}
-  m_Table: {fileID: 0}
+  m_Table: {fileID: 5125309276226988771}
   m_Sound: {fileID: 7972433155771006671}
   m_Pool: {fileID: 7972433157192860555}
   m_Resource: {fileID: 7972433156858142211}

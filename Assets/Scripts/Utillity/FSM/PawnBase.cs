@@ -6,7 +6,7 @@ public abstract class PawnBase : MonoBehaviour
     [SerializeField] protected Animator m_ani;
 
     // FSM 관련 변수
-    protected FSM_STATE m_state;
+    protected FSM_STATE      m_state;
     protected CFMS<PawnBase> m_FSM;
 
     // 스탯 관련 변수

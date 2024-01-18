@@ -38,12 +38,14 @@ public class Managers : MonoBehaviour
 
     public void Init()
     {
+        Table.Init();
         Pool.Init();
         UI.Init();
     }
 
     public void Clear()
     {
+        Table.Clear();
         UI.Clear();
         Pool.Clear();
     }

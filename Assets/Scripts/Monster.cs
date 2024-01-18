@@ -1,30 +1,34 @@
 using UnityEngine;
-using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class Monster : PawnBase
 {
     private const string ANI_RUN = "Run";
     private const string ANI_DIE = "Die";
 
-    [SerializeField] private NavMeshAgent m_agent = null;
-
     private Vector3 m_destination;
-    private HPBar m_hp_bar;
+    private HPBar   m_hp_bar;
+    private int     m_line_index;
+
+    public List<Transform> Path           { get; set; } = new List<Transform>();
+    public MonsterData     GetMonsterData { get; set; } = null;
 
     protected override void Start()
     {
         base.Start();
 
         // 변수 셋팅
-        m_curr_hp = 100;
-        m_max_hp = 100;
+        m_curr_hp    = GetMonsterData.m_hp;
+        m_max_hp     = GetMonsterData.m_hp;
+        m_line_index = 1;       // 0 은 스폰 위치라 1부터 시작
 
         // 체력바 셋팅
-        m_hp_bar = Util.CreateHP(this.transform, m_curr_hp, m_max_hp, new Vector3(0.5f, 0.5f, 0.5f), new Vector3(0f, 0.4f, 0f));
+        m_hp_bar = Util.CreateHP(this.transform, m_curr_hp, m_max_hp, new Vector3(0.75f, 0.75f, 1f), new Vector3(0f, 0.8f, 0f), true);
 
-        m_agent.enabled = true;
-        m_agent.SetDestination(m_destination);
+        // 도착지 설정
+        SetDestination();
 
+        // 시작
         ChangeState(FSM_STATE.Run);
     }
 
@@ -47,36 +51,38 @@ public class Monster : PawnBase
         m_hp_bar.SetHP((float)m_curr_hp / m_max_hp);
     }
 
-    public void SetDestination(Vector3 in_destination)
+    private void SetDestination()
     {
-        m_destination = in_destination;
+        if (m_line_index >= Path.Count)
+        {
+            // 도착지에 왔다는 뜻
+            Delete();
+            return;
+        }
+
+        this.transform.LookAt(Path[m_line_index]);
+        m_destination = Path[m_line_index++].position;
     }
 
     public override void Enter_Run()
     {
-        m_agent.isStopped = false;
-
         m_ani.Play(ANI_RUN);
     }
 
     public override void Update_Run()
     {
-        if (m_agent.pathPending)
-            return;
-
-        if (m_agent.remainingDistance <= 1.0f)
+        if (Vector3.Distance(this.transform.position, m_destination) <= 0.1f)
         {
-            Delete();
+            this.transform.position = m_destination;
+            SetDestination();
         }
+
+        this.transform.Translate(Vector3.forward * Time.smoothDeltaTime * GetMonsterData.m_move_speed);
     }
 
     public override void Enter_Die()
     {
         //GameController.GetInstance.Gold += 10; 
-
-        m_agent.velocity = Vector3.zero;
-        m_agent.isStopped = true;
-        m_agent.enabled = false;
 
         m_ani.Ex_Play(ANI_DIE, this, () =>
         {
@@ -93,6 +99,6 @@ public class Monster : PawnBase
 
         Managers.Resource.Destroy(this.gameObject);
 
-        //GameController.GetInstance.Monsters.Remove(this);
+        GameController.GetInstance.Monsters.Remove(this);
     }
 }

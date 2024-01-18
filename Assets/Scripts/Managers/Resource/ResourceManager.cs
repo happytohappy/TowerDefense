@@ -19,19 +19,19 @@ public class ResourceManager : MonoBehaviour
         return Resources.Load<T>(path);
     }
 
-    public GameObject Instantiate(string path, Transform parent = null)
+    public GameObject Instantiate(string in_path, Vector3 in_position = new Vector3(), Transform in_parent = null)
     {
-        GameObject original = Load<GameObject>($"{path}");
+        GameObject original = Load<GameObject>($"{in_path}");
         if (original == null)
         {
-            Debug.Log($"Failed to load prefab : {path}");
+            Debug.Log($"Failed to load prefab : {in_path}");
             return null;
         }
 
         if (original.GetComponent<Poolable>() != null)
-            return Managers.Pool.Pop(original, parent).gameObject;
+            return Managers.Pool.Pop(original, in_parent).gameObject;
 
-        GameObject go = GameObject.Instantiate(original, parent) as GameObject;
+        GameObject go = GameObject.Instantiate(original, in_position, Quaternion.identity, in_parent) as GameObject;
         go.name = original.name;
         return go;
     }

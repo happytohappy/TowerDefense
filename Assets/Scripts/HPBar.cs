@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class HPBar : MonoBehaviour
 {
-    [SerializeField] private GameObject m_parent;
-    [SerializeField] private Image      m_fill;
+    [SerializeField] private GameObject m_parent = null;
+    [SerializeField] private Image      m_fill   = null;
 
     private Vector3 m_offset = Vector3.zero;
 

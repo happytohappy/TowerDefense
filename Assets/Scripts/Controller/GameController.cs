@@ -44,17 +44,19 @@ public class GameController : MonoBehaviour
 
     private const string MONSTER_PATH = "Monster";
     private const string MONSTER_NAME = "Monster_";
-    private const string TOWER_PATH = "Tower";
-    private const string TOWER_NAME = "Tower_";
-
+    private const string TOWER_PATH   = "Tower";
+    private const string TOWER_NAME   = "Tower_";
 
     [SerializeField] private List<Path>       m_pathes    = new List<Path>();
     [SerializeField] private List<GameObject> m_build_map = new List<GameObject>();
 
-    public Dictionary<int, LandData> LandInfo { get; set; } = new Dictionary<int, LandData>();
+    private bool m_wave          = true;
+    private bool m_sniffling     = true;
+    private int  m_monster_index = 1;
 
-    //public Transform TowerRoot => m_tower_root; 
-    //public List<Monster> Monsters { get; set; } = new List<Monster>();
+    public Dictionary<int, LandData> LandInfo { get; set; } = new Dictionary<int, LandData>();
+    public List<Monster>             Monsters { get; set; } = new List<Monster>();
+    
     //public int Gold
     //{
     //    get { return m_gold; }
@@ -75,8 +77,6 @@ public class GameController : MonoBehaviour
 
         //Gold = 50;
         //m_towers.Clear();
-
-        //StartCoroutine(CoSpawn());
     }
 
     private void Update()
@@ -90,16 +90,31 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                var go = Managers.Resource.Instantiate($"{TOWER_PATH}/{TOWER_NAME}1");
+                var ran = UnityEngine.Random.Range(1, 3);
+                var heroData = Managers.Table.GetHeroData(ran);
+
+                var go = Managers.Resource.Instantiate(heroData.m_path);
                 if (go == null)
                     return;
 
+                var tower = go.GetComponent<Tower>();
+                tower.GetHeroData = heroData;
+
                 var rand = emptyLand[UnityEngine.Random.Range(0, emptyLand.Count)];
                 go.transform.SetParent(rand.Value.m_trans.transform);
-                go.transform.localPosition = new Vector3(0f, 0f, 0f);
+                go.transform.localPosition = new Vector3(0f, 1f, 0f);
                 rand.Value.m_tower_object = go;
                 rand.Value.m_build = true;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            if (m_wave == false)
+                return;
+
+            m_wave = false;
+            StartCoroutine(CoSpawn());
         }
 
         //if (Input.GetMouseButtonDown(0))
@@ -136,73 +151,33 @@ public class GameController : MonoBehaviour
         //}
     }
 
-    //private IEnumerator CoSpawn()
-    //{
-    //    yield return new WaitForSeconds(5.0f);
+    private IEnumerator CoSpawn()
+    {
+        if (m_monster_index > 2)
+            m_monster_index = 1;
+                
+        var monsterData = Managers.Table.GetMonsterData(m_monster_index);
 
-    //    for (int i = 0; i < 10; i++)
-    //    {
-    //        var go = Managers.Resource.Instantiate($"{MONSTER_PATH}/{MONSTER_NAME}1");
-    //        if (go != null)
-    //        {
-    //            go.transform.position = m_spawn_pos.position;
+        for (int i = 0; i < 20; i++)
+        {
+            var go = Managers.Resource.Instantiate(monsterData.m_path);
+            if (go != null)
+            {
+                var lineInex = m_sniffling ? 0 : 1;
+                var monster = go.GetComponent<Monster>();
+                    
+                monster.Path.AddRange(m_pathes[lineInex].m_path);
+                monster.GetMonsterData = monsterData;
+                go.transform.position = m_pathes[lineInex].m_path[0].position;
+                Monsters.Add(monster);
 
-    //            var sc = go.GetComponent<Monster>();
-    //            sc.SetDestination(m_goal_pos.position);
+                m_sniffling = !m_sniffling;
+            }
 
-    //            Monsters.Add(sc);
-    //        }
+            yield return new WaitForSeconds(0.5f);
+        }
 
-    //        yield return new WaitForSeconds(0.5f);
-    //    }
-
-    //    yield return new WaitForSeconds(4.5f);
-    //    for (int i = 0; i < 10; i++)
-    //    {
-    //        var go = Managers.Resource.Instantiate($"{MONSTER_PATH}/{MONSTER_NAME}2");
-    //        if (go != null)
-    //        {
-    //            go.transform.position = m_spawn_pos.position;
-
-    //            var sc = go.GetComponent<Monster>();
-    //            sc.SetDestination(m_goal_pos.position);
-
-    //            Monsters.Add(sc);
-    //        }
-
-    //        yield return new WaitForSeconds(0.5f);
-    //    }
-    //}
-
-    //public void OnCreate()
-    //{
-    //    if (m_select == null)
-    //        return;
-
-    //    if (Gold < 50)
-    //        return;
-
-    //    var ranIndex = UnityEngine.Random.Range(1, 3);
-    //    var go = Managers.Resource.Instantiate($"{TOWER_PATH}/{TOWER_NAME}{ranIndex}");
-    //    if (go == null)
-    //        return;
-
-    //    go.transform.SetParent(m_select.transform);
-    //    go.transform.localPosition = new Vector3(0f, 1.1f, 0f);
-    //    m_towers.Add(m_select);
-
-    //    Gold -= 50;
-    //}
-
-    //public void OnUpgrade()
-    //{
-    //    //if (m_select == null)
-    //    //    return;
-    //}
-
-    //public void OnDelete()
-    //{
-    //    //if (m_select == null)
-    //    //    return;
-    //}
+        m_wave = true;
+        m_monster_index++;
+    }
 }

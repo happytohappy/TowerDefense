@@ -1,19 +1,27 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Tower : PawnBase
 {
-    private const string ANI_IDLE = "Idle";
+    private const string ANI_IDLE   = "Idle";
     private const string ANI_ATTACK = "Attack";
 
-    [SerializeField] private int m_attack_power = 0;
-    [SerializeField] private float m_attack_range = 0.0f;
-
+    [SerializeField] private GameObject m_range_effect = null;
+    
+    private int     m_attack_power = 0;
+    private float   m_attack_range = 0.0f;
     private Monster m_target_monster = null;
+
+    public HeroData GetHeroData { get; set; } = null;
 
     protected override void Start()
     {
         base.Start();
+
+        m_range_effect.Ex_SetActive(false);
+
+        m_attack_power = GetHeroData.m_ATK;
+        m_attack_range = GetHeroData.m_attack_range;
+        m_range_effect.transform.localScale = new Vector3(m_attack_range, m_attack_range, 1f);
 
         ChangeState(FSM_STATE.Idle);
     }
@@ -46,26 +54,24 @@ public class Tower : PawnBase
 
     private bool NearMonsterSearch()
     {
-        return false;
+        var nearDis = float.MaxValue;
+        foreach (var monster in GameController.GetInstance.Monsters)
+        {
+            if (monster.GetState == FSM_STATE.None || monster.GetState == FSM_STATE.Die)
+                continue;
 
-        //var nearDis = float.MaxValue;
-        //foreach (var monster in GameController.GetInstance.Monsters)
-        //{
-        //    if (monster.GetState == FSM_STATE.None || monster.GetState == FSM_STATE.Die)
-        //        continue;
+            var dis = Vector3.Distance(monster.transform.position, this.transform.position);
+            if (dis > m_attack_range)
+                continue;
 
-        //    var dis = Vector3.Distance(monster.transform.position, this.transform.position);
-        //    if (dis > m_attack_range)
-        //        continue;
+            if (dis < nearDis)
+            {
+                nearDis = dis;
+                m_target_monster = monster;
+            }
+        }
 
-        //    if (dis < nearDis)
-        //    {
-        //        nearDis = dis;
-        //        m_target_monster = monster;
-        //    }
-        //}
-
-        //return m_target_monster != null;
+        return m_target_monster != null;
     }
 
     private void OnAttack()
