@@ -12,6 +12,9 @@ public enum WindowID
     UIPopupSetting,
     UIPopupTown,
     UIPopupPause,
+    UIPopupEquipment,
+    UIPopupTreasure,
+    UIPopupUnit,
 }
 
 [System.Flags]
