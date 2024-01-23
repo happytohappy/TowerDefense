@@ -11,6 +11,7 @@ public class Tower : PawnBase
     private float   m_attack_range = 0.0f;
     private Monster m_target_monster = null;
 
+    public GameObject RangeEffect => m_range_effect;
     public HeroData GetHeroData { get; set; } = null;
 
     protected override void Start()

@@ -31,14 +31,14 @@ public class GameController : MonoBehaviour
         public int        m_land_index;     // 땅 인덱스
         public bool       m_build;          // 타워가 설치 되었는지
         public Transform  m_trans;          // 땅 위치
-        public GameObject m_tower_object;   // 타워 오브젝트
+        public Tower      m_tower;          // 타워
 
-        public LandData(int in_land_index, bool in_build, Transform in_trans, GameObject in_tower_object)
+        public LandData(int in_land_index, bool in_build, Transform in_trans, Tower in_tower)
         {
-            m_land_index   = in_land_index;
-            m_build        = in_build;
-            m_trans        = in_trans;
-            m_tower_object = in_tower_object;
+            m_land_index = in_land_index;
+            m_build      = in_build;
+            m_trans      = in_trans;
+            m_tower      = in_tower;
         }
     }
 
@@ -54,9 +54,14 @@ public class GameController : MonoBehaviour
     private bool m_sniffling     = true;
     private int  m_monster_index = 1;
 
-    public Dictionary<int, LandData> LandInfo { get; set; } = new Dictionary<int, LandData>();
-    public List<Monster>             Monsters { get; set; } = new List<Monster>();
-    
+    public List<LandData> LandInfo    { get; set; } = new List<LandData>();
+    public List<Monster>  Monsters    { get; set; } = new List<Monster>();
+    public Tower          SelectTower { get; set; } = null;
+    public LandData       StartLand   { get; set; } = null;
+    public LandData       EndLand     { get; set; } = null;
+
+
+
     //public int Gold
     //{
     //    get { return m_gold; }
@@ -73,7 +78,7 @@ public class GameController : MonoBehaviour
     {
         LandInfo.Clear();
         for (int i = 0; i < m_build_map.Count; i++)
-            LandInfo.Add(i, new LandData(i, false, m_build_map[i].transform, null));
+            LandInfo.Add(new LandData(i, false, m_build_map[i].transform, null));
 
         //Gold = 50;
         //m_towers.Clear();
@@ -81,53 +86,96 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetMouseButtonDown(0))
         {
-            TowerSpawn();
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform.gameObject.CompareTag("Tower"))
+                {
+                    SelectTower = hit.transform.gameObject.GetComponent<Tower>();
+                    StartLand = LandInfo.Find(x => x.m_tower == SelectTower);
+                    EndLand = null;
+
+                    // 일부 UI Hide
+                    var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
+                    if (gui != null) gui.HideButton();
+
+                    // 타워 공격 범위 보여주기
+                    SelectTower.RangeEffect.Ex_SetActive(true);
+                }
+                else
+                {
+                    SelectTower = null;
+                    StartLand = null;
+                    EndLand = null;
+                }
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetMouseButton(0))
         {
-            MonsterSpawn();
+            if (SelectTower == null)
+                return;
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Build")))
+            {
+                EndLand = LandInfo.Find(x => x.m_trans == hit.transform);
+                if (EndLand != null)
+                {
+                    if (EndLand.m_build)
+                    {
+                        // 합성 유무 따져야됨
+                    }
+                    else
+                    {
+                        SelectTower.transform.position = EndLand.m_trans.position + new Vector3(0f, 1f, 0f);
+                    }
+                }
+            }
+            else if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Plane")))
+            {
+                SelectTower.transform.position = hit.point;
+                EndLand = null;
+            }
         }
 
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //    RaycastHit hit;
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (SelectTower == null || StartLand == null)
+                return;
+            
+            if (EndLand == null)
+            {
+                SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
+                return;
+            }
 
-        //    if (Physics.Raycast(ray, out hit))
-        //    {
-        //        var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
-        //        if (gui == null)
-        //            return;
+            SelectTower.transform.SetParent(EndLand.m_trans.transform);
+            SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
+            EndLand.m_tower = SelectTower;
+            EndLand.m_build = true;
 
-        //        if (hit.transform.gameObject.CompareTag("Build"))
-        //        {
-        //            m_select = hit.transform.gameObject;
+            StartLand.m_tower = null;
+            StartLand.m_build = false;
 
-        //            이미 설치된 땅
-        //            if (m_towers.Contains(hit.transform.gameObject))
-        //            {
-        //                gui.ShowFixed();
-        //            }
-        //            신규 땅
-        //            else
-        //            {
-        //                gui.ShowCreate();
-        //            }
-        //        }
-        //        else
-        //        {
-        //            gui.HideButton();
-        //        }
-        //    }
-        //}
+            // 타워 범위 가리기
+            SelectTower.RangeEffect.Ex_SetActive(false);
+
+            SelectTower = null;
+            StartLand = null;
+            EndLand = null;
+        }
     }
 
     public void TowerSpawn()
     {
-        var emptyLand = LandInfo.Where(x => x.Value.m_build == false).ToList();
+        var emptyLand = LandInfo.FindAll(x => x.m_build == false).ToList();
         if (emptyLand.Count == 0)
         {
             Debug.LogError("빈 땅이 없다요.");
@@ -145,10 +193,10 @@ public class GameController : MonoBehaviour
             tower.GetHeroData = heroData;
 
             var rand = emptyLand[UnityEngine.Random.Range(0, emptyLand.Count)];
-            go.transform.SetParent(rand.Value.m_trans.transform);
+            go.transform.SetParent(rand.m_trans.transform);
             go.transform.localPosition = new Vector3(0f, 1f, 0f);
-            rand.Value.m_tower_object = go;
-            rand.Value.m_build = true;
+            rand.m_tower = tower;
+            rand.m_build = true;
         }
     }
 

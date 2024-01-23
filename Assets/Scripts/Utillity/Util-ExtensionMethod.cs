@@ -21,6 +21,14 @@ public static partial class Util
         in_gameobject.SetActive(in_active);
     }
 
+    public static void Ex_SetValue(this RectTransform in_scroll_rect, float in_value)
+    {
+        if (in_scroll_rect == null)
+            return;
+
+        in_scroll_rect.anchoredPosition = new Vector2(0f, 0f);
+    }
+
     public static void Ex_Play(this Animator in_ani, string in_state, MonoBehaviour in_mono = null, Action in_callback = null)
     {
         in_ani.Play(in_state, -1, 0);
