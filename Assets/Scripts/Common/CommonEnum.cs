@@ -41,3 +41,17 @@ public enum FSM_STATE
     Attack,
     Die
 }
+
+public enum TowerType
+{
+    None,
+    Human,
+    Orc
+}
+
+public enum TowerRarity
+{
+    None,
+    Normal,
+    Epic
+}
