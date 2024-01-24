@@ -25,6 +25,7 @@ public class Managers : MonoBehaviour
     [SerializeField] private SoundManager m_Sound = null;
     [SerializeField] private PoolManager m_Pool = null;
     [SerializeField] private ResourceManager m_Resource = null;
+    [SerializeField] private UserManager m_User = null;
 
     public static Canvas UICanvas => GetInstance.m_UIRootCan;
     public static Transform Widget => GetInstance.m_Widget;
@@ -35,6 +36,7 @@ public class Managers : MonoBehaviour
     public static SoundManager Sound => GetInstance.m_Sound;
     public static PoolManager Pool => GetInstance.m_Pool;
     public static ResourceManager Resource => GetInstance.m_Resource;
+    public static UserManager User => GetInstance.m_User;
 
     public void Init()
     {
