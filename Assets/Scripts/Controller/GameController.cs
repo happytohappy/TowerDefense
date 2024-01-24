@@ -182,7 +182,8 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            var ranTowerKind = UnityEngine.Random.Range(1, 3);
+            //var ranTowerKind = UnityEngine.Random.Range(1, 3);
+            var ranTowerKind = 1;
             var heroInfoData = Managers.Table.GetHeroInfoData(ranTowerKind);
 
             var userTowerInfo = Managers.User.GetUserTowerInfo(ranTowerKind);
