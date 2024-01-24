@@ -7,8 +7,6 @@ public class Tower : PawnBase
 
     [SerializeField] private GameObject m_range_effect = null;
     
-    private int     m_attack_power = 0;
-    private float   m_attack_range = 0.0f;
     private Monster m_target_monster = null;
 
     public GameObject RangeEffect => m_range_effect;
@@ -19,10 +17,7 @@ public class Tower : PawnBase
         base.Start();
 
         m_range_effect.Ex_SetActive(false);
-
-        m_attack_power = GetHeroData.m_ATK;
-        m_attack_range = GetHeroData.m_attack_range;
-        m_range_effect.transform.localScale = new Vector3(m_attack_range, m_attack_range, 1f);
+        m_range_effect.transform.localScale = new Vector3(GetHeroData.m_stat.m_range, GetHeroData.m_stat.m_range, 1f);
 
         ChangeState(FSM_STATE.Idle);
     }
@@ -34,7 +29,7 @@ public class Tower : PawnBase
         if (m_target_monster != null)
         {
             var dis = Vector3.Distance(m_target_monster.transform.position, this.transform.position);
-            if (dis > m_attack_range)
+            if (dis > GetHeroData.m_stat.m_range)
                 m_target_monster = null;
             else if (m_target_monster.GetState == FSM_STATE.None || m_target_monster.GetState == FSM_STATE.Die)
                 m_target_monster = null;
@@ -62,7 +57,7 @@ public class Tower : PawnBase
                 continue;
 
             var dis = Vector3.Distance(monster.transform.position, this.transform.position);
-            if (dis > m_attack_range)
+            if (dis > GetHeroData.m_stat.m_range)
                 continue;
 
             if (dis < nearDis)
@@ -81,7 +76,7 @@ public class Tower : PawnBase
             return;
 
         this.transform.LookAt(m_target_monster.transform);
-        m_target_monster.OnHit(m_attack_power);
+        m_target_monster.OnHit(GetHeroData.m_stat.m_atk);
     }
 
     public override void Enter_Idle()

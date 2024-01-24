@@ -43,6 +43,7 @@ public class Managers : MonoBehaviour
         Table.Init();
         Pool.Init();
         UI.Init();
+        User.Init();
     }
 
     public void Clear()

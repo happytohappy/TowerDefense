@@ -182,10 +182,16 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            var ran = UnityEngine.Random.Range(1, 3);
-            var heroData = Managers.Table.GetHeroData(ran);
+            var ranTowerKind = UnityEngine.Random.Range(1, 3);
+            var heroInfoData = Managers.Table.GetHeroInfoData(ranTowerKind);
 
-            var go = Managers.Resource.Instantiate(heroData.m_path);
+            var userTowerInfo = Managers.User.GetUserTowerInfo(ranTowerKind);
+
+            var heroLevelData = Managers.Table.GetHeroLevelData(ranTowerKind, userTowerInfo.m_level);
+            var heroGradeData = Managers.Table.GetHeroGradeData(ranTowerKind, userTowerInfo.m_grade);
+            HeroData heroData = new HeroData(heroInfoData, heroGradeData, heroLevelData);
+
+            var go = Managers.Resource.Instantiate(heroInfoData.m_path);
             if (go == null)
                 return;
 
