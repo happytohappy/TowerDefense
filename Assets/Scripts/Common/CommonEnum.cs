@@ -46,12 +46,15 @@ public enum TowerType
 {
     None,
     Human,
-    Orc
+    Orc,
+    Elf
 }
 
 public enum TowerRarity
 {
     None,
     Normal,
-    Epic
+    Rare,
+    Epic,
+    Legend
 }
