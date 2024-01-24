@@ -57,7 +57,6 @@ public class GameController : MonoBehaviour
     public List<LandData> LandInfo    { get; set; } = new List<LandData>();
     public List<Monster>  Monsters    { get; set; } = new List<Monster>();
     public Tower          SelectTower { get; set; } = null;
-    public LandData       StartLand   { get; set; } = null;
     public LandData       EndLand     { get; set; } = null;
 
 
@@ -96,7 +95,6 @@ public class GameController : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag("Tower"))
                 {
                     SelectTower = hit.transform.gameObject.GetComponent<Tower>();
-                    StartLand = LandInfo.Find(x => x.m_tower == SelectTower);
                     EndLand = null;
 
                     // 일부 UI Hide
@@ -109,7 +107,6 @@ public class GameController : MonoBehaviour
                 else
                 {
                     SelectTower = null;
-                    StartLand = null;
                     EndLand = null;
                 }
             }
@@ -130,7 +127,15 @@ public class GameController : MonoBehaviour
                 {
                     if (EndLand.m_build)
                     {
-                        // 합성 유무 따져야됨
+                        // 내가 원래 있던 위치라면 움직일 수 있다.
+                        if (EndLand.m_tower == SelectTower)
+                        {
+                            SelectTower.transform.position = EndLand.m_trans.position + new Vector3(0f, 1f, 0f);
+                        }
+                        else
+                        {
+                            // 합성 유무 따져야됨
+                        }
                     }
                     else
                     {
@@ -147,28 +152,57 @@ public class GameController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            if (SelectTower == null || StartLand == null)
+            if (SelectTower == null)
                 return;
             
+            // 타워 설치 구역이 아닌 곳에서 마우스를 놨을 경우
             if (EndLand == null)
             {
                 SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
+                SelectTower.RangeEffect.Ex_SetActive(false);
                 return;
             }
+
+            // 놓으려는 곳에 이미 타워가 설치 되어 있는 경우
+            if (EndLand.m_build)
+            {
+                // 내가 원래 있던 위치에 놓은 것이기 때문에 아무것도 처리할 필요가 없다.
+                if (EndLand.m_tower == SelectTower)
+                {
+                    SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
+                    SelectTower.RangeEffect.Ex_SetActive(false);
+                    return;
+                }
+
+                // 합성일 경우 여기서 처리 해야됨
+                if (EndLand.m_tower.GetHeroData.m_info.m_kind == SelectTower.GetHeroData.m_info.m_kind)
+                {
+                    //Debug.LogError("합성 코드 작성 위치");
+                    // 합성
+                }
+
+                SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
+                SelectTower.RangeEffect.Ex_SetActive(false);
+
+                SelectTower = null;
+                EndLand = null;
+                return;
+            }
+
+            // 타워가 설치되어 있던 땅의 정보는 초기화
+            var startLand = LandInfo.Find(x => x.m_tower == SelectTower);
+            startLand.m_tower = null;
+            startLand.m_build = false;
 
             SelectTower.transform.SetParent(EndLand.m_trans.transform);
             SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
             EndLand.m_tower = SelectTower;
             EndLand.m_build = true;
 
-            StartLand.m_tower = null;
-            StartLand.m_build = false;
-
             // 타워 범위 가리기
             SelectTower.RangeEffect.Ex_SetActive(false);
 
             SelectTower = null;
-            StartLand = null;
             EndLand = null;
         }
     }
