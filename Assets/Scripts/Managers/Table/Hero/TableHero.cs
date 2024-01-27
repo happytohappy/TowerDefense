@@ -3,6 +3,7 @@
 public partial class TableManager
 {
     private Dictionary<int, HeroInfoData>         m_dic_hero_info_data  = new Dictionary<int, HeroInfoData>();
+    private Dictionary<int, List<HeroInfoData>>   m_dic_hero_info_data_group_by_tier  = new Dictionary<int, List<HeroInfoData>>();
     private Dictionary<(int, int), HeroGradeData> m_dic_hero_grade_data = new Dictionary<(int, int), HeroGradeData>();
     private Dictionary<(int, int), HeroLevelData> m_dic_hero_level_data = new Dictionary<(int, int), HeroLevelData>();
 
@@ -24,6 +25,14 @@ public partial class TableManager
     {
         if (m_dic_hero_info_data.ContainsKey(in_kind))
             return m_dic_hero_info_data[in_kind];
+        else
+            return null;
+    }
+
+    public List<HeroInfoData> GetHeroInfoDataGroupByTier(int in_tier)
+    {
+        if (m_dic_hero_info_data_group_by_tier.ContainsKey(in_tier))
+            return m_dic_hero_info_data_group_by_tier[in_tier];
         else
             return null;
     }

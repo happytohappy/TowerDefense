@@ -22,6 +22,12 @@ public partial class TableManager
             HeroInfoData.m_rarity = (TowerRarity)Enum.Parse(typeof(TowerRarity), words[6]);
 
             m_dic_hero_info_data.Add(HeroInfoData.m_kind, HeroInfoData);
+
+            // GroupBy Tier
+            if (m_dic_hero_info_data_group_by_tier.ContainsKey(HeroInfoData.m_tier))
+                m_dic_hero_info_data_group_by_tier[HeroInfoData.m_tier].Add(HeroInfoData);
+            else
+                m_dic_hero_info_data_group_by_tier.Add(HeroInfoData.m_tier, new List<HeroInfoData>() { HeroInfoData });
         }
     }
 }
