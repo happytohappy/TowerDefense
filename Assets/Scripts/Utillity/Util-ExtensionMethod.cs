@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections;
+using TMPro;
 
 public static partial class Util
 {
@@ -21,12 +22,36 @@ public static partial class Util
         in_gameobject.SetActive(in_active);
     }
 
+    public static void Ex_SetActive(this TMP_Text in_text, bool in_active)
+    {
+        if (in_text == null)
+            return;
+
+        in_text.gameObject.SetActive(in_active);
+    }
+
     public static void Ex_SetValue(this RectTransform in_scroll_rect, float in_value)
     {
         if (in_scroll_rect == null)
             return;
 
         in_scroll_rect.anchoredPosition = new Vector2(0f, 0f);
+    }
+
+    public static void Ex_SetColor(this Image in_image, Color in_color)
+    {
+        if (in_image == null)
+            return;
+
+        in_image.color = in_color;
+    }
+
+    public static void Ex_SetText(this TMP_Text in_text, string in_value)
+    {
+        if (in_text == null)
+            return;
+
+        in_text.text = in_value;
     }
 
     public static void Ex_Play(this Animator in_ani, string in_state, MonoBehaviour in_mono = null, Action in_callback = null)
