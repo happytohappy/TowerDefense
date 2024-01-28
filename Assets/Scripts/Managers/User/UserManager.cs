@@ -20,6 +20,7 @@ public class UserManager : MonoBehaviour
     }
 
     private Dictionary<int, TowerInfo> m_dic_have_tower = new Dictionary<int, TowerInfo>();
+    private Dictionary<int, List<TowerInfo>> m_dic_have_tower_group_by_tier = new Dictionary<int, List<TowerInfo>>();
 
     // PlayerPrefab 에서 데이터 가져오기
     public void Init()
@@ -30,13 +31,29 @@ public class UserManager : MonoBehaviour
         m_dic_have_tower.Add(3, new TowerInfo(3, 1, 1));
         m_dic_have_tower.Add(4, new TowerInfo(4, 1, 1));
         m_dic_have_tower.Add(5, new TowerInfo(5, 1, 1));
+        m_dic_have_tower_group_by_tier.Add(1, new List<TowerInfo>()
+        {
+            new TowerInfo(1, 1, 1),
+            new TowerInfo(2, 1, 1),
+            new TowerInfo(3, 1, 1),
+            new TowerInfo(4, 1, 1),
+            new TowerInfo(5, 1, 1) 
+        });
 
-        // 2티어 기본 보유 타워
-        m_dic_have_tower.Add(9, new TowerInfo(9, 1, 1));
-        m_dic_have_tower.Add(10, new TowerInfo(10, 1, 1));
+        // 2티어 기본 보유 타워                                      
+        m_dic_have_tower.Add(9, new TowerInfo(9, 1, 1));             
+        m_dic_have_tower.Add(10, new TowerInfo(10, 1, 1));            
         m_dic_have_tower.Add(11, new TowerInfo(11, 1, 1));
         m_dic_have_tower.Add(12, new TowerInfo(12, 1, 1));
         m_dic_have_tower.Add(13, new TowerInfo(13, 1, 1));
+        m_dic_have_tower_group_by_tier.Add(2, new List<TowerInfo>()
+        {
+            new TowerInfo(9, 1, 1),
+            new TowerInfo(10, 1, 1),
+            new TowerInfo(11, 1, 1),
+            new TowerInfo(12, 1, 1),
+            new TowerInfo(13, 1, 1)
+        });
 
         // 3티어 기본 보유 타워
         m_dic_have_tower.Add(17, new TowerInfo(17, 1, 1));
@@ -44,6 +61,14 @@ public class UserManager : MonoBehaviour
         m_dic_have_tower.Add(19, new TowerInfo(19, 1, 1));
         m_dic_have_tower.Add(20, new TowerInfo(20, 1, 1));
         m_dic_have_tower.Add(21, new TowerInfo(21, 1, 1));
+        m_dic_have_tower_group_by_tier.Add(3, new List<TowerInfo>()
+        {
+            new TowerInfo(17, 1, 1),
+            new TowerInfo(18, 1, 1),
+            new TowerInfo(19, 1, 1),
+            new TowerInfo(20, 1, 1),
+            new TowerInfo(21, 1, 1)
+        });
 
         // 4티어 기본 보유 타워
         m_dic_have_tower.Add(25, new TowerInfo(25, 1, 1));
@@ -51,6 +76,14 @@ public class UserManager : MonoBehaviour
         m_dic_have_tower.Add(27, new TowerInfo(27, 1, 1));
         m_dic_have_tower.Add(28, new TowerInfo(28, 1, 1));
         m_dic_have_tower.Add(29, new TowerInfo(29, 1, 1));
+        m_dic_have_tower_group_by_tier.Add(4, new List<TowerInfo>()
+        {
+            new TowerInfo(25, 1, 1),
+            new TowerInfo(26, 1, 1),
+            new TowerInfo(27, 1, 1),
+            new TowerInfo(28, 1, 1),
+            new TowerInfo(29, 1, 1)
+        });
 
         // 5티어 기본 보유 타워
         m_dic_have_tower.Add(33, new TowerInfo(33, 1, 1));
@@ -58,12 +91,28 @@ public class UserManager : MonoBehaviour
         m_dic_have_tower.Add(35, new TowerInfo(35, 1, 1));
         m_dic_have_tower.Add(36, new TowerInfo(36, 1, 1));
         m_dic_have_tower.Add(37, new TowerInfo(37, 1, 1));
+        m_dic_have_tower_group_by_tier.Add(5, new List<TowerInfo>()
+        {
+            new TowerInfo(33, 1, 1),
+            new TowerInfo(34, 1, 1),
+            new TowerInfo(35, 1, 1),
+            new TowerInfo(36, 1, 1),
+            new TowerInfo(37, 1, 1)
+        });
     }
 
     public TowerInfo GetUserTowerInfo(int in_kind)
     {
         if (m_dic_have_tower.ContainsKey(in_kind))
             return m_dic_have_tower[in_kind];
+        else
+            return null;
+    }
+
+    public List<TowerInfo> GetUserTowerInfoGroupByTier(int in_tier)
+    {
+        if (m_dic_have_tower_group_by_tier.ContainsKey(in_tier))
+            return m_dic_have_tower_group_by_tier[in_tier];
         else
             return null;
     }

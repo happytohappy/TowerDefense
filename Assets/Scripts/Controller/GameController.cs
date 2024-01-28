@@ -177,8 +177,23 @@ public class GameController : MonoBehaviour
                 // 합성일 경우 여기서 처리 해야됨
                 if (EndLand.m_tower.GetHeroData.m_info.m_kind == SelectTower.GetHeroData.m_info.m_kind)
                 {
-                    //Debug.LogError("합성 코드 작성 위치");
-                    // 합성
+                    var nextTier = SelectTower.GetHeroData.m_info.m_tier + 1;
+                    var towerList = Managers.User.GetUserTowerInfoGroupByTier(nextTier);
+                    if (towerList == null || towerList.Count == 0)
+                        return;
+
+                    // 타워가 설치되어 있던 땅의 정보는 초기화
+                    var startLand = LandInfo.Find(x => x.m_tower == SelectTower);
+                    Managers.Resource.Destroy(startLand.m_tower.gameObject);
+                    startLand.m_tower = null;
+                    startLand.m_build = false;
+
+                    Managers.Resource.Destroy(EndLand.m_tower.gameObject);
+                    EndLand.m_tower = null;
+                    EndLand.m_build = false;
+
+                    TowerSpawn(nextTier, EndLand);
+                    return;
                 }
 
                 SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
@@ -189,55 +204,75 @@ public class GameController : MonoBehaviour
                 return;
             }
 
-            // 타워가 설치되어 있던 땅의 정보는 초기화
-            var startLand = LandInfo.Find(x => x.m_tower == SelectTower);
-            startLand.m_tower = null;
-            startLand.m_build = false;
+            {          
+                // 타워가 설치되어 있던 땅의 정보는 초기화
+                var startLand = LandInfo.Find(x => x.m_tower == SelectTower);
+                startLand.m_tower = null;
+                startLand.m_build = false;
 
-            SelectTower.transform.SetParent(EndLand.m_trans.transform);
-            SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
-            EndLand.m_tower = SelectTower;
-            EndLand.m_build = true;
+                SelectTower.transform.SetParent(EndLand.m_trans.transform);
+                SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
+                EndLand.m_tower = SelectTower;
+                EndLand.m_build = true;
 
-            // 타워 범위 가리기
-            SelectTower.RangeEffect.Ex_SetActive(false);
+                // 타워 범위 가리기
+                SelectTower.RangeEffect.Ex_SetActive(false);
 
-            SelectTower = null;
-            EndLand = null;
+                SelectTower = null;
+                EndLand = null;
+            }
         }
     }
 
-    public void TowerSpawn()
+    public bool TowerSpawn(int in_tier = 1, LandData in_land = null)
     {
         var emptyLand = LandInfo.FindAll(x => x.m_build == false).ToList();
         if (emptyLand.Count == 0)
         {
             Debug.LogError("빈 땅이 없다요.");
+            return false;
         }
         else
         {
-            //var ranTowerKind = UnityEngine.Random.Range(1, 3);
-            var ranTowerKind = 1;
-            var heroInfoData = Managers.Table.GetHeroInfoData(ranTowerKind);
+            var towerList = Managers.User.GetUserTowerInfoGroupByTier(in_tier);
+            if (towerList == null || towerList.Count == 0)
+            {
+                Debug.LogError("상위 타워 없음 땅이 없다요.");
+                return false;
+            }
 
-            var userTowerInfo = Managers.User.GetUserTowerInfo(ranTowerKind);
+            var userTowerInfo = towerList[UnityEngine.Random.Range(0, towerList.Count)];
+            var heroInfoData = Managers.Table.GetHeroInfoData(userTowerInfo.m_kind);
 
-            var heroLevelData = Managers.Table.GetHeroLevelData(ranTowerKind, userTowerInfo.m_level);
-            var heroGradeData = Managers.Table.GetHeroGradeData(ranTowerKind, userTowerInfo.m_grade);
+            var heroLevelData = Managers.Table.GetHeroLevelData(userTowerInfo.m_kind, userTowerInfo.m_level);
+            var heroGradeData = Managers.Table.GetHeroGradeData(userTowerInfo.m_kind, userTowerInfo.m_grade);
             HeroData heroData = new HeroData(heroInfoData, heroGradeData, heroLevelData);
 
             var go = Managers.Resource.Instantiate(heroInfoData.m_path);
             if (go == null)
-                return;
+                return false;
 
             var tower = go.GetComponent<Tower>();
             tower.GetHeroData = heroData;
 
-            var rand = emptyLand[UnityEngine.Random.Range(0, emptyLand.Count)];
-            go.transform.SetParent(rand.m_trans.transform);
-            go.transform.localPosition = new Vector3(0f, 1f, 0f);
-            rand.m_tower = tower;
-            rand.m_build = true;
+            if (in_land != null)
+            {
+                var rand = in_land;
+                go.transform.SetParent(rand.m_trans.transform);
+                go.transform.localPosition = new Vector3(0f, 1f, 0f);
+                rand.m_tower = tower;
+                rand.m_build = true;
+            }
+            else
+            {
+                var rand = emptyLand[UnityEngine.Random.Range(0, emptyLand.Count)];
+                go.transform.SetParent(rand.m_trans.transform);
+                go.transform.localPosition = new Vector3(0f, 1f, 0f);
+                rand.m_tower = tower;
+                rand.m_build = true;
+            }
+
+            return true;
         }
     }
 
