@@ -26,78 +26,78 @@ public class UserManager : MonoBehaviour
     public void Init()
     {
         // 1티어 기본 보유 타워
-        m_dic_have_tower.Add(1, new TowerInfo(1, 1, 1));
-        m_dic_have_tower.Add(2, new TowerInfo(2, 1, 1));
-        m_dic_have_tower.Add(3, new TowerInfo(3, 1, 1));
-        m_dic_have_tower.Add(4, new TowerInfo(4, 1, 1));
-        m_dic_have_tower.Add(5, new TowerInfo(5, 1, 1));
+        m_dic_have_tower.Add(1001, new TowerInfo(1001, 1, 1));
+        m_dic_have_tower.Add(1002, new TowerInfo(1002, 1, 1));
+        m_dic_have_tower.Add(1003, new TowerInfo(1003, 1, 1));
+        m_dic_have_tower.Add(1004, new TowerInfo(1004, 1, 1));
+        m_dic_have_tower.Add(1005, new TowerInfo(1005, 1, 1));
         m_dic_have_tower_group_by_tier.Add(1, new List<TowerInfo>()
         {
-            new TowerInfo(1, 1, 1),
-            new TowerInfo(2, 1, 1),
-            new TowerInfo(3, 1, 1),
-            new TowerInfo(4, 1, 1),
-            new TowerInfo(5, 1, 1) 
+            new TowerInfo(1001, 1, 1),
+            new TowerInfo(1002, 1, 1),
+            new TowerInfo(1003, 1, 1),
+            new TowerInfo(1004, 1, 1),
+            new TowerInfo(1005, 1, 1) 
         });
 
         // 2티어 기본 보유 타워                                      
-        m_dic_have_tower.Add(9, new TowerInfo(9, 1, 1));             
-        m_dic_have_tower.Add(10, new TowerInfo(10, 1, 1));            
-        m_dic_have_tower.Add(11, new TowerInfo(11, 1, 1));
-        m_dic_have_tower.Add(12, new TowerInfo(12, 1, 1));
-        m_dic_have_tower.Add(13, new TowerInfo(13, 1, 1));
+        m_dic_have_tower.Add(2001, new TowerInfo(2001, 1, 1));             
+        m_dic_have_tower.Add(2002, new TowerInfo(2002, 1, 1));            
+        m_dic_have_tower.Add(2003, new TowerInfo(2003, 1, 1));
+        m_dic_have_tower.Add(2004, new TowerInfo(2004, 1, 1));
+        m_dic_have_tower.Add(2005, new TowerInfo(2005, 1, 1));
         m_dic_have_tower_group_by_tier.Add(2, new List<TowerInfo>()
         {
-            new TowerInfo(9, 1, 1),
-            new TowerInfo(10, 1, 1),
-            new TowerInfo(11, 1, 1),
-            new TowerInfo(12, 1, 1),
-            new TowerInfo(13, 1, 1)
+            new TowerInfo(2001, 1, 1),
+            new TowerInfo(2002, 1, 1),
+            new TowerInfo(2003, 1, 1),
+            new TowerInfo(2004, 1, 1),
+            new TowerInfo(2005, 1, 1)
         });
 
         // 3티어 기본 보유 타워
-        m_dic_have_tower.Add(17, new TowerInfo(17, 1, 1));
-        m_dic_have_tower.Add(18, new TowerInfo(18, 1, 1));
-        m_dic_have_tower.Add(19, new TowerInfo(19, 1, 1));
-        m_dic_have_tower.Add(20, new TowerInfo(20, 1, 1));
-        m_dic_have_tower.Add(21, new TowerInfo(21, 1, 1));
+        m_dic_have_tower.Add(3001, new TowerInfo(3001, 1, 1));
+        m_dic_have_tower.Add(3002, new TowerInfo(3002, 1, 1));
+        m_dic_have_tower.Add(3003, new TowerInfo(3003, 1, 1));
+        m_dic_have_tower.Add(3004, new TowerInfo(3004, 1, 1));
+        m_dic_have_tower.Add(3005, new TowerInfo(3005, 1, 1));
         m_dic_have_tower_group_by_tier.Add(3, new List<TowerInfo>()
         {
-            new TowerInfo(17, 1, 1),
-            new TowerInfo(18, 1, 1),
-            new TowerInfo(19, 1, 1),
-            new TowerInfo(20, 1, 1),
-            new TowerInfo(21, 1, 1)
+            new TowerInfo(3001, 1, 1),
+            new TowerInfo(3002, 1, 1),
+            new TowerInfo(3003, 1, 1),
+            new TowerInfo(3004, 1, 1),
+            new TowerInfo(3005, 1, 1)
         });
 
         // 4티어 기본 보유 타워
-        m_dic_have_tower.Add(25, new TowerInfo(25, 1, 1));
-        m_dic_have_tower.Add(26, new TowerInfo(26, 1, 1));
-        m_dic_have_tower.Add(27, new TowerInfo(27, 1, 1));
-        m_dic_have_tower.Add(28, new TowerInfo(28, 1, 1));
-        m_dic_have_tower.Add(29, new TowerInfo(29, 1, 1));
+        m_dic_have_tower.Add(4001, new TowerInfo(4001, 1, 1));
+        m_dic_have_tower.Add(4002, new TowerInfo(4002, 1, 1));
+        m_dic_have_tower.Add(4003, new TowerInfo(4003, 1, 1));
+        m_dic_have_tower.Add(4004, new TowerInfo(4004, 1, 1));
+        m_dic_have_tower.Add(4005, new TowerInfo(4005, 1, 1));
         m_dic_have_tower_group_by_tier.Add(4, new List<TowerInfo>()
         {
-            new TowerInfo(25, 1, 1),
-            new TowerInfo(26, 1, 1),
-            new TowerInfo(27, 1, 1),
-            new TowerInfo(28, 1, 1),
-            new TowerInfo(29, 1, 1)
+            new TowerInfo(4001, 1, 1),
+            new TowerInfo(4002, 1, 1),
+            new TowerInfo(4003, 1, 1),
+            new TowerInfo(4004, 1, 1),
+            new TowerInfo(4005, 1, 1)
         });
 
         // 5티어 기본 보유 타워
-        m_dic_have_tower.Add(33, new TowerInfo(33, 1, 1));
-        m_dic_have_tower.Add(34, new TowerInfo(34, 1, 1));
-        m_dic_have_tower.Add(35, new TowerInfo(35, 1, 1));
-        m_dic_have_tower.Add(36, new TowerInfo(36, 1, 1));
-        m_dic_have_tower.Add(37, new TowerInfo(37, 1, 1));
+        m_dic_have_tower.Add(5001, new TowerInfo(5001, 1, 1));
+        m_dic_have_tower.Add(5002, new TowerInfo(5002, 1, 1));
+        m_dic_have_tower.Add(5003, new TowerInfo(5003, 1, 1));
+        m_dic_have_tower.Add(5004, new TowerInfo(5004, 1, 1));
+        m_dic_have_tower.Add(5005, new TowerInfo(5005, 1, 1));
         m_dic_have_tower_group_by_tier.Add(5, new List<TowerInfo>()
         {
-            new TowerInfo(33, 1, 1),
-            new TowerInfo(34, 1, 1),
-            new TowerInfo(35, 1, 1),
-            new TowerInfo(36, 1, 1),
-            new TowerInfo(37, 1, 1)
+            new TowerInfo(5001, 1, 1),
+            new TowerInfo(5002, 1, 1),
+            new TowerInfo(5003, 1, 1),
+            new TowerInfo(5004, 1, 1),
+            new TowerInfo(5005, 1, 1)
         });
     }
 
