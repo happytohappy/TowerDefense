@@ -71,7 +71,7 @@ public class Monster : PawnBase
 
     public override void Update_Run()
     {
-        if (Vector3.Distance(this.transform.position, m_destination) <= 0.1f)
+        if (Vector3.Distance(this.transform.position, m_destination) <= 0.5f)
         {
             this.transform.position = m_destination;
             SetDestination();

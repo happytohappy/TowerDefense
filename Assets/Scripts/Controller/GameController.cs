@@ -31,21 +31,19 @@ public class GameController : MonoBehaviour
         public int        m_land_index;     // 땅 인덱스
         public bool       m_build;          // 타워가 설치 되었는지
         public Transform  m_trans;          // 땅 위치
-        public Tower      m_tower;          // 타워
+        public Hero       m_hero;           // 영웅
 
-        public LandData(int in_land_index, bool in_build, Transform in_trans, Tower in_tower)
+        public LandData(int in_land_index, bool in_build, Transform in_trans, Hero in_tower)
         {
             m_land_index = in_land_index;
             m_build      = in_build;
             m_trans      = in_trans;
-            m_tower      = in_tower;
+            m_hero      = in_tower;
         }
     }
 
     private const string MONSTER_PATH = "Monster";
     private const string MONSTER_NAME = "Monster_";
-    private const string TOWER_PATH   = "Tower";
-    private const string TOWER_NAME   = "Tower_";
 
     [SerializeField] private List<Path>       m_pathes    = new List<Path>();
     [SerializeField] private List<GameObject> m_build_map = new List<GameObject>();
@@ -56,7 +54,7 @@ public class GameController : MonoBehaviour
 
     public List<LandData> LandInfo    { get; set; } = new List<LandData>();
     public List<Monster>  Monsters    { get; set; } = new List<Monster>();
-    public Tower          SelectTower { get; set; } = null;
+    public Hero           SelectTower { get; set; } = null;
     public LandData       EndLand     { get; set; } = null;
 
 
@@ -92,9 +90,9 @@ public class GameController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.CompareTag("Tower"))
+                if (hit.transform.gameObject.CompareTag("Hero"))
                 {
-                    SelectTower = hit.transform.gameObject.GetComponent<Tower>();
+                    SelectTower = hit.transform.gameObject.GetComponent<Hero>();
                     EndLand = null;
 
                     // 일부 UI Hide
@@ -128,13 +126,14 @@ public class GameController : MonoBehaviour
                     if (EndLand.m_build)
                     {
                         // 내가 원래 있던 위치라면 움직일 수 있다.
-                        if (EndLand.m_tower == SelectTower)
+                        if (EndLand.m_hero == SelectTower)
                         {
                             SelectTower.transform.position = EndLand.m_trans.position + new Vector3(0f, 1f, 0f);
                         }
                         else
                         {
                             // 합성 유무 따져야됨
+                            SelectTower.transform.position = EndLand.m_trans.position + new Vector3(0f, 1f, 0f);
                         }
                     }
                     else
@@ -167,7 +166,7 @@ public class GameController : MonoBehaviour
             if (EndLand.m_build)
             {
                 // 내가 원래 있던 위치에 놓은 것이기 때문에 아무것도 처리할 필요가 없다.
-                if (EndLand.m_tower == SelectTower)
+                if (EndLand.m_hero == SelectTower)
                 {
                     SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
                     SelectTower.RangeEffect.Ex_SetActive(false);
@@ -175,7 +174,7 @@ public class GameController : MonoBehaviour
                 }
 
                 // 합성일 경우 여기서 처리 해야됨
-                if (EndLand.m_tower.GetHeroData.m_info.m_kind == SelectTower.GetHeroData.m_info.m_kind)
+                if (EndLand.m_hero.GetHeroData.m_info.m_kind == SelectTower.GetHeroData.m_info.m_kind)
                 {
                     var nextTier = SelectTower.GetHeroData.m_info.m_tier + 1;
                     var towerList = Managers.User.GetUserTowerInfoGroupByTier(nextTier);
@@ -183,13 +182,13 @@ public class GameController : MonoBehaviour
                         return;
 
                     // 타워가 설치되어 있던 땅의 정보는 초기화
-                    var startLand = LandInfo.Find(x => x.m_tower == SelectTower);
-                    Managers.Resource.Destroy(startLand.m_tower.gameObject);
-                    startLand.m_tower = null;
+                    var startLand = LandInfo.Find(x => x.m_hero == SelectTower);
+                    Managers.Resource.Destroy(startLand.m_hero.gameObject);
+                    startLand.m_hero = null;
                     startLand.m_build = false;
 
-                    Managers.Resource.Destroy(EndLand.m_tower.gameObject);
-                    EndLand.m_tower = null;
+                    Managers.Resource.Destroy(EndLand.m_hero.gameObject);
+                    EndLand.m_hero = null;
                     EndLand.m_build = false;
 
                     TowerSpawn(nextTier, EndLand);
@@ -206,13 +205,13 @@ public class GameController : MonoBehaviour
 
             {          
                 // 타워가 설치되어 있던 땅의 정보는 초기화
-                var startLand = LandInfo.Find(x => x.m_tower == SelectTower);
-                startLand.m_tower = null;
+                var startLand = LandInfo.Find(x => x.m_hero == SelectTower);
+                startLand.m_hero = null;
                 startLand.m_build = false;
 
                 SelectTower.transform.SetParent(EndLand.m_trans.transform);
                 SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
-                EndLand.m_tower = SelectTower;
+                EndLand.m_hero = SelectTower;
                 EndLand.m_build = true;
 
                 // 타워 범위 가리기
@@ -252,15 +251,16 @@ public class GameController : MonoBehaviour
             if (go == null)
                 return false;
 
-            var tower = go.GetComponent<Tower>();
-            tower.GetHeroData = heroData;
+            var hero = go.GetComponent<Hero>();
+            hero.GetHeroData = heroData;
 
             if (in_land != null)
             {
                 var rand = in_land;
                 go.transform.SetParent(rand.m_trans.transform);
                 go.transform.localPosition = new Vector3(0f, 1f, 0f);
-                rand.m_tower = tower;
+                go.transform.eulerAngles = new Vector3(0f, 180f, 0f);
+                rand.m_hero = hero;
                 rand.m_build = true;
             }
             else
@@ -268,7 +268,8 @@ public class GameController : MonoBehaviour
                 var rand = emptyLand[UnityEngine.Random.Range(0, emptyLand.Count)];
                 go.transform.SetParent(rand.m_trans.transform);
                 go.transform.localPosition = new Vector3(0f, 1f, 0f);
-                rand.m_tower = tower;
+                go.transform.eulerAngles = new Vector3(0f, 180f, 0f);
+                rand.m_hero = hero;
                 rand.m_build = true;
             }
 
