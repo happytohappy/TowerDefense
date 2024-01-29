@@ -46,6 +46,17 @@ public class Hero : PawnBase
                 ChangeState(FSM_STATE.Idle);
             }
         }
+
+        if (m_target_monster != null)
+        {
+            var dir = m_target_monster.transform.position - this.transform.position;
+            var quaternion = Quaternion.LookRotation(dir);
+            this.transform.eulerAngles = new Vector3(0f, quaternion.eulerAngles.y, 0f);
+        }
+        else
+        {
+            this.transform.eulerAngles = new Vector3(0f, 180f, 0f);
+        }
     }
 
     private bool NearMonsterSearch()
@@ -75,7 +86,6 @@ public class Hero : PawnBase
         if (m_target_monster == null)
             return;
 
-        this.transform.LookAt(m_target_monster.transform);
         m_target_monster.OnHit(GetHeroData.m_stat.m_atk);
     }
 
