@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class UIPopupEquipment : UIWindowBase
 {
     public override void Awake()
