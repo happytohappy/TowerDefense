@@ -84,6 +84,11 @@ public class UIPopupUnit : UIWindowBase
             m_Image_equipment.Ex_SetActive(true);
         }
     }
+
+    public void OnClickUnitBuy()
+    {
+        Managers.UI.OpenWindow(WindowID.UIPopupUnitBuy);
+    }
 }
 
 // Hero Level 테이블을 조회해서 스탯 정보를 알아온다.
