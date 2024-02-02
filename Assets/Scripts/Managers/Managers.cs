@@ -26,6 +26,7 @@ public class Managers : MonoBehaviour
     [SerializeField] private PoolManager m_Pool = null;
     [SerializeField] private ResourceManager m_Resource = null;
     [SerializeField] private UserManager m_User = null;
+    [SerializeField] private BackendManager m_BackEnd = null;
 
     public static Canvas UICanvas => GetInstance.m_UIRootCan;
     public static Transform Widget => GetInstance.m_Widget;
@@ -37,6 +38,7 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool => GetInstance.m_Pool;
     public static ResourceManager Resource => GetInstance.m_Resource;
     public static UserManager User => GetInstance.m_User;
+    public static BackendManager BackEnd => GetInstance.m_BackEnd;
 
     public void Init()
     {
@@ -44,6 +46,7 @@ public class Managers : MonoBehaviour
         Pool.Init();
         UI.Init();
         User.Init();
+        BackEnd.Init();
     }
 
     public void Clear()
