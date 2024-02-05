@@ -12,6 +12,11 @@ public class LoadingParam : WindowParam
     public WindowParam Param = null;
 }
 
+public class GachaHeroParam : WindowParam
+{
+    public int m_hero_kind = 0;
+}
+
 public class HeroData
 {
     public HeroInfoData m_info = new HeroInfoData();
@@ -61,4 +66,20 @@ public class MonsterData
     public string m_path;
     public int    m_hp;
     public float  m_move_speed;
+}
+
+public class GachaGroupData
+{
+    public int m_kind;
+    public int m_reward;
+}
+
+public class GachaRewardData
+{
+    public int m_kind;
+    public int m_item;
+    public int m_amount;
+    public int m_rate;
+    public int m_rate_min;
+    public int m_rate_max;
 }

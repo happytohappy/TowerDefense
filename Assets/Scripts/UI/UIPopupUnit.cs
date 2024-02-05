@@ -44,6 +44,9 @@ public class UIPopupUnit : UIWindowBase
 
     private void RefreshUI()
     {
+        for (int i = 0; i < m_trs_root.childCount; i++)
+            Managers.Resource.Destroy(m_trs_root.GetChild(i).gameObject);
+
         for (int tier = 1; tier <= 6; tier++)
         {
             var tierGroup = Managers.Resource.Instantiate(UNIT_TIER_GROUP_PATH, Vector3.zero, m_trs_root);
@@ -64,7 +67,7 @@ public class UIPopupUnit : UIWindowBase
         // m_text_attack
 
         //내가 보유한 타워의 레벨과 등급을 불러와서
-        var Tower = Managers.User.GetUserTowerInfo(in_kind);
+        var Tower = Managers.User.GetUserHeroInfo(in_kind);
         if (Tower == null)
         {
             // 타워 보유하지 않은 셋팅 해주면 됨
@@ -87,7 +90,17 @@ public class UIPopupUnit : UIWindowBase
 
     public void OnClickUnitBuy()
     {
-        Managers.UI.OpenWindow(WindowID.UIPopupUnitBuy);
+        var gachaReward = Managers.Table.GetGachaHero(1000);
+        if (gachaReward == null)
+            return;
+
+        Managers.User.UpsertHero(gachaReward.m_item);
+        RefreshUI();
+
+        GachaHeroParam param = new GachaHeroParam();
+        param.m_hero_kind = gachaReward.m_item;
+
+        Managers.UI.OpenWindow(WindowID.UIPopupUnitBuy, param);
     }
 }
 

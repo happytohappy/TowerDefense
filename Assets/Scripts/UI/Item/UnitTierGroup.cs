@@ -21,7 +21,7 @@ public class UnitTierGroup : MonoBehaviour
             var unit = Managers.Resource.Instantiate(UNIT_ICON_PATH, Vector3.zero, m_trs_unit);
             var sc = unit.GetComponent<UnitIcon>();
 
-            var userTower = Managers.User.GetUserTowerInfo(tierUnit.m_kind);
+            var userTower = Managers.User.GetUserHeroInfo(tierUnit.m_kind);
             if (userTower != null)
             {
                 // 보유하고 있는 타워

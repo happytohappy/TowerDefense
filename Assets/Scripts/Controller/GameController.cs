@@ -177,7 +177,7 @@ public class GameController : MonoBehaviour
                 if (EndLand.m_hero.GetHeroData.m_info.m_kind == SelectTower.GetHeroData.m_info.m_kind)
                 {
                     var nextTier = SelectTower.GetHeroData.m_info.m_tier + 1;
-                    var towerList = Managers.User.GetUserTowerInfoGroupByTier(nextTier);
+                    var towerList = Managers.User.GetUserHeroInfoGroupByTier(nextTier);
                     if (towerList == null || towerList.Count == 0)
                         return;
 
@@ -233,7 +233,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            var towerList = Managers.User.GetUserTowerInfoGroupByTier(in_tier);
+            var towerList = Managers.User.GetUserHeroInfoGroupByTier(in_tier);
             if (towerList == null || towerList.Count == 0)
             {
                 Debug.LogError("상위 타워 없음 땅이 없다요.");
@@ -242,7 +242,7 @@ public class GameController : MonoBehaviour
 
             var userTowerInfo = towerList[UnityEngine.Random.Range(0, towerList.Count)];
             var heroInfoData = Managers.Table.GetHeroInfoData(userTowerInfo.m_kind);
-
+            
             var heroLevelData = Managers.Table.GetHeroLevelData(userTowerInfo.m_kind, userTowerInfo.m_level);
             var heroGradeData = Managers.Table.GetHeroGradeData(userTowerInfo.m_kind, userTowerInfo.m_grade);
             HeroData heroData = new HeroData(heroInfoData, heroGradeData, heroLevelData);
