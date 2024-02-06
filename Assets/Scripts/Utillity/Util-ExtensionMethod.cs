@@ -46,6 +46,14 @@ public static partial class Util
         in_image.color = in_color;
     }
 
+    public static void Ex_SetImage(this Image in_image, Sprite in_sprite)
+    {
+        if (in_image == null)
+            return;
+
+        in_image.sprite = in_sprite;
+    }
+
     public static void Ex_SetText(this TMP_Text in_text, string in_value)
     {
         if (in_text == null)
