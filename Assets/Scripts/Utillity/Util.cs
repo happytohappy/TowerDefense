@@ -161,4 +161,13 @@ public static partial class Util
 
         return heroInfo.m_rarity.ToString();
     }
+
+    public static int GetHeroTier(int in_kind)
+    {
+        var heroInfo = Managers.Table.GetHeroInfoData(in_kind);
+        if (heroInfo == null)
+            return 0;
+
+        return heroInfo.m_tier;
+    }
 }

@@ -1,5 +1,18 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
 public class UIPopupUnitBuy : UIWindowBase
 {
+    [Header("유닛 상세 정보")]
+    [SerializeField] private TMP_Text m_text_name = null;
+    [SerializeField] private TMP_Text m_text_rarity = null;
+    [SerializeField] private Image m_Image_hero = null;
+    [SerializeField] private TMP_Text m_text_damage = null;
+    [SerializeField] private TMP_Text m_text_speed = null;
+    [SerializeField] private TMP_Text m_text_range = null;
+    [SerializeField] private TMP_Text m_text_tier = null;
+
     private GachaHeroParam m_param = null;
 
     public override void Awake()
@@ -21,16 +34,36 @@ public class UIPopupUnitBuy : UIWindowBase
         if (m_param == null)
             Managers.UI.CloseLast();
 
-        RefreshUI();
+        RefreshUI(m_param.m_hero_kind);
     }
 
-    private void RefreshUI()
+    private void RefreshUI(int in_kind)
     {
-        var heroData = Managers.Table.GetHeroInfoData(m_param.m_hero_kind);
+        // 타워 보유하지 않은 셋팅 해주면 됨
+        m_text_name.Ex_SetText(Util.GetHeroName(in_kind));
+        m_text_rarity.Ex_SetText(Util.GetHeroRarityToString(in_kind));
+        m_Image_hero.Ex_SetImage(Util.GetHeroImage(in_kind));;
+        m_text_tier.Ex_SetText($"Class {Util.GetHeroTier(in_kind)}");
 
-        // 여기서 내가 보유한 타워 정보 불러오고, 레벨 데이터 이용해서 레벨 별 타워 정보불러오고
-        // 대충 데이터 UI 에 셋팅해준다.
+        var hero = Managers.User.GetUserHeroInfo(in_kind);
+        var heroLevelInfo = Managers.Table.GetHeroLevelData(in_kind, hero.m_level);
+        m_text_damage.Ex_SetText(heroLevelInfo.m_atk.ToString());
+        m_text_speed.Ex_SetText(heroLevelInfo.m_speed.ToString());
+        m_text_range.Ex_SetText(heroLevelInfo.m_range.ToString());
+    }
 
+    public void OnClickUnitBuy()
+    {
+        var gachaReward = Managers.Table.GetGachaHero(1000);
+        if (gachaReward == null)
+            return;
+
+        Managers.User.UpsertHero(gachaReward.m_item);
+        RefreshUI(gachaReward.m_item);
+
+        var uiUnitPopup = Managers.UI.GetWindow(WindowID.UIPopupUnit, false) as UIPopupUnit;
+        if (uiUnitPopup != null)
+            uiUnitPopup.RefreshUI();
     }
 
     public void OnClickClose()

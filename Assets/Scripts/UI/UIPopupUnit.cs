@@ -16,6 +16,7 @@ public class UIPopupUnit : UIWindowBase
     [SerializeField] private Image m_Image_lock = null;
     [SerializeField] private Image m_Image_star = null;
     [SerializeField] private TMP_Text m_text_star = null;
+    [SerializeField] private TMP_Text m_text_level_fixed = null;
     [SerializeField] private TMP_Text m_text_level = null;
     [SerializeField] private Image m_Image_equipment = null;
     [SerializeField] private TMP_Text m_text_damage = null;
@@ -47,7 +48,7 @@ public class UIPopupUnit : UIWindowBase
         Managers.UI.CloseLast();
     }
 
-    private void RefreshUI()
+    public void RefreshUI()
     {
         for (int i = 0; i < m_trs_root.childCount; i++)
             Managers.Resource.Destroy(m_trs_root.GetChild(i).gameObject);
@@ -80,6 +81,7 @@ public class UIPopupUnit : UIWindowBase
             m_Image_hero.Ex_SetColor(Color.black);
             m_Image_lock.Ex_SetActive(true);
             m_Image_star.Ex_SetActive(false);
+            m_text_level_fixed.Ex_SetActive(false);
             m_text_level.Ex_SetActive(false);
             m_Image_equipment.Ex_SetActive(false);
             m_go_level_up.Ex_SetActive(false);
@@ -90,6 +92,7 @@ public class UIPopupUnit : UIWindowBase
             m_Image_hero.Ex_SetColor(Color.white);
             m_Image_lock.Ex_SetActive(false);
             m_Image_star.Ex_SetActive(true);
+            m_text_level_fixed.Ex_SetActive(true);
             m_text_level.Ex_SetActive(true);
             m_text_level.Ex_SetText(hero.m_level.ToString());
             m_Image_equipment.Ex_SetActive(true);
