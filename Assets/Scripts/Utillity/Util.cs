@@ -134,4 +134,31 @@ public static partial class Util
 
         return hpBar;
     }
+
+    public static Sprite GetHeroImage(int in_kind)
+    {
+        var heroInfo = Managers.Table.GetHeroInfoData(in_kind);
+        if (heroInfo == null)
+            return null;
+
+        return Managers.Resource.Load<Sprite>($"Image/Hero/Tier_{heroInfo.m_tier}/Hero_{heroInfo.m_kind}");
+    }
+
+    public static string GetHeroName(int in_kind)
+    {
+        var heroInfo = Managers.Table.GetHeroInfoData(in_kind);
+        if (heroInfo == null)
+            return string.Empty;
+
+        return heroInfo.m_name;
+    }
+
+    public static string GetHeroRarityToString(int in_kind)
+    {
+        var heroInfo = Managers.Table.GetHeroInfoData(in_kind);
+        if (heroInfo == null)
+            return string.Empty;
+
+        return heroInfo.m_rarity.ToString();
+    }
 }

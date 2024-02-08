@@ -2206,7 +2206,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 10}
+  m_AnchoredPosition: {x: 15, y: -10}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &699740050646770819
@@ -2776,7 +2776,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7402830593428019568}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5252619210065258921}
+        m_TargetAssemblyTypeName: UIPopupUnit, Assembly-CSharp
+        m_MethodName: OnClickUnitLevelUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4195108261376539037
 GameObject:
   m_ObjectHideFlags: 0
@@ -3837,7 +3849,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -15, y: 10}
+  m_AnchoredPosition: {x: -15, y: -10}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &18083147909126028
@@ -4588,7 +4600,7 @@ MonoBehaviour:
   m_text_name: {fileID: 4735402098954730048}
   m_text_rarity: {fileID: 3980718795421715755}
   m_text_attack: {fileID: 7608210103572090500}
-  m_Image_tower: {fileID: 8067367418292327776}
+  m_Image_hero: {fileID: 8067367418292327776}
   m_Image_lock: {fileID: 2905453442802039334}
   m_Image_star: {fileID: 6508084614192509224}
   m_text_star: {fileID: 7989443632768916689}
@@ -4597,6 +4609,8 @@ MonoBehaviour:
   m_text_damage: {fileID: 185181536553273612}
   m_text_speed: {fileID: 8859667864421896517}
   m_text_range: {fileID: 2687545347556159696}
+  m_go_level_up: {fileID: 0}
+  m_go_active: {fileID: 0}
 --- !u!1 &6869819438719872407
 GameObject:
   m_ObjectHideFlags: 0
@@ -4632,8 +4646,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 70}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: 50}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6732497512273192474
 CanvasRenderer:
