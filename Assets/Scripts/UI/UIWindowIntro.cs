@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class UIWindowIntro : UIWindowBase
 {
     public override void Awake()

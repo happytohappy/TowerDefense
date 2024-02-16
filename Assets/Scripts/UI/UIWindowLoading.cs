@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UIWindowLoading : UIWindowBase
 {
+
+    /*
     [SerializeField] private Image m_Progress = null;
 
     public override void Awake()
@@ -59,6 +61,54 @@ public class UIWindowLoading : UIWindowBase
                     timer = 0f;
                 }
             }
+        }
+    }
+    */
+
+    [SerializeField] private Slider m_Slider = null;
+
+    private float timer;
+
+    public override void Awake()
+    {
+        Window_ID = WindowID.UIWindowLoading;
+        Window_Mode = WindowMode.WindowClose;
+
+        base.Awake();
+    }
+
+    public override void OpenUI(WindowParam wp)
+    {
+        base.OpenUI(wp);
+        var info = wp as LoadingParam;
+
+        StartCoroutine(LoadScene(info));
+    }
+
+    private IEnumerator LoadScene(LoadingParam info)
+    {
+        yield return null;
+
+        AsyncOperation op = SceneManager.LoadSceneAsync(info.SceneIndex);
+        op.allowSceneActivation = false;
+
+        while (!op.isDone)
+        {
+            timer += Time.time;
+
+            m_Slider.value = timer / 10f;
+
+            if (timer > 10)
+            {
+                op.allowSceneActivation = true;
+
+                if (info.NextWindow != WindowID.None)
+                    Managers.UI.OpenWindow(info.NextWindow);
+                else
+                    Managers.UI.CloseLast(true);
+            }
+
+            yield return null;
         }
     }
 }
