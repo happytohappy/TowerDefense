@@ -6,7 +6,7 @@ public partial class TableManager : MonoBehaviour
     private Dictionary<string, LocalizationData> m_dic_localization_data = new Dictionary<string, LocalizationData>();
     public List<LocalizationText> LocalizationTextList { get; set; } = new List<LocalizationText>();
 
-    private void InitLanguage()
+    private void InitLocalization()
     {
         if (m_dic_localization_data.Count > 0)
             return;

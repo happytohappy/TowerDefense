@@ -7,6 +7,7 @@ public partial class TableManager : MonoBehaviour
         InitHeroTable();
         InitMonsterTable();
         InitGachaTable();
+        InitLocalization();
     }
 
     public void Clear()
