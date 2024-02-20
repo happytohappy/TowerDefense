@@ -101,7 +101,20 @@ public static partial class Util
     {
         return string.Format("{0:#,###}", in_value); 
     }
-    
+
+    public static string SpecialString(string in_str)
+    {
+        in_str = in_str.Replace('^', ',');
+
+        string[] tempStr = in_str.Split('|');
+        string Result = tempStr[0];
+
+        for (int i = 1; i < tempStr.Length; i++)
+            Result += "\n" + tempStr[i];
+
+        return Result;
+    }
+
     public static void DebugLog(string logMsg, DebugType debugLogType = DebugType.Normal)
     {
 #if UNITY_EDITOR
