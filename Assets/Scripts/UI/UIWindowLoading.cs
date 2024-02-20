@@ -67,8 +67,6 @@ public class UIWindowLoading : UIWindowBase
 
     [SerializeField] private Slider m_Slider = null;
 
-    private float timer;
-
     public override void Awake()
     {
         Window_ID = WindowID.UIWindowLoading;
@@ -92,6 +90,7 @@ public class UIWindowLoading : UIWindowBase
         AsyncOperation op = SceneManager.LoadSceneAsync(info.SceneIndex);
         op.allowSceneActivation = false;
 
+        float timer = 0.0f;
         while (!op.isDone)
         {
             timer += Time.time;

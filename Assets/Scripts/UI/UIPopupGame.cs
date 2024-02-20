@@ -1,5 +1,3 @@
-using UnityEngine.SceneManagement;
-
 public class UIPopupGame : UIWindowBase
 {
     public override void Awake()
@@ -22,10 +20,12 @@ public class UIPopupGame : UIWindowBase
 
     public void OnClickGame()
     {
-        Managers.UI.Clear();
+        Managers.UI.CloseLast();
 
-        SceneManager.LoadScene(2);
+        LoadingParam param = new LoadingParam();
+        param.SceneIndex = 2;
+        param.NextWindow = WindowID.UIWindowGame;
 
-        Managers.UI.OpenWindow(WindowID.UIWindowGame);
+        Managers.UI.OpenWindow(WindowID.UIWindowLoading, param);
     }
 }
