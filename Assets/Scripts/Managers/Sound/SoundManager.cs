@@ -14,4 +14,9 @@ public class SoundManager : MonoBehaviour
     {
         m_AudioSourceSFX.Play();
     }
+
+    public void PlaySFX(AudioClip in_audio_clip)
+    {
+        m_AudioSourceSFX.PlayOneShot(in_audio_clip);
+    }
 }
