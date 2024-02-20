@@ -83,3 +83,13 @@ public class GachaRewardData
     public int m_rate_min;
     public int m_rate_max;
 }
+
+public class LocalizationData
+{
+    public string LAN_KEY;
+    public string KOR;
+    public string ENG;
+    public string CHN_T;   // 번체
+    public string CHN_S;   // 간체
+    public string JPN;
+}

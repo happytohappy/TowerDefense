@@ -43,6 +43,15 @@ public enum FSM_STATE
     Die
 }
 
+public enum Language
+{
+    Kor,
+    Eng,
+    Jpn,
+    Chn_S,
+    Chn_T,
+}
+
 public enum TowerType
 {
     None,
