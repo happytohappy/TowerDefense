@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public class GoogleSheetManager : MonoBehaviour
 {
-    private const string GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1CDppVzjl5WXTeD0vy6Gsnsek16yf-6AgTettq47xFWE/export?format=tsv&range=A2:Z&gid=";
+    private const string GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1CDppVzjl5WXTeD0vy6Gsnsek16yf-6AgTettq47xFWE/export?format=tsv&range=A6:Z&gid=";
     private string sheetData;
 
     // GID

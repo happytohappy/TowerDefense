@@ -39,21 +39,22 @@ public partial class TableManager
         {
             for (int i = 0; i < columns.Length; i++)
             {
-                System.Type type = fields[i].FieldType;
+                var sheetData = rows[row].Split('\t');
 
+                System.Type type = fields[i].FieldType;
                 if (string.IsNullOrEmpty(columns[i])) continue;
 
                 // 변수에 맞는 자료형으로 파싱해서 넣는다
                 if (type == typeof(int))
-                    fields[i].SetValue(data, int.Parse(columns[i]));
+                    fields[i].SetValue(data, int.Parse(sheetData[i]));
                 else if (type == typeof(float))
-                    fields[i].SetValue(data, float.Parse(columns[i]));
+                    fields[i].SetValue(data, float.Parse(sheetData[i]));
                 else if (type == typeof(bool))
-                    fields[i].SetValue(data, bool.Parse(columns[i]));
+                    fields[i].SetValue(data, bool.Parse(sheetData[i]));
                 else if (type == typeof(string))
-                    fields[i].SetValue(data, columns[i]);
+                    fields[i].SetValue(data, sheetData[i]);
                 else
-                    fields[i].SetValue(data, Enum.Parse(type, columns[i]));
+                    fields[i].SetValue(data, Enum.Parse(type, sheetData[i]));
             }
 
             var tableData = data as HeroLevelData;
