@@ -71,8 +71,47 @@ public class GameController : MonoBehaviour
     //    }
     //}
 
+    private void Awake()
+    {
+        //for (int z = 0; z < 30; z++)
+        //{
+        //    for (int i = 1; i <= 8; i++)
+        //    {
+        //        var heroList = Managers.User.GetUserHeroInfoGroupByTier(i);
+        //        if (heroList == null)
+        //            continue;
+
+        //        foreach (var hero in heroList)
+        //        {
+        //            var heroInfoData = Managers.Table.GetHeroInfoData(hero.m_kind);
+        //            var go = Managers.Resource.Instantiate(heroInfoData.m_path);
+        //            if (go != null)
+        //                Managers.Resource.Destroy(go);
+        //        }
+        //    }
+        //}
+    }
+
     private void Start()
     {
+        //for (int z = 0; z < 30; z++)
+        //{
+        //    for (int i = 1; i <= 8; i++)
+        //    {
+        //        var heroList = Managers.User.GetUserHeroInfoGroupByTier(i);
+        //        if (heroList == null)
+        //            continue;
+
+        //        foreach (var hero in heroList)
+        //        {
+        //            var heroInfoData = Managers.Table.GetHeroInfoData(hero.m_kind);
+        //            var go = Managers.Resource.Instantiate(heroInfoData.m_path);
+        //            if (go != null)
+        //                Managers.Resource.Destroy(go);
+        //        }
+        //    }
+        //}
+
         LandInfo.Clear();
         for (int i = 0; i < m_build_map.Count; i++)
             LandInfo.Add(new LandData(i, false, m_build_map[i].transform, null));
@@ -233,18 +272,18 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            var towerList = Managers.User.GetUserHeroInfoGroupByTier(in_tier);
-            if (towerList == null || towerList.Count == 0)
+            var heroList = Managers.User.GetUserHeroInfoGroupByTier(in_tier);
+            if (heroList == null || heroList.Count == 0)
             {
                 Debug.LogError("상위 타워 없음 땅이 없다요.");
                 return false;
             }
 
-            var userTowerInfo = towerList[UnityEngine.Random.Range(0, towerList.Count)];
-            var heroInfoData = Managers.Table.GetHeroInfoData(userTowerInfo.m_kind);
+            var userHeroInfo = heroList[UnityEngine.Random.Range(0, heroList.Count)];
+            var heroInfoData = Managers.Table.GetHeroInfoData(userHeroInfo.m_kind);
             
-            var heroLevelData = Managers.Table.GetHeroLevelData(userTowerInfo.m_kind, userTowerInfo.m_level);
-            var heroGradeData = Managers.Table.GetHeroGradeData(userTowerInfo.m_kind, userTowerInfo.m_grade);
+            var heroLevelData = Managers.Table.GetHeroLevelData(userHeroInfo.m_kind, userHeroInfo.m_level);
+            var heroGradeData = Managers.Table.GetHeroGradeData(userHeroInfo.m_kind, userHeroInfo.m_grade);
             HeroData heroData = new HeroData(heroInfoData, heroGradeData, heroLevelData);
 
             var go = Managers.Resource.Instantiate(heroInfoData.m_path);

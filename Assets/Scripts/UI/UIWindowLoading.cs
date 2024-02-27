@@ -1,70 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIWindowLoading : UIWindowBase
 {
-
-    /*
-    [SerializeField] private Image m_Progress = null;
-
-    public override void Awake()
-    {
-        Window_ID = WindowID.UIWindowLoading;
-        Window_Mode = WindowMode.WindowClose;
-
-        base.Awake();
-    }
-
-    public override void OpenUI(WindowParam wp)
-    {
-        base.OpenUI(wp);
-        var info = wp as LoadingParam;
-
-        StartCoroutine(LoadScene(info));
-    }
-
-    private IEnumerator LoadScene(LoadingParam info)
-    {
-        yield return null;
-
-        AsyncOperation op = SceneManager.LoadSceneAsync(info.SceneIndex);
-        op.allowSceneActivation = false;
-
-        float timer = 0.0f;
-        while (!op.isDone)
-        {
-            yield return null;
-
-            timer += Time.deltaTime;
-
-            if (op.progress >= 0.9f)
-            {
-                m_Progress.fillAmount = Mathf.Lerp(m_Progress.fillAmount, 1f, timer);
-
-                if (m_Progress.fillAmount == 1.0f)
-                {
-                    op.allowSceneActivation = true;
-
-                    if (info.NextWindow != WindowID.None)
-                        Managers.UI.OpenWindow(info.NextWindow);
-                    else
-                        Managers.UI.CloseLast(true);
-                }
-            }
-            else
-            {
-                m_Progress.fillAmount = Mathf.Lerp(m_Progress.fillAmount, op.progress, timer);
-                if (m_Progress.fillAmount >= op.progress)
-                {
-                    timer = 0f;
-                }
-            }
-        }
-    }
-    */
-
     [SerializeField] private Slider m_Slider = null;
 
     public override void Awake()
@@ -80,6 +21,7 @@ public class UIWindowLoading : UIWindowBase
         base.OpenUI(wp);
         var info = wp as LoadingParam;
 
+        m_Slider.value = 0f;
         StartCoroutine(LoadScene(info));
     }
 
@@ -88,26 +30,106 @@ public class UIWindowLoading : UIWindowBase
         yield return null;
 
         AsyncOperation op = SceneManager.LoadSceneAsync(info.SceneIndex);
-        op.allowSceneActivation = false;
+        //op.allowSceneActivation = false;
 
-        float timer = 0.0f;
-        while (!op.isDone)
+        // info.SceneIndex == 2 게임씬이라 리소스 로딩 하자
+        if (info.SceneIndex == 2)
         {
-            timer += Time.time;
+            var maxCount = 0;
+            List<string> aaa = new List<string>();
+            //for (int z = 0; z < 30; z++)
+            //{
+                for (int i = 1; i <= 8; i++)
+                {
+                    var heroList = Managers.User.GetUserHeroInfoGroupByTier(i);
+                    if (heroList == null)
+                        continue;
 
-            m_Slider.value = timer / 10f;
+                    foreach (var hero in heroList)
+                    {
+                        maxCount++;
 
-            if (timer > 10)
+                        var heroInfoData = Managers.Table.GetHeroInfoData(hero.m_kind);
+                        aaa.Add(heroInfoData.m_path);
+                        //var go = Managers.Resource.Instantiate(heroInfoData.m_path);
+                        //if (go != null)
+                        //    Managers.Resource.Destroy(go);
+                    }
+                }
+            //}
+
+            maxCount = maxCount + (int)(maxCount * 0.5f);
+            var successCnt = 0;
+            foreach (var path in aaa)
             {
-                op.allowSceneActivation = true;
+                var go = Managers.Resource.Instantiate(path);
+                if (go != null)
+                    Managers.Resource.Destroy(go);
 
-                if (info.NextWindow != WindowID.None)
-                    Managers.UI.OpenWindow(info.NextWindow);
-                else
-                    Managers.UI.CloseLast(true);
+                successCnt++;
+
+                m_Slider.value = successCnt / (float)maxCount;
+                yield return null;
             }
 
-            yield return null;
+            
+            float timer = 0.0f;
+
+            while (true)
+            {
+                yield return null;
+
+                timer += Time.deltaTime;
+
+                //if (op.progress >= 0.9f)
+                //{
+                    m_Slider.value = Mathf.Lerp(m_Slider.value, 1f, timer);
+
+                    if (m_Slider.value == 1.0f)
+                    {
+                        //op.allowSceneActivation = true;
+
+                        if (info.NextWindow != WindowID.None)
+                            Managers.UI.OpenWindow(info.NextWindow);
+                        else
+                            Managers.UI.CloseLast(true);
+                    }
+                //}
+            }
+        }
+        else
+        {
+            float timer = 0.0f;
+            while (true)
+            {
+                yield return null;
+
+                timer += Time.deltaTime;
+
+                if (op.progress >= 0.9f)
+                {
+                    m_Slider.value = Mathf.Lerp(m_Slider.value, 1f, timer);
+
+                    if (m_Slider.value == 1.0f)
+                    {
+                        op.allowSceneActivation = true;
+                        yield return null;
+
+                        if (info.NextWindow != WindowID.None)
+                            Managers.UI.OpenWindow(info.NextWindow);
+                        else
+                            Managers.UI.CloseLast(true);
+                    }
+                }
+                else
+                {
+                    m_Slider.value = Mathf.Lerp(m_Slider.value, op.progress, timer);
+                    if (m_Slider.value >= op.progress)
+                    {
+                        timer = 0f;
+                    }
+                }
+            }
         }
     }
 }

@@ -2,10 +2,10 @@
 
 public partial class TableManager
 {
-    private Dictionary<int, HeroInfoData>         m_dic_hero_info_data  = new Dictionary<int, HeroInfoData>();
-    private Dictionary<int, List<HeroInfoData>>   m_dic_hero_info_data_group_by_tier  = new Dictionary<int, List<HeroInfoData>>();
-    private Dictionary<(int, int), HeroGradeData> m_dic_hero_grade_data = new Dictionary<(int, int), HeroGradeData>();
-    private Dictionary<(int, int), HeroLevelData> m_dic_hero_level_data = new Dictionary<(int, int), HeroLevelData>();
+    public Dictionary<int, HeroInfoData>         m_dic_hero_info_data  = new Dictionary<int, HeroInfoData>();
+    public Dictionary<int, List<HeroInfoData>>   m_dic_hero_info_data_group_by_tier  = new Dictionary<int, List<HeroInfoData>>();
+    public Dictionary<(int, int), HeroGradeData> m_dic_hero_grade_data = new Dictionary<(int, int), HeroGradeData>();
+    public Dictionary<(int, int), HeroLevelData> m_dic_hero_level_data = new Dictionary<(int, int), HeroLevelData>();
 
     private void InitHeroTable()
     {

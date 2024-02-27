@@ -43,6 +43,66 @@ public enum FSM_STATE
     Die
 }
 
+public enum EBuff
+{
+    BUFF_ALLY_CHARGE_ENERGY,                    // 에너지 충전
+    BUFF_ALLY_INCREASE_DAMAGE_ALL,              // 아군 전체 공격력 증가
+    BUFF_ALLY_INCREASE_DAMAGE_SOLO,             // 자기 자신 공격력 증가
+    BUFF_ALLY_INCREASE_SPEED_ALL,               // 아군 전체 공격 속도 증가
+    BUFF_ALLY_INCREASE_SPEED_SOLO,              // 자기 자신 공격 속도 증가
+    BUFF_ALLY_INCREASE_RANGE_ALL,               // 아군 전체 공격 범위 증가
+    BUFF_ALLY_INCREASE_RANGE_SOLO,              // 자기 자신 공격 범위 증가
+    BUFF_ALLY_INCREASE_CRITICAL_ALL,            // 아군 전체 치명타 증가
+    BUFF_ALLY_INCREASE_CRITICAL_SOLO,           // 자기 자신 치명타 증가
+    BUFF_ALLY_INCREASE_CRITCHANCE_ALL,          // 아군 전체 치명타율 증가
+    BUFF_ALLY_INCREASE_CRITCHANCE_SOLO,         // 자기 자신 치명타율 증가
+    BUFF_ALLY_INCREASE_BOSSDAMAGE_ALL,          // 아군 전체 보스 대상 공격력 증가
+    BUFF_ALLY_INCREASE_BOSSDAMAGE_SOLO,         // 자기 자신 보스 대상 공격력 증가
+    BUFF_ENEMY_DECREASE_DEFENSE_ALL,            // 적 전체 방어력 감소
+    BUFF_ENEMY_DECREASE_DEFENSE_SOLO,           // 피격당한 적 방어력 감소
+    BUFF_ENEMY_EFFECT_STUN_ALL,                 // 적 전체 기절 효과
+    BUFF_ENEMY_EFFECT_STUN_SOLO,                // 피격당한 적 기절 효과
+    BUFF_ENEMY_EFFECT_SLOW_ALL,                 // 적 전체 슬로우 효과
+    BUFF_ENEMY_EFFECT_SLOW_SOLO,                // 피격당한 적 슬로우 효과
+}
+
+public enum EUnion
+{
+    TYPE,           // 종족
+    TIER,           // 티어
+    RARITY,         // 희귀도
+}
+
+public enum EType
+{
+    NONE    = 0,    //
+    HUMAN   = 1,    // 인간
+    ORC     = 2,    // 요정
+    ELF     = 3,    // 오크
+}
+
+public enum ETier
+{
+    NONE    = 0,    //
+    TIER_1  = 1,    // 1티어
+    TIER_2  = 2,    // 2티어
+    TIER_3  = 3,    // 3티어
+    TIER_4  = 4,    // 4티어
+    TIER_5  = 5,    // 5티어
+    TIER_6  = 6,    // 6티어
+    TIER_7  = 7,    // 7티어
+    TIER_8  = 8,    // 8티어
+}
+
+public enum ERarity
+{
+    NONE    = 0,    //
+    NORMAL  = 1,    // 노말
+    RARE    = 2,    // 레어
+    EPIC    = 3,    // 에픽
+    LEGEND  = 4,    // 레전드
+}
+
 public enum Language
 {
     Kor,
@@ -52,19 +112,19 @@ public enum Language
     Chn_T,
 }
 
-public enum TowerType
+public enum Type
 {
     None,
-    Human,
-    Orc,
-    Elf
+    HUMAN,
+    SPECIES,
+    WORLD
 }
 
-public enum TowerRarity
+public enum Rarity
 {
     None,
-    Normal,
-    Rare,
-    Epic,
-    Legend
+    RARE,
+    EPIC,
+    LEGEND,
+    MYTH
 }

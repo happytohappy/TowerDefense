@@ -1,20 +1,24 @@
 using System.Collections.Generic;
 
-public abstract class WindowParam
+// 구글 시트 정리 완료
+public class HeroInfoData
 {
-
+    public int m_kind;
+    public string m_path;
+    public string m_name;
+    public string m_desc;
+    public Type m_type;
+    public int m_tier;
+    public Rarity m_rarity;
 }
 
-public class LoadingParam : WindowParam
+public class HeroGradeData
 {
-    public int SceneIndex = 0;
-    public WindowID NextWindow = WindowID.None;
-    public WindowParam Param = null;
-}
-
-public class GachaHeroParam : WindowParam
-{
-    public int m_hero_kind = 0;
+    public int m_kind;
+    public int m_grade;
+    public int m_skill_1;
+    public int m_skill_2;
+    public int m_skill_3;
 }
 
 public class HeroData
@@ -31,23 +35,52 @@ public class HeroData
     }
 }
 
-public class HeroInfoData
+// 구글 시트 정리 대기
+
+
+
+
+public class BuffInfoData
 {
-    public int         m_kind;
-    public string      m_path;
-    public string      m_name;
-    public string      m_desc;
-    public TowerType   m_type;
-    public int         m_tier;
-    public TowerRarity m_rarity;
+    public int m_kind;
+    public EBuff m_buff;
+    public string m_comment;
 }
 
-public class HeroGradeData
+public class BuffLevelData
 {
-    public int       m_kind;
-    public int       m_grade;
-    public List<int> m_skills = new List<int>();
+    public int m_kind;
+    public int m_level;
+    public int m_rate;
+    public float m_time;
+    public float m_width;
 }
+
+public class GachaGroupData2
+{
+    public int m_kind;
+    public int m_consumption;
+    public int m_reward;
+    public string m_image;
+    public string m_text_page;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 public class HeroLevelData
 {

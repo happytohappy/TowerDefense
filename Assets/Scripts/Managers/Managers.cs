@@ -20,6 +20,7 @@ public class Managers : MonoBehaviour
     [SerializeField] private Transform m_Widget = null;
     [SerializeField] private Camera m_WorldCam = null;
     [SerializeField] private Camera m_UICam = null;
+    [SerializeField] private GoogleSheetManager m_GoogleSheet = null;
     [SerializeField] private UIWindowManager m_UI = null;
     [SerializeField] private TableManager m_Table = null;
     [SerializeField] private SoundManager m_Sound = null;
@@ -32,6 +33,7 @@ public class Managers : MonoBehaviour
     public static Transform Widget => GetInstance.m_Widget;
     public static Camera WorldCam => GetInstance.m_WorldCam;
     public static Camera UICam => GetInstance.m_UICam;
+    public static GoogleSheetManager GoogleSheet => GetInstance.m_GoogleSheet;
     public static UIWindowManager UI => GetInstance.m_UI;
     public static TableManager Table => GetInstance.m_Table;
     public static SoundManager Sound => GetInstance.m_Sound;
@@ -42,6 +44,7 @@ public class Managers : MonoBehaviour
 
     public void Init()
     {
+        GoogleSheet.Init();
         Table.Init();
         Pool.Init();
         UI.Init();
