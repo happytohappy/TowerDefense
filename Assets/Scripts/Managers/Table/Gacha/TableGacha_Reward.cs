@@ -39,6 +39,9 @@ public partial class TableManager
 
     public void SetGachaRewardData(string in_sheet_data)
     {
+        int totalRate = 0;
+        int lastKind = 0;
+
         // 클래스에 있는 변수들을 순서대로 저장한 배열
         FieldInfo[] fields = typeof(GachaRewardData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -48,9 +51,6 @@ public partial class TableManager
         {
             var sheetData = rows[row].Split('\t');
             GachaRewardData tableData = new GachaRewardData();
-
-            int totalRate = 0;
-            int lastKind = 0;
 
             for (int i = 0; i < columns.Length; i++)
             {
