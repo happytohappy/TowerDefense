@@ -12,12 +12,14 @@ public class GoogleSheetManager : MonoBehaviour
     // Hero_Info    846969345
     // Hero_Grade   1100293316
     // Hero_Level   703649086
+    // Localization 1101510208
 
     public void Init()
     {
         StartCoroutine(CoRequestGoogleSheet(846969345, (value) => Managers.Table.SetHeroInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(1100293316, (value) => Managers.Table.SetHeroGradeData(value)));
         StartCoroutine(CoRequestGoogleSheet(703649086, (value) => Managers.Table.SetHeroLevelData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1101510208, (value) => Managers.Table.SetLocalizationData(value)));
     }
 
     private IEnumerator CoRequestGoogleSheet(int in_gid, Action<string> in_call_back)

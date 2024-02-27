@@ -34,8 +34,6 @@ public partial class TableManager
 
     public void SetHeroInfoData(string in_sheet_data)
     {
-        object data = Activator.CreateInstance(typeof(HeroInfoData));
-
         // 클래스에 있는 변수들을 순서대로 저장한 배열
         FieldInfo[] fields = typeof(HeroInfoData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -43,27 +41,26 @@ public partial class TableManager
         string[] columns = rows[0].Split('\t');
         for (int row = 0; row < rows.Length; row++)
         {
+            var sheetData = rows[row].Split('\t');
+            HeroInfoData tableData = new HeroInfoData();
             for (int i = 0; i < columns.Length; i++)
             {
-                var sheetData = rows[row].Split('\t');
-
                 System.Type type = fields[i].FieldType;
                 if (string.IsNullOrEmpty(columns[i])) continue;
 
                 // 변수에 맞는 자료형으로 파싱해서 넣는다
                 if (type == typeof(int))
-                    fields[i].SetValue(data, int.Parse(sheetData[i]));
+                    fields[i].SetValue(tableData, int.Parse(sheetData[i]));
                 else if (type == typeof(float))
-                    fields[i].SetValue(data, float.Parse(sheetData[i]));
+                    fields[i].SetValue(tableData, float.Parse(sheetData[i]));
                 else if (type == typeof(bool))
-                    fields[i].SetValue(data, bool.Parse(sheetData[i]));
+                    fields[i].SetValue(tableData, bool.Parse(sheetData[i]));
                 else if (type == typeof(string))
-                    fields[i].SetValue(data, sheetData[i]);
+                    fields[i].SetValue(tableData, sheetData[i]);
                 else
-                    fields[i].SetValue(data, Enum.Parse(type, sheetData[i]));
+                    fields[i].SetValue(tableData, Enum.Parse(type, sheetData[i]));
             }
 
-            var tableData = data as HeroInfoData;
             m_dic_hero_info_data.Add(tableData.m_kind, tableData);
 
             // GroupBy Tier

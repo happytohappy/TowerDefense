@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
+using System;
+using System.Reflection;
+using System.Collections.Generic;
 public partial class TableManager : MonoBehaviour
 { 
     private Dictionary<string, LocalizationData> m_dic_localization_data = new Dictionary<string, LocalizationData>();
@@ -59,6 +60,39 @@ public partial class TableManager : MonoBehaviour
         for (int i = 0; i < LocalizationTextList.Count; i++)
         {
             LocalizationTextList[i].SetLanguage();
+        }
+    }
+
+    public void SetLocalizationData(string in_sheet_data)
+    {
+        // 클래스에 있는 변수들을 순서대로 저장한 배열
+        FieldInfo[] fields = typeof(LocalizationData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+        string[] rows = in_sheet_data.Split('\n');
+        string[] columns = rows[0].Split('\t');
+        for (int row = 0; row < rows.Length; row++)
+        {
+            var sheetData = rows[row].Split('\t');
+            LocalizationData tableData = new LocalizationData();
+            for (int i = 0; i < columns.Length; i++)
+            {
+                System.Type type = fields[i].FieldType;
+                if (string.IsNullOrEmpty(columns[i])) continue;
+
+                // 변수에 맞는 자료형으로 파싱해서 넣는다
+                if (type == typeof(int))
+                    fields[i].SetValue(tableData, int.Parse(sheetData[i]));
+                else if (type == typeof(float))
+                    fields[i].SetValue(tableData, float.Parse(sheetData[i]));
+                else if (type == typeof(bool))
+                    fields[i].SetValue(tableData, bool.Parse(sheetData[i]));
+                else if (type == typeof(string))
+                    fields[i].SetValue(tableData, sheetData[i]);
+                else
+                    fields[i].SetValue(tableData, Enum.Parse(type, sheetData[i]));
+            }
+
+            m_dic_localization_data.Add(tableData.LAN_KEY, tableData);
         }
     }
 }

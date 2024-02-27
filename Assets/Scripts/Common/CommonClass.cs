@@ -1,6 +1,20 @@
 using System.Collections.Generic;
 
 // 구글 시트 정리 완료
+public class HeroData
+{
+    public HeroInfoData m_info = new HeroInfoData();
+    public HeroGradeData m_skill = new HeroGradeData();
+    public HeroLevelData m_stat = new HeroLevelData();
+
+    public HeroData(HeroInfoData in_info, HeroGradeData in_grade, HeroLevelData in_level)
+    {
+        m_info = in_info;
+        m_skill = in_grade;
+        m_stat = in_level;
+    }
+}
+
 public class HeroInfoData
 {
     public int m_kind;
@@ -21,22 +35,46 @@ public class HeroGradeData
     public int m_skill_3;
 }
 
-public class HeroData
+public class HeroLevelData
 {
-    public HeroInfoData m_info = new HeroInfoData();
-    public HeroGradeData m_skill = new HeroGradeData();
-    public HeroLevelData m_stat = new HeroLevelData();
-
-    public HeroData(HeroInfoData in_info, HeroGradeData in_grade, HeroLevelData in_level)
-    {
-        m_info = in_info;
-        m_skill = in_grade;
-        m_stat = in_level;
-    }
+    public int m_kind;
+    public int m_level;
+    public int m_atk;
+    public float m_speed;
+    public float m_range;
+    public int m_critical;
+    public int m_critical_chance;
 }
 
+public class LocalizationData
+{
+    public string LAN_KEY;
+    public string KOR;
+    public string ENG;
+    public string JPN;
+    public string CHN_S;   // 간체
+    public string CHN_T;   // 번체
+}
 // 구글 시트 정리 대기
 
+public class GachaGroupData
+{
+    public int m_kind;
+    public int m_consumption;
+    public int m_reward;
+    public string m_image;
+    public int m_text_page;
+}
+
+public class GachaRewardData
+{
+    public int m_kind;
+    public int m_item;
+    public int m_amount;
+    public int m_rate;
+    public int m_rate_min;
+    public int m_rate_max;
+}
 
 
 
@@ -56,73 +94,10 @@ public class BuffLevelData
     public float m_width;
 }
 
-public class GachaGroupData2
-{
-    public int m_kind;
-    public int m_consumption;
-    public int m_reward;
-    public string m_image;
-    public string m_text_page;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class HeroLevelData
-{
-    public int   m_kind;
-    public int   m_level;
-    public int   m_atk;
-    public float m_speed;
-    public float m_range;
-    public int   m_critical;
-    public int   m_critical_chance;
-}
-
 public class MonsterData
 {
     public int    m_kind;
     public string m_path;
     public int    m_hp;
     public float  m_move_speed;
-}
-
-public class GachaGroupData
-{
-    public int m_kind;
-    public int m_reward;
-}
-
-public class GachaRewardData
-{
-    public int m_kind;
-    public int m_item;
-    public int m_amount;
-    public int m_rate;
-    public int m_rate_min;
-    public int m_rate_max;
-}
-
-public class LocalizationData
-{
-    public string LAN_KEY;
-    public string KOR;
-    public string ENG;
-    public string CHN_T;   // 번체
-    public string CHN_S;   // 간체
-    public string JPN;
 }
