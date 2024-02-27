@@ -1525,7 +1525,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2673029300860036167}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3444566118778519681}
+        m_TargetAssemblyTypeName: AdMobManager, Assembly-CSharp
+        m_MethodName: ShowAds
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2091522587108272128
 GameObject:
   m_ObjectHideFlags: 0
@@ -3118,6 +3130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6712918325758415786}
   - component: {fileID: 2955811139556181953}
+  - component: {fileID: 3444566118778519681}
   m_Layer: 5
   m_Name: UIPopupSetting
   m_TagString: Untagged
@@ -3160,6 +3173,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6913c196866d72a4a82a900ced972421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3444566118778519681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6712918325758415787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a87d193ba8eb5cd40b23edbb34b3e72b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gold: 0
 --- !u!1 &6826886843247160399
 GameObject:
   m_ObjectHideFlags: 0
