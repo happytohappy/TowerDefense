@@ -1,37 +1,30 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 public partial class TableManager
 {
-    private Dictionary<int, MonsterData> m_dic_monster_data = new Dictionary<int, MonsterData>();
+    private Dictionary<int, MonsterInfoData> m_dic_monster_info_data = new Dictionary<int, MonsterInfoData>();
+    private Dictionary<(int, int), MonsterStatusData> m_dic_monster_status_data = new Dictionary<(int, int), MonsterStatusData>();
 
     private void InitMonsterTable()
     {
-        TextAsset TextFile = Resources.Load<TextAsset>("Table/TableMonster");
-        string CSVText = TextFile.text;
-        List<string> valueArray = Util.CSVSplitData(CSVText);
-        for (int i = 2; i < valueArray.Count; i++)
-        {
-            string[] words = valueArray[i].Split(',');
-            MonsterData MonsterData = new MonsterData();
-            MonsterData.m_kind = int.Parse(words[0]);
-            MonsterData.m_path = words[1];
-            MonsterData.m_hp = int.Parse(words[3]);
-            MonsterData.m_move_speed = float.Parse(words[4]);
-
-            m_dic_monster_data.Add(MonsterData.m_kind, MonsterData);
-        }
+        InitMonsterInfoTable();
+        InitMonsterStatusTable();
     }
 
-    private void ClearMonsterTable()
+
+    public MonsterInfoData GetMonsterInfoData(int in_kind)
     {
-        m_dic_monster_data.Clear();
+        if (m_dic_monster_info_data.ContainsKey(in_kind))
+            return m_dic_monster_info_data[in_kind];
+        else
+            return null;
     }
 
-    public MonsterData GetMonsterData(int in_kind)
+    public MonsterStatusData GetMonsterStatusData(int in_kind, int in_level)
     {
-        if (m_dic_monster_data.ContainsKey(in_kind))
-            return m_dic_monster_data[in_kind];
+        var key = (in_kind, in_level);
+        if (m_dic_monster_status_data.ContainsKey(key))
+            return m_dic_monster_status_data[key];
         else
             return null;
     }

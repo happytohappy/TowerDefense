@@ -5,33 +5,35 @@ using System.Collections.Generic;
 
 public partial class TableManager
 {
-    private void InitGachaGroup()
+    private void InitMonsterInfoTable()
     {
-        TextAsset TextFile = Resources.Load<TextAsset>("Table/Gacha_Group");
+        TextAsset TextFile = Resources.Load<TextAsset>("Table/TableMonster");
         string CSVText = TextFile.text;
         List<string> valueArray = Util.CSVSplitData(CSVText);
         for (int i = 2; i < valueArray.Count; i++)
         {
             string[] words = valueArray[i].Split(',');
-            GachaGroupData GachaGroupData = new GachaGroupData();
-            GachaGroupData.m_kind = int.Parse(words[0]);
-            GachaGroupData.m_reward = int.Parse(words[2]);
+            MonsterInfoData MonsterData = new MonsterInfoData();
+            MonsterData.m_kind = int.Parse(words[0]);
+            MonsterData.m_path = words[1];
+            //MonsterData.m_hp = int.Parse(words[3]);
+            //MonsterData.m_move_speed = float.Parse(words[4]);
 
-            m_dic_gacha_group_data.Add(GachaGroupData.m_kind, GachaGroupData);
+            m_dic_monster_info_data.Add(MonsterData.m_kind, MonsterData);
         }
     }
 
-    public void SetGachaGroupData(string in_sheet_data)
+    public void SetMonsterInfoData(string in_sheet_data)
     {
         // 클래스에 있는 변수들을 순서대로 저장한 배열
-        FieldInfo[] fields = typeof(GachaGroupData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        FieldInfo[] fields = typeof(MonsterInfoData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
         string[] rows = in_sheet_data.Split('\n');
         string[] columns = rows[0].Split('\t');
         for (int row = 0; row < rows.Length; row++)
         {
             var sheetData = rows[row].Split('\t');
-            GachaGroupData tableData = new GachaGroupData();
+            MonsterInfoData tableData = new MonsterInfoData();
             for (int i = 0; i < columns.Length; i++)
             {
                 System.Type type = fields[i].FieldType;
@@ -50,7 +52,7 @@ public partial class TableManager
                     fields[i].SetValue(tableData, Enum.Parse(type, sheetData[i]));
             }
 
-            m_dic_gacha_group_data.Add(tableData.m_kind, tableData);
+            m_dic_monster_info_data.Add(tableData.m_kind, tableData);
         }
     }
 }

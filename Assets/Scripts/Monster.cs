@@ -10,16 +10,17 @@ public class Monster : PawnBase
     private HPBar   m_hp_bar;
     private int     m_line_index;
 
-    public List<Transform> Path           { get; set; } = new List<Transform>();
-    public MonsterData     GetMonsterData { get; set; } = null;
+    public List<Transform>   Path                   { get; set; } = new List<Transform>();
+    public MonsterInfoData   GetMonsterInfoData     { get; set; } = null;
+    public MonsterStatusData GetMonsterStatusData   { get; set; } = null;
 
     protected override void Start()
     {
         base.Start();
 
         // 변수 셋팅
-        m_curr_hp    = GetMonsterData.m_hp;
-        m_max_hp     = GetMonsterData.m_hp;
+        m_curr_hp    = GetMonsterStatusData.m_hp;
+        m_max_hp     = GetMonsterStatusData.m_hp;
         m_line_index = 1;       // 0 은 스폰 위치라 1부터 시작
 
         // 체력바 셋팅
@@ -77,7 +78,7 @@ public class Monster : PawnBase
             SetDestination();
         }
 
-        this.transform.Translate(Vector3.forward * Time.smoothDeltaTime * GetMonsterData.m_move_speed);
+        this.transform.Translate(Vector3.forward * Time.smoothDeltaTime * GetMonsterStatusData.m_move_speed);
     }
 
     public override void Enter_Die()

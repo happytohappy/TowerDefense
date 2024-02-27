@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 // 구글 시트 정리 완료
 public class HeroData
 {
@@ -55,8 +53,27 @@ public class LocalizationData
     public string CHN_S;   // 간체
     public string CHN_T;   // 번체
 }
-// 구글 시트 정리 대기
 
+public class MonsterInfoData
+{
+    public int m_kind;
+    public string m_path;
+    public string m_name;
+    public string m_desc;
+}
+
+public class MonsterStatusData
+{
+    public int m_kind;
+    public int m_level;
+    public int m_hp;
+    public int m_def;
+    public float m_move_speed;
+    public string m_resource;
+    public int m_resource_amount;
+}
+
+// 구글 시트 정리 대기
 public class GachaGroupData
 {
     public int m_kind;
@@ -94,10 +111,3 @@ public class BuffLevelData
     public float m_width;
 }
 
-public class MonsterData
-{
-    public int    m_kind;
-    public string m_path;
-    public int    m_hp;
-    public float  m_move_speed;
-}

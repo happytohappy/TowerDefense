@@ -5,14 +5,14 @@ public partial class TableManager : MonoBehaviour
     public void Init()
     {
         //InitHeroTable();
-        InitMonsterTable();
+        //InitMonsterTable();
         InitGachaTable();
         //InitLocalization();
     }
 
     public void Clear()
     {
-        ClearHeroTable();
-        ClearMonsterTable();
+        //ClearHeroTable();
+        //ClearMonsterTable();
     }
 }

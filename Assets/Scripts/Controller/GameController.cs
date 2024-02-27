@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour
 
     private bool m_wave          = true;
     private bool m_sniffling     = true;
-    private int  m_monster_index = 1;
+    private int  m_monster_index = 1001;
 
     public List<LandData> LandInfo    { get; set; } = new List<LandData>();
     public List<Monster>  Monsters    { get; set; } = new List<Monster>();
@@ -327,21 +327,23 @@ public class GameController : MonoBehaviour
 
     private IEnumerator CoMonsterSpawn()
     {
-        if (m_monster_index > 2)
-            m_monster_index = 1;
+        if (m_monster_index > 1002)
+            m_monster_index = 1001;
                 
-        var monsterData = Managers.Table.GetMonsterData(m_monster_index);
+        var monsterInfoData = Managers.Table.GetMonsterInfoData(m_monster_index);
+        var monsterStatusData = Managers.Table.GetMonsterStatusData(monsterInfoData.m_kind, 1);
 
         for (int i = 0; i < 20; i++)
         {
-            var go = Managers.Resource.Instantiate(monsterData.m_path);
+            var go = Managers.Resource.Instantiate(monsterInfoData.m_path);
             if (go != null)
             {
                 var lineInex = m_sniffling ? 0 : 1;
                 var monster = go.GetComponent<Monster>();
                     
                 monster.Path.AddRange(m_pathes[lineInex].m_path);
-                monster.GetMonsterData = monsterData;
+                monster.GetMonsterInfoData = monsterInfoData;
+                monster.GetMonsterStatusData = monsterStatusData;
                 go.transform.position = m_pathes[lineInex].m_path[0].position;
                 Monsters.Add(monster);
 

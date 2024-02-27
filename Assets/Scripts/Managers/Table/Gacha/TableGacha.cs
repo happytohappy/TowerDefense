@@ -33,7 +33,6 @@ public partial class TableManager
             return null;
     }
 
-
     public GachaRewardData GetGachaHero(int in_kind)
     {
         var gachaGroup = GetGachaGroupData(in_kind);
