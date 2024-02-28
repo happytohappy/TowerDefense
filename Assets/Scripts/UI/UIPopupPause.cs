@@ -23,6 +23,8 @@ public class UIPopupPause : UIWindowBase
 
     public void OnClickExit()
     {
+        GameController.GetInstance.AllDestory();
+
         Managers.UI.Clear();
 
         SceneManager.LoadScene(1);

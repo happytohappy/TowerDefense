@@ -358,4 +358,25 @@ public class GameController : MonoBehaviour
         m_wave = true;
         m_monster_index++;
     }
+
+    public void AllDestory()
+    {
+        for (int i = 0; i < LandInfo.Count; i++)
+        {
+            var landInfo = LandInfo[i];
+            if (landInfo == null || landInfo.m_hero == null)
+                continue;
+
+            Managers.Resource.Destroy(landInfo.m_hero.gameObject);
+            Managers.Resource.Destroy(landInfo.m_hero.HudHeroInfo.gameObject);
+        }
+
+        for (int i = 0; i < Monsters.Count; i++)
+        {
+            if (Monsters[i] == null || Monsters[i].gameObject == null)
+                continue;
+
+            Managers.Resource.Destroy(Monsters[i].gameObject);
+        }
+    }
 }
