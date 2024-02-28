@@ -6,10 +6,13 @@ public class Monster : PawnBase
     private const string ANI_RUN = "Run";
     private const string ANI_DIE = "Die";
 
+    [SerializeField] private Transform m_pivot = null;
+
     private Vector3 m_destination;
     private HPBar   m_hp_bar;
     private int     m_line_index;
 
+    public Transform Pivot => m_pivot;
     public List<Transform>   Path                   { get; set; } = new List<Transform>();
     public MonsterInfoData   GetMonsterInfoData     { get; set; } = null;
     public MonsterStatusData GetMonsterStatusData   { get; set; } = null;
