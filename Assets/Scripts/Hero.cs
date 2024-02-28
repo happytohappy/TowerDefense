@@ -8,6 +8,7 @@ public class Hero : PawnBase
     [SerializeField] private GameObject m_range_effect = null;
     
     private Monster m_target_monster = null;
+    private Hud_HeroInfo m_hud_hero_info;
 
     public GameObject RangeEffect => m_range_effect;
     public HeroData GetHeroData { get; set; } = null;
@@ -18,6 +19,9 @@ public class Hero : PawnBase
 
         m_range_effect.Ex_SetActive(false);
         m_range_effect.transform.localScale = new Vector3(GetHeroData.m_stat.m_range, GetHeroData.m_stat.m_range, 1f);
+
+        // 인포 셋팅
+        m_hud_hero_info = Util.CreateHudHeroInfo(this.transform, new Vector3(0f, -0.2f, 0f));
 
         ChangeState(FSM_STATE.Idle);
     }
