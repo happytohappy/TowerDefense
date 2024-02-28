@@ -6,8 +6,6 @@ public class FixedObject : MonoBehaviour
     {
         Application.targetFrameRate = 60;
 
-        Screen.SetResolution(1920, 1080, true);
-
         DontDestroyOnLoad(gameObject);
     }
 }

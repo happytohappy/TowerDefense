@@ -223,10 +223,12 @@ public class GameController : MonoBehaviour
                     // 타워가 설치되어 있던 땅의 정보는 초기화
                     var startLand = LandInfo.Find(x => x.m_hero == SelectTower);
                     Managers.Resource.Destroy(startLand.m_hero.gameObject);
+                    Managers.Resource.Destroy(startLand.m_hero.HudHeroInfo.gameObject);
                     startLand.m_hero = null;
                     startLand.m_build = false;
 
                     Managers.Resource.Destroy(EndLand.m_hero.gameObject);
+                    Managers.Resource.Destroy(EndLand.m_hero.HudHeroInfo.gameObject);
                     EndLand.m_hero = null;
                     EndLand.m_build = false;
 

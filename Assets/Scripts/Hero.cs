@@ -10,6 +10,7 @@ public class Hero : PawnBase
     private Monster m_target_monster = null;
     private Hud_HeroInfo m_hud_hero_info;
 
+    public Hud_HeroInfo HudHeroInfo => m_hud_hero_info;
     public GameObject RangeEffect => m_range_effect;
     public HeroData GetHeroData { get; set; } = null;
 
