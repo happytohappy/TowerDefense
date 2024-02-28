@@ -6,6 +6,8 @@ public class ProjectileBase : MonoBehaviour
 {
     private const string MONSTER = "Monster";
 
+    [SerializeField] private AudioClip m_audio_clip = null;
+
     private bool m_update = false;
     private Monster m_monster;
     private int m_ATK;
@@ -28,6 +30,9 @@ public class ProjectileBase : MonoBehaviour
 
     public void SetData(Monster in_monster, int in_atk)
     {
+        if (m_audio_clip != null)
+            Managers.Sound.PlaySFX(m_audio_clip);
+
         m_monster = in_monster;
         m_ATK = in_atk;
 
