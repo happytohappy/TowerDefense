@@ -74,10 +74,11 @@ public partial class TableManager : MonoBehaviour
         {
             var sheetData = rows[row].Split('\t');
             LocalizationData tableData = new LocalizationData();
-            for (int i = 0; i < columns.Length; i++)
+            for (int i = 0; i < sheetData.Length; i++)
             {
                 System.Type type = fields[i].FieldType;
-                if (string.IsNullOrEmpty(columns[i])) continue;
+                sheetData[i] = sheetData[i].Replace("\r", "");
+                if (string.IsNullOrEmpty(sheetData[i])) continue;
 
                 // 변수에 맞는 자료형으로 파싱해서 넣는다
                 if (type == typeof(int))

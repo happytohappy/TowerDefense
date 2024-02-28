@@ -90,7 +90,17 @@ public class Hero : PawnBase
         if (m_target_monster == null)
             return;
 
-        m_target_monster.OnHit(GetHeroData.m_stat.m_atk);
+        if (string.IsNullOrEmpty(GetHeroData.m_info.m_projectile))
+        {
+            m_target_monster.OnHit(GetHeroData.m_stat.m_atk);
+        }
+        else
+        {
+            var go = Managers.Resource.Instantiate($"Projectile/{GetHeroData.m_info.m_projectile}");
+            var projectile = go.GetComponent<ProjectileBase>();
+            projectile.transform.position = this.transform.position;
+            projectile.SetData(m_target_monster, GetHeroData.m_stat.m_atk);
+        }
     }
 
     public override void Enter_Idle()

@@ -26,19 +26,26 @@ public class UserManager : MonoBehaviour
     public void Init()
     {
         // 1티어 기본 보유 타워
-        m_dic_have_hero.Add(1001, new HeroInfo(1001, 1, 1));
-        m_dic_have_hero.Add(1002, new HeroInfo(1002, 1, 1));
-        m_dic_have_hero.Add(1003, new HeroInfo(1003, 1, 1));
-        m_dic_have_hero.Add(1004, new HeroInfo(1004, 1, 1));
-        m_dic_have_hero.Add(1005, new HeroInfo(1005, 1, 1));
+        m_dic_have_hero.Add(1007, new HeroInfo(1007, 1, 1));
         m_dic_have_hero_group_by_tier.Add(1, new List<HeroInfo>()
         {
-            new HeroInfo(1001, 1, 1),
-            new HeroInfo(1002, 1, 1),
-            new HeroInfo(1003, 1, 1),
-            new HeroInfo(1004, 1, 1),
-            new HeroInfo(1005, 1, 1) 
+            new HeroInfo(1007, 1, 1),
         });
+
+        //// 1티어 기본 보유 타워
+        //m_dic_have_hero.Add(1001, new HeroInfo(1001, 1, 1));
+        //m_dic_have_hero.Add(1002, new HeroInfo(1002, 1, 1));
+        //m_dic_have_hero.Add(1003, new HeroInfo(1003, 1, 1));
+        //m_dic_have_hero.Add(1004, new HeroInfo(1004, 1, 1));
+        //m_dic_have_hero.Add(1005, new HeroInfo(1005, 1, 1));
+        //m_dic_have_hero_group_by_tier.Add(1, new List<HeroInfo>()
+        //{
+        //    new HeroInfo(1001, 1, 1),
+        //    new HeroInfo(1002, 1, 1),
+        //    new HeroInfo(1003, 1, 1),
+        //    new HeroInfo(1004, 1, 1),
+        //    new HeroInfo(1005, 1, 1) 
+        //});
 
         // 2티어 기본 보유 타워                                      
         m_dic_have_hero.Add(2001, new HeroInfo(2001, 1, 1));             
