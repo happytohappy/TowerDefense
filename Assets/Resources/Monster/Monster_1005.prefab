@@ -1778,6 +1778,7 @@ GameObject:
   - component: {fileID: 1802286859466067829}
   - component: {fileID: 1802286859456520337}
   - component: {fileID: -8489557516131044786}
+  - component: {fileID: 7777947626537739200}
   m_Layer: 0
   m_Name: Monster_1005
   m_TagString: Untagged
@@ -1834,6 +1835,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ani: {fileID: 1802286859456520337}
+--- !u!65 &7777947626537739200
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802286859466036053}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2, y: 1.2, z: 1.2}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1802286859466036055
 GameObject:
   m_ObjectHideFlags: 0
