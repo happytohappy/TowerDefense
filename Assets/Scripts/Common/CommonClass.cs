@@ -22,6 +22,7 @@ public class HeroInfoData
     public Type m_type;
     public int m_tier;
     public Rarity m_rarity;
+    public string m_projectile;
 }
 
 public class HeroGradeData
