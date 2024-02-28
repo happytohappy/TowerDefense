@@ -1,7 +1,8 @@
-using GoogleMobileAds.Api;
+//using GoogleMobileAds.Api;
 using System;
 using UnityEngine;
 
+/*
 public class AdMobManager : MonoBehaviour
 {
     private RewardedAd rewardedAd;
@@ -54,3 +55,4 @@ public class AdMobManager : MonoBehaviour
         InitAds();
     }
 }
+*/
