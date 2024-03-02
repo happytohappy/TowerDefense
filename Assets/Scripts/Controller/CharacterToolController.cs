@@ -28,6 +28,6 @@ public class CharacterToolController : MonoBehaviour
 
     private void Start()
     {
-        Managers.UI.OpenWindow(WindowID.UIWindowCharacterTool);
+
     }
 }
