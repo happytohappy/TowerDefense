@@ -1,6 +1,7 @@
 public enum WindowID
 {
     None,
+    UIWindowCharacterTool,
     UIWindowLoading,
     UIWindowIntro,
     UIWindowMain,
