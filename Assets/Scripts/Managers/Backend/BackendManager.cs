@@ -8,15 +8,29 @@ public class BackendManager : MonoBehaviour
     {
         // 뒤끝 초기화
         var bro = Backend.Initialize(true);
-
         if (bro.IsSuccess())
         {
-            //GetProbabilitysTest();
+            Debug.Log("뒤끝 SDK 초기화 완료 : " + bro);
 
-            Debug.Log("초기화 성공 : " + bro);
+            // 게스트 로그인
+            GuestLogin();
         }
         else
-            Debug.LogError("초기화 실패 : " + bro);
+        {
+            Debug.Log("뒤끝 SDK 초기화 실패 : " + bro);
+        }
+    }
+
+    public void GuestLogin()
+    {
+        BackendReturnObject bro = Backend.BMember.GuestLogin();
+        if (bro.IsSuccess())
+        {
+            Debug.Log("게스트 로그인에 성공했습니다");
+
+            // 가챠 테스트
+            GetProbabilitysTest();
+        }
     }
 
     public class ProbabilityItem
