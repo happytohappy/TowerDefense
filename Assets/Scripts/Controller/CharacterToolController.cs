@@ -26,8 +26,21 @@ public class CharacterToolController : MonoBehaviour
     public List<GameObject> m_asset_1_cloak = new List<GameObject>();
     public List<GameObject> m_asset_1_equip = new List<GameObject>();
 
-    private void Start()
-    {
+    [Header("에셋 2")]
+    public List<GameObject> m_asset_2_head = new List<GameObject>();
+    public List<GameObject> m_asset_2_body = new List<GameObject>();
+    public List<GameObject> m_asset_2_equip_right = new List<GameObject>();
+    public List<GameObject> m_asset_2_equip_left = new List<GameObject>();
 
-    }
+    [Header("에셋 3")]
+    public List<GameObject> m_asset_3_head = new List<GameObject>();
+    public List<GameObject> m_asset_3_body = new List<GameObject>();
+    public List<GameObject> m_asset_3_equip_right = new List<GameObject>();
+    public List<GameObject> m_asset_3_equip_left = new List<GameObject>();
+
+    [Header("에셋 4")]
+    public List<GameObject> m_asset_4_head = new List<GameObject>();
+    public List<GameObject> m_asset_4_body = new List<GameObject>();
+    public List<GameObject> m_asset_4_equip_right = new List<GameObject>();
+    public List<GameObject> m_asset_4_equip_left = new List<GameObject>();
 }
