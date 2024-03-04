@@ -7,7 +7,7 @@ public partial class TableManager
 {
     private void InitGachaReward()
     {
-        int totalRate = 0;
+        float totalRate = 0;
         int lastKind = 0;
 
         TextAsset TextFile = Resources.Load<TextAsset>("Table/Gacha_Reward");
@@ -39,7 +39,7 @@ public partial class TableManager
 
     public void SetGachaRewardData(string in_sheet_data)
     {
-        int totalRate = 0;
+        float totalRate = 0;
         int lastKind = 0;
 
         // 클래스에 있는 변수들을 순서대로 저장한 배열

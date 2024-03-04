@@ -2,12 +2,12 @@
 
 public partial class TableManager
 {
-    private Dictionary<int, GachaGroupData> m_dic_gacha_group_data = new Dictionary<int, GachaGroupData>();
+    private Dictionary<int, GachaInfoData> m_dic_gacha_group_data = new Dictionary<int, GachaInfoData>();
     private Dictionary<int, List<GachaRewardData>> m_dic_gacha_reward_data = new Dictionary<int, List<GachaRewardData>>();
 
     private void InitGachaTable()
     {
-        InitGachaGroup();
+        InitGachaInfo();
         InitGachaReward();
     }
 
@@ -17,7 +17,7 @@ public partial class TableManager
         m_dic_gacha_reward_data.Clear();
     }
 
-    public GachaGroupData GetGachaGroupData(int in_kind)
+    public GachaInfoData GetGachaGroupData(int in_kind)
     {
         if (m_dic_gacha_group_data.ContainsKey(in_kind))
             return m_dic_gacha_group_data[in_kind];

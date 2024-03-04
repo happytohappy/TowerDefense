@@ -15,7 +15,7 @@ public class GoogleSheetManager : MonoBehaviour
     // Localization     1101510208
     // Monster_Info     1943578647
     // Monster_Status   1100538500
-    // Gacha_Group      1870653907
+    // Gacha_Info      1085540121
     // Gacha_Reward     397372995
 
     public void Init()
@@ -26,7 +26,7 @@ public class GoogleSheetManager : MonoBehaviour
         StartCoroutine(CoRequestGoogleSheet(1101510208, (value) => Managers.Table.SetLocalizationData(value)));
         StartCoroutine(CoRequestGoogleSheet(1943578647, (value) => Managers.Table.SetMonsterInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(1100538500, (value) => Managers.Table.SetMonsterStatusData(value)));
-        StartCoroutine(CoRequestGoogleSheet(1870653907, (value) => Managers.Table.SetGachaGroupData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1085540121, (value) => Managers.Table.SetGachaInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(397372995,  (value) => Managers.Table.SetGachaRewardData(value)));
     }
 

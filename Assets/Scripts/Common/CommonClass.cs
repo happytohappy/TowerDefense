@@ -75,13 +75,17 @@ public class MonsterStatusData
 }
 
 // 구글 시트 정리 대기
-public class GachaGroupData
+public class GachaInfoData
 {
     public int m_kind;
-    public int m_consumption;
-    public int m_reward;
+    public int m_gacha_kind;
     public string m_image;
     public int m_text_page;
+    public int m_consumption;
+    public int m_consumption_amount;
+    public int m_gacha_count;
+    public int m_reward;
+    public int m_reward_bonus;
 }
 
 public class GachaRewardData
@@ -89,9 +93,9 @@ public class GachaRewardData
     public int m_kind;
     public int m_item;
     public int m_amount;
-    public int m_rate;
-    public int m_rate_min;
-    public int m_rate_max;
+    public float m_rate;
+    public float m_rate_min;
+    public float m_rate_max;
 }
 
 
