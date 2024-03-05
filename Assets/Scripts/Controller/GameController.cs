@@ -48,9 +48,11 @@ public class GameController : MonoBehaviour
     [SerializeField] private List<Path>       m_pathes    = new List<Path>();
     [SerializeField] private List<GameObject> m_build_map = new List<GameObject>();
 
-    private bool m_wave          = true;
-    private bool m_sniffling     = true;
-    private int  m_monster_index = 1001;
+    private bool m_wave             = true;
+    private bool m_sniffling        = true;
+    private int  m_monster_index    = 1001;
+    private Vector3 m_hero_position = new Vector3(0f, 0.55f, 0f);
+    private Vector3 m_hero_rotation = new Vector3(0f, 180f, 0f);
 
     public List<LandData> LandInfo    { get; set; } = new List<LandData>();
     public List<Monster>  Monsters    { get; set; } = new List<Monster>();
@@ -167,17 +169,17 @@ public class GameController : MonoBehaviour
                         // 내가 원래 있던 위치라면 움직일 수 있다.
                         if (EndLand.m_hero == SelectTower)
                         {
-                            SelectTower.transform.position = EndLand.m_trans.position + new Vector3(0f, 1f, 0f);
+                            SelectTower.transform.position = EndLand.m_trans.position + m_hero_position;
                         }
                         else
                         {
                             // 합성 유무 따져야됨
-                            SelectTower.transform.position = EndLand.m_trans.position + new Vector3(0f, 1f, 0f);
+                            SelectTower.transform.position = EndLand.m_trans.position + m_hero_position;
                         }
                     }
                     else
                     {
-                        SelectTower.transform.position = EndLand.m_trans.position + new Vector3(0f, 1f, 0f);
+                        SelectTower.transform.position = EndLand.m_trans.position + m_hero_position;
                     }
                 }
             }
@@ -196,7 +198,7 @@ public class GameController : MonoBehaviour
             // 타워 설치 구역이 아닌 곳에서 마우스를 놨을 경우
             if (EndLand == null)
             {
-                SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
+                SelectTower.transform.localPosition = m_hero_position;
                 SelectTower.RangeEffect.Ex_SetActive(false);
                 return;
             }
@@ -207,7 +209,7 @@ public class GameController : MonoBehaviour
                 // 내가 원래 있던 위치에 놓은 것이기 때문에 아무것도 처리할 필요가 없다.
                 if (EndLand.m_hero == SelectTower)
                 {
-                    SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
+                    SelectTower.transform.localPosition = m_hero_position;
                     SelectTower.RangeEffect.Ex_SetActive(false);
                     return;
                 }
@@ -236,7 +238,7 @@ public class GameController : MonoBehaviour
                     return;
                 }
 
-                SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
+                SelectTower.transform.localPosition = m_hero_position;
                 SelectTower.RangeEffect.Ex_SetActive(false);
 
                 SelectTower = null;
@@ -251,7 +253,7 @@ public class GameController : MonoBehaviour
                 startLand.m_build = false;
 
                 SelectTower.transform.SetParent(EndLand.m_trans.transform);
-                SelectTower.transform.localPosition = new Vector3(0f, 1f, 0f);
+                SelectTower.transform.localPosition = m_hero_position;
                 EndLand.m_hero = SelectTower;
                 EndLand.m_build = true;
 
@@ -299,8 +301,8 @@ public class GameController : MonoBehaviour
             {
                 var rand = in_land;
                 go.transform.SetParent(rand.m_trans.transform);
-                go.transform.localPosition = new Vector3(0f, 1f, 0f);
-                go.transform.eulerAngles = new Vector3(0f, 180f, 0f);
+                go.transform.localPosition = m_hero_position;
+                go.transform.eulerAngles = m_hero_rotation;
                 rand.m_hero = hero;
                 rand.m_build = true;
             }
@@ -308,8 +310,8 @@ public class GameController : MonoBehaviour
             {
                 var rand = emptyLand[UnityEngine.Random.Range(0, emptyLand.Count)];
                 go.transform.SetParent(rand.m_trans.transform);
-                go.transform.localPosition = new Vector3(0f, 1f, 0f);
-                go.transform.eulerAngles = new Vector3(0f, 180f, 0f);
+                go.transform.localPosition = m_hero_position;
+                go.transform.eulerAngles = m_hero_rotation;
                 rand.m_hero = hero;
                 rand.m_build = true;
             }
