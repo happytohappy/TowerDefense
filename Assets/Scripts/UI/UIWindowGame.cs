@@ -7,6 +7,7 @@ public class UIWindowGame : UIWindowBase
     [SerializeField] private GameObject m_create;
     [SerializeField] private GameObject m_upgrade;
     [SerializeField] private GameObject m_delete;
+    [SerializeField] private GameObject m_next_wave;
 
     public override void Awake()
     {
@@ -29,18 +30,20 @@ public class UIWindowGame : UIWindowBase
             m_gold.text = Util.CommaText(in_gold);
     }
 
-    public void HideButton()
+    public void ActiveButton(bool in_mouse_down)
     {
-        m_create.SetActive(false);
-        m_upgrade.SetActive(false);
-        m_delete.SetActive(false);
-    }
-
-    public void ShowCreate()
-    {
-        m_create.SetActive(true);
-        m_upgrade.SetActive(false);
-        m_delete.SetActive(false);
+        if (in_mouse_down)
+        {
+            //m_create.SetActive(false);
+            //m_upgrade.SetActive(false);
+            m_delete.SetActive(true);
+        }
+        else
+        {
+            //m_create.SetActive(true);
+            //m_upgrade.SetActive(false);
+            m_delete.SetActive(false);
+        }
     }
 
     public void ShowFixed()
@@ -58,6 +61,7 @@ public class UIWindowGame : UIWindowBase
     public void OnClickWave()
     {
         GameController.GetInstance.MonsterSpawn();
+        m_next_wave.SetActive(false);
     }
 
     public void OnClickCreateTower()

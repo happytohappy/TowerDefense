@@ -19,6 +19,7 @@ public class Managers : MonoBehaviour
     [SerializeField] private Canvas m_UIRootCan = null;
     [SerializeField] private Transform m_Widget = null;
     [SerializeField] private Camera m_WorldCam = null;
+    [SerializeField] private Camera m_UnitCam = null;
     [SerializeField] private Camera m_UICam = null;
     [SerializeField] private GoogleSheetManager m_GoogleSheet = null;
     [SerializeField] private UIWindowManager m_UI = null;
@@ -32,6 +33,7 @@ public class Managers : MonoBehaviour
     public static Canvas UICanvas => GetInstance.m_UIRootCan;
     public static Transform Widget => GetInstance.m_Widget;
     public static Camera WorldCam => GetInstance.m_WorldCam;
+    public static Camera UnitCam => GetInstance.m_UnitCam;
     public static Camera UICam => GetInstance.m_UICam;
     public static GoogleSheetManager GoogleSheet => GetInstance.m_GoogleSheet;
     public static UIWindowManager UI => GetInstance.m_UI;

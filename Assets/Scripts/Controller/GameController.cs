@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameController : MonoBehaviour
 {
@@ -136,9 +138,11 @@ public class GameController : MonoBehaviour
                     SelectTower = hit.transform.gameObject.GetComponent<Hero>();
                     EndLand = null;
 
-                    // 일부 UI Hide
+                    Managers.UnitCam.gameObject.SetActive(true);
+
+                    // 일부 UI 제어
                     var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
-                    if (gui != null) gui.HideButton();
+                    if (gui != null) gui.ActiveButton(true);
 
                     // 타워 공격 범위 보여주기
                     SelectTower.RangeEffect.Ex_SetActive(true);
@@ -194,7 +198,22 @@ public class GameController : MonoBehaviour
         {
             if (SelectTower == null)
                 return;
-            
+
+            Managers.UnitCam.gameObject.SetActive(false);
+
+            // 일부 UI 제어
+            var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
+            if (gui != null) gui.ActiveButton(false);
+
+            /*  그래픽 레이캐스트 적용 */
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //RaycastHit hit;
+            //if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("UI")))
+            //{
+            //    Managers.Resource.Destroy(SelectTower.gameObject);
+            //    return;
+            //}
+
             // 타워 설치 구역이 아닌 곳에서 마우스를 놨을 경우
             if (EndLand == null)
             {
