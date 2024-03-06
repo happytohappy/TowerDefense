@@ -15,19 +15,21 @@ public class GoogleSheetManager : MonoBehaviour
     // Localization     1101510208
     // Monster_Info     1943578647
     // Monster_Status   1100538500
-    // Gacha_Info      1085540121
+    // Gacha_Info       1085540121
     // Gacha_Reward     397372995
+    // Stage_Wave       1189025789
 
     public void Init()
     {
-        StartCoroutine(CoRequestGoogleSheet(846969345,  (value) => Managers.Table.SetHeroInfoData(value)));
-        StartCoroutine(CoRequestGoogleSheet(1100293316, (value) => Managers.Table.SetHeroGradeData(value)));
-        StartCoroutine(CoRequestGoogleSheet(703649086,  (value) => Managers.Table.SetHeroLevelData(value)));
-        StartCoroutine(CoRequestGoogleSheet(1101510208, (value) => Managers.Table.SetLocalizationData(value)));
-        StartCoroutine(CoRequestGoogleSheet(1943578647, (value) => Managers.Table.SetMonsterInfoData(value)));
-        StartCoroutine(CoRequestGoogleSheet(1100538500, (value) => Managers.Table.SetMonsterStatusData(value)));
-        StartCoroutine(CoRequestGoogleSheet(1085540121, (value) => Managers.Table.SetGachaInfoData(value)));
-        StartCoroutine(CoRequestGoogleSheet(397372995,  (value) => Managers.Table.SetGachaRewardData(value)));
+        StartCoroutine(CoRequestGoogleSheet(846969345,      (value) => Managers.Table.SetHeroInfoData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1100293316,     (value) => Managers.Table.SetHeroGradeData(value)));
+        StartCoroutine(CoRequestGoogleSheet(703649086,      (value) => Managers.Table.SetHeroLevelData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1101510208,     (value) => Managers.Table.SetLocalizationData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1943578647,     (value) => Managers.Table.SetMonsterInfoData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1100538500,     (value) => Managers.Table.SetMonsterStatusData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1085540121,     (value) => Managers.Table.SetGachaInfoData(value)));
+        StartCoroutine(CoRequestGoogleSheet(397372995,      (value) => Managers.Table.SetGachaRewardData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1189025789,     (value) => Managers.Table.SetStageWaveData(value)));
     }
 
     private IEnumerator CoRequestGoogleSheet(int in_gid, Action<string> in_call_back)

@@ -74,7 +74,6 @@ public class MonsterStatusData
     public int m_resource_amount;
 }
 
-// 구글 시트 정리 대기
 public class GachaInfoData
 {
     public int m_kind;
@@ -98,8 +97,17 @@ public class GachaRewardData
     public float m_rate_max;
 }
 
+public class StageWaveData
+{
+    public int m_kind;
+    public int m_wave;
+    public int m_sequence;
+    public int m_monster_kind;
+    public int m_monster_level;
+    public int m_monster_spawn_count;
+}
 
-
+// 구글 시트 정리 대기
 public class BuffInfoData
 {
     public int m_kind;

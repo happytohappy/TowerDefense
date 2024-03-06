@@ -64,6 +64,11 @@ public class UIWindowGame : UIWindowBase
         m_next_wave.SetActive(false);
     }
 
+    public void NextWaveActive()
+    {
+        m_next_wave.SetActive(true);
+    }
+
     public void OnClickCreateTower()
     {
         GameController.GetInstance.TowerSpawn();

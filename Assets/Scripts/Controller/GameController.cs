@@ -50,9 +50,13 @@ public class GameController : MonoBehaviour
     [SerializeField] private List<Path>       m_pathes    = new List<Path>();
     [SerializeField] private List<GameObject> m_build_map = new List<GameObject>();
 
-    private bool m_wave             = true;
+    private bool m_spawn_finish = true;
+    private bool m_next_wave = true;
+    private int  m_wave_index = 1;
+    private int m_monster_spawn_count = 0;
+    private int m_monster_kill_count = 0;
+    private int m_monster_goal_count = 0;
     private bool m_sniffling        = true;
-    private int  m_monster_index    = 1001;
     private Vector3 m_hero_position = new Vector3(0f, 0.55f, 0f);
     private Vector3 m_hero_rotation = new Vector3(0f, 180f, 0f);
 
@@ -341,43 +345,84 @@ public class GameController : MonoBehaviour
 
     public void MonsterSpawn()
     {
-        if (m_wave == false)
+        if (m_next_wave == false)
             return;
 
-        m_wave = false;
+        m_next_wave = false;
+        m_spawn_finish = false;
+        m_monster_spawn_count = 0;
+        m_monster_kill_count = 0;
+        m_monster_goal_count = 0;
         StartCoroutine(CoMonsterSpawn());
     }
 
     private IEnumerator CoMonsterSpawn()
     {
-        if (m_monster_index > 1002)
-            m_monster_index = 1001;
-                
-        var monsterInfoData = Managers.Table.GetMonsterInfoData(m_monster_index);
-        var monsterStatusData = Managers.Table.GetMonsterStatusData(monsterInfoData.m_kind, 1);
+        var waveDatas = Managers.Table.GetStageWaveDataByWave(1, m_wave_index);
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < waveDatas.Count; i++)
         {
-            var go = Managers.Resource.Instantiate(monsterInfoData.m_path);
-            if (go != null)
+            var waveData = waveDatas[i];
+            if (waveData == null)
+                continue;
+
+            var monsterInfoData = Managers.Table.GetMonsterInfoData(waveData.m_monster_kind);
+            var monsterStatusData = Managers.Table.GetMonsterStatusData(waveData.m_monster_kind, waveData.m_monster_level);
+
+            if (monsterInfoData == null || monsterStatusData == null)
+                continue;
+
+            m_sniffling = true;
+            for (int j = 0; j < waveData.m_monster_spawn_count; j++)
             {
-                var lineInex = m_sniffling ? 0 : 1;
-                var monster = go.GetComponent<Monster>();
-                    
-                monster.Path.AddRange(m_pathes[lineInex].m_path);
-                monster.GetMonsterInfoData = monsterInfoData;
-                monster.GetMonsterStatusData = monsterStatusData;
-                go.transform.position = m_pathes[lineInex].m_path[0].position;
-                Monsters.Add(monster);
+                var go = Managers.Resource.Instantiate(monsterInfoData.m_path);
+                if (go != null)
+                {
+                    var lineInex = m_sniffling ? 0 : 1;
+                    var monster = go.GetComponent<Monster>();
 
-                m_sniffling = !m_sniffling;
+                    monster.Path.AddRange(m_pathes[lineInex].m_path);
+                    monster.GetMonsterInfoData = monsterInfoData;
+                    monster.GetMonsterStatusData = monsterStatusData;
+                    go.transform.position = m_pathes[lineInex].m_path[0].position;
+                    Monsters.Add(monster);
+
+                    m_sniffling = !m_sniffling;
+
+                    m_monster_spawn_count++;
+                }
+
+                yield return new WaitForSeconds(0.5f);
             }
-
-            yield return new WaitForSeconds(0.5f);
         }
 
-        m_wave = true;
-        m_monster_index++;
+        m_spawn_finish = true;
+    }
+
+    public void MonsterKill()
+    {
+        m_monster_kill_count++;
+        if (m_spawn_finish == false)
+            return;
+
+        if (m_monster_spawn_count != m_monster_kill_count + m_monster_goal_count)
+            return;
+
+        var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
+        if (gui != null) gui.NextWaveActive();
+    }
+
+    public void MonsterGoal()
+    {
+        m_monster_goal_count++;
+        if (m_spawn_finish == false)
+            return;
+
+        if (m_monster_spawn_count != m_monster_kill_count + m_monster_goal_count)
+            return;
+
+        var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
+        if (gui != null) gui.NextWaveActive();
     }
 
     public void AllDestory()
