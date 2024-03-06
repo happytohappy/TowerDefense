@@ -397,6 +397,7 @@ public class GameController : MonoBehaviour
         }
 
         m_spawn_finish = true;
+        m_wave_index++;
     }
 
     public void MonsterKill()

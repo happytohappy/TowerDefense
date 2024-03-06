@@ -47,6 +47,7 @@ public class Monster : PawnBase
 
         if (GetState == FSM_STATE.Die)
         {
+            GameController.GetInstance.MonsterKill();
             m_hp_bar.HPBarActive(false);
             return;
         }
@@ -60,6 +61,7 @@ public class Monster : PawnBase
         if (m_line_index >= Path.Count)
         {
             // 도착지에 왔다는 뜻
+            GameController.GetInstance.MonsterGoal();
             Delete();
             return;
         }
