@@ -45,14 +45,6 @@ public class UIWindowGame : UIWindowBase
             m_delete.SetActive(false);
         }
     }
-
-    public void ShowFixed()
-    {
-        m_create.SetActive(false);
-        m_upgrade.SetActive(true);
-        m_delete.SetActive(true);
-    }
-
     public void OnClickPause()
     {
         Managers.UI.OpenWindow(WindowID.UIPopupPause);
