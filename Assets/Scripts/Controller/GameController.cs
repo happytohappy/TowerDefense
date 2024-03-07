@@ -60,12 +60,28 @@ public class GameController : MonoBehaviour
     private Vector3 m_hero_position = new Vector3(0f, 0.55f, 0f);
     private Vector3 m_hero_rotation = new Vector3(0f, 180f, 0f);
 
+    // UI Ray
+    private GraphicRaycaster m_raycaster;
+    private PointerEventData m_pointer_event_data;
+    private List<RaycastResult> m_ray_results = new List<RaycastResult>();
+
     public List<LandData> LandInfo    { get; set; } = new List<LandData>();
     public List<Monster>  Monsters    { get; set; } = new List<Monster>();
     public Hero           SelectTower { get; set; } = null;
     public LandData       EndLand     { get; set; } = null;
 
+    private UIWindowGame m_gui = null;
+    public UIWindowGame GUI
+    {
+        get
+        {
+            if (m_gui != null)
+                return m_gui;
 
+            m_gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
+            return m_gui;
+        }
+    }
 
     //public int Gold
     //{
@@ -81,6 +97,8 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        m_raycaster = Managers.UICanvas.gameObject.GetComponent<GraphicRaycaster>();
+        m_pointer_event_data = new PointerEventData(EventSystem.current);
         //for (int z = 0; z < 30; z++)
         //{
         //    for (int i = 1; i <= 8; i++)
@@ -145,8 +163,7 @@ public class GameController : MonoBehaviour
                     Managers.UnitCam.gameObject.SetActive(true);
 
                     // 일부 UI 제어
-                    var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
-                    if (gui != null) gui.ActiveButton(true);
+                    if (GUI != null) GUI.ActiveButton(true);
 
                     // 타워 공격 범위 보여주기
                     SelectTower.RangeEffect.Ex_SetActive(true);
@@ -205,18 +222,31 @@ public class GameController : MonoBehaviour
 
             Managers.UnitCam.gameObject.SetActive(false);
 
-            // 일부 UI 제어
-            var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
-            if (gui != null) gui.ActiveButton(false);
+            if (m_raycaster != null && m_pointer_event_data != null)
+            {
+                m_ray_results.Clear();
+                m_pointer_event_data.position = Input.mousePosition;
+                m_raycaster.Raycast(m_pointer_event_data, m_ray_results);
+                foreach (RaycastResult result in m_ray_results)
+                {
+                    if (result.gameObject.name == "Btn_UnitRemove")
+                    {
+                        var startLand = LandInfo.Find(x => x.m_hero == SelectTower);
+                        Managers.Resource.Destroy(startLand.m_hero.gameObject);
+                        Managers.Resource.Destroy(startLand.m_hero.HudHeroInfo.gameObject);
+                        startLand.m_hero = null;
+                        startLand.m_build = false;
 
-            /*  그래픽 레이캐스트 적용 */
-            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //RaycastHit hit;
-            //if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("UI")))
-            //{
-            //    Managers.Resource.Destroy(SelectTower.gameObject);
-            //    return;
-            //}
+                        // 일부 UI 제어
+                        if (GUI != null) GUI.ActiveButton(false);
+
+                        return;
+                    }
+                }
+            }
+
+            // 일부 UI 제어
+            if (GUI != null) GUI.ActiveButton(false);
 
             // 타워 설치 구역이 아닌 곳에서 마우스를 놨을 경우
             if (EndLand == null)
@@ -409,8 +439,7 @@ public class GameController : MonoBehaviour
         if (m_monster_spawn_count != m_monster_kill_count + m_monster_goal_count)
             return;
 
-        var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
-        if (gui != null) gui.NextWaveActive();
+        if (GUI != null) GUI.NextWaveActive();
     }
 
     public void MonsterGoal()
@@ -422,8 +451,7 @@ public class GameController : MonoBehaviour
         if (m_monster_spawn_count != m_monster_kill_count + m_monster_goal_count)
             return;
 
-        var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
-        if (gui != null) gui.NextWaveActive();
+        if (GUI != null) GUI.NextWaveActive();
     }
 
     public void AllDestory()
