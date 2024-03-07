@@ -439,6 +439,7 @@ public class GameController : MonoBehaviour
         if (m_monster_spawn_count != m_monster_kill_count + m_monster_goal_count)
             return;
 
+        m_next_wave = true;
         if (GUI != null) GUI.NextWaveActive();
     }
 
@@ -451,6 +452,7 @@ public class GameController : MonoBehaviour
         if (m_monster_spawn_count != m_monster_kill_count + m_monster_goal_count)
             return;
 
+        m_next_wave = true;
         if (GUI != null) GUI.NextWaveActive();
     }
 
