@@ -29,9 +29,15 @@ public class HeroGradeData
 {
     public int m_kind;
     public int m_grade;
+    public int m_grade_up_piece;
     public int m_skill_1;
     public int m_skill_2;
     public int m_skill_3;
+    public int m_ATK;
+    public int m_speed;
+    public float m_range;
+    public int m_critical;
+    public int m_critical_chance;
 }
 
 public class HeroLevelData
@@ -43,6 +49,8 @@ public class HeroLevelData
     public float m_range;
     public int m_critical;
     public int m_critical_chance;
+    public int m_resource;
+    public int m_resource_amount;
 }
 
 public class LocalizationData
