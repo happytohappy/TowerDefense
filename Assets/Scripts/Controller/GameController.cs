@@ -44,9 +44,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private const string MONSTER_PATH = "Monster";
-    private const string MONSTER_NAME = "Monster_";
-
     [SerializeField] private List<Path>       m_pathes    = new List<Path>();
     [SerializeField] private List<GameObject> m_build_map = new List<GameObject>();
 
@@ -65,6 +62,7 @@ public class GameController : MonoBehaviour
     private PointerEventData m_pointer_event_data;
     private List<RaycastResult> m_ray_results = new List<RaycastResult>();
 
+    // GAME DATA
     public List<LandData> LandInfo    { get; set; } = new List<LandData>();
     public List<Monster>  Monsters    { get; set; } = new List<Monster>();
     public Hero           SelectTower { get; set; } = null;
@@ -83,67 +81,32 @@ public class GameController : MonoBehaviour
         }
     }
 
-    //public int Gold
-    //{
-    //    get { return m_gold; }
-    //    set 
-    //    {
-    //        m_gold = value;
-    //        var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
-    //        if (gui != null)
-    //            gui.SetGold(Gold);
-    //    }
-    //}
+    private int m_energy;
+    public int Energy
+    {
+        get
+        {
+            return m_energy;
+        }
+        set
+        {
+            m_energy = value;
+            GUI?.SetEnergy(m_energy);
+        }
+    }
 
     private void Awake()
     {
         m_raycaster = Managers.UICanvas.gameObject.GetComponent<GraphicRaycaster>();
-        m_pointer_event_data = new PointerEventData(EventSystem.current);
-        //for (int z = 0; z < 30; z++)
-        //{
-        //    for (int i = 1; i <= 8; i++)
-        //    {
-        //        var heroList = Managers.User.GetUserHeroInfoGroupByTier(i);
-        //        if (heroList == null)
-        //            continue;
-
-        //        foreach (var hero in heroList)
-        //        {
-        //            var heroInfoData = Managers.Table.GetHeroInfoData(hero.m_kind);
-        //            var go = Managers.Resource.Instantiate(heroInfoData.m_path);
-        //            if (go != null)
-        //                Managers.Resource.Destroy(go);
-        //        }
-        //    }
-        //}
+        m_pointer_event_data = new PointerEventData(EventSystem.current);        
     }
 
     private void Start()
     {
-        //for (int z = 0; z < 30; z++)
-        //{
-        //    for (int i = 1; i <= 8; i++)
-        //    {
-        //        var heroList = Managers.User.GetUserHeroInfoGroupByTier(i);
-        //        if (heroList == null)
-        //            continue;
-
-        //        foreach (var hero in heroList)
-        //        {
-        //            var heroInfoData = Managers.Table.GetHeroInfoData(hero.m_kind);
-        //            var go = Managers.Resource.Instantiate(heroInfoData.m_path);
-        //            if (go != null)
-        //                Managers.Resource.Destroy(go);
-        //        }
-        //    }
-        //}
-
+        m_energy = 100;
         LandInfo.Clear();
         for (int i = 0; i < m_build_map.Count; i++)
             LandInfo.Add(new LandData(i, false, m_build_map[i].transform, null));
-
-        //Gold = 50;
-        //m_towers.Clear();
     }
 
     private void Update()
@@ -240,6 +203,8 @@ public class GameController : MonoBehaviour
                         // 일부 UI 제어
                         if (GUI != null) GUI.ActiveButton(false);
 
+                        Energy += CONST.STAGE_ENERGY_SELL;
+
                         return;
                     }
                 }
@@ -287,7 +252,7 @@ public class GameController : MonoBehaviour
                     EndLand.m_hero = null;
                     EndLand.m_build = false;
 
-                    TowerSpawn(nextTier, EndLand);
+                    TowerSpawn(false, nextTier, EndLand);
                     return;
                 }
 
@@ -319,8 +284,17 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public bool TowerSpawn(int in_tier = 1, LandData in_land = null)
+    public bool TowerSpawn(bool in_buy, int in_tier = 1, LandData in_land = null)
     {
+        if (in_buy)
+        {
+            if (Energy < CONST.STAGE_ENERGY_BUY)
+            {
+                // 돈 없어요...
+                return false;
+            }
+        }
+
         var emptyLand = LandInfo.FindAll(x => x.m_build == false).ToList();
         if (emptyLand.Count == 0)
         {
@@ -368,6 +342,10 @@ public class GameController : MonoBehaviour
                 rand.m_hero = hero;
                 rand.m_build = true;
             }
+
+            // 비용 지불
+            if (in_buy)
+                Energy -= CONST.STAGE_ENERGY_BUY;
 
             return true;
         }
@@ -439,6 +417,7 @@ public class GameController : MonoBehaviour
         if (m_monster_spawn_count != m_monster_kill_count + m_monster_goal_count)
             return;
 
+        Energy++;
         m_next_wave = true;
         if (GUI != null) GUI.NextWaveActive();
     }

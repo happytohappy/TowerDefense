@@ -8,6 +8,7 @@ public class UIWindowGame : UIWindowBase
     [SerializeField] private GameObject m_upgrade;
     [SerializeField] private GameObject m_delete;
     [SerializeField] private GameObject m_next_wave;
+    [SerializeField] private TMP_Text m_txt_next_wave;
 
     public override void Awake()
     {
@@ -20,6 +21,13 @@ public class UIWindowGame : UIWindowBase
     public override void OpenUI(WindowParam wp)
     {
         base.OpenUI(wp);
+
+        SetEnergy(100);
+    }
+
+    public void SetEnergy(int in_energy)
+    {
+        m_txt_next_wave.text = $"{in_energy} / {CONST.STAGE_ENERGY_BUY}";
     }
 
     public void SetGold(int in_gold)
@@ -63,7 +71,7 @@ public class UIWindowGame : UIWindowBase
 
     public void OnClickCreateTower()
     {
-        GameController.GetInstance.TowerSpawn();
+        GameController.GetInstance.TowerSpawn(true);
     }
 
     //public void OnClickCreate()

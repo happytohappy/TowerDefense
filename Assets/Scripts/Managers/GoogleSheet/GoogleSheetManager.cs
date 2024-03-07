@@ -22,7 +22,7 @@ public class GoogleSheetManager : MonoBehaviour
 
     public void Init()
     {
-        StartCoroutine(CoRequestGoogleSheet(195141331,      (value) => Managers.Table.SetConstData(value)));
+        //StartCoroutine(CoRequestGoogleSheet(195141331,      (value) => Managers.Table.SetConstData(value)));  // ¾Æ´Ñµí,,;
         StartCoroutine(CoRequestGoogleSheet(846969345,      (value) => Managers.Table.SetHeroInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(1100293316,     (value) => Managers.Table.SetHeroGradeData(value)));
         StartCoroutine(CoRequestGoogleSheet(703649086,      (value) => Managers.Table.SetHeroLevelData(value)));
