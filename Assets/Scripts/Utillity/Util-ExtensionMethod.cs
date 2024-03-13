@@ -22,6 +22,14 @@ public static partial class Util
         in_gameobject.SetActive(in_active);
     }
 
+    public static void Ex_SetActive(this ExtentionButton in_ex_button, bool in_active)
+    {
+        if (in_ex_button == null)
+            return;
+
+        in_ex_button.gameObject.SetActive(in_active);
+    }
+
     public static void Ex_SetActive(this TMP_Text in_text, bool in_active)
     {
         if (in_text == null)

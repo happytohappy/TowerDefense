@@ -30,30 +30,31 @@ public class GameController : MonoBehaviour
 
     public class LandData
     {
-        public int        m_land_index;     // 땅 인덱스
-        public bool       m_build;          // 타워가 설치 되었는지
-        public Transform  m_trans;          // 땅 위치
-        public Hero       m_hero;           // 영웅
+        public int m_land_index;     // 땅 인덱스
+        public bool m_build;         // 타워가 설치 되었는지
+        public Transform m_trans;    // 땅 위치
+        public Hero m_hero;          // 영웅
 
         public LandData(int in_land_index, bool in_build, Transform in_trans, Hero in_tower)
         {
             m_land_index = in_land_index;
-            m_build      = in_build;
-            m_trans      = in_trans;
-            m_hero      = in_tower;
+            m_build = in_build;
+            m_trans = in_trans;
+            m_hero = in_tower;
         }
     }
 
-    [SerializeField] private List<Path>       m_pathes    = new List<Path>();
+    [SerializeField] private List<Path> m_pathes = new List<Path>();
     [SerializeField] private List<GameObject> m_build_map = new List<GameObject>();
 
+    private bool m_first_hero_spawn = true;
     private bool m_spawn_finish = true;
     private bool m_next_wave = true;
-    private int  m_wave_index = 1;
+    private int m_wave_index = 1;
     private int m_monster_spawn_count = 0;
     private int m_monster_kill_count = 0;
     private int m_monster_goal_count = 0;
-    private bool m_sniffling        = true;
+    private bool m_sniffling = true;
     private Vector3 m_hero_position = new Vector3(0f, 0.55f, 0f);
     private Vector3 m_hero_rotation = new Vector3(0f, 180f, 0f);
 
@@ -62,11 +63,16 @@ public class GameController : MonoBehaviour
     private PointerEventData m_pointer_event_data;
     private List<RaycastResult> m_ray_results = new List<RaycastResult>();
 
+    // ClickTime
+    private float m_click_time = 0.2f;      // 이 시간 보다 빠르게 마우스를 눌럿다 떼야 클릭으로 간주, 이 시간보다 길어지면 프레스
+    private float m_click_curr = 0.0f;
+   
     // GAME DATA
     public List<LandData> LandInfo    { get; set; } = new List<LandData>();
     public List<Monster>  Monsters    { get; set; } = new List<Monster>();
-    public Hero           SelectTower { get; set; } = null;
+    public Hero           SelectHero  { get; set; } = null;
     public LandData       EndLand     { get; set; } = null;
+    public Hud_HeroInfo   HudHeroInfo { get; set; } = null;
 
     private UIWindowGame m_gui = null;
     public UIWindowGame GUI
@@ -78,6 +84,22 @@ public class GameController : MonoBehaviour
 
             m_gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
             return m_gui;
+        }
+    }
+
+    private EInputType m_input_type = EInputType.None;
+    public EInputType InputType
+    {
+        get
+        {
+            return m_input_type;
+        }
+        set
+        {
+            m_input_type = value;
+
+            if (m_input_type == EInputType.Press)
+                HeroPressStart();
         }
     }
 
@@ -113,178 +135,239 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            if (RayPickUI() != null)
+                return;
 
-            if (Physics.Raycast(ray, out hit))
+            m_click_curr = 0f;
+            m_input_type = EInputType.Click;
+            SelectHero = null;
+            EndLand = null;
+
+            if (HudHeroInfo != null)
             {
-                if (hit.transform.gameObject.CompareTag("Hero"))
-                {
-                    SelectTower = hit.transform.gameObject.GetComponent<Hero>();
-                    EndLand = null;
-
-                    Managers.UnitCam.gameObject.SetActive(true);
-
-                    // 일부 UI 제어
-                    if (GUI != null) GUI.ActiveButton(true);
-
-                    // 타워 공격 범위 보여주기
-                    SelectTower.RangeEffect.Ex_SetActive(true);
-                }
-                else
-                {
-                    SelectTower = null;
-                    EndLand = null;
-                }
+                HudHeroInfo.CloseHeroInfo();
+                HudHeroInfo = null;
             }
         }
 
         if (Input.GetMouseButton(0))
         {
-            if (SelectTower == null)
-                return;
+            m_click_curr += Time.deltaTime;
+            if (InputType != EInputType.Press && m_click_curr > m_click_time)
+                InputType = EInputType.Press;
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Build")))
-            {
-                EndLand = LandInfo.Find(x => x.m_trans == hit.transform);
-                if (EndLand != null)
-                {
-                    if (EndLand.m_build)
-                    {
-                        // 내가 원래 있던 위치라면 움직일 수 있다.
-                        if (EndLand.m_hero == SelectTower)
-                        {
-                            SelectTower.transform.position = EndLand.m_trans.position + m_hero_position;
-                        }
-                        else
-                        {
-                            // 합성 유무 따져야됨
-                            SelectTower.transform.position = EndLand.m_trans.position + m_hero_position;
-                        }
-                    }
-                    else
-                    {
-                        SelectTower.transform.position = EndLand.m_trans.position + m_hero_position;
-                    }
-                }
-            }
-            else if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Plane")))
-            {
-                SelectTower.transform.position = hit.point;
-                EndLand = null;
-            }
+            if (InputType == EInputType.Press)
+                HeroPress();
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            if (SelectTower == null)
-                return;
+            if (InputType == EInputType.Click)
+                HeroClick();
+            else
+                HeroPressEnd();
+        }
+    }
 
-            Managers.UnitCam.gameObject.SetActive(false);
+    public GameObject RayPickUI()
+    {
+        if (m_raycaster == null || m_pointer_event_data == null)
+            return null;
 
-            if (m_raycaster != null && m_pointer_event_data != null)
+        m_ray_results.Clear();
+        m_pointer_event_data.position = Input.mousePosition;
+        m_raycaster.Raycast(m_pointer_event_data, m_ray_results);
+        foreach (RaycastResult result in m_ray_results)
+            return result.gameObject;
+
+        return null;
+    }
+
+    private void HeroClick()
+    {
+        if (RayPickUI() != null)
+            return;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.transform.gameObject.CompareTag("Hero"))
             {
-                m_ray_results.Clear();
-                m_pointer_event_data.position = Input.mousePosition;
-                m_raycaster.Raycast(m_pointer_event_data, m_ray_results);
-                foreach (RaycastResult result in m_ray_results)
-                {
-                    if (result.gameObject.name == "Btn_UnitRemove")
-                    {
-                        var startLand = LandInfo.Find(x => x.m_hero == SelectTower);
-                        Managers.Resource.Destroy(startLand.m_hero.gameObject);
-                        Managers.Resource.Destroy(startLand.m_hero.HudHeroInfo.gameObject);
-                        startLand.m_hero = null;
-                        startLand.m_build = false;
+                SelectHero = hit.transform.gameObject.GetComponent<Hero>();
+                SelectHero.HudHeroInfo.ShowHeroInfo();
+                HudHeroInfo = SelectHero.HudHeroInfo;
 
-                        // 일부 UI 제어
-                        if (GUI != null) GUI.ActiveButton(false);
-
-                        Energy += CONST.STAGE_ENERGY_SELL;
-
-                        return;
-                    }
-                }
-            }
-
-            // 일부 UI 제어
-            if (GUI != null) GUI.ActiveButton(false);
-
-            // 타워 설치 구역이 아닌 곳에서 마우스를 놨을 경우
-            if (EndLand == null)
-            {
-                SelectTower.transform.localPosition = m_hero_position;
-                SelectTower.RangeEffect.Ex_SetActive(false);
-                return;
-            }
-
-            // 놓으려는 곳에 이미 타워가 설치 되어 있는 경우
-            if (EndLand.m_build)
-            {
-                // 내가 원래 있던 위치에 놓은 것이기 때문에 아무것도 처리할 필요가 없다.
-                if (EndLand.m_hero == SelectTower)
-                {
-                    SelectTower.transform.localPosition = m_hero_position;
-                    SelectTower.RangeEffect.Ex_SetActive(false);
-                    return;
-                }
-
-                // 합성일 경우 여기서 처리 해야됨
-                if (EndLand.m_hero.GetHeroData.m_info.m_kind == SelectTower.GetHeroData.m_info.m_kind)
-                {
-                    var nextTier = SelectTower.GetHeroData.m_info.m_tier + 1;
-                    var towerList = Managers.User.GetUserHeroInfoGroupByTier(nextTier);
-                    if (towerList == null || towerList.Count == 0)
-                        return;
-
-                    // 타워가 설치되어 있던 땅의 정보는 초기화
-                    var startLand = LandInfo.Find(x => x.m_hero == SelectTower);
-                    Managers.Resource.Destroy(startLand.m_hero.gameObject);
-                    Managers.Resource.Destroy(startLand.m_hero.HudHeroInfo.gameObject);
-                    startLand.m_hero = null;
-                    startLand.m_build = false;
-
-                    Managers.Resource.Destroy(EndLand.m_hero.gameObject);
-                    Managers.Resource.Destroy(EndLand.m_hero.HudHeroInfo.gameObject);
-                    EndLand.m_hero = null;
-                    EndLand.m_build = false;
-
-                    TowerSpawn(false, nextTier, EndLand);
-                    return;
-                }
-
-                SelectTower.transform.localPosition = m_hero_position;
-                SelectTower.RangeEffect.Ex_SetActive(false);
-
-                SelectTower = null;
-                EndLand = null;
-                return;
-            }
-
-            {          
-                // 타워가 설치되어 있던 땅의 정보는 초기화
-                var startLand = LandInfo.Find(x => x.m_hero == SelectTower);
-                startLand.m_hero = null;
-                startLand.m_build = false;
-
-                SelectTower.transform.SetParent(EndLand.m_trans.transform);
-                SelectTower.transform.localPosition = m_hero_position;
-                EndLand.m_hero = SelectTower;
-                EndLand.m_build = true;
-
-                // 타워 범위 가리기
-                SelectTower.RangeEffect.Ex_SetActive(false);
-
-                SelectTower = null;
-                EndLand = null;
+                // 가장 최상위에서 보이도록
+                HudHeroInfo.transform.SetAsLastSibling();
             }
         }
     }
 
-    public bool TowerSpawn(bool in_buy, int in_tier = 1, LandData in_land = null)
+    private void HeroPressStart()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.transform.gameObject.CompareTag("Hero"))
+            {
+                SelectHero = hit.transform.gameObject.GetComponent<Hero>();
+
+                Managers.UnitCam.gameObject.SetActive(true);
+
+                // 일부 UI 제어
+                if (GUI != null) GUI.ActiveButton(true);
+
+                // 타워 공격 범위 보여주기
+                SelectHero.RangeEffect.Ex_SetActive(true);
+            }
+        }
+    }
+
+    private void HeroPress()
+    {
+        if (SelectHero == null)
+            return;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Build")))
+        {
+            EndLand = LandInfo.Find(x => x.m_trans == hit.transform);
+            if (EndLand != null)
+            {
+                if (EndLand.m_build)
+                {
+                    // 내가 원래 있던 위치라면 움직일 수 있다.
+                    if (EndLand.m_hero == SelectHero)
+                    {
+                        SelectHero.transform.position = EndLand.m_trans.position + m_hero_position;
+                    }
+                    else
+                    {
+                        // 합성 유무 따져야됨
+                        SelectHero.transform.position = EndLand.m_trans.position + m_hero_position;
+                    }
+                }
+                else
+                {
+                    SelectHero.transform.position = EndLand.m_trans.position + m_hero_position;
+                }
+            }
+        }
+        else if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Plane")))
+        {
+            SelectHero.transform.position = hit.point;
+            EndLand = null;
+        }
+    }
+
+    private void HeroPressEnd()
+    {
+        if (SelectHero == null)
+            return;
+
+        Managers.UnitCam.gameObject.SetActive(false);
+
+        var PickUI = RayPickUI();
+        if (PickUI != null && PickUI.name == "Btn_UnitRemove")
+        {
+            var startLand = LandInfo.Find(x => x.m_hero == SelectHero);
+            Managers.Resource.Destroy(startLand.m_hero.gameObject);
+            Managers.Resource.Destroy(startLand.m_hero.HudHeroInfo.gameObject);
+            startLand.m_hero = null;
+            startLand.m_build = false;
+
+            // 일부 UI 제어
+            if (GUI != null) GUI.ActiveButton(false);
+
+            Energy += CONST.STAGE_ENERGY_SELL;
+            return;
+        }
+
+        // 일부 UI 제어
+        if (GUI != null) GUI.ActiveButton(false);
+
+        // 타워 설치 구역이 아닌 곳에서 마우스를 놨을 경우
+        if (EndLand == null)
+        {
+            SelectHero.transform.localPosition = m_hero_position;
+            SelectHero.RangeEffect.Ex_SetActive(false);
+            return;
+        }
+
+        // 놓으려는 곳에 이미 타워가 설치 되어 있는 경우
+        if (EndLand.m_build)
+        {
+            // 내가 원래 있던 위치에 놓은 것이기 때문에 아무것도 처리할 필요가 없다.
+            if (EndLand.m_hero == SelectHero)
+            {
+                SelectHero.transform.localPosition = m_hero_position;
+                SelectHero.RangeEffect.Ex_SetActive(false);
+                return;
+            }
+
+            // 합성일 경우 여기서 처리 해야됨
+            if (EndLand.m_hero.GetHeroData.m_info.m_kind == SelectHero.GetHeroData.m_info.m_kind)
+            {
+                HeroMerge();
+                return;
+            }
+
+            SelectHero.transform.localPosition = m_hero_position;
+            SelectHero.RangeEffect.Ex_SetActive(false);
+
+            SelectHero = null;
+            EndLand = null;
+            return;
+        }
+
+        {
+            // 타워가 설치되어 있던 땅의 정보는 초기화
+            var startLand = LandInfo.Find(x => x.m_hero == SelectHero);
+            startLand.m_hero = null;
+            startLand.m_build = false;
+
+            SelectHero.transform.SetParent(EndLand.m_trans.transform);
+            SelectHero.transform.localPosition = m_hero_position;
+            EndLand.m_hero = SelectHero;
+            EndLand.m_build = true;
+
+            // 타워 범위 가리기
+            SelectHero.RangeEffect.Ex_SetActive(false);
+
+            SelectHero = null;
+            EndLand = null;
+        }
+    }
+
+    public void HeroMerge()
+    {
+        var nextTier = SelectHero.GetHeroData.m_info.m_tier + 1;
+        var towerList = Managers.User.GetUserHeroInfoGroupByTier(nextTier);
+        if (towerList == null || towerList.Count == 0)
+            return;
+
+        // 타워가 설치되어 있던 땅의 정보는 초기화
+        var startLand = LandInfo.Find(x => x.m_hero == SelectHero);
+        Managers.Resource.Destroy(startLand.m_hero.gameObject);
+        Managers.Resource.Destroy(startLand.m_hero.HudHeroInfo.gameObject);
+        startLand.m_hero = null;
+        startLand.m_build = false;
+
+        Managers.Resource.Destroy(EndLand.m_hero.gameObject);
+        Managers.Resource.Destroy(EndLand.m_hero.HudHeroInfo.gameObject);
+        EndLand.m_hero = null;
+        EndLand.m_build = false;
+
+        HeroSpawn(false, nextTier, EndLand);
+    }
+
+    public bool HeroSpawn(bool in_buy, int in_tier = 1, LandData in_land = null)
     {
         if (in_buy)
         {
@@ -346,6 +429,12 @@ public class GameController : MonoBehaviour
             // 비용 지불
             if (in_buy)
                 Energy -= CONST.STAGE_ENERGY_BUY;
+
+            if (m_first_hero_spawn)
+            {
+                m_first_hero_spawn = false;
+                GUI.NextWaveActive();
+            }
 
             return true;
         }

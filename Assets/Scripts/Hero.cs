@@ -22,7 +22,7 @@ public class Hero : PawnBase
         m_range_effect.transform.localScale = new Vector3(GetHeroData.m_stat.m_range, GetHeroData.m_stat.m_range, 1f);
 
         // 인포 셋팅
-        m_hud_hero_info = Util.CreateHudHeroInfo(this.transform, new Vector3(0f, -0.2f, 0f));
+        m_hud_hero_info = Util.CreateHudHeroInfo(this, new Vector3(0f, -0.2f, 0f));
 
         ChangeState(FSM_STATE.Idle);
     }

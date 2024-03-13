@@ -22,6 +22,9 @@ public class UIWindowGame : UIWindowBase
     {
         base.OpenUI(wp);
 
+        // 최초 꺼져있는 상태
+        m_next_wave.Ex_SetActive(false);
+
         SetEnergy(100);
     }
 
@@ -71,7 +74,7 @@ public class UIWindowGame : UIWindowBase
 
     public void OnClickCreateTower()
     {
-        GameController.GetInstance.TowerSpawn(true);
+        GameController.GetInstance.HeroSpawn(true);
     }
 
     //public void OnClickCreate()

@@ -148,14 +148,14 @@ public static partial class Util
         return hpBar;
     }
 
-    public static Hud_HeroInfo CreateHudHeroInfo(Transform in_transform, Vector3 in_offset)
+    public static Hud_HeroInfo CreateHudHeroInfo(Hero in_hero, Vector3 in_offset)
     {
         var go = Managers.Resource.Instantiate("Item/Hud_HeroInfo", new Vector3(9999f, 9999f, 9999f), Managers.Widget);
         var hudHeroInfo = go.GetComponent<Hud_HeroInfo>();
         if (hudHeroInfo == null)
             return null;
 
-        hudHeroInfo.Target = in_transform;
+        hudHeroInfo.Target = in_hero;
         hudHeroInfo.Set(in_offset);
 
         return hudHeroInfo;

@@ -44,6 +44,13 @@ public enum FSM_STATE
     Die
 }
 
+public enum EInputType
+{
+    None,
+    Click,
+    Press
+}
+
 public enum EBuff
 {
     BUFF_ALLY_CHARGE_ENERGY,                    // 에너지 충전
