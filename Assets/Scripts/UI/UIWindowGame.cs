@@ -77,6 +77,19 @@ public class UIWindowGame : UIWindowBase
         GameController.GetInstance.HeroSpawn(true);
     }
 
+    public void OnClickBonusUnit()
+    {
+        Managers.UI.OpenWindow(WindowID.UIPopupIngameSkill);
+    }
+
+    public void OnClickSkill(int in_number)
+    {
+        InGameSkillParam param = new InGameSkillParam();
+        param.m_index = in_number;
+
+        Managers.UI.OpenWindow(WindowID.UIPopupIngameSkill, param);
+    }
+
     //public void OnClickCreate()
     //{
     //    GameController.GetInstance.OnCreate();

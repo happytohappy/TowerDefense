@@ -11,3 +11,8 @@ public class GachaHeroParam : WindowParam
 {
     public int m_hero_kind = 0;
 }
+
+public class InGameSkillParam : WindowParam
+{
+    public int m_index = 0;
+}
