@@ -55,5 +55,7 @@ public class Hud_HeroInfo : MonoBehaviour
         GameController.GetInstance.EndLand = SelectLand;
         GameController.GetInstance.SelectHero = SameHero[UnityEngine.Random.Range(0, SameHero.Count)].m_hero;
         GameController.GetInstance.HeroMerge();
+
+        GameController.GetInstance.InputInit();
     }
 }

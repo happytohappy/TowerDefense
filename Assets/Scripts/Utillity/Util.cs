@@ -196,4 +196,11 @@ public static partial class Util
 
         return heroInfo.m_tier;
     }
+
+    public static void ChangeLayersRecursively(Transform in_trans, string in_layer_name)
+    {
+        in_trans.gameObject.layer = LayerMask.NameToLayer(in_layer_name);
+        foreach (Transform child in in_trans)
+            ChangeLayersRecursively(child, in_layer_name);
+    }
 }

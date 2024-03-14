@@ -13,6 +13,7 @@ public class Monster : PawnBase
     private int     m_line_index;
 
     public Transform Pivot => m_pivot;
+    public HPBar HPBar => m_hp_bar;
     public List<Transform>   Path                   { get; set; } = new List<Transform>();
     public MonsterInfoData   GetMonsterInfoData     { get; set; } = null;
     public MonsterStatusData GetMonsterStatusData   { get; set; } = null;

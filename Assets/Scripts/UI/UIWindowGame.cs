@@ -41,21 +41,11 @@ public class UIWindowGame : UIWindowBase
             m_gold.text = Util.CommaText(in_gold);
     }
 
-    public void ActiveButton(bool in_mouse_down)
+    public void DeleteUIActive(bool in_active)
     {
-        if (in_mouse_down)
-        {
-            //m_create.SetActive(false);
-            //m_upgrade.SetActive(false);
-            m_delete.SetActive(true);
-        }
-        else
-        {
-            //m_create.SetActive(true);
-            //m_upgrade.SetActive(false);
-            m_delete.SetActive(false);
-        }
+        m_delete.SetActive(in_active);
     }
+
     public void OnClickPause()
     {
         Managers.UI.OpenWindow(WindowID.UIPopupPause);
@@ -74,7 +64,7 @@ public class UIWindowGame : UIWindowBase
 
     public void OnClickCreateTower()
     {
-        GameController.GetInstance.HeroSpawn(true);
+        GameController.GetInstance.HeroSpawn(ESpawnType.Energy);
     }
 
     public void OnClickBonusUnit()

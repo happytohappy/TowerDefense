@@ -52,6 +52,15 @@ public enum EInputType
     Press
 }
 
+public enum ESpawnType
+{
+    Free,
+    Merge,
+    Energy,
+    Ruby,
+    AD
+}
+
 public enum EBuff
 {
     BUFF_ALLY_CHARGE_ENERGY,                    // 에너지 충전
