@@ -1,58 +1,100 @@
-//using GoogleMobileAds.Api;
-using System;
+using GoogleMobileAds.Api;
 using UnityEngine;
+using UnityEngine.UI;
 
-/*
 public class AdMobManager : MonoBehaviour
 {
+    [Header("안드로이드 id")]
+    public string androidUnitId = "ca-app-pub-3940256099942544/5224354917";
+
+    private string adUnitId;
     private RewardedAd rewardedAd;
-    private int gold;
+
+    //public Text text;
 
     private void Start()
     {
-        InitAds();
-    }
-
-    private void InitAds()
-    {
-        string adUnitId;
+        MobileAds.Initialize((InitializationStatus initStatus) =>
+        {
+            //초기화 완료
+        });
 
 #if UNITY_ANDROID
-        adUnitId = "ca-app-pub-3940256099942544/5224354917";
+        adUnitId = androidUnitId;
 #else
         adUnitId = "unexpected_platform";
 #endif
 
-        RewardedAd.Load(adUnitId, new AdRequest.Builder().Build(), LoadCallback);
+        LoadRewardedAd();
     }
 
-    private void LoadCallback(RewardedAd rewardedAd, LoadAdError loadAdError)
+    // 광고 로드
+    public void LoadRewardedAd()
     {
         if (rewardedAd != null)
         {
-            this.rewardedAd = rewardedAd;
+            rewardedAd.Destroy();
+            rewardedAd = null;
+        }
 
-            Debug.Log("로드 성공");
+        Debug.Log("Loading the rewarded ad.");
+        //text.text = "Loading the rewarded ad.";
+
+        var adRequest = new AdRequest();
+        RewardedAd.Load(adUnitId, adRequest, (RewardedAd ad, LoadAdError error) =>
+        {
+            if (error != null || ad == null)
+            {
+                Debug.Log("Rewarded ad failed to load an ad " + "with error : " + error);
+                //text.text = "Rewarded ad failed to load an ad " + "with error : " + error;
+
+                return;
+            }
+
+            Debug.Log("Rewarded ad loaded with response: " + ad.GetResponseInfo());
+            //text.text = "Rewarded ad loaded with response : " + ad.GetResponseInfo();
+
+            rewardedAd = ad;
+        });
+    }
+
+    // 광고 보기
+    public void ShowAd()
+    {
+        const string rewardMsg = "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
+
+        if (rewardedAd != null && rewardedAd.CanShowAd())
+        {
+            rewardedAd.Show((Reward reward) =>
+            {
+                // 보상 획득
+                Debug.Log(string.Format(rewardMsg, reward.Type, reward.Amount));
+                //text.text = string.Format(rewardMsg, reward.Type, reward.Amount);
+            });
         }
         else
-            Debug.Log(loadAdError.GetMessage());
+        {
+            LoadRewardedAd();
+        }
     }
 
-    public void ShowAds()
+    // 광고 재로드
+    private void RegisterReloadHandler(RewardedAd ad)
     {
-        if (rewardedAd.CanShowAd())
-            rewardedAd.Show(GetReward);
-        else
-            Debug.Log("광고 재생 실패");
-    }
+        ad.OnAdFullScreenContentClosed += (null);
+        {
+            Debug.Log("Rewarded Ad full screen content closed.");
+            //text.text = "Rewarded Ad full screen content closed.";
 
-    private void GetReward(Reward reward)
-    {
-        gold += (int)reward.Amount;
+            LoadRewardedAd();
+        };
 
-        Debug.Log("골드 : " + gold.ToString());
+        ad.OnAdFullScreenContentFailed += (AdError error) =>
+        {
+            Debug.Log("Rewarded ad failed to open full screen content " + "with error : " + error);
+            //text.text = "Rewarded ad failed to open full screen content " + "with error : " + error;
 
-        InitAds();
+            LoadRewardedAd();
+        };
     }
 }
-*/
