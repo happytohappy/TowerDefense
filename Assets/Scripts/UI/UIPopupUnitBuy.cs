@@ -61,7 +61,7 @@ public class UIPopupUnitBuy : UIWindowBase
         Managers.User.UpsertHero(gachaReward.m_item);
         RefreshUI(gachaReward.m_item);
 
-        var uiUnitPopup = Managers.UI.GetWindow(WindowID.UIPopupUnit, false) as UIPopupUnit;
+        var uiUnitPopup = Managers.UI.GetWindow(WindowID.UIWindowUnit, false) as UIWindowUnit;
         if (uiUnitPopup != null)
             uiUnitPopup.RefreshUI();
     }

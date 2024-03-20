@@ -59,6 +59,6 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickUnit()
     {
-        Managers.UI.OpenWindow(WindowID.UIPopupUnit);
+        Managers.UI.OpenWindow(WindowID.UIWindowUnit);
     }
 }

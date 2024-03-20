@@ -1729,7 +1729,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5252619210065258921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIPopupUnit, Assembly-CSharp
         m_MethodName: OnClickClose
         m_Mode: 1
@@ -3219,7 +3219,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 8031282340867800616}
   m_FillRect: {fileID: 0}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
@@ -4257,7 +4257,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5252619210065258921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIPopupUnit, Assembly-CSharp
         m_MethodName: OnClickUnitLevelUp
         m_Mode: 1
@@ -6741,10 +6741,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6712918325758415786}
-  - component: {fileID: 5252619210065258921}
+  - component: {fileID: 1469961691975528244}
   - component: {fileID: 1636648794469088366}
   m_Layer: 5
-  m_Name: UIPopupUnit
+  m_Name: UIWindowUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6772,7 +6772,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5252619210065258921
+--- !u!114 &1469961691975528244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6781,25 +6781,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 6712918325758415787}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00d5b92a725c0a14a8593bd627749c7c, type: 3}
+  m_Script: {fileID: 11500000, guid: fac409709b0c73349b07728d28da9f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_trs_root: {fileID: 7371229458724904690}
+  m_rect_root: {fileID: 7371229458724904690}
   m_text_name: {fileID: 2402729271574109603}
-  m_text_rarity: {fileID: 0}
-  m_text_attack: {fileID: 0}
   m_Image_hero: {fileID: 4779521539071293033}
   m_Image_lock: {fileID: 5284008459059072279}
-  m_Image_star: {fileID: 0}
-  m_text_star: {fileID: 0}
-  m_text_level_fixed: {fileID: 0}
-  m_text_level: {fileID: 0}
+  m_list_grade_star:
+  - {fileID: 5863801759836949691}
+  - {fileID: 1360053413297914107}
+  - {fileID: 502335247332172791}
+  - {fileID: 2176294106929912323}
+  - {fileID: 3867906951691759531}
+  m_text_level: {fileID: 7174753396757214728}
   m_Image_equipment: {fileID: 7940791198377734293}
   m_text_damage: {fileID: 5199708549056810129}
   m_text_speed: {fileID: 3952170358585479304}
   m_text_range: {fileID: 3829555012474031288}
   m_go_level_up: {fileID: 0}
   m_go_active: {fileID: 0}
+  m_list_bg:
+  - {fileID: 3442389490464255899}
+  - {fileID: 5247258872332116907}
+  - {fileID: 284142930416939651}
+  - {fileID: 7260677768605193326}
 --- !u!114 &1636648794469088366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7295,7 +7302,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 5705740527994198599}
   m_FillRect: {fileID: 6523541766046343370}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
@@ -7809,6 +7816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7371229458724904690}
   - component: {fileID: 3343064440657478043}
+  - component: {fileID: 5908868800357157629}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -7833,7 +7841,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 1624}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3343064440657478043
 MonoBehaviour:
@@ -7859,6 +7867,20 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &5908868800357157629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7378243308726934662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &7460865490834732005
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Text;
 using System.Collections.Generic;
 
@@ -176,7 +177,7 @@ public static partial class Util
         if (heroInfo == null)
             return string.Empty;
 
-        return heroInfo.m_name;
+        return Managers.Table.GetLanguage(heroInfo.m_name);
     }
 
     public static string GetHeroRarityToString(int in_kind)
@@ -202,5 +203,46 @@ public static partial class Util
         in_trans.gameObject.layer = LayerMask.NameToLayer(in_layer_name);
         foreach (Transform child in in_trans)
             ChangeLayersRecursively(child, in_layer_name);
+    }
+
+    public static void SetGradeStar(List<Image> in_star, int in_grade)
+    {
+        string GradeNone = "Icon_GradeStar_Off";
+        string GradeOneByFive = "Icon_GradeStar_On1-5";
+        string GradeSixByTen = "Icon_GradeStar_On6-10";
+
+        for (int i = 0; i < in_star.Count; i++)
+        {
+            if (in_grade < 6)
+            {
+                if (i < in_grade)
+                    in_star[i].Ex_SetImage(Managers.Sprite.GetSprite(GradeOneByFive));
+                else
+                    in_star[i].Ex_SetImage(Managers.Sprite.GetSprite(GradeNone));
+            }
+            else
+            {
+                if (i < in_grade - 5)
+                    in_star[i].Ex_SetImage(Managers.Sprite.GetSprite(GradeSixByTen));
+                else
+                    in_star[i].Ex_SetImage(Managers.Sprite.GetSprite(GradeOneByFive));
+            }
+        }
+    }
+
+    public static void SetRarityBG(Image in_grade_bg, ERarity in_rarity)
+    {
+        string Rare = "BG_Slot_Rare";
+        string Epic = "BG_Slot_Epic";
+        string Legend = "BG_Slot_Legend";
+        string Myth = "BG_Slot_Myth";
+
+        switch (in_rarity)
+        {
+            case ERarity.RARE:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Rare)); break;
+            case ERarity.EPIC:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Epic)); break;
+            case ERarity.LEGEND: in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Legend)); break;
+            case ERarity.MYTH:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Myth)); break;
+        }
     }
 }

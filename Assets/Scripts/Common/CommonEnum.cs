@@ -6,6 +6,7 @@ public enum WindowID
     UIWindowIntro,
     UIWindowMain,
     UIWindowGame,
+    UIWindowUnit,
     UIPopupGame,
     UIPopupShop,
     UIPopupReward,
@@ -15,7 +16,6 @@ public enum WindowID
     UIPopupPause,
     UIPopupEquipment,
     UIPopupTreasure,
-    UIPopupUnit,
     UIPopupUnitBuy,
     UIPopupIngameSkill
 }
@@ -114,11 +114,11 @@ public enum ETier
 
 public enum ERarity
 {
-    NONE    = 0,    //
-    NORMAL  = 1,    // 노말
-    RARE    = 2,    // 레어
-    EPIC    = 3,    // 에픽
-    LEGEND  = 4,    // 레전드
+    NONE   = 0,    //
+    RARE   = 1,    // 희귀
+    EPIC   = 2,    // 영웅
+    LEGEND = 3,    // 전설
+    MYTH   = 4,    // 신화
 }
 
 public enum Language
@@ -136,13 +136,4 @@ public enum Type
     HUMAN,
     SPECIES,
     WORLD
-}
-
-public enum Rarity
-{
-    None,
-    RARE,
-    EPIC,
-    LEGEND,
-    MYTH
 }

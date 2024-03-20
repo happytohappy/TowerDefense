@@ -29,6 +29,7 @@ public class Managers : MonoBehaviour
     [SerializeField] private ResourceManager m_Resource = null;
     [SerializeField] private UserManager m_User = null;
     [SerializeField] private BackendManager m_BackEnd = null;
+    [SerializeField] private SpriteManager m_Sprite = null;
 
     public static Canvas UICanvas => GetInstance.m_UIRootCan;
     public static Transform Widget => GetInstance.m_Widget;
@@ -43,6 +44,7 @@ public class Managers : MonoBehaviour
     public static ResourceManager Resource => GetInstance.m_Resource;
     public static UserManager User => GetInstance.m_User;
     public static BackendManager BackEnd => GetInstance.m_BackEnd;
+    public static SpriteManager Sprite => GetInstance.m_Sprite;
 
     public void Init()
     {

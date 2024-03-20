@@ -20,7 +20,7 @@ public partial class TableManager
             HeroInfoData.m_desc = words[3];
             HeroInfoData.m_type = (Type)Enum.Parse(typeof(Type), words[4]);
             HeroInfoData.m_tier = int.Parse(words[5]);
-            HeroInfoData.m_rarity = (Rarity)Enum.Parse(typeof(Rarity), words[6]);
+            HeroInfoData.m_rarity = (ERarity)Enum.Parse(typeof(ERarity), words[6]);
 
             m_dic_hero_info_data.Add(HeroInfoData.m_kind, HeroInfoData);
 

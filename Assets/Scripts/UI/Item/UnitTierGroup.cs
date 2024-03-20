@@ -1,11 +1,11 @@
-using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class UnitTierGroup : MonoBehaviour
 {
     private const string UNIT_ICON_PATH = "UI/Item/UnitIcon";
 
-    [SerializeField] private TMP_Text m_text_tier = null;
+    [SerializeField] private List<GameObject> m_list_tier = new List<GameObject>();
     [SerializeField] private Transform m_trs_unit = null;
 
     public void SetTierUnit(int in_tier)
@@ -14,7 +14,8 @@ public class UnitTierGroup : MonoBehaviour
         if (UnitTierList == null || UnitTierList.Count == 0)
             return;
 
-        m_text_tier.Ex_SetText($"클래스 {in_tier}");
+        for (int i = 0; i < m_list_tier.Count; i++)
+            m_list_tier[i].Ex_SetActive(i == in_tier - 1);
 
         foreach (var tierUnit in UnitTierList)
         {
@@ -25,11 +26,11 @@ public class UnitTierGroup : MonoBehaviour
             if (userTower != null)
             {
                 // 보유하고 있는 타워
-                sc.SetHaveUnit(tierUnit.m_kind, ((int)tierUnit.m_rarity).ToString());
+                sc.SetHaveUnit(tierUnit.m_kind, tierUnit.m_rarity, userTower.m_grade, userTower.m_level);
             }
             else
             {
-                sc.SetNoneUnit(tierUnit.m_kind);
+                sc.SetNoneUnit(tierUnit.m_kind, tierUnit.m_rarity);
             }
         }
     }
