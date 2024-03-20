@@ -30,6 +30,7 @@ public class Managers : MonoBehaviour
     [SerializeField] private UserManager m_User = null;
     [SerializeField] private BackendManager m_BackEnd = null;
     [SerializeField] private SpriteManager m_Sprite = null;
+    [SerializeField] private ADManager m_AD = null;
 
     public static Canvas UICanvas => GetInstance.m_UIRootCan;
     public static Transform Widget => GetInstance.m_Widget;
@@ -45,6 +46,7 @@ public class Managers : MonoBehaviour
     public static UserManager User => GetInstance.m_User;
     public static BackendManager BackEnd => GetInstance.m_BackEnd;
     public static SpriteManager Sprite => GetInstance.m_Sprite;
+    public static ADManager AD => GetInstance.m_AD;
 
     public void Init()
     {
@@ -54,6 +56,7 @@ public class Managers : MonoBehaviour
         UI.Init();
         User.Init();
         BackEnd.Init();
+        AD.Init();
     }
 
     public void Clear()

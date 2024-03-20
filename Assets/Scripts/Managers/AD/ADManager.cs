@@ -1,26 +1,25 @@
 using GoogleMobileAds.Api;
 using UnityEngine;
-using UnityEngine.UI;
+using System;
 
-public class AdMobManager : MonoBehaviour
+public class ADManager : MonoBehaviour
 {
-    [Header("안드로이드 id")]
-    public string androidUnitId = "ca-app-pub-3940256099942544/5224354917";
-
     private string adUnitId;
     private RewardedAd rewardedAd;
 
-    //public Text text;
+    public bool AdmobInit { get; private set; }
 
-    private void Start()
+    public void Init()
     {
+        AdmobInit = false;
         MobileAds.Initialize((InitializationStatus initStatus) =>
         {
-            //초기화 완료
+            AdmobInit = true;
+            Debug.Log("구글 애드몹 초기화 완료");
         });
 
 #if UNITY_ANDROID
-        adUnitId = androidUnitId;
+        adUnitId = "ca-app-pub-3940256099942544/5224354917";
 #else
         adUnitId = "unexpected_platform";
 #endif
@@ -38,7 +37,6 @@ public class AdMobManager : MonoBehaviour
         }
 
         Debug.Log("Loading the rewarded ad.");
-        //text.text = "Loading the rewarded ad.";
 
         var adRequest = new AdRequest();
         RewardedAd.Load(adUnitId, adRequest, (RewardedAd ad, LoadAdError error) =>
@@ -46,30 +44,26 @@ public class AdMobManager : MonoBehaviour
             if (error != null || ad == null)
             {
                 Debug.Log("Rewarded ad failed to load an ad " + "with error : " + error);
-                //text.text = "Rewarded ad failed to load an ad " + "with error : " + error;
 
                 return;
             }
 
             Debug.Log("Rewarded ad loaded with response: " + ad.GetResponseInfo());
-            //text.text = "Rewarded ad loaded with response : " + ad.GetResponseInfo();
 
             rewardedAd = ad;
         });
     }
 
     // 광고 보기
-    public void ShowAd()
+    public void ShowAd(Action in_callback)
     {
-        const string rewardMsg = "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
-
         if (rewardedAd != null && rewardedAd.CanShowAd())
         {
             rewardedAd.Show((Reward reward) =>
             {
                 // 보상 획득
-                Debug.Log(string.Format(rewardMsg, reward.Type, reward.Amount));
-                //text.text = string.Format(rewardMsg, reward.Type, reward.Amount);
+                if (in_callback != null)
+                    in_callback.Invoke();
             });
         }
         else
@@ -84,7 +78,6 @@ public class AdMobManager : MonoBehaviour
         ad.OnAdFullScreenContentClosed += (null);
         {
             Debug.Log("Rewarded Ad full screen content closed.");
-            //text.text = "Rewarded Ad full screen content closed.";
 
             LoadRewardedAd();
         };
@@ -92,7 +85,6 @@ public class AdMobManager : MonoBehaviour
         ad.OnAdFullScreenContentFailed += (AdError error) =>
         {
             Debug.Log("Rewarded ad failed to open full screen content " + "with error : " + error);
-            //text.text = "Rewarded ad failed to open full screen content " + "with error : " + error;
 
             LoadRewardedAd();
         };
