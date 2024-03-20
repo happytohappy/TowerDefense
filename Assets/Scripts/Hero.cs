@@ -8,15 +8,19 @@ public class Hero : PawnBase
     [SerializeField] private GameObject m_range_effect = null;
     
     private Monster m_target_monster = null;
-    private Hud_HeroInfo m_hud_hero_info;
+    private Hud_HeroInfo m_hud_hero_info = null;
+    private bool m_hero_drag = false;
 
     public Hud_HeroInfo HudHeroInfo => m_hud_hero_info;
     public GameObject RangeEffect => m_range_effect;
     public HeroData GetHeroData { get; set; } = null;
 
+
     protected override void Start()
     {
         base.Start();
+
+        m_hero_drag = false;
 
         m_range_effect.Ex_SetActive(false);
         m_range_effect.transform.localScale = new Vector3(GetHeroData.m_stat.m_range, GetHeroData.m_stat.m_range, 1f);
@@ -29,6 +33,10 @@ public class Hero : PawnBase
 
     protected override void Update()
     {
+        // Hero가 Drag 중이라면 아무것도 하지 않는다.
+        if (m_hero_drag)
+            return;
+
         base.Update();
 
         if (m_target_monster != null)
@@ -84,6 +92,17 @@ public class Hero : PawnBase
         }
 
         return m_target_monster != null;
+    }
+
+    public void OnHeroDrag(bool in_drag)
+    {
+        m_hero_drag = in_drag;
+
+        if (m_hero_drag)
+        {
+            m_target_monster = null;
+            ChangeState(FSM_STATE.Idle);
+        }
     }
 
     private void OnAttack()

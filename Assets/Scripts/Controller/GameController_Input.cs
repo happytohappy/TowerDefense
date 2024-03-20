@@ -159,6 +159,8 @@ public partial class GameController
                 Managers.UnitCam.gameObject.SetActive(true);
                 SelectHero.RangeEffect.Ex_SetActive(true);
 
+                SelectHero.OnHeroDrag(true);
+
                 if (GUI != null) 
                     GUI.DeleteUIActive(true);
             }
@@ -198,6 +200,8 @@ public partial class GameController
     {
         if (SelectHero == null)
             return;
+
+        SelectHero.OnHeroDrag(false);
 
         // 파는 곳에서 손을 뗏다면 판매
         if (RayPickUIObject && RayPickUIObject.name == UI_UNIT_REMOVE)
