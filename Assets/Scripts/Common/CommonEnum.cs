@@ -133,7 +133,12 @@ public enum Language
 public enum Type
 {
     None,
-    HUMAN,
-    SPECIES,
-    WORLD
+    Fighter,
+    Archer,
+    Warrior,
+    Assassin,
+    Magician,
+    Lancer,
+    Shooter,
+    Gladiator
 }
