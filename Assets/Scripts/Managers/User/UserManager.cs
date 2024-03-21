@@ -21,6 +21,7 @@ public class UserManager : MonoBehaviour
 
     private Dictionary<int, HeroInfo> m_dic_have_hero = new Dictionary<int, HeroInfo>();
     private Dictionary<int, List<HeroInfo>> m_dic_have_hero_group_by_tier = new Dictionary<int, List<HeroInfo>>();
+    private Dictionary<int, int> m_dic_inventory_item = new Dictionary<int, int>();
 
     // PlayerPrefab 에서 데이터 가져오기
     public void Init()
@@ -124,6 +125,14 @@ public class UserManager : MonoBehaviour
             return null;
     }
 
+    public int GetInventoryItem(int in_kind)
+    {
+        if (m_dic_inventory_item.ContainsKey(in_kind))
+            return m_dic_inventory_item[in_kind];
+        else
+            return 0;
+    }
+
     public void UpsertHero(int in_kind)
     {
         // 있는것은 레벨이 증가하는건가?
@@ -135,7 +144,18 @@ public class UserManager : MonoBehaviour
         {
             m_dic_have_hero.Add(in_kind, new HeroInfo(in_kind, 1, 1));
         }
+    }
 
+    public void UpsertInventoryItem(int in_kind, int in_amount)
+    {
+        if (m_dic_inventory_item.ContainsKey(in_kind))
+        {
+            m_dic_inventory_item[in_kind] += in_amount;
+        }
+        else
+        {
+            m_dic_inventory_item.Add(in_kind, in_amount);
+        }
     }
 
     /*

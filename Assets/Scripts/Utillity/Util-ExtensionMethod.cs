@@ -70,6 +70,14 @@ public static partial class Util
         in_text.text = in_value;
     }
 
+    public static void Ex_SetValue(this Slider in_slider, float in_value)
+    {
+        if (in_slider == null)
+            return;
+
+        in_slider.value = in_value;
+    }
+
     public static void Ex_Play(this Animator in_ani, string in_state, MonoBehaviour in_mono = null, Action in_callback = null)
     {
         in_ani.Play(in_state, -1, 0);

@@ -1,10 +1,12 @@
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class Hud_HeroInfo : MonoBehaviour
 {
     [SerializeField] private GameObject m_go_group_root = null;
     [SerializeField] private ExtentionButton m_btn_merge = null;
+    [SerializeField] private Image m_img_unit_type = null;
 
     private Vector3 m_offset = Vector3.zero;
 
@@ -24,6 +26,7 @@ public class Hud_HeroInfo : MonoBehaviour
     {
         m_offset = in_offset;
         m_go_group_root.Ex_SetActive(false);
+        m_img_unit_type.Ex_SetImage(Util.GetUnitType(Target.GetHeroData.m_info.m_kind));
     }
 
     public void ShowHeroInfo()
