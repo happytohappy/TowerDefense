@@ -45,8 +45,6 @@ public class ProjectileBase : MonoBehaviour
         {
             if (m_monster == null)
             {
-                // 버그인데..
-                Debug.LogError("ProjectileBase m_monster is Null");
                 Managers.Resource.Destroy(this.gameObject);
                 return;
             }
