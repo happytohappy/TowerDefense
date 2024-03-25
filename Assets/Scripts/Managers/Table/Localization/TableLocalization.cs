@@ -32,23 +32,23 @@ public partial class TableManager : MonoBehaviour
     public string GetLanguage(string _lanKey)
     {
         string LanStr = string.Empty;
-        var accountLanguage = Language.Kor;
+        var accountLanguage = ELanguage.Kor;
 
         switch (accountLanguage)
         {
-            case Language.Kor:
+            case ELanguage.Kor:
                 LanStr = m_dic_localization_data[_lanKey].KOR;
                 break;
-            case Language.Eng:
+            case ELanguage.Eng:
                 LanStr = m_dic_localization_data[_lanKey].ENG;
                 break;
-            case Language.Jpn:
+            case ELanguage.Jpn:
                 LanStr = m_dic_localization_data[_lanKey].JPN;
                 break;
-            case Language.Chn_S:
+            case ELanguage.Chn_S:
                 LanStr = m_dic_localization_data[_lanKey].CHN_S;
                 break;
-            case Language.Chn_T:
+            case ELanguage.Chn_T:
                 LanStr = m_dic_localization_data[_lanKey].CHN_T;
                 break;
         }

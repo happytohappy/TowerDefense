@@ -19,7 +19,7 @@ public class HeroInfoData
     public string m_path;
     public string m_name;
     public string m_desc;
-    public Type m_type;
+    public EType m_type;
     public int m_tier;
     public ERarity m_rarity;
     public string m_projectile;
@@ -117,6 +117,29 @@ public class StageWaveData
     public int m_monster_kind;
     public int m_monster_level;
     public int m_monster_spawn_count;
+}
+
+public class TreasureLevelData
+{
+    public int m_kind;
+    public int m_level;
+    public int m_item_kind;
+    public int m_grade_up_piece;
+    public int m_buff_level;
+}
+
+public class MissionInfoData
+{
+    public int m_kind;
+    public EMissionType m_mission_type;
+    public EMissionCondition m_mission_condition;
+    public int m_value_1;
+    public int m_value_2;
+    public int m_value_3;
+    public int m_reward_item_kind;
+    public int m_reward_item_amound;
+    public string m_title;
+    public string m_desc;
 }
 
 // 구글 시트 정리 대기

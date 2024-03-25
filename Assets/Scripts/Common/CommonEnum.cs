@@ -92,14 +92,6 @@ public enum EUnion
     RARITY,         // 희귀도
 }
 
-public enum EType
-{
-    NONE    = 0,    //
-    HUMAN   = 1,    // 인간
-    ORC     = 2,    // 요정
-    ELF     = 3,    // 오크
-}
-
 public enum ETier
 {
     NONE    = 0,    //
@@ -122,7 +114,7 @@ public enum ERarity
     MYTH   = 4,    // 신화
 }
 
-public enum Language
+public enum ELanguage
 {
     Kor,
     Eng,
@@ -131,7 +123,7 @@ public enum Language
     Chn_T,
 }
 
-public enum Type
+public enum EType
 {
     None,
     Fighter,
@@ -142,4 +134,26 @@ public enum Type
     Lancer,
     Shooter,
     Gladiator
+}
+
+public enum EMissionType
+{
+    STAGE,
+    ACHIEVEMENT
+}
+
+public enum EMissionCondition
+{
+    HERO_MERGE,             // 영웅 합성
+    HERO_LEVEL,             // 영웅 레벨업
+    KILL_MONSTER,           // 몬스터 처치
+    VILLAGE,                // 마을 보상 획득
+    EQUIP_MERGE,            // 장비 합성
+    GACHA_NORMAL,           // 일반 가챠
+    GACHA_PREMIUM,          // 프리미엄 가챠
+    CLEAR_INFINITE,         // 무한 모드 스테이지 달성
+    HERO_SAME,              // 같은 영웅 보유
+    HERO_DIFF,              // 서로 다른 영웅 종류 보유
+    HERO_TIER,              // 특정 티어 이상 영웅 보유
+    KILL_BOSS,              // 보스 몬스터 처치
 }

@@ -19,6 +19,8 @@ public class GoogleSheetManager : MonoBehaviour
     // Gacha_Info       1085540121
     // Gacha_Reward     397372995
     // Stage_Wave       1189025789
+    // Treasure_Level   494813664
+    // Mission_Info     866950427
 
     public void Init()
     {
@@ -32,6 +34,8 @@ public class GoogleSheetManager : MonoBehaviour
         StartCoroutine(CoRequestGoogleSheet(1085540121,     (value) => Managers.Table.SetGachaInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(397372995,      (value) => Managers.Table.SetGachaRewardData(value)));
         StartCoroutine(CoRequestGoogleSheet(1189025789,     (value) => Managers.Table.SetStageWaveData(value)));
+        StartCoroutine(CoRequestGoogleSheet(494813664,      (value) => Managers.Table.SetTreasureLevelData(value)));
+        StartCoroutine(CoRequestGoogleSheet(866950427,      (value) => Managers.Table.SetMissionInfoData(value)));
     }
 
     private IEnumerator CoRequestGoogleSheet(int in_gid, Action<string> in_call_back)

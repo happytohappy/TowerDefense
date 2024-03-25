@@ -26,8 +26,6 @@ public class UIWindowUnit : UIWindowBase
     [SerializeField] private TMP_Text m_text_gradeup = null;
     [SerializeField] private TMP_Text m_text_levelup = null;
     [SerializeField] private Slider m_slider_gradeup = null;
-    [SerializeField] private Image m_image_gradeup = null;
-    [SerializeField] private Image m_image_levelup = null;
     [SerializeField] private Image m_image_resource = null;
     [SerializeField] private Image m_img_unit_type = null;
 
@@ -126,15 +124,7 @@ public class UIWindowUnit : UIWindowBase
             {
                 m_text_gradeup.Ex_SetText($"{Managers.User.GetInventoryItem(HeroGrade.m_item_kind)}/{HeroGrade.m_grade_up_piece}");
                 m_slider_gradeup.Ex_SetValue(Managers.User.GetInventoryItem(HeroGrade.m_item_kind) / HeroGrade.m_grade_up_piece);
-
-                if (Managers.User.GetInventoryItem(HeroGrade.m_item_kind) >= HeroGrade.m_grade_up_piece)
-                {
-                    m_image_gradeup.Ex_SetImage(m_btn_gradeup.spriteState.highlightedSprite);
-                }
-                else
-                {
-                    m_image_gradeup.Ex_SetImage(m_btn_gradeup.spriteState.disabledSprite);
-                }
+                m_btn_gradeup.interactable = Managers.User.GetInventoryItem(HeroGrade.m_item_kind) >= HeroGrade.m_grade_up_piece;
             }
 
             var HeroLevel = Managers.Table.GetHeroLevelData(in_kind, hero.m_level + 1);
@@ -146,15 +136,7 @@ public class UIWindowUnit : UIWindowBase
             {
                 m_image_resource.Ex_SetImage(Util.GetResourceImage(HeroLevel.m_item_kind));
                 m_text_levelup.Ex_SetText(Util.CommaText(HeroLevel.m_item_amount));
-
-                if (Managers.User.GetInventoryItem(HeroLevel.m_item_kind) >= HeroLevel.m_item_amount)
-                {
-                    m_image_levelup.Ex_SetImage(m_btn_levelup.spriteState.highlightedSprite);
-                }
-                else
-                {
-                    m_image_levelup.Ex_SetImage(m_btn_levelup.spriteState.disabledSprite);
-                }
+                m_btn_levelup.interactable = Managers.User.GetInventoryItem(HeroLevel.m_item_kind) >= HeroLevel.m_item_amount;
             }
         }
     }
