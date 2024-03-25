@@ -160,7 +160,17 @@ public partial class GameController : MonoBehaviour
         startLand.m_hero = null;
         startLand.m_build = false;
 
-        Energy += CONST.STAGE_ENERGY_SELL;
+        switch (SelectHero.GetHeroData.m_info.m_tier)
+        {
+            case 1: Energy += CONST.STAGE_ENERGY_SELL_1; break;
+            case 2: Energy += CONST.STAGE_ENERGY_SELL_2; break;
+            case 3: Energy += CONST.STAGE_ENERGY_SELL_3; break;
+            case 4: Energy += CONST.STAGE_ENERGY_SELL_4; break;
+            case 5: Energy += CONST.STAGE_ENERGY_SELL_5; break;
+            case 6: Energy += CONST.STAGE_ENERGY_SELL_6; break;
+            case 7: Energy += CONST.STAGE_ENERGY_SELL_7; break;
+            case 8: Energy += CONST.STAGE_ENERGY_SELL_8; break;
+        }
     }
 
     public void HeroMove()

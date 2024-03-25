@@ -17,7 +17,8 @@ public enum WindowID
     UIPopupEquipment,
     UIPopupTreasure,
     UIPopupUnitBuy,
-    UIPopupIngameSkill
+    UIPopupIngameSkill,
+    UIPopupUnit
 }
 
 [System.Flags]

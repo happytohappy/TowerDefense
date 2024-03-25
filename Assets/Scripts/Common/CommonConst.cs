@@ -2,7 +2,14 @@ public static class CONST
 {
     public static int STAGE_DEFAULT_LIFE     = 5;       // 소환 시 필요한 에너지
     public static int STAGE_ENERGY_BUY       = 10;	    // 소환 시 필요한 에너지
-    public static int STAGE_ENERGY_SELL      = 5;	    // 제거 시 회수 에너지
+    public static int STAGE_ENERGY_SELL_1    = 5;	    // 1티어 제거 시 회수 에너지
+    public static int STAGE_ENERGY_SELL_2    = 7;	    // 2티어 제거 시 회수 에너지
+    public static int STAGE_ENERGY_SELL_3    = 9;	    // 3티어 제거 시 회수 에너지
+    public static int STAGE_ENERGY_SELL_4    = 11;	    // 4티어 제거 시 회수 에너지
+    public static int STAGE_ENERGY_SELL_5    = 13;	    // 5티어 제거 시 회수 에너지
+    public static int STAGE_ENERGY_SELL_6    = 15;	    // 6티어 제거 시 회수 에너지
+    public static int STAGE_ENERGY_SELL_7    = 17;	    // 7티어 제거 시 회수 에너지
+    public static int STAGE_ENERGY_SELL_8    = 19;	    // 8티어 제거 시 회수 에너지
     public static int BUFF_FIRST_KIND        = 1000;	// 인게임에서 구매 가능한 첫 번째 버프 KIND
     public static int BUFF_FIRST_RESOURCE    = 2;	    // 첫 번째 버프 구매 리소스
     public static int BUFF_FIRST_PRICE       = 20;	    // 첫 번째 버프 구매 가격

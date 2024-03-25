@@ -13,6 +13,7 @@ public class UIWindowBase : MonoBehaviour
 
     public virtual void OpenUI(WindowParam wp)
     {
+        this.gameObject.SetActive(true);
         this.transform.SetAsLastSibling();
         this.Window_Param = wp;
     }

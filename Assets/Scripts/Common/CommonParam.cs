@@ -16,3 +16,8 @@ public class InGameSkillParam : WindowParam
 {
     public int m_index = 0;
 }
+
+public class UnitInfoParam : WindowParam
+{
+    public int m_kind = 0;
+}

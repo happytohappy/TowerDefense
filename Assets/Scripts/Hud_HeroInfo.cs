@@ -45,7 +45,12 @@ public class Hud_HeroInfo : MonoBehaviour
 
     public void OnClickInfo()
     {
-        Debug.LogError("OnClickInfo");
+        UnitInfoParam param = new UnitInfoParam();
+        param.m_kind = Target.GetHeroData.m_info.m_kind;
+
+        Managers.UI.OpenWindow(WindowID.UIPopupUnit, param);
+
+        //GameController.GetInstance.InputInit();
     }
 
     public void OnClickMerge()

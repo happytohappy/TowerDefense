@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public partial class GameController
 {
     private const string UI_UNIT_REMOVE = "Btn_UnitRemove";
+    private const string UI_UNIT_INFO   = "Btn_Info";
     private const string UI_UNIT_MERGE  = "Btn_Merge";
 
     // UI Ray
@@ -42,15 +43,11 @@ public partial class GameController
         {
             InputType = EInputType.None;
 
-            // 머지 버튼을 눌럿다면 초기화를 버튼에서 한다.
-            if (RayPickUIObject && RayPickUIObject.name == UI_UNIT_MERGE)
+            if (RayPickUIObject)
                 return;
 
             // 초기화
             InputInit();
-
-            if (RayPickUIObject)
-                return;
 
             InputType = EInputType.Click;
         }
@@ -107,7 +104,7 @@ public partial class GameController
 
         if (GUI != null)
         {
-            GUI.DeleteUIActive(false);
+            GUI.DeleteUIActive(false, 0);
         }
 
         if (SelectHero != null)
@@ -162,7 +159,7 @@ public partial class GameController
                 SelectHero.OnHeroDrag(true);
 
                 if (GUI != null) 
-                    GUI.DeleteUIActive(true);
+                    GUI.DeleteUIActive(true, SelectHero.GetHeroData.m_info.m_tier);
             }
         }
     }

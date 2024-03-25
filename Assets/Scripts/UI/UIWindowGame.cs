@@ -3,12 +3,13 @@ using TMPro;
 
 public class UIWindowGame : UIWindowBase
 {
-    [SerializeField] private TMP_Text m_gold;
     [SerializeField] private GameObject m_create;
     [SerializeField] private GameObject m_upgrade;
     [SerializeField] private GameObject m_delete;
     [SerializeField] private GameObject m_next_wave;
-    [SerializeField] private TMP_Text m_txt_next_wave;
+    [SerializeField] private TMP_Text m_text_unit_spawn;
+    [SerializeField] private TMP_Text m_text_remove_tier;
+    [SerializeField] private TMP_Text m_text_remove_energy;
 
     public override void Awake()
     {
@@ -30,19 +31,27 @@ public class UIWindowGame : UIWindowBase
 
     public void SetEnergy(int in_energy)
     {
-        m_txt_next_wave.text = $"{in_energy} / {CONST.STAGE_ENERGY_BUY}";
+        m_text_unit_spawn.text = $"{in_energy} / {CONST.STAGE_ENERGY_BUY}";
     }
 
-    public void SetGold(int in_gold)
+    public void DeleteUIActive(bool in_active, int in_tier)
     {
-        if (in_gold == 0)
-            m_gold.text = "0";
-        else
-            m_gold.text = Util.CommaText(in_gold);
-    }
+        if (in_active)
+        {
+            m_text_remove_tier.Ex_SetText($"Tier {in_tier}");
+            switch (in_tier)
+            {
+                case 1: m_text_remove_energy.Ex_SetText($"{CONST.STAGE_ENERGY_SELL_1}"); break;
+                case 2: m_text_remove_energy.Ex_SetText($"{CONST.STAGE_ENERGY_SELL_2}"); break;
+                case 3: m_text_remove_energy.Ex_SetText($"{CONST.STAGE_ENERGY_SELL_3}"); break;
+                case 4: m_text_remove_energy.Ex_SetText($"{CONST.STAGE_ENERGY_SELL_4}"); break;
+                case 5: m_text_remove_energy.Ex_SetText($"{CONST.STAGE_ENERGY_SELL_5}"); break;
+                case 6: m_text_remove_energy.Ex_SetText($"{CONST.STAGE_ENERGY_SELL_6}"); break;
+                case 7: m_text_remove_energy.Ex_SetText($"{CONST.STAGE_ENERGY_SELL_7}"); break;
+                case 8: m_text_remove_energy.Ex_SetText($"{CONST.STAGE_ENERGY_SELL_8}"); break;
+            }
+        }
 
-    public void DeleteUIActive(bool in_active)
-    {
         m_delete.SetActive(in_active);
     }
 

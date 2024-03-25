@@ -75,13 +75,11 @@ public class UIWindowManager : MonoBehaviour
             return;
 
         var closeWindow = llist_Window.Last.Value;
+        closeWindow.gameObject.SetActive(false);
 
         llist_Window.RemoveLast();
         if (absolute || (closeWindow.Window_Mode & WindowMode.WindowJustClose) == WindowMode.WindowJustClose)
-        {
-            closeWindow.gameObject.SetActive(false);
             return;
-        }
 
         LinkedListNode<UIWindowBase> lastNode = llist_Window.Last;
         UIWindowBase openWindow = lastNode.Value;

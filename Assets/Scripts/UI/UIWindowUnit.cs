@@ -38,7 +38,7 @@ public class UIWindowUnit : UIWindowBase
     public override void Awake()
     {
         Window_ID = WindowID.UIWindowUnit;
-        Window_Mode = WindowMode.WindowOverlay | WindowMode.WindowJustClose;
+        Window_Mode = WindowMode.WindowClose;
 
         base.Awake();
     }
