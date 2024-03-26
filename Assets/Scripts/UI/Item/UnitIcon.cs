@@ -68,6 +68,20 @@ public class UnitIcon : MonoBehaviour
         m_go_red_dot.Ex_SetActive(false);
     }
 
+    public void SetSimpleUnit(int in_kind, ERarity in_rarity, int in_grade, int in_level)
+    {
+        m_kind = in_kind;
+        m_go_select.Ex_SetActive(false);
+        Util.SetGradeStar(m_list_star, in_grade);
+        m_img_unit.Ex_SetColor(Color.white);
+        m_img_unit.Ex_SetImage(Util.GetHeroImage(in_kind));
+        m_img_unit_type.Ex_SetImage(Util.GetUnitType(in_kind));
+        Util.SetRarityBG(m_img_grade_bg, in_rarity);
+        m_go_lock.Ex_SetActive(false);
+        m_text_level.Ex_SetText($"Lv.{in_level}");
+        m_go_red_dot.Ex_SetActive(false);
+    }
+
     public void OnClickHeroInfo()
     {
         var ui = Managers.UI.GetWindow(WindowID.UIWindowUnit, false) as UIWindowUnit;

@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 5945059275911187058}
   - component: {fileID: 2210631534792400325}
   - component: {fileID: 7680151503893751429}
+  - component: {fileID: 1383234031767595198}
   m_Layer: 5
   m_Name: Slot_PopupSynergy
   m_TagString: Untagged
@@ -146,6 +147,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1383234031767595198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3328205935294316179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47ee570a549f0ff4d9104a4d2c2f0537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_trs_root: {fileID: 466401549131489228}
+  m_Image_hero_type: {fileID: 808154778812840275}
+  m_text_synergy: {fileID: 8031563125633364743}
+  m_text_synergy_buff: {fileID: 4632898170501332087}
 --- !u!1 &5030224747085107529
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +333,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38
+  m_fontSize: 18
   m_fontSizeBase: 38
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -631,7 +648,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38
+  m_fontSize: 18
   m_fontSizeBase: 38
   m_fontWeight: 400
   m_enableAutoSizing: 1

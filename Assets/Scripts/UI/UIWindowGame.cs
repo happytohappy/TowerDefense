@@ -101,7 +101,7 @@ public class UIWindowGame : UIWindowBase
 
     public void OnClickSynergy()
     {
-
+        Managers.UI.OpenWindow(WindowID.UIPopupSynergy);
     }
     
     public void OnCheckHeroSynergy()
@@ -109,10 +109,16 @@ public class UIWindowGame : UIWindowBase
         SynergyUIClear();
 
         Dictionary<EHeroType, int> DicSynergy = new Dictionary<EHeroType, int>();
+        HashSet<int> useHeroKind = new HashSet<int>();
 
         var HeroLand = GameController.GetInstance.LandInfo.FindAll(x => x.m_build).ToList();
         foreach (var e in HeroLand)
         {
+            if (useHeroKind.Contains(e.m_hero.GetHeroData.m_info.m_kind))
+                continue;
+
+            useHeroKind.Add(e.m_hero.GetHeroData.m_info.m_kind);
+
             var heroType = e.m_hero.GetHeroData.m_info.m_type;
             if (DicSynergy.ContainsKey(heroType))
                 DicSynergy[heroType]++;
