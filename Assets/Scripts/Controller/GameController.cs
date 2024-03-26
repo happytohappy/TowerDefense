@@ -276,4 +276,22 @@ public partial class GameController : MonoBehaviour
         LandInfo.Clear();
         Monsters.Clear();
     }
+
+
+    public Dictionary<EHeroType, int> GetHeroTypeCount()
+    {
+        Dictionary<EHeroType, int> result = new Dictionary<EHeroType, int>();
+
+        var HeroLand = LandInfo.FindAll(x => x.m_build).ToList();
+        foreach (var e in HeroLand)
+        {
+            var heroType = e.m_hero.GetHeroData.m_info.m_type;
+            if (result.ContainsKey(heroType))
+                result[heroType]++;
+            else
+                result.Add(heroType, 1);
+        }
+
+        return result;
+    }
 }

@@ -51,18 +51,11 @@ public class Slot_PopupSynergy : MonoBehaviour
 
         m_text_synergy_buff.Ex_SetText("ÀÛ¾÷Áß");
 
-        HashSet<int> useHeroKind = new HashSet<int>();
-
         var HeroLand = GameController.GetInstance.LandInfo.FindAll(x => x.m_build).ToList();
         foreach (var e in HeroLand)
         {
             if (e.m_hero.GetHeroData.m_info.m_type == in_type)
             {
-                if (useHeroKind.Contains(e.m_hero.GetHeroData.m_info.m_kind))
-                    continue;
-
-                useHeroKind.Add(e.m_hero.GetHeroData.m_info.m_kind);
-
                 var go = Managers.Resource.Instantiate(SLOT_POPUP_SYNERGY_UNIT_ICON_PATH, Vector3.zero, m_trs_root);
                 go.transform.SetAsFirstSibling();
 
