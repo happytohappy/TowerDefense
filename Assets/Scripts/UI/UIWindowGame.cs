@@ -30,7 +30,7 @@ public class UIWindowGame : UIWindowBase
         m_next_wave.Ex_SetActive(false);
 
         SetEnergy(100);
-        RefreshUI();
+        SynergyUIClear();
     }
 
     public void SetEnergy(int in_energy)
@@ -38,9 +38,9 @@ public class UIWindowGame : UIWindowBase
         m_text_unit_spawn.text = $"{in_energy} / {CONST.STAGE_ENERGY_BUY}";
     }
 
-    private void RefreshUI()
+    private void SynergyUIClear()
     {
-        for (int i = 0; i < m_tr_synergy_root.childCount; i++)
+        for (int i = 1; i < m_tr_synergy_root.childCount; i++)
             Managers.Resource.Destroy(m_tr_synergy_root.GetChild(i).gameObject);
     }
 
@@ -106,6 +106,8 @@ public class UIWindowGame : UIWindowBase
     
     public void OnCheckHeroSynergy()
     {
+        SynergyUIClear();
+
         Dictionary<EHeroType, int> DicSynergy = new Dictionary<EHeroType, int>();
 
         var HeroLand = GameController.GetInstance.LandInfo.FindAll(x => x.m_build).ToList();
