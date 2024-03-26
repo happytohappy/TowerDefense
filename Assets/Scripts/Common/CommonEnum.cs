@@ -123,7 +123,7 @@ public enum ELanguage
     Chn_T,
 }
 
-public enum EType
+public enum EHeroType
 {
     None,
     Fighter,

@@ -136,6 +136,8 @@ public partial class GameController : MonoBehaviour
         EndLand.m_build = false;
 
         HeroSpawn(ESpawnType.Merge, nextTier, EndLand);
+
+        GUI.OnCheckHeroSynergy();
     }
 
     public void HeroSwap()
@@ -171,6 +173,8 @@ public partial class GameController : MonoBehaviour
             case 7: Energy += CONST.STAGE_ENERGY_SELL_7; break;
             case 8: Energy += CONST.STAGE_ENERGY_SELL_8; break;
         }
+
+        GUI.OnCheckHeroSynergy();
     }
 
     public void HeroMove()
@@ -244,6 +248,8 @@ public partial class GameController : MonoBehaviour
             m_first_hero_spawn = false;
             GUI.NextWaveActive();
         }
+
+        GUI.OnCheckHeroSynergy();
     }
 
     public void AllDestory()

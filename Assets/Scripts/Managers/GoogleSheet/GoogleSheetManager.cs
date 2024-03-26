@@ -21,6 +21,7 @@ public class GoogleSheetManager : MonoBehaviour
     // Stage_Wave       1189025789
     // Treasure_Level   494813664
     // Mission_Info     866950427
+    // Synergy_Info     1669999714
 
     public void Init()
     {
@@ -36,6 +37,7 @@ public class GoogleSheetManager : MonoBehaviour
         StartCoroutine(CoRequestGoogleSheet(1189025789,     (value) => Managers.Table.SetStageWaveData(value)));
         StartCoroutine(CoRequestGoogleSheet(494813664,      (value) => Managers.Table.SetTreasureLevelData(value)));
         StartCoroutine(CoRequestGoogleSheet(866950427,      (value) => Managers.Table.SetMissionInfoData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1669999714,     (value) => Managers.Table.SetSynergyInfoData(value)));
     }
 
     private IEnumerator CoRequestGoogleSheet(int in_gid, Action<string> in_call_back)

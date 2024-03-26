@@ -239,14 +239,14 @@ public static partial class Util
         string resourceName = string.Empty;
         switch (heroInfo.m_type)
         {
-            case EType.Fighter: resourceName = "Icon_HeroType_Fighter"; break;
-            case EType.Archer: resourceName = "Icon_HeroType_Archer"; break;
-            case EType.Warrior: resourceName = "Icon_HeroType_Warrior"; break;
-            case EType.Assassin: resourceName = "Icon_HeroType_Assassin"; break;
-            case EType.Magician: resourceName = "Icon_HeroType_Magician"; break;
-            case EType.Lancer: resourceName = "Icon_HeroType_Lancer"; break;
-            case EType.Shooter: resourceName = "Icon_HeroType_Shooter"; break;
-            case EType.Gladiator: resourceName = "Icon_HeroType_Gladiator"; break;
+            case EHeroType.Fighter: resourceName = "Icon_HeroType_Fighter"; break;
+            case EHeroType.Archer: resourceName = "Icon_HeroType_Archer"; break;
+            case EHeroType.Warrior: resourceName = "Icon_HeroType_Warrior"; break;
+            case EHeroType.Assassin: resourceName = "Icon_HeroType_Assassin"; break;
+            case EHeroType.Magician: resourceName = "Icon_HeroType_Magician"; break;
+            case EHeroType.Lancer: resourceName = "Icon_HeroType_Lancer"; break;
+            case EHeroType.Shooter: resourceName = "Icon_HeroType_Shooter"; break;
+            case EHeroType.Gladiator: resourceName = "Icon_HeroType_Gladiator"; break;
         }
 
         return Managers.Sprite.GetSprite(resourceName);

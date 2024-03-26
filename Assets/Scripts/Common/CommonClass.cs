@@ -19,7 +19,7 @@ public class HeroInfoData
     public string m_path;
     public string m_name;
     public string m_desc;
-    public EType m_type;
+    public EHeroType m_type;
     public int m_tier;
     public ERarity m_rarity;
     public string m_projectile;
@@ -138,6 +138,18 @@ public class MissionInfoData
     public int m_value_3;
     public int m_reward_item_kind;
     public int m_reward_item_amound;
+    public string m_title;
+    public string m_desc;
+}
+
+public class SynergyInfoData
+{
+    public int m_kind;
+    public EHeroType m_hero_type;
+    public int m_count;
+    public int m_buff_kind;
+    public int m_buff_level;
+    public string m_icon;
     public string m_title;
     public string m_desc;
 }

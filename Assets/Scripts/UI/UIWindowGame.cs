@@ -1,15 +1,18 @@
 using UnityEngine;
+using System.Linq;
+using System.Collections.Generic;
 using TMPro;
 
 public class UIWindowGame : UIWindowBase
 {
-    [SerializeField] private GameObject m_create;
-    [SerializeField] private GameObject m_upgrade;
+    private const string SLOT_SYNERGY_PATH = "UI/Item/Slot_Synergy";
+
     [SerializeField] private GameObject m_delete;
     [SerializeField] private GameObject m_next_wave;
     [SerializeField] private TMP_Text m_text_unit_spawn;
     [SerializeField] private TMP_Text m_text_remove_tier;
     [SerializeField] private TMP_Text m_text_remove_energy;
+    [SerializeField] private Transform m_tr_synergy_root;
 
     public override void Awake()
     {
@@ -27,11 +30,18 @@ public class UIWindowGame : UIWindowBase
         m_next_wave.Ex_SetActive(false);
 
         SetEnergy(100);
+        RefreshUI();
     }
 
     public void SetEnergy(int in_energy)
     {
         m_text_unit_spawn.text = $"{in_energy} / {CONST.STAGE_ENERGY_BUY}";
+    }
+
+    private void RefreshUI()
+    {
+        for (int i = 0; i < m_tr_synergy_root.childCount; i++)
+            Managers.Resource.Destroy(m_tr_synergy_root.GetChild(i).gameObject);
     }
 
     public void DeleteUIActive(bool in_active, int in_tier)
@@ -89,18 +99,30 @@ public class UIWindowGame : UIWindowBase
         Managers.UI.OpenWindow(WindowID.UIPopupIngameSkill, param);
     }
 
-    //public void OnClickCreate()
-    //{
-    //    GameController.GetInstance.OnCreate();
-    //}
+    public void OnClickSynergy()
+    {
 
-    //public void OnClickUpgrade()
-    //{
-    //    GameController.GetInstance.OnUpgrade();
-    //}
+    }
+    
+    public void OnCheckHeroSynergy()
+    {
+        Dictionary<EHeroType, int> DicSynergy = new Dictionary<EHeroType, int>();
 
-    //public void OnClickDelete()
-    //{
-    //    GameController.GetInstance.OnDelete();
-    //}
+        var HeroLand = GameController.GetInstance.LandInfo.FindAll(x => x.m_build).ToList();
+        foreach (var e in HeroLand)
+        {
+            var heroType = e.m_hero.GetHeroData.m_info.m_type;
+            if (DicSynergy.ContainsKey(heroType))
+                DicSynergy[heroType]++;
+            else
+                DicSynergy.Add(heroType, 1);
+        }
+
+        foreach (var e in DicSynergy)
+        {
+            var slotSynergy = Managers.Resource.Instantiate(SLOT_SYNERGY_PATH, Vector3.zero, m_tr_synergy_root);
+            var sc = slotSynergy.GetComponent<Slot_Synergy>();
+            sc.SetSynergy(e.Key, e.Value);
+        }
+    }
 }

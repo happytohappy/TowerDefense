@@ -111,22 +111,7 @@ public class UIPopupUnit : UIWindowBase
     public void OnClickUnitRemove()
     {
         GameController.GetInstance.HeroSell();
-        //var heroInfo = Managers.Table.GetHeroInfoData(m_kind);
-        //if (heroInfo == null)
-        //    return;
-
-        //switch (heroInfo.m_tier)
-        //{
-        //    case 1: GameController.GetInstance.Energy += CONST.STAGE_ENERGY_SELL_1; break;
-        //    case 2: GameController.GetInstance.Energy += CONST.STAGE_ENERGY_SELL_2; break;
-        //    case 3: GameController.GetInstance.Energy += CONST.STAGE_ENERGY_SELL_3; break;
-        //    case 4: GameController.GetInstance.Energy += CONST.STAGE_ENERGY_SELL_4; break;
-        //    case 5: GameController.GetInstance.Energy += CONST.STAGE_ENERGY_SELL_5; break;
-        //    case 6: GameController.GetInstance.Energy += CONST.STAGE_ENERGY_SELL_6; break;
-        //    case 7: GameController.GetInstance.Energy += CONST.STAGE_ENERGY_SELL_7; break;
-        //    case 8: GameController.GetInstance.Energy += CONST.STAGE_ENERGY_SELL_8; break;
-        //}
-
+        
         OnClickClose();
     }
 
@@ -140,6 +125,9 @@ public class UIPopupUnit : UIWindowBase
         GameController.GetInstance.EndLand = SelectLand;
         GameController.GetInstance.SelectHero = SameHero[UnityEngine.Random.Range(0, SameHero.Count)].m_hero;
         GameController.GetInstance.HeroMerge();
+
+        var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
+        gui.OnCheckHeroSynergy();
 
         OnClickClose();
     }

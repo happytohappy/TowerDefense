@@ -13,6 +13,11 @@ public partial class TableManager
         m_dic_mission_info_data.Clear();
     }
 
+    public Dictionary<int, MissionInfoData> GetAllMissionInfoData()
+    {
+        return m_dic_mission_info_data;
+    }
+
     public MissionInfoData GetMissionInfoData(int in_kind)
     {
         if (m_dic_mission_info_data.ContainsKey(in_kind))

@@ -1004,6 +1004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4600021527567553033}
   - component: {fileID: 1638193183819754046}
+  - component: {fileID: 5143469806392169086}
   m_Layer: 5
   m_Name: Layout_Synergy
   m_TagString: Untagged
@@ -1029,7 +1030,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 204, y: 115}
-  m_SizeDelta: {x: 400, y: 680}
+  m_SizeDelta: {x: 400, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1638193183819754046
 MonoBehaviour:
@@ -1057,6 +1058,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &5143469806392169086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914944093425046471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &1932471304923151286
 GameObject:
   m_ObjectHideFlags: 0
@@ -3586,13 +3601,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50fe94d8926818e4cb68c1c54b3c1e58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_create: {fileID: 0}
-  m_upgrade: {fileID: 0}
   m_delete: {fileID: 1876289551836037290}
   m_next_wave: {fileID: 4951665037390373878}
   m_text_unit_spawn: {fileID: 7887716362258862499}
   m_text_remove_tier: {fileID: 1396486912425008288}
   m_text_remove_energy: {fileID: 7197792531379445347}
+  m_tr_synergy_root: {fileID: 4600021527567553033}
 --- !u!114 &7787921637329956794
 MonoBehaviour:
   m_ObjectHideFlags: 0

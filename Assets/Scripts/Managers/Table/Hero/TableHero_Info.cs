@@ -18,7 +18,7 @@ public partial class TableManager
             HeroInfoData.m_path = words[1];
             HeroInfoData.m_name = words[2];
             HeroInfoData.m_desc = words[3];
-            HeroInfoData.m_type = (EType)Enum.Parse(typeof(EType), words[4]);
+            HeroInfoData.m_type = (EHeroType)Enum.Parse(typeof(EHeroType), words[4]);
             HeroInfoData.m_tier = int.Parse(words[5]);
             HeroInfoData.m_rarity = (ERarity)Enum.Parse(typeof(ERarity), words[6]);
 

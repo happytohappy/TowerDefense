@@ -49,8 +49,6 @@ public class Hud_HeroInfo : MonoBehaviour
         param.m_kind = Target.GetHeroData.m_info.m_kind;
 
         Managers.UI.OpenWindow(WindowID.UIPopupUnit, param);
-
-        //GameController.GetInstance.InputInit();
     }
 
     public void OnClickMerge()
@@ -65,5 +63,8 @@ public class Hud_HeroInfo : MonoBehaviour
         GameController.GetInstance.HeroMerge();
 
         GameController.GetInstance.InputInit();
+
+        var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
+        gui.OnCheckHeroSynergy();
     }
 }
