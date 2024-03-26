@@ -122,6 +122,9 @@ public class UIWindowGame : UIWindowBase
 
         foreach (var e in DicSynergy)
         {
+            if (Managers.Table.GetEnableSynergy(e.Key, e.Value) == false)
+                continue;
+
             var slotSynergy = Managers.Resource.Instantiate(SLOT_SYNERGY_PATH, Vector3.zero, m_tr_synergy_root);
             var sc = slotSynergy.GetComponent<Slot_Synergy>();
             sc.SetSynergy(e.Key, e.Value);

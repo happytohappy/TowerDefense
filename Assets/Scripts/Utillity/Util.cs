@@ -236,8 +236,13 @@ public static partial class Util
         if (heroInfo == null)
             return null;
 
+        return GetUnitType(heroInfo.m_type);
+    }
+
+    public static Sprite GetUnitType(EHeroType in_type)
+    {
         string resourceName = string.Empty;
-        switch (heroInfo.m_type)
+        switch (in_type)
         {
             case EHeroType.Fighter: resourceName = "Icon_HeroType_Fighter"; break;
             case EHeroType.Archer: resourceName = "Icon_HeroType_Archer"; break;

@@ -54,6 +54,11 @@ public partial class TableManager
             }
 
             m_dic_synergy_info_data.Add(tableData.m_kind, tableData);
+
+            if (m_dic_synergy_info_data_by_hero_type.ContainsKey(tableData.m_hero_type))
+                m_dic_synergy_info_data_by_hero_type[tableData.m_hero_type].Add(tableData);
+            else
+                m_dic_synergy_info_data_by_hero_type.Add(tableData.m_hero_type, new List<SynergyInfoData>() { tableData });
         }
     }
 }
