@@ -65,25 +65,45 @@ public enum ESpawnType
 
 public enum EBuff
 {
-    BUFF_ALLY_CHARGE_ENERGY,                    // 에너지 충전
-    BUFF_ALLY_INCREASE_DAMAGE_ALL,              // 아군 전체 공격력 증가
-    BUFF_ALLY_INCREASE_DAMAGE_SOLO,             // 자기 자신 공격력 증가
-    BUFF_ALLY_INCREASE_SPEED_ALL,               // 아군 전체 공격 속도 증가
-    BUFF_ALLY_INCREASE_SPEED_SOLO,              // 자기 자신 공격 속도 증가
-    BUFF_ALLY_INCREASE_RANGE_ALL,               // 아군 전체 공격 범위 증가
-    BUFF_ALLY_INCREASE_RANGE_SOLO,              // 자기 자신 공격 범위 증가
-    BUFF_ALLY_INCREASE_CRITICAL_ALL,            // 아군 전체 치명타 증가
-    BUFF_ALLY_INCREASE_CRITICAL_SOLO,           // 자기 자신 치명타 증가
-    BUFF_ALLY_INCREASE_CRITCHANCE_ALL,          // 아군 전체 치명타율 증가
-    BUFF_ALLY_INCREASE_CRITCHANCE_SOLO,         // 자기 자신 치명타율 증가
-    BUFF_ALLY_INCREASE_BOSSDAMAGE_ALL,          // 아군 전체 보스 대상 공격력 증가
-    BUFF_ALLY_INCREASE_BOSSDAMAGE_SOLO,         // 자기 자신 보스 대상 공격력 증가
-    BUFF_ENEMY_DECREASE_DEFENSE_ALL,            // 적 전체 방어력 감소
-    BUFF_ENEMY_DECREASE_DEFENSE_SOLO,           // 피격당한 적 방어력 감소
-    BUFF_ENEMY_EFFECT_STUN_ALL,                 // 적 전체 기절 효과
-    BUFF_ENEMY_EFFECT_STUN_SOLO,                // 피격당한 적 기절 효과
-    BUFF_ENEMY_EFFECT_SLOW_ALL,                 // 적 전체 슬로우 효과
-    BUFF_ENEMY_EFFECT_SLOW_SOLO,                // 피격당한 적 슬로우 효과
+    BUFF_ALLY_INCREASE_DAMAGE,              // 아군 전체 공격력 증가
+    BUFF_OWN_INCREASE_DAMAGE,               // 자기 자신 공격력 증가
+    BUFF_ALLY_INCREASE_SPEED,               // 아군 전체 공격 속도 증가
+    BUFF_OWN_INCREASE_SPEED,                // 자기 자신 공격 속도 증가
+    BUFF_ALLY_INCREASE_RANGE,               // 아군 전체 공격 범위 증가
+    BUFF_OWN_INCREASE_RANGE,                // 자기 자신 공격 범위 증가
+    BUFF_ALLY_INCREASE_BOSS,                // 아군 전체 보스 공격력 증가
+    BUFF_OWN_INCREASE_BOSS,                 // 자기 자신 보스 공격력 증가
+    BUFF_ALLY_INCREASE_CRITICAL,            // 아군 전체 치명타 공격력 증가
+    BUFF_OWN_INCREASE_CRITICAL,             // 자기 자신 치명타 공격력 증가
+    BUFF_ALLY_INCREASE_CHANCE,              // 아군 전체 치명타 확률 증가
+    BUFF_OWN_INCREASE_CHANCE,               // 자기 자신 치명타 확률 증가
+    BUFF_ENEMY_DECREASE_DEF,                // 적 전체 방어력 감소
+    BUFF_SOLO_DECREASE_DEF,                 // 적 단일 방어력 감소
+    BUFF_ENEMY_DECREASE_HP,                 // 적 전체 체력 감소
+    BUFF_SOLO_DECREASE_HP,                  // 적 단일 체력 감소
+    BUFF_ENEMY_DECREASE_SPEED,              // 적 전체 이동 속도 감소
+    BUFF_SOLO_DECREASE_SPEED,               // 적 단일 이동 속도 감소
+    BUFF_ENEMY_STUN,                        // 적 전체 기절
+    BUFF_SOLO_STUN,                         // 적 단일 기절
+    BUFF_ENERGY_KILL,                       // 적 처치 시 에너지 추가 획득
+    BUFF_MERGE_EQUIP,                       // 장비 합성 성공 확률 증가
+    BUFF_REWARD_BOSS,                       // 보스 처치 보상 증가
+    BUFF_ENERGY_ROUND,                      // 라운드 종료 시 에너지 추가 획득
+    BUFF_MAKE_TIER_2,                       // 유닛 생성 시 2티어 유닛 생성
+    BUFF_MORE_EQUIP,                        // 유닛 착용 장비 제한
+    BUFF_REWARD_MISSION_STAGE,              // 스테이지 미션 보상 증가
+    BUFF_REWARD_GOLD_STAGE,                 // 스테이지 종료 골드 보상 증가
+    BUFF_MORE_LIFE_START_STAGE,             // 게임 시작 시 추가 라이프 획득
+    BUFF_EARN_LIFE_WAVE,                    // 10 웨이브 클리어 시 마다 라이프 획득
+    BUFF_MORE_ENERGY_START_STAGE,           // 게임 시작 시 추가 에너지
+    BUFF_MORE_MISSION_START_STAGE,          // 스테이지 미션 개수 추가
+    BUFF_GET_HERO_HIGHER,                   // 유닛 합성 시 한 단계 높은 티어 유닛 획득
+    BUFF_ENEMY_DECREASE_SPEED_PLUS,         // 적 이동 속도 디버프 추가 값(보물용)
+    BUFF_ENEMY_DECREASE_SPEED_TIME_PLUS,    // 적 이동 속도 디버프 시간 추가 값(보물용)
+    BUFF_ENEMY_STUN_TIME_PLUS,              // 적 기절 디버프 시간 추가 값(보물용)
+    BUFF_ALLY_INCREASE_BOSS_PLUS,           // 아군 전체 보스 공격력 증가 버프 추가 값(보물용)
+    BUFF_ALLY_INCREASE_DAMAGE_PLUS,         // 아군 전체 공격력 증가 버프 추가 값(보물용)
+    BUFF_ALLY_INCREASE_CRITICAL_PLUS,       // 아군 전체 치명타 공격력 증가 버프 추가 값(보물용)
 }
 
 public enum EUnion

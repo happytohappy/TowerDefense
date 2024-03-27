@@ -37,11 +37,16 @@ public class UIPopupSynergy : UIWindowBase
             Managers.Resource.Destroy(m_trs_root.GetChild(i).gameObject);
 
         var dicSynergy = GameController.GetInstance.GetHeroTypeCount();
-        foreach (var e in dicSynergy)
+
+        foreach (var e in Managers.Table.GetSynergyAllInfoDataList())
         {
+            var count = 0;
+            if (dicSynergy.ContainsKey(e.Key))
+                count = dicSynergy[e.Key];
+
             var go = Managers.Resource.Instantiate(SLOT_POPUP_SYNERGY_PATH, Vector3.zero, m_trs_root);
             var sc = go.GetComponent<Slot_PopupSynergy>();
-            sc.SetData(e.Key, e.Value);
+            sc.SetData(e.Key, e.Value, count);
         }
     }
 }

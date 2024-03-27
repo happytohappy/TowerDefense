@@ -2,8 +2,8 @@
 
 public partial class TableManager
 {
-    public Dictionary<int, SynergyInfoData> m_dic_synergy_info_data  = new Dictionary<int, SynergyInfoData>();
-    public Dictionary<EHeroType, List<SynergyInfoData>> m_dic_synergy_info_data_by_hero_type  = new Dictionary<EHeroType, List<SynergyInfoData>>();
+    private Dictionary<int, SynergyInfoData> m_dic_synergy_info_data  = new Dictionary<int, SynergyInfoData>();
+    private Dictionary<EHeroType, List<SynergyInfoData>> m_dic_synergy_info_data_by_hero_type  = new Dictionary<EHeroType, List<SynergyInfoData>>();
 
     private void InitSynergyTable()
     {
@@ -20,6 +20,11 @@ public partial class TableManager
             return m_dic_synergy_info_data[in_kind];
         else
             return null;
+    }
+
+    public Dictionary<EHeroType, List<SynergyInfoData>> GetSynergyAllInfoDataList()
+    {
+        return m_dic_synergy_info_data_by_hero_type;
     }
 
     public List<SynergyInfoData> GetSynergyInfoDataList(EHeroType in_hero_type)

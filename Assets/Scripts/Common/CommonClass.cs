@@ -154,11 +154,11 @@ public class SynergyInfoData
     public string m_desc;
 }
 
-// 구글 시트 정리 대기
 public class BuffInfoData
 {
     public int m_kind;
     public EBuff m_buff;
+    public string m_desc;
     public string m_comment;
 }
 
@@ -168,6 +168,5 @@ public class BuffLevelData
     public int m_level;
     public int m_rate;
     public float m_time;
-    public float m_width;
+    public float m_value;
 }
-
