@@ -25,11 +25,19 @@ public class UIWindowGameResult : UIWindowBase
 
     public void OnClickRetry()
     {
-        Debug.LogError("OnClickRetry");
+        Time.timeScale = 1;
+
+        Managers.UI.Clear();
+
+        Managers.UI.OpenWindow(WindowID.UIWindowGame);
+
+        GameController.GetInstance.StageInit();
     }
 
     public void OnClickCancel()
     {
+        Time.timeScale = 1;
+
         GameController.GetInstance.AllDestory();
 
         Managers.UI.Clear();
@@ -41,6 +49,8 @@ public class UIWindowGameResult : UIWindowBase
 
     public void OnClickNext()
     {
+        Time.timeScale = 1;
+
         Debug.LogError("OnClickNext");
     }
 }

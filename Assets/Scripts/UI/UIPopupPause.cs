@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class UIPopupPause : UIWindowBase
 {
     public override void Awake()
@@ -11,11 +13,15 @@ public class UIPopupPause : UIWindowBase
     public override void OpenUI(WindowParam wp)
     {
         base.OpenUI(wp);
+
+        Time.timeScale = 0;
     }
 
     public void OnClickContinue()
     {
         Managers.UI.CloseLast();
+
+        Time.timeScale = 1;
     }
 
     public void OnClickExit()

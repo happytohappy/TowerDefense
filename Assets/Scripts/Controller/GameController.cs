@@ -102,18 +102,28 @@ public partial class GameController : MonoBehaviour
 
     private void Start()
     {
-        m_first_hero_spawn = true;
-        m_energy = 100;
-
-        LandInfo.Clear();
-
-        for (int i = 0; i < m_build_map.Count; i++)
-            LandInfo.Add(new LandData(i, false, m_build_map[i].transform, null));
+        StageInit();
     }
 
     private void Update()
     {
         Update_Input();
+    }
+
+    public void StageInit()
+    {
+        StopAllCoroutines();
+
+        AllDestory();
+
+        m_first_hero_spawn = true;
+        m_energy = 100;
+        m_next_wave = true;
+
+        LandInfo.Clear();
+
+        for (int i = 0; i < m_build_map.Count; i++)
+            LandInfo.Add(new LandData(i, false, m_build_map[i].transform, null));
     }
 
     public void HeroMerge()
