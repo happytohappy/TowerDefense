@@ -24,6 +24,8 @@ public class ADManager : MonoBehaviour
         adUnitId = "unexpected_platform";
 #endif
 
+        MobileAds.RaiseAdEventsOnUnityMainThread = true;
+
         LoadRewardedAd();
     }
 
