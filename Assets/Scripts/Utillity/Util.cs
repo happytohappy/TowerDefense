@@ -162,6 +162,18 @@ public static partial class Util
         return hudHeroInfo;
     }
 
+    public static Hud_Damage CreateHudDamage(Vector3 in_position, string in_damage)
+    {
+        var go = Managers.Resource.Instantiate("Item/Hud_Damage", new Vector3(9999f, 9999f, 9999f), Managers.Widget);
+        var hudDamage = go.GetComponent<Hud_Damage>();
+        if (hudDamage == null)
+            return null;
+
+        hudDamage.Set(in_position, in_damage);
+
+        return hudDamage;
+    }
+
     public static Sprite GetHeroImage(int in_kind)
     {
         var heroInfo = Managers.Table.GetHeroInfoData(in_kind);

@@ -113,7 +113,10 @@ public class Hero : PawnBase
         if (string.IsNullOrEmpty(GetHeroData.m_info.m_projectile))
         {
             var atkCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_DAMAGE);
-            m_target_monster.OnHit((int)(GetHeroData.m_stat.m_atk * atkCalculation));
+            var result = (int)(GetHeroData.m_stat.m_atk * atkCalculation);
+            m_target_monster.OnHit(result);
+
+            Util.CreateHudDamage(m_target_monster.transform.position, result.ToString());
         }
         else
         {
