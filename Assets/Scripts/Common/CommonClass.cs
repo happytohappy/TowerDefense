@@ -158,6 +158,7 @@ public class BuffInfoData
 {
     public int m_kind;
     public EBuff m_buff;
+    public EBuffTarget m_buff_target;
     public string m_desc;
     public string m_comment;
 }

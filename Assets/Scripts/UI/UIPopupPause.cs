@@ -1,6 +1,3 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class UIPopupPause : UIWindowBase
 {
     public override void Awake()
@@ -23,12 +20,6 @@ public class UIPopupPause : UIWindowBase
 
     public void OnClickExit()
     {
-        GameController.GetInstance.AllDestory();
-
-        Managers.UI.Clear();
-
-        SceneManager.LoadScene(1);
-
-        Managers.UI.OpenWindow(WindowID.UIWindowMain);
+        Managers.UI.OpenWindow(WindowID.UIWindowGameResult);
     }
 }

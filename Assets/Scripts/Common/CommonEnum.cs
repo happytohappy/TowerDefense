@@ -7,6 +7,7 @@ public enum WindowID
     UIWindowMain,
     UIWindowGame,
     UIWindowUnit,
+    UIWindowGameResult,
     UIPopupGame,
     UIPopupShop,
     UIPopupReward,
@@ -63,28 +64,28 @@ public enum ESpawnType
     AD
 }
 
+public enum EBuffTarget
+{
+    ME,             //나만
+    HERO_TYPE,      // 같은 히어로 타입만
+    TEAM_ALL,       // 아군 전체
+    ENEMY_TARGET,   // 적 타겟만
+    ENEMY_ALL,      // 적 전체
+    PASSIVE,        // 항상
+}
+
 public enum EBuff
 {
-    BUFF_ALLY_INCREASE_DAMAGE,              // 아군 전체 공격력 증가
-    BUFF_OWN_INCREASE_DAMAGE,               // 자기 자신 공격력 증가
-    BUFF_ALLY_INCREASE_SPEED,               // 아군 전체 공격 속도 증가
-    BUFF_OWN_INCREASE_SPEED,                // 자기 자신 공격 속도 증가
-    BUFF_ALLY_INCREASE_RANGE,               // 아군 전체 공격 범위 증가
-    BUFF_OWN_INCREASE_RANGE,                // 자기 자신 공격 범위 증가
-    BUFF_ALLY_INCREASE_BOSS,                // 아군 전체 보스 공격력 증가
-    BUFF_OWN_INCREASE_BOSS,                 // 자기 자신 보스 공격력 증가
-    BUFF_ALLY_INCREASE_CRITICAL,            // 아군 전체 치명타 공격력 증가
-    BUFF_OWN_INCREASE_CRITICAL,             // 자기 자신 치명타 공격력 증가
-    BUFF_ALLY_INCREASE_CHANCE,              // 아군 전체 치명타 확률 증가
-    BUFF_OWN_INCREASE_CHANCE,               // 자기 자신 치명타 확률 증가
-    BUFF_ENEMY_DECREASE_DEF,                // 적 전체 방어력 감소
-    BUFF_SOLO_DECREASE_DEF,                 // 적 단일 방어력 감소
-    BUFF_ENEMY_DECREASE_HP,                 // 적 전체 체력 감소
-    BUFF_SOLO_DECREASE_HP,                  // 적 단일 체력 감소
-    BUFF_ENEMY_DECREASE_SPEED,              // 적 전체 이동 속도 감소
-    BUFF_SOLO_DECREASE_SPEED,               // 적 단일 이동 속도 감소
-    BUFF_ENEMY_STUN,                        // 적 전체 기절
-    BUFF_SOLO_STUN,                         // 적 단일 기절
+    BUFF_INCREASE_DAMAGE,                   // 공격력 증가
+    BUFF_INCREASE_SPEED,                    // 공격 속도 증가
+    BUFF_INCREASE_RANGE,                    // 범위 증가
+    BUFF_INCREASE_BOSS,                     // 보스 공격력 증가
+    BUFF_INCREASE_CRITICAL,                 // 치명타 공격력 증가
+    BUFF_INCREASE_CHANCE,                   // 치명타 확률 증가
+    BUFF_DECREASE_DEF,                      // 방어력 감소
+    BUFF_DECREASE_HP,                       // 체력 감소
+    BUFF_DECREASE_SPEED,                    // 이동 속도 감소
+    BUFF_STUN,                              // 기절
     BUFF_ENERGY_KILL,                       // 적 처치 시 에너지 추가 획득
     BUFF_MERGE_EQUIP,                       // 장비 합성 성공 확률 증가
     BUFF_REWARD_BOSS,                       // 보스 처치 보상 증가
