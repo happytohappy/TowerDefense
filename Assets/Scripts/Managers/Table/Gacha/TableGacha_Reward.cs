@@ -26,7 +26,7 @@ public partial class TableManager
             GachaRewardData.m_item = int.Parse(words[1]);
             GachaRewardData.m_amount = int.Parse(words[2]);
             GachaRewardData.m_rate = int.Parse(words[3]);
-            GachaRewardData.m_rate_min = totalRate;
+            GachaRewardData.m_rate_min = totalRate * 100;
             GachaRewardData.m_rate_max = totalRate + GachaRewardData.m_rate;
             totalRate += GachaRewardData.m_rate;
 
@@ -74,8 +74,8 @@ public partial class TableManager
                 lastKind = tableData.m_kind;
 
                 tableData.m_rate_min = totalRate;
-                tableData.m_rate_max = totalRate + tableData.m_rate;
-                totalRate += tableData.m_rate;
+                tableData.m_rate_max = totalRate + tableData.m_rate * 100;
+                totalRate += tableData.m_rate * 100;
             }
 
             if (m_dic_gacha_reward_data.ContainsKey(tableData.m_kind))

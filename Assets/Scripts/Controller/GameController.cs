@@ -57,6 +57,8 @@ public partial class GameController : MonoBehaviour
     private bool m_sniffling = true;
     private Vector3 m_hero_position = new Vector3(0f, 0.55f, 0f);
     private Vector3 m_hero_rotation = new Vector3(0f, 180f, 0f);
+    private int m_wave_count = 0;
+    private int m_life = 0;
 
     // GAME DATA
     public List<LandData> LandInfo    { get; set; } = new List<LandData>();
@@ -102,6 +104,8 @@ public partial class GameController : MonoBehaviour
 
     private void Start()
     {
+        m_wave_count = Managers.Table.GetWaveCount(1);
+
         StageInit();
     }
 
@@ -112,13 +116,17 @@ public partial class GameController : MonoBehaviour
 
     public void StageInit()
     {
+        Time.timeScale = Managers.User.GameSpeed;
+
         StopAllCoroutines();
 
         AllDestory();
 
         m_first_hero_spawn = true;
         m_energy = 100;
+        m_wave_index = 1;
         m_next_wave = true;
+        m_life = CONST.STAGE_LIFE;
 
         LandInfo.Clear();
 

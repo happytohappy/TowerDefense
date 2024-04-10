@@ -19,6 +19,7 @@ public class UserManager : MonoBehaviour
         }
     }
 
+    public float GameSpeed { get; private set; } = 1.0f;
     private Dictionary<int, HeroInfo> m_dic_have_hero = new Dictionary<int, HeroInfo>();
     private Dictionary<int, List<HeroInfo>> m_dic_have_hero_group_by_tier = new Dictionary<int, List<HeroInfo>>();
     private Dictionary<int, int> m_dic_inventory_item = new Dictionary<int, int>();
@@ -138,7 +139,7 @@ public class UserManager : MonoBehaviour
         // 있는것은 레벨이 증가하는건가?
         if (m_dic_have_hero.ContainsKey(in_kind))
         {
-            m_dic_have_hero[in_kind].m_level++;
+            UpsertInventoryItem(in_kind, 1);
         }
         else
         {
@@ -156,6 +157,13 @@ public class UserManager : MonoBehaviour
         {
             m_dic_inventory_item.Add(in_kind, in_amount);
         }
+    }
+
+    public void SetGameSpeedUP()
+    {
+        GameSpeed += 0.5f;
+        if (GameSpeed > 2.0f)
+            GameSpeed = 1.0f;
     }
 
     /*

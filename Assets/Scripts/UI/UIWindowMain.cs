@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class UIWindowMain : UIWindowBase
 {
     public override void Awake()
@@ -60,5 +62,14 @@ public class UIWindowMain : UIWindowBase
     public void OnClickUnit()
     {
         Managers.UI.OpenWindow(WindowID.UIWindowUnit);
+    }
+
+    public void OnClickGacha()
+    {
+        var gachaReward = Managers.Table.GetGachaHero(1000);
+        if (gachaReward == null)
+            return;
+    
+        Managers.User.UpsertHero(gachaReward.m_item);
     }
 }

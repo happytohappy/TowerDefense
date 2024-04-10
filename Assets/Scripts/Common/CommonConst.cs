@@ -1,6 +1,6 @@
 public static class CONST
 {
-    public static int STAGE_DEFAULT_LIFE     = 5;       // 소환 시 필요한 에너지
+    public static int STAGE_LIFE             = 2;     // 스테이지 목숨
     public static int STAGE_ENERGY_BUY       = 10;	    // 소환 시 필요한 에너지
     public static int STAGE_ENERGY_SELL_1    = 5;	    // 1티어 제거 시 회수 에너지
     public static int STAGE_ENERGY_SELL_2    = 7;	    // 2티어 제거 시 회수 에너지

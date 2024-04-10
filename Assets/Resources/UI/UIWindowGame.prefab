@@ -681,7 +681,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1911558200647450860}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8358167946263531618}
+        m_TargetAssemblyTypeName: UIWindowGame, Assembly-CSharp
+        m_MethodName: OnClickGameSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AudioSource: {fileID: 8300000, guid: 6c5c86c7015ede847a187f5583cc7d9e, type: 3}
 --- !u!1 &1764797398119744036
 GameObject:
@@ -3619,6 +3631,9 @@ MonoBehaviour:
   m_text_remove_tier: {fileID: 1396486912425008288}
   m_text_remove_energy: {fileID: 7197792531379445347}
   m_tr_synergy_root: {fileID: 4600021527567553033}
+  m_text_round: {fileID: 1336722119416367935}
+  m_text_life: {fileID: 1107703621031897939}
+  m_speed: {fileID: 5398425647796236456}
 --- !u!114 &7787921637329956794
 MonoBehaviour:
   m_ObjectHideFlags: 0

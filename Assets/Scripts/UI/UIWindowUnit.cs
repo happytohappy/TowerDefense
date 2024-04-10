@@ -141,6 +141,26 @@ public class UIWindowUnit : UIWindowBase
         }
     }
 
+    public void OnClickUnitGradeUp()
+    {
+        var hero = Managers.User.GetUserHeroInfo(m_kind);
+        if (hero == null)
+            return;
+
+        // 현재 등급을 10을 맥스라고 가정
+        if (hero.m_grade >= 10)
+            return;
+
+        var HeroGrade = Managers.Table.GetHeroGradeData(m_kind, hero.m_grade + 1);
+        if (Managers.User.GetInventoryItem(m_kind) < HeroGrade.m_grade_up_piece)
+            return;
+
+        hero.m_grade++;
+        Managers.User.UpsertInventoryItem(m_kind, HeroGrade.m_grade_up_piece);
+
+        RefreshUI();
+    }
+
     public void OnClickUnitLevelUp()
     {
         var hero = Managers.User.GetUserHeroInfo(m_kind);

@@ -18,14 +18,23 @@ public class UIWindowGameResult : UIWindowBase
         base.Awake();
     }
 
-    public override void OpenUI(WindowParam wp)
+    public override void OpenUI(WindowParam in_param)
     {
-        base.OpenUI(wp);
+        base.OpenUI(in_param);
+
+        var param = in_param as WaveInfoParam;
+        if (param == null)
+        {
+            Managers.UI.CloseLast();
+            return;
+        }
+
+        m_text_wave_score.Ex_SetText($"{string.Format("{0:D2}", param.m_curr_wave - 1)} / {string.Format("{0:D2}", param.m_max_wave)}");
     }
 
     public void OnClickRetry()
     {
-        Time.timeScale = 1;
+        Time.timeScale = Managers.User.GameSpeed;
 
         Managers.UI.Clear();
 
@@ -49,7 +58,7 @@ public class UIWindowGameResult : UIWindowBase
 
     public void OnClickNext()
     {
-        Time.timeScale = 1;
+        Time.timeScale = Managers.User.GameSpeed;
 
         Debug.LogError("OnClickNext");
     }

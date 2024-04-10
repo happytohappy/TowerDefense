@@ -13,6 +13,7 @@ public partial class GameController
         m_monster_spawn_count = 0;
         m_monster_kill_count = 0;
         m_monster_goal_count = 0;
+
         StartCoroutine(CoMonsterSpawn());
     }
 
@@ -57,7 +58,6 @@ public partial class GameController
         }
 
         m_spawn_finish = true;
-        m_wave_index++;
     }
 
     public void MonsterKill()
@@ -71,7 +71,20 @@ public partial class GameController
     public void MonsterGoal()
     {
         m_monster_goal_count++;
-        
+        m_life--;
+
+        if (m_life <= 0)
+        {
+            Time.timeScale = 0;
+
+            WaveInfoParam param = new WaveInfoParam();
+            param.m_curr_wave = m_wave_index;
+            param.m_max_wave = m_wave_count;
+
+            Managers.UI.OpenWindow(WindowID.UIWindowGameResult, param);
+        }
+
+        GUI.SetLifeInfo(m_life);
         WaveFinishCheck();
     }
 
@@ -85,7 +98,11 @@ public partial class GameController
             m_next_wave = true;
 
             if (GUI != null)
+            {
+                m_wave_index++;
                 GUI.NextWaveActive();
+                GUI.SetWaveInfo(m_wave_index);
+            }
         }
     }
 }

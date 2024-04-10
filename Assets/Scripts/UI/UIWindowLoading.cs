@@ -21,6 +21,8 @@ public class UIWindowLoading : UIWindowBase
         base.OpenUI(wp);
         var info = wp as LoadingParam;
 
+        Time.timeScale = 1;
+
         m_Slider.value = 0f;
         StartCoroutine(LoadScene(info));
     }

@@ -13,6 +13,13 @@ public class UIWindowGame : UIWindowBase
     [SerializeField] private TMP_Text m_text_remove_tier;
     [SerializeField] private TMP_Text m_text_remove_energy;
     [SerializeField] private Transform m_tr_synergy_root;
+    [SerializeField] private TMP_Text m_text_round;
+    [SerializeField] private TMP_Text m_text_life;
+    [SerializeField] private TMP_Text m_speed;
+
+    private int m_stage = 1;
+    private int m_curr_wave = 1;
+    private int m_max_wave;
 
     public override void Awake()
     {
@@ -31,6 +38,13 @@ public class UIWindowGame : UIWindowBase
 
         SetEnergy(100);
         SynergyUIClear();
+
+        // 파람으로 스테이지 넘겨줘야 할 듯
+        m_max_wave = Managers.Table.GetWaveCount(1);
+        SetWaveInfo(m_curr_wave);
+
+        m_text_life.Ex_SetText($"{CONST.STAGE_LIFE}/{CONST.STAGE_LIFE}");
+        m_speed.Ex_SetText($"x{Managers.User.GameSpeed}");
     }
 
     public void SetEnergy(int in_energy)
@@ -67,7 +81,11 @@ public class UIWindowGame : UIWindowBase
 
     public void OnClickPause()
     {
-        Managers.UI.OpenWindow(WindowID.UIPopupPause);
+        WaveInfoParam param = new WaveInfoParam();
+        param.m_curr_wave = m_curr_wave;
+        param.m_max_wave = m_max_wave;
+
+        Managers.UI.OpenWindow(WindowID.UIPopupPause, param);
     }
 
     public void OnClickWave()
@@ -79,6 +97,18 @@ public class UIWindowGame : UIWindowBase
     public void NextWaveActive()
     {
         m_next_wave.SetActive(true);
+    }
+
+    public void SetWaveInfo(int in_curr_wave)
+    {
+        m_curr_wave = in_curr_wave;
+
+        m_text_round.Ex_SetText($"{string.Format("{0:D2}", in_curr_wave)} / {string.Format("{0:D2}", m_max_wave)}");
+    }
+
+    public void SetLifeInfo(int in_curr_life)
+    {
+        m_text_life.Ex_SetText($"{in_curr_life}/{CONST.STAGE_LIFE}");
     }
 
     public void OnClickCreateTower()
@@ -102,6 +132,14 @@ public class UIWindowGame : UIWindowBase
     public void OnClickSynergy()
     {
         Managers.UI.OpenWindow(WindowID.UIPopupSynergy);
+    }
+
+    public void OnClickGameSpeed()
+    {
+        Managers.User.SetGameSpeedUP();
+
+        m_speed.Ex_SetText($"x{Managers.User.GameSpeed}");
+        Time.timeScale = Managers.User.GameSpeed;
     }
     
     public void OnCheckHeroSynergy()

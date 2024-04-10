@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class UIPopupPause : UIWindowBase
 {
+    WaveInfoParam m_param = null;
+
     public override void Awake()
     {
         Window_ID = WindowID.UIPopupPause;
@@ -10,9 +12,16 @@ public class UIPopupPause : UIWindowBase
         base.Awake();
     }
 
-    public override void OpenUI(WindowParam wp)
+    public override void OpenUI(WindowParam in_param)
     {
-        base.OpenUI(wp);
+        base.OpenUI(in_param);
+
+        m_param = in_param as WaveInfoParam;
+        if (m_param == null)
+        {
+            Managers.UI.CloseLast();
+            return;
+        }
 
         Time.timeScale = 0;
     }
@@ -21,11 +30,11 @@ public class UIPopupPause : UIWindowBase
     {
         Managers.UI.CloseLast();
 
-        Time.timeScale = 1;
+        Time.timeScale = Managers.User.GameSpeed;
     }
 
     public void OnClickExit()
     {
-        Managers.UI.OpenWindow(WindowID.UIWindowGameResult);
+        Managers.UI.OpenWindow(WindowID.UIWindowGameResult, m_param);
     }
 }
