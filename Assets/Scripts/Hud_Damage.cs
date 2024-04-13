@@ -10,7 +10,7 @@ public class Hud_Damage : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var newYPos = this.transform.position.y + 0.01f;
+        var newYPos = this.transform.position.y + 0.02f;
         this.transform.position = new Vector3(this.transform.position.x, newYPos, 0f);
 
         if (newYPos - m_start_pos >= 0.5f)
