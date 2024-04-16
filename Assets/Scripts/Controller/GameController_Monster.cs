@@ -97,10 +97,15 @@ public partial class GameController
         if (m_monster_spawn_count == m_monster_kill_count + m_monster_goal_count)
         {
             m_next_wave = true;
+            m_wave_index++;
+
+            if (Managers.User.UserData.LastClearWave < m_wave_index - 1)
+            {
+                Managers.User.UserData.LastClearWave = m_wave_index - 1;
+            }
 
             if (GUI != null)
             {
-                m_wave_index++;
                 GUI.NextWaveActive();
                 GUI.SetWaveInfo(m_wave_index);
             }

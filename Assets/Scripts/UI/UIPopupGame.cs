@@ -1,5 +1,13 @@
+using TMPro;
+using UnityEngine;
+
 public class UIPopupGame : UIWindowBase
 {
+    [SerializeField] private TMP_Text m_text_best_round;
+
+    private int m_curr_stage;
+    private int m_wave_count;
+
     public override void Awake()
     {
         Window_ID = WindowID.UIPopupGame;
@@ -11,6 +19,11 @@ public class UIPopupGame : UIWindowBase
     public override void OpenUI(WindowParam wp)
     {
         base.OpenUI(wp);
+
+        m_curr_stage = 1;
+        m_wave_count = Managers.Table.GetWaveCount(m_curr_stage);
+
+        SetWaveInfo();
     }
 
     public void OnClickClose()
@@ -27,5 +40,10 @@ public class UIPopupGame : UIWindowBase
         param.NextWindow = WindowID.UIWindowGame;
 
         Managers.UI.OpenWindow(WindowID.UIWindowLoading, param);
+    }
+
+    public void SetWaveInfo()
+    {
+        m_text_best_round.Ex_SetText($"{string.Format("{0:D2}", Managers.User.UserData.LastClearWave)}/{string.Format("{0:D2}", m_wave_count)}");
     }
 }

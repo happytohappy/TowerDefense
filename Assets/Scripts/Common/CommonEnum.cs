@@ -33,6 +33,11 @@ public enum WindowMode
     WindowJustClose = 1 << 2,   // ´ÝÈú¶§ ¹«Á¶°Ç ´ÝÈ÷°í ÀÌÀü ³ëµå¿¡ °£¼·ÇÏÁö ¾Ê´Â´Ù.
 }
 
+public enum LocalKey
+{
+    UserData
+}
+
 public enum DebugType
 {
     Normal,

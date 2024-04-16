@@ -1457,6 +1457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1207c11c187e442a75c2e95c3c9783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_text_best_round: {fileID: 8672477282732366355}
 --- !u!114 &2252869968007034893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2225,7 +2226,7 @@ GameObject:
   - component: {fileID: 8672477283474398380}
   - component: {fileID: 8672477283474398381}
   m_Layer: 5
-  m_Name: Text_BastWave
+  m_Name: Text_BestWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2278,7 +2279,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bast Wave
+  m_text: Best Wave
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4fe9be758774b7e42a1ad012c9cdf95e, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 2d3719150237d304887345c4b98659f1, type: 2}
@@ -2355,6 +2356,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2659339797980906812}
     m_Modifications:
+    - target: {fileID: 652841551354561535, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 652841551354561535, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1121986456053247524, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
       propertyPath: m_Name
       value: Slot_Reward03
@@ -2465,6 +2474,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2659339797980906812}
     m_Modifications:
+    - target: {fileID: 652841551354561535, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 652841551354561535, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1121986456053247524, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
       propertyPath: m_Name
       value: Slot_Reward01
@@ -2575,6 +2592,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2659339797980906812}
     m_Modifications:
+    - target: {fileID: 652841551354561535, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 652841551354561535, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1121986456053247524, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
       propertyPath: m_Name
       value: Slot_Reward02
