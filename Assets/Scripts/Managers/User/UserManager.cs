@@ -35,7 +35,7 @@ public class UserManager : MonoBehaviour
         public Dictionary<int, int> DicInventoryItem = new Dictionary<int, int>();
     }
 
-    public CUserData UserData { get; set; } = new();
+    public CUserData UserData { get; set; } = new CUserData();
 
     public void Init()
     {
@@ -206,10 +206,4 @@ public class UserManager : MonoBehaviour
         // 가져온 데이터를 바이트 배열로 변환하고 사용하기 위해 다시 리스트로 캐스팅 해줍니다.
         return (T)binaryFormatter.Deserialize(memoryStream);
     }
-
-     //if (PlayerPrefs.HasKey(LocalKey.Option.ToString()) == true)
-     //   {
-     //       Account.option = Utility.LoadLocalData<Option>(LocalKey.Option);
-     //       Utility.SaveLocalData<Option>(Account.option, LocalKey.Option);
-     //   }
 }

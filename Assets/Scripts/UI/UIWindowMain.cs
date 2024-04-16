@@ -1,7 +1,12 @@
+using TMPro;
 using UnityEngine;
 
 public class UIWindowMain : UIWindowBase
 {
+    [SerializeField] private TMP_Text m_text_gold;
+    [SerializeField] private TMP_Text m_text_ruby;
+    [SerializeField] private TMP_Text m_text_diamond;
+
     public override void Awake()
     {
         Window_ID = WindowID.UIWindowMain;
@@ -13,6 +18,10 @@ public class UIWindowMain : UIWindowBase
     public override void OpenUI(WindowParam wp)
     {
         base.OpenUI(wp);
+
+        m_text_gold.Ex_SetText($"{Util.CommaText(Managers.User.UserData.Gold)}");
+        m_text_ruby.Ex_SetText($"{Util.CommaText(Managers.User.UserData.Ruby)}");
+        m_text_diamond.Ex_SetText($"{Util.CommaText(Managers.User.UserData.Diamond)}");
     }
 
     public void OnClickGame()

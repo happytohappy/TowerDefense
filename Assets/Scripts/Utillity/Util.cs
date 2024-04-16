@@ -100,6 +100,9 @@ public static partial class Util
 
     public static string CommaText(int in_value)
     {
+        if (in_value == 0)
+            return "0";
+
         return string.Format("{0:#,###}", in_value); 
     }
 
