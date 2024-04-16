@@ -38,6 +38,14 @@ public static partial class Util
         in_text.gameObject.SetActive(in_active);
     }
 
+    public static void Ex_SetActive(this Animator in_animator, bool in_active)
+    {
+        if (in_animator == null)
+            return;
+
+        in_animator.gameObject.SetActive(in_active);
+    }
+
     public static void Ex_SetValue(this RectTransform in_scroll_rect, float in_value)
     {
         if (in_scroll_rect == null)

@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Linq;
-using System.Collections.Generic;
 using TMPro;
 
 public class UIWindowGame : UIWindowBase
@@ -15,7 +13,10 @@ public class UIWindowGame : UIWindowBase
     [SerializeField] private Transform m_tr_synergy_root;
     [SerializeField] private TMP_Text m_text_round;
     [SerializeField] private TMP_Text m_text_life;
-    [SerializeField] private TMP_Text m_speed;
+    [SerializeField] private TMP_Text m_text_speed;
+    [SerializeField] private TMP_Text m_text_start_round;
+    [SerializeField] private Animator m_ani_start_round;
+    [SerializeField] private ExtentionButton m_btn_unit_add;
 
     private int m_stage = 1;
     private int m_curr_wave = 1;
@@ -35,6 +36,7 @@ public class UIWindowGame : UIWindowBase
 
         // 최초 꺼져있는 상태
         m_next_wave.Ex_SetActive(false);
+        m_btn_unit_add.interactable = true;
 
         SetEnergy(100);
         SynergyUIClear();
@@ -44,7 +46,7 @@ public class UIWindowGame : UIWindowBase
         SetWaveInfo(m_curr_wave);
 
         m_text_life.Ex_SetText($"{CONST.STAGE_LIFE}/{CONST.STAGE_LIFE}");
-        m_speed.Ex_SetText($"x{Managers.User.UserData.GameSpeed}");
+        m_text_speed.Ex_SetText($"x{Managers.User.UserData.GameSpeed}");
     }
 
     public void SetEnergy(int in_energy)
@@ -90,6 +92,13 @@ public class UIWindowGame : UIWindowBase
 
     public void OnClickWave()
     {
+        m_text_start_round.Ex_SetText($"Wave {m_curr_wave}");
+        m_ani_start_round.Ex_SetActive(true);
+        m_ani_start_round.Ex_Play("Ani_UIWindowGame_Start", this, () =>
+        {
+            m_ani_start_round.Ex_SetActive(false);
+        });
+
         GameController.GetInstance.MonsterSpawn();
         m_next_wave.SetActive(false);
     }
@@ -103,7 +112,7 @@ public class UIWindowGame : UIWindowBase
     {
         m_curr_wave = in_curr_wave;
 
-        m_text_round.Ex_SetText($"{string.Format("{0:D2}", in_curr_wave)} / {string.Format("{0:D2}", m_max_wave)}");
+        m_text_round.Ex_SetText($"{string.Format("{0:D2}", in_curr_wave)}/{string.Format("{0:D2}", m_max_wave)}");
     }
 
     public void SetLifeInfo(int in_curr_life)
@@ -114,6 +123,7 @@ public class UIWindowGame : UIWindowBase
     public void OnClickCreateTower()
     {
         GameController.GetInstance.HeroSpawn(ESpawnType.Energy);
+        SetUnitEnergy();
     }
 
     public void OnClickBonusUnit()
@@ -138,8 +148,13 @@ public class UIWindowGame : UIWindowBase
     {
         Managers.User.SetGameSpeedUP();
 
-        m_speed.Ex_SetText($"x{Managers.User.UserData.GameSpeed}");
+        m_text_speed.Ex_SetText($"x{Managers.User.UserData.GameSpeed}");
         Time.timeScale = Managers.User.UserData.GameSpeed;
+    }
+
+    public void SetUnitEnergy()
+    {
+        m_btn_unit_add.interactable = GameController.GetInstance.Energy >= CONST.STAGE_ENERGY_BUY;
     }
     
     public void OnCheckHeroSynergy()

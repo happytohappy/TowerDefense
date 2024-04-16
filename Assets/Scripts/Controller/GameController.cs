@@ -293,6 +293,12 @@ public partial class GameController : MonoBehaviour
 
         LandInfo.Clear();
         Monsters.Clear();
+
+        for (int i = 0; i < Managers.Widget.transform.childCount; i++)
+        {
+            var child = Managers.Widget.transform.GetChild(i);
+            Managers.Resource.Destroy(child.gameObject);
+        }
     }
 
 

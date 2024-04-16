@@ -19,6 +19,7 @@ public enum WindowID
     UIPopupTreasure,
     UIPopupUnitBuy,
     UIPopupIngameSkill,
+    UIPopupIngameAuto,
     UIPopupUnit,
     UIPopupSynergy
 }

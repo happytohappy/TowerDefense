@@ -65,6 +65,7 @@ public partial class GameController
         m_monster_kill_count++;
         Energy++;
 
+        GUI.SetUnitEnergy();
         WaveFinishCheck();
     }
 
