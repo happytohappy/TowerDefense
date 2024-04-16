@@ -81,4 +81,16 @@ public class UIWindowMain : UIWindowBase
     
         Managers.User.UpsertHero(gachaReward.m_item);
     }
+
+    public void OnClickReset()
+    {
+        PlayerPrefs.DeleteAll();
+        Managers.User.Init();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit(); // 어플리케이션 종료
+#endif
+    }
 }

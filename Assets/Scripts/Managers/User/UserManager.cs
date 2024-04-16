@@ -37,10 +37,10 @@ public class UserManager : MonoBehaviour
 
     public CUserData UserData { get; set; } = new CUserData();
 
+    private bool m_paused;
+
     public void Init()
     {
-        //PlayerPrefs.DeleteAll();
-
         if (PlayerPrefs.HasKey(LocalKey.UserData.ToString()) == true)
         {
             UserData = LoadLocalData<CUserData>(LocalKey.UserData);
@@ -180,13 +180,30 @@ public class UserManager : MonoBehaviour
             UserData.GameSpeed = 1.0f;
     }
 
+    // 게임 비활성화
+    private void OnApplicationFocus(bool pause)
+    {
+        if (pause)
+        {
+            m_paused = true;
+        }
+        else
+        {
+            if (m_paused)
+            {
+                m_paused = false;
+
+                SaveLocalData<CUserData>(UserData, LocalKey.UserData);
+            }
+        }
+    }
+
     // 게임 종료
     private void OnApplicationQuit()
     {
         SaveLocalData<CUserData>(UserData, LocalKey.UserData);
     }
 
-    // 백그라운드
     public static void SaveLocalData<T>(T SaveData, LocalKey Key)
     {
         var binaryFormatter = new BinaryFormatter();
