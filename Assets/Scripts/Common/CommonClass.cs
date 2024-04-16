@@ -170,4 +170,5 @@ public class BuffLevelData
     public int m_rate;
     public float m_time;
     public float m_value;
+    public string m_comment;
 }
