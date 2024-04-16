@@ -116,7 +116,7 @@ public partial class GameController : MonoBehaviour
 
     public void StageInit()
     {
-        Time.timeScale = Managers.User.GameSpeed;
+        Time.timeScale = Managers.User.UserData.GameSpeed;
 
         StopAllCoroutines();
 

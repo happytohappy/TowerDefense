@@ -19,10 +19,30 @@ public class UserManager : MonoBehaviour
         }
     }
 
-    public float GameSpeed { get; private set; } = 1.0f;
-    private Dictionary<int, HeroInfo> m_dic_have_hero = new Dictionary<int, HeroInfo>();
-    private Dictionary<int, List<HeroInfo>> m_dic_have_hero_group_by_tier = new Dictionary<int, List<HeroInfo>>();
-    private Dictionary<int, int> m_dic_inventory_item = new Dictionary<int, int>();
+    public class CUserData
+    {
+        public int LastClearStage = 0;
+        public int LastClearWave = 0;
+        public float GameSpeed  = 1.0f;
+        public Dictionary<int, HeroInfo> DicHaveHero = new Dictionary<int, HeroInfo>();
+        public Dictionary<int, List<HeroInfo>> DicHaveHeroGroupByTier = new Dictionary<int, List<HeroInfo>>();
+        public Dictionary<int, int> DicInventoryItem = new Dictionary<int, int>();
+
+        //public int m_last_clear_stage;
+        //public int m_last_clear_wave;
+        //public float m_game_speed;
+        //public Dictionary<int, HeroInfo> m_dic_have_hero = new Dictionary<int, HeroInfo>();
+        //public Dictionary<int, List<HeroInfo>> m_dic_have_hero_group_by_tier = new Dictionary<int, List<HeroInfo>>();
+        //public Dictionary<int, int> m_dicInventory_item = new Dictionary<int, int>();
+    }
+
+    public CUserData UserData { get; set; } = new();
+    //public int LastClearStage = 0;
+    //public int LastClearWave = 0;
+    //public float GameSpeed { get; private set; } = 1.0f;
+    //private Dictionary<int, HeroInfo> DicHaveHero = new Dictionary<int, HeroInfo>();
+    //private Dictionary<int, List<HeroInfo>> DicHaveHeroGroupByTier = new Dictionary<int, List<HeroInfo>>();
+    //private Dictionary<int, int> DicInventoryItem = new Dictionary<int, int>();
 
     // PlayerPrefab 에서 데이터 가져오기
     public void Init()
@@ -35,12 +55,12 @@ public class UserManager : MonoBehaviour
         //});
 
         // 1티어 기본 보유 타워
-        m_dic_have_hero.Add(1001, new HeroInfo(1001, 1, 1));
-        m_dic_have_hero.Add(1002, new HeroInfo(1002, 1, 1));
-        m_dic_have_hero.Add(1003, new HeroInfo(1003, 1, 1));
-        m_dic_have_hero.Add(1004, new HeroInfo(1004, 1, 1));
-        m_dic_have_hero.Add(1005, new HeroInfo(1005, 1, 1));
-        m_dic_have_hero_group_by_tier.Add(1, new List<HeroInfo>()
+        UserData.DicHaveHero.Add(1001, new HeroInfo(1001, 1, 1));
+        UserData.DicHaveHero.Add(1002, new HeroInfo(1002, 1, 1));
+        UserData.DicHaveHero.Add(1003, new HeroInfo(1003, 1, 1));
+        UserData.DicHaveHero.Add(1004, new HeroInfo(1004, 1, 1));
+        UserData.DicHaveHero.Add(1005, new HeroInfo(1005, 1, 1));
+        UserData.DicHaveHeroGroupByTier.Add(1, new List<HeroInfo>()
         {
             new HeroInfo(1001, 1, 1),
             new HeroInfo(1002, 1, 1),
@@ -50,12 +70,12 @@ public class UserManager : MonoBehaviour
         });
 
         // 2티어 기본 보유 타워                                      
-        m_dic_have_hero.Add(2001, new HeroInfo(2001, 1, 1));             
-        m_dic_have_hero.Add(2002, new HeroInfo(2002, 1, 1));            
-        m_dic_have_hero.Add(2003, new HeroInfo(2003, 1, 1));
-        m_dic_have_hero.Add(2004, new HeroInfo(2004, 1, 1));
-        m_dic_have_hero.Add(2005, new HeroInfo(2005, 1, 1));
-        m_dic_have_hero_group_by_tier.Add(2, new List<HeroInfo>()
+        UserData.DicHaveHero.Add(2001, new HeroInfo(2001, 1, 1));
+        UserData.DicHaveHero.Add(2002, new HeroInfo(2002, 1, 1));
+        UserData.DicHaveHero.Add(2003, new HeroInfo(2003, 1, 1));
+        UserData.DicHaveHero.Add(2004, new HeroInfo(2004, 1, 1));
+        UserData.DicHaveHero.Add(2005, new HeroInfo(2005, 1, 1));
+        UserData.DicHaveHeroGroupByTier.Add(2, new List<HeroInfo>()
         {
             new HeroInfo(2001, 1, 1),
             new HeroInfo(2002, 1, 1),
@@ -65,12 +85,12 @@ public class UserManager : MonoBehaviour
         });
 
         // 3티어 기본 보유 타워
-        m_dic_have_hero.Add(3001, new HeroInfo(3001, 1, 1));
-        m_dic_have_hero.Add(3002, new HeroInfo(3002, 1, 1));
-        m_dic_have_hero.Add(3003, new HeroInfo(3003, 1, 1));
-        m_dic_have_hero.Add(3004, new HeroInfo(3004, 1, 1));
-        m_dic_have_hero.Add(3005, new HeroInfo(3005, 1, 1));
-        m_dic_have_hero_group_by_tier.Add(3, new List<HeroInfo>()
+        UserData.DicHaveHero.Add(3001, new HeroInfo(3001, 1, 1));
+        UserData.DicHaveHero.Add(3002, new HeroInfo(3002, 1, 1));
+        UserData.DicHaveHero.Add(3003, new HeroInfo(3003, 1, 1));
+        UserData.DicHaveHero.Add(3004, new HeroInfo(3004, 1, 1));
+        UserData.DicHaveHero.Add(3005, new HeroInfo(3005, 1, 1));
+        UserData.DicHaveHeroGroupByTier.Add(3, new List<HeroInfo>()
         {
             new HeroInfo(3001, 1, 1),
             new HeroInfo(3002, 1, 1),
@@ -80,12 +100,12 @@ public class UserManager : MonoBehaviour
         });
 
         // 4티어 기본 보유 타워
-        m_dic_have_hero.Add(4001, new HeroInfo(4001, 1, 1));
-        m_dic_have_hero.Add(4002, new HeroInfo(4002, 1, 1));
-        m_dic_have_hero.Add(4003, new HeroInfo(4003, 1, 1));
-        m_dic_have_hero.Add(4004, new HeroInfo(4004, 1, 1));
-        m_dic_have_hero.Add(4005, new HeroInfo(4005, 1, 1));
-        m_dic_have_hero_group_by_tier.Add(4, new List<HeroInfo>()
+        UserData.DicHaveHero.Add(4001, new HeroInfo(4001, 1, 1));
+        UserData.DicHaveHero.Add(4002, new HeroInfo(4002, 1, 1));
+        UserData.DicHaveHero.Add(4003, new HeroInfo(4003, 1, 1));
+        UserData.DicHaveHero.Add(4004, new HeroInfo(4004, 1, 1));
+        UserData.DicHaveHero.Add(4005, new HeroInfo(4005, 1, 1));
+        UserData.DicHaveHeroGroupByTier.Add(4, new List<HeroInfo>()
         {
             new HeroInfo(4001, 1, 1),
             new HeroInfo(4002, 1, 1),
@@ -95,12 +115,12 @@ public class UserManager : MonoBehaviour
         });
 
         // 5티어 기본 보유 타워
-        m_dic_have_hero.Add(5001, new HeroInfo(5001, 1, 1));
-        m_dic_have_hero.Add(5002, new HeroInfo(5002, 1, 1));
-        m_dic_have_hero.Add(5003, new HeroInfo(5003, 1, 1));
-        m_dic_have_hero.Add(5004, new HeroInfo(5004, 1, 1));
-        m_dic_have_hero.Add(5005, new HeroInfo(5005, 1, 1));
-        m_dic_have_hero_group_by_tier.Add(5, new List<HeroInfo>()
+        UserData.DicHaveHero.Add(5001, new HeroInfo(5001, 1, 1));
+        UserData.DicHaveHero.Add(5002, new HeroInfo(5002, 1, 1));
+        UserData.DicHaveHero.Add(5003, new HeroInfo(5003, 1, 1));
+        UserData.DicHaveHero.Add(5004, new HeroInfo(5004, 1, 1));
+        UserData.DicHaveHero.Add(5005, new HeroInfo(5005, 1, 1));
+        UserData.DicHaveHeroGroupByTier.Add(5, new List<HeroInfo>()
         {
             new HeroInfo(5001, 1, 1),
             new HeroInfo(5002, 1, 1),
@@ -112,24 +132,24 @@ public class UserManager : MonoBehaviour
 
     public HeroInfo GetUserHeroInfo(int in_kind)
     {
-        if (m_dic_have_hero.ContainsKey(in_kind))
-            return m_dic_have_hero[in_kind];
+        if (UserData.DicHaveHero.ContainsKey(in_kind))
+            return UserData.DicHaveHero[in_kind];
         else
             return null;
     }
 
     public List<HeroInfo> GetUserHeroInfoGroupByTier(int in_tier)
     {
-        if (m_dic_have_hero_group_by_tier.ContainsKey(in_tier))
-            return m_dic_have_hero_group_by_tier[in_tier];
+        if (UserData.DicHaveHeroGroupByTier.ContainsKey(in_tier))
+            return UserData.DicHaveHeroGroupByTier[in_tier];
         else
             return null;
     }
 
     public int GetInventoryItem(int in_kind)
     {
-        if (m_dic_inventory_item.ContainsKey(in_kind))
-            return m_dic_inventory_item[in_kind];
+        if (UserData.DicInventoryItem.ContainsKey(in_kind))
+            return UserData.DicInventoryItem[in_kind];
         else
             return 0;
     }
@@ -137,35 +157,42 @@ public class UserManager : MonoBehaviour
     public void UpsertHero(int in_kind)
     {
         // 있는것은 레벨이 증가하는건가?
-        if (m_dic_have_hero.ContainsKey(in_kind))
+        if (UserData.DicHaveHero.ContainsKey(in_kind))
         {
             UpsertInventoryItem(in_kind, 1);
         }
         else
         {
-            m_dic_have_hero.Add(in_kind, new HeroInfo(in_kind, 1, 1));
+            UserData.DicHaveHero.Add(in_kind, new HeroInfo(in_kind, 1, 1));
         }
     }
 
     public void UpsertInventoryItem(int in_kind, int in_amount)
     {
-        if (m_dic_inventory_item.ContainsKey(in_kind))
+        if (UserData.DicInventoryItem.ContainsKey(in_kind))
         {
-            m_dic_inventory_item[in_kind] += in_amount;
+            UserData.DicInventoryItem[in_kind] += in_amount;
         }
         else
         {
-            m_dic_inventory_item.Add(in_kind, in_amount);
+            UserData.DicInventoryItem.Add(in_kind, in_amount);
         }
     }
 
     public void SetGameSpeedUP()
     {
-        GameSpeed += 0.5f;
-        if (GameSpeed > 2.0f)
-            GameSpeed = 1.0f;
+        UserData.GameSpeed += 0.5f;
+        if (UserData.GameSpeed > 2.0f)
+            UserData.GameSpeed = 1.0f;
     }
 
+    private void OnApplicationQuit()
+    {
+
+    }
+
+    // 게임 종료
+    // 백그라운드
     /*
      * public static void SaveLocalData<T>(T SaveData, LocalKey Key)
     {

@@ -30,7 +30,7 @@ public class UIPopupPause : UIWindowBase
     {
         Managers.UI.CloseLast();
 
-        Time.timeScale = Managers.User.GameSpeed;
+        Time.timeScale = Managers.User.UserData.GameSpeed;
     }
 
     public void OnClickExit()

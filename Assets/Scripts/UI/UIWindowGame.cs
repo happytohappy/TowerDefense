@@ -44,7 +44,7 @@ public class UIWindowGame : UIWindowBase
         SetWaveInfo(m_curr_wave);
 
         m_text_life.Ex_SetText($"{CONST.STAGE_LIFE}/{CONST.STAGE_LIFE}");
-        m_speed.Ex_SetText($"x{Managers.User.GameSpeed}");
+        m_speed.Ex_SetText($"x{Managers.User.UserData.GameSpeed}");
     }
 
     public void SetEnergy(int in_energy)
@@ -138,8 +138,8 @@ public class UIWindowGame : UIWindowBase
     {
         Managers.User.SetGameSpeedUP();
 
-        m_speed.Ex_SetText($"x{Managers.User.GameSpeed}");
-        Time.timeScale = Managers.User.GameSpeed;
+        m_speed.Ex_SetText($"x{Managers.User.UserData.GameSpeed}");
+        Time.timeScale = Managers.User.UserData.GameSpeed;
     }
     
     public void OnCheckHeroSynergy()

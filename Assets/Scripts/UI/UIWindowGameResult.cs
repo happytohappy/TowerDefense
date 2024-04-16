@@ -34,7 +34,7 @@ public class UIWindowGameResult : UIWindowBase
 
     public void OnClickRetry()
     {
-        Time.timeScale = Managers.User.GameSpeed;
+        Time.timeScale = Managers.User.UserData.GameSpeed;
 
         Managers.UI.Clear();
 
@@ -58,7 +58,7 @@ public class UIWindowGameResult : UIWindowBase
 
     public void OnClickNext()
     {
-        Time.timeScale = Managers.User.GameSpeed;
+        Time.timeScale = Managers.User.UserData.GameSpeed;
 
         Debug.LogError("OnClickNext");
     }
