@@ -109,6 +109,12 @@ public class GachaRewardData
     public float m_rate_max;
 }
 
+public class StageInfoData
+{
+    public int m_stage;
+    public string m_map_model_path;
+}
+
 public class StageWaveData
 {
     public int m_kind;
@@ -117,6 +123,16 @@ public class StageWaveData
     public int m_monster_kind;
     public int m_monster_level;
     public int m_monster_spawn_count;
+}
+
+public class StageRewardData
+{
+    public int m_stage;
+    public int m_wave;
+    public int m_first_clear_reward;
+    public int m_first_clear_reward_amount;
+    public int m_repeat_clear_reward;
+    public int m_repeat_clear_reward_amount;
 }
 
 public class TreasureLevelData

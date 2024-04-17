@@ -2,6 +2,8 @@
 
 public partial class TableManager
 {
+    private Dictionary<int, StageInfoData> m_dic_stage_info_data = new Dictionary<int, StageInfoData>();
+    private Dictionary<int, List<StageRewardData>> m_dic_stage_reward_data = new Dictionary<int, List<StageRewardData>>();
     private Dictionary<int, List<StageWaveData>> m_dic_stage_wave_data = new Dictionary<int, List<StageWaveData>>();
     private Dictionary<(int, int), List<StageWaveData>> m_dic_stage_wave_data_by_kind_wave = new Dictionary<(int, int), List<StageWaveData>>();
 
@@ -11,6 +13,18 @@ public partial class TableManager
         //InitMonsterStatusTable();
     }
 
+    public int GetStageCount()
+    {
+        return m_dic_stage_info_data.Count;
+    }
+
+    public List<StageRewardData> GetStageReward(int in_stage)
+    {        
+        if (m_dic_stage_reward_data.ContainsKey(in_stage))
+            return m_dic_stage_reward_data[in_stage];
+        else
+            return null;
+    }
 
     public List<StageWaveData> GetStageWaveData(int in_kind)
     {

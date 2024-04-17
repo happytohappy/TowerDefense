@@ -18,7 +18,9 @@ public class GoogleSheetManager : MonoBehaviour
     // Monster_Status   1100538500
     // Gacha_Info       1085540121
     // Gacha_Reward     397372995
+    // Stage_Info       1399009269
     // Stage_Wave       1189025789
+    // Stage_Reward     715738274
     // Treasure_Level   494813664
     // Mission_Info     866950427
     // Synergy_Info     1669999714
@@ -36,7 +38,9 @@ public class GoogleSheetManager : MonoBehaviour
         StartCoroutine(CoRequestGoogleSheet(1100538500,     (value) => Managers.Table.SetMonsterStatusData(value)));
         StartCoroutine(CoRequestGoogleSheet(1085540121,     (value) => Managers.Table.SetGachaInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(397372995,      (value) => Managers.Table.SetGachaRewardData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1399009269,     (value) => Managers.Table.SetStageInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(1189025789,     (value) => Managers.Table.SetStageWaveData(value)));
+        StartCoroutine(CoRequestGoogleSheet(715738274,      (value) => Managers.Table.SetStageRewardData(value)));
         StartCoroutine(CoRequestGoogleSheet(494813664,      (value) => Managers.Table.SetTreasureLevelData(value)));
         StartCoroutine(CoRequestGoogleSheet(866950427,      (value) => Managers.Table.SetMissionInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(1669999714,     (value) => Managers.Table.SetSynergyInfoData(value)));
