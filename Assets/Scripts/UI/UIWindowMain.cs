@@ -85,6 +85,7 @@ public class UIWindowMain : UIWindowBase
     public void OnClickReset()
     {
         PlayerPrefs.DeleteAll();
+        Managers.User.UserData = new UserManager.CUserData();
         Managers.User.Init();
 
 #if UNITY_EDITOR
