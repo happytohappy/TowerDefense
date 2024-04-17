@@ -204,9 +204,9 @@ public class UserManager : MonoBehaviour
     {
         SaveLocalData<CUserData>(UserData, LocalKey.UserData);
 
-        var data = GetLocalDataString<CUserData>(LocalKey.UserData);
+        //var data = GetLocalDataString<CUserData>(LocalKey.UserData);
 
-        Managers.BackEnd.InsertUserData(data);
+        //Managers.BackEnd.InsertUserData(data);
     }
 
     public static void SaveLocalData<T>(T SaveData, LocalKey Key)
