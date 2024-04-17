@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
@@ -21,6 +20,13 @@ public partial class GameController : MonoBehaviour
         }
     }
     #endregion
+
+    public class RewardData
+    {
+        public int m_reward;
+        public int m_amount;
+        public string m_text;
+    }
 
     [Serializable]
     public class Path
@@ -59,6 +65,10 @@ public partial class GameController : MonoBehaviour
     private Vector3 m_hero_rotation = new Vector3(0f, 180f, 0f);
     private int m_wave_count = 0;
     private int m_life = 0;
+    private List<StageRewardData> m_list_stage_reward = new List<StageRewardData>();
+
+    // REWARD DATA
+    public List<RewardData> GetRewardData { get; set; } = new List<RewardData>();
 
     // GAME DATA
     public List<LandData> LandInfo    { get; set; } = new List<LandData>();
@@ -104,7 +114,8 @@ public partial class GameController : MonoBehaviour
 
     private void Start()
     {
-        m_wave_count = Managers.Table.GetWaveCount(1);
+        m_wave_count = Managers.Table.GetWaveCount(Managers.User.SelectStage);
+        m_list_stage_reward = Managers.Table.GetStageReward(Managers.User.SelectStage);
 
         StageInit();
     }
@@ -299,6 +310,8 @@ public partial class GameController : MonoBehaviour
             var child = Managers.Widget.transform.GetChild(i);
             Managers.Resource.Destroy(child.gameObject);
         }
+
+        GetRewardData.Clear();
     }
 
 

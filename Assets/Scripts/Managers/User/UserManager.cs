@@ -25,9 +25,6 @@ public class UserManager : MonoBehaviour
     [Serializable]
     public class CUserData
     {
-        public int Gold = 0;
-        public int Ruby = 0;
-        public int Diamond = 0;
         public int LastClearStage = 0;
         public int LastClearWave = 0;
         public float GameSpeed  = 1.0f;
@@ -37,6 +34,7 @@ public class UserManager : MonoBehaviour
     }
 
     public CUserData UserData { get; set; } = new CUserData();
+    public int SelectStage { get; set; } = 0;
 
     private bool m_paused;
 

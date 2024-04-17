@@ -4,11 +4,12 @@ using TMPro;
 
 public class UIWindowGameResult : UIWindowBase
 {
-    private const string SLOT_REWARD_PATH = "UI/Item/Slot_PopupSynergy";
+    private const string SLOT_REWARD_PATH = "UI/Item/Slot_Reward";
 
     [SerializeField] private TMP_Text m_text_wave_score = null;
     [SerializeField] private GameObject m_go_reward_none = null;
     [SerializeField] private Transform m_trs_root = null;
+    [SerializeField] private GameObject m_go_next = null;
 
     public override void Awake()
     {
@@ -30,6 +31,26 @@ public class UIWindowGameResult : UIWindowBase
         }
 
         m_text_wave_score.Ex_SetText($"{string.Format("{0:D2}", param.m_curr_wave - 1)} / {string.Format("{0:D2}", param.m_max_wave)}");
+        m_go_next.Ex_SetActive(Managers.User.UserData.LastClearStage >= Managers.User.SelectStage || param.m_curr_wave - 1 == param.m_max_wave);
+
+        if (GameController.GetInstance.GetRewardData.Count == 0)
+        {
+            m_go_reward_none.Ex_SetActive(true);
+        }
+        else
+        {
+            m_go_reward_none.Ex_SetActive(false);
+
+            for (int i = 0; i < GameController.GetInstance.GetRewardData.Count; i++)
+            {
+                var reward = GameController.GetInstance.GetRewardData[i];
+
+                var slot = Managers.Resource.Instantiate(SLOT_REWARD_PATH, Vector3.zero, m_trs_root);
+                var sc = slot.GetComponent<Slot_Reward>();
+
+                sc.SetReward(reward.m_reward, reward.m_amount, false, reward.m_text);
+            }
+        }
     }
 
     public void OnClickRetry()

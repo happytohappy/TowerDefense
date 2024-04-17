@@ -61,6 +61,14 @@ public enum EInputType
     Press
 }
 
+public enum EGoods
+{
+    Gold = 1,
+    Ruby = 2,
+    Diamond = 3,
+    Energy = 4
+}
+
 public enum ESpawnType
 {
     Free,

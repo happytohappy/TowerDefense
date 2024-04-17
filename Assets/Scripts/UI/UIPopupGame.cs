@@ -52,6 +52,8 @@ public class UIPopupGame : UIWindowBase
 
     public void SetWaveInfo()
     {
+        Managers.User.SelectStage = m_curr_stage;
+
         m_wave_count = Managers.Table.GetWaveCount(m_curr_stage);
 
         m_text_stage.Ex_SetText($"Stage {string.Format("{0:D2}", m_curr_stage)}");

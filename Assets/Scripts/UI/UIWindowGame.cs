@@ -41,8 +41,7 @@ public class UIWindowGame : UIWindowBase
         SetEnergy(100);
         SynergyUIClear();
 
-        // 파람으로 스테이지 넘겨줘야 할 듯
-        m_max_wave = Managers.Table.GetWaveCount(1);
+        m_max_wave = Managers.Table.GetWaveCount(Managers.User.SelectStage);
         SetWaveInfo(m_curr_wave);
 
         m_text_life.Ex_SetText($"{CONST.STAGE_LIFE}/{CONST.STAGE_LIFE}");

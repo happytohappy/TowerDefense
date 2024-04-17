@@ -99,9 +99,68 @@ public partial class GameController
             m_next_wave = true;
             m_wave_index++;
 
-            if (Managers.User.UserData.LastClearWave < m_wave_index - 1)
+            // 도전 중인 스테이지 인지 체크
+            if (Managers.User.UserData.LastClearStage == Managers.User.SelectStage - 1)
             {
-                Managers.User.UserData.LastClearWave = m_wave_index - 1;
+                // 라운드를 갱신 했는지 체크
+                if (Managers.User.UserData.LastClearWave < m_wave_index - 1)
+                {
+                    // 새로운 라운드를 깻다고 저장 해주고
+                    Managers.User.UserData.LastClearWave = m_wave_index - 1;
+
+                    // 받을 보상이 있는지 체크한다.
+                    for (int i = 0; i < m_list_stage_reward.Count; i++)
+                    {
+                        var reward = m_list_stage_reward[i];
+                        if (reward.m_wave == Managers.User.UserData.LastClearWave)
+                        {
+                            RewardData rewardData = new RewardData();
+                            rewardData.m_reward = reward.m_first_clear_reward;
+                            rewardData.m_amount = reward.m_first_clear_reward_amount;
+                            rewardData.m_text = $"{reward.m_wave}-{m_wave_count}";
+                            GetRewardData.Add(rewardData);
+
+                            Managers.User.UpsertInventoryItem(reward.m_first_clear_reward, reward.m_first_clear_reward_amount);
+                        }
+                    }
+                }
+            }
+
+            // 최종 라운드까지 진행 했다면
+            if (m_wave_index > m_wave_count)
+            {
+                // 이미 깬 스테이지라면 반복 보상만 받는다.
+                if (Managers.User.UserData.LastClearStage >= Managers.User.SelectStage)
+                {
+                    for (int i = 0; i < m_list_stage_reward.Count; i++)
+                    {
+                        var reward = m_list_stage_reward[i];
+                        if (reward.m_repeat_clear_reward == 0)
+                            continue;
+
+                        RewardData rewardData = new RewardData();
+                        rewardData.m_reward = reward.m_repeat_clear_reward;
+                        rewardData.m_amount = reward.m_repeat_clear_reward_amount;
+                        rewardData.m_text = string.Empty;
+                        GetRewardData.Add(rewardData);
+
+                        Managers.User.UpsertInventoryItem(reward.m_repeat_clear_reward, reward.m_repeat_clear_reward_amount);
+                    }
+                }
+                else
+                {
+                    // 최고 스테이지 갱신!
+                    // 웨이브는 0으로 변경해준다.
+                    Managers.User.UserData.LastClearStage = Managers.User.SelectStage;
+                    Managers.User.UserData.LastClearWave = 0;
+                }
+
+                WaveInfoParam param = new WaveInfoParam();
+                param.m_curr_wave = m_wave_index;
+                param.m_max_wave = m_wave_count;
+
+                Managers.UI.OpenWindow(WindowID.UIWindowGameResult, param);
+                return;
             }
 
             if (GUI != null)

@@ -301,4 +301,9 @@ public static partial class Util
             case ERarity.MYTH:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Myth));      break;
         }
     }
+
+    public static int GetGoods(EGoods in_goods)
+    {
+        return Managers.User.GetInventoryItem((int)in_goods);
+    }
 }
