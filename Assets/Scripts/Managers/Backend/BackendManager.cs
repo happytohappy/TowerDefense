@@ -23,13 +23,28 @@ public class BackendManager : MonoBehaviour
 
     public void GuestLogin()
     {
-        BackendReturnObject bro = Backend.BMember.GuestLogin();
+        BackendReturnObject bro = Backend.BMember.GuestLogin("게스트 로그인");
         if (bro.IsSuccess())
         {
             Debug.Log("게스트 로그인에 성공했습니다");
 
             // 가챠 테스트
             GetProbabilitysTest();
+        }
+        else
+        {
+            Backend.BMember.DeleteGuestInfo();
+
+            PlayerPrefs.DeleteAll();
+            Managers.User.Init();
+
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit(); // 어플리케이션 종료
+#endif
+
+            Debug.Log("게스트 로그인 실패");
         }
     }
 
@@ -83,5 +98,15 @@ public class BackendManager : MonoBehaviour
         {
             Debug.Log(item.ToString());
         }
+    }
+
+    public void InsertUserData(string in_data)
+    {
+        Param param = new Param();
+        param.Add("Data", in_data);
+
+        var aaa = Backend.GameData.Insert("User", param);
+
+        Debug.LogError(aaa);
     }
 }

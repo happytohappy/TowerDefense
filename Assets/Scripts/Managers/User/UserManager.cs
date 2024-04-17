@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using BackEnd;
 
 public class UserManager : MonoBehaviour
 {
@@ -202,6 +203,10 @@ public class UserManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveLocalData<CUserData>(UserData, LocalKey.UserData);
+
+        var data = GetLocalDataString<CUserData>(LocalKey.UserData);
+
+        Managers.BackEnd.InsertUserData(data);
     }
 
     public static void SaveLocalData<T>(T SaveData, LocalKey Key)
@@ -222,5 +227,12 @@ public class UserManager : MonoBehaviour
 
         // 가져온 데이터를 바이트 배열로 변환하고 사용하기 위해 다시 리스트로 캐스팅 해줍니다.
         return (T)binaryFormatter.Deserialize(memoryStream);
+    }
+
+    public static string GetLocalDataString<T>(LocalKey key)
+    {
+        var data = PlayerPrefs.GetString(key.ToString());
+
+        return data;
     }
 }
