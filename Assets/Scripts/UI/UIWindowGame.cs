@@ -133,7 +133,7 @@ public class UIWindowGame : UIWindowBase
     public void OnClickSkill(int in_number)
     {
         InGameSkillParam param = new InGameSkillParam();
-        param.m_index = in_number;
+        param.m_reward_type = (EADRewardType)in_number;
 
         Managers.UI.OpenWindow(WindowID.UIPopupIngameSkill, param);
     }

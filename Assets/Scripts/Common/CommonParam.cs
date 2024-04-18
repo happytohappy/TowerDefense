@@ -14,7 +14,7 @@ public class GachaHeroParam : WindowParam
 
 public class InGameSkillParam : WindowParam
 {
-    public int m_index = 0;
+    public EADRewardType m_reward_type = EADRewardType.ENERGY;
 }
 
 public class UnitInfoParam : WindowParam

@@ -72,9 +72,9 @@ public partial class GameController
     public void MonsterGoal()
     {
         m_monster_goal_count++;
-        m_life--;
+        Life--;
 
-        if (m_life <= 0)
+        if (Life <= 0)
         {
             Time.timeScale = 0;
 
@@ -85,7 +85,7 @@ public partial class GameController
             Managers.UI.OpenWindow(WindowID.UIWindowGameResult, param);
         }
 
-        GUI.SetLifeInfo(m_life);
+        GUI.SetLifeInfo(Life);
         WaveFinishCheck();
     }
 

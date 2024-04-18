@@ -10,8 +10,8 @@ public abstract class PawnBase : MonoBehaviour
     protected CFMS<PawnBase> m_FSM;
 
     // 스탯 관련 변수
-    protected int m_curr_hp;
-    protected int m_max_hp;
+    public int CurrHP { get; set; }
+    public int MaxHP { get; set; }
 
     public virtual FSM_STATE GetState => m_state;
 
@@ -38,9 +38,9 @@ public abstract class PawnBase : MonoBehaviour
 
     public virtual void OnHit(int in_damage)
     {
-        m_curr_hp -= in_damage;
+        CurrHP -= in_damage;
 
-        if (m_curr_hp <= 0)
+        if (CurrHP <= 0)
             ChangeState(FSM_STATE.Die);
     }
 

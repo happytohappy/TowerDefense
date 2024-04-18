@@ -23,12 +23,12 @@ public class Monster : PawnBase
         base.Start();
 
         // 변수 셋팅
-        m_curr_hp    = GetMonsterStatusData.m_hp;
-        m_max_hp     = GetMonsterStatusData.m_hp;
+        CurrHP    = GetMonsterStatusData.m_hp;
+        MaxHP     = GetMonsterStatusData.m_hp;
         m_line_index = 1;       // 0 은 스폰 위치라 1부터 시작
 
         // 체력바 셋팅
-        m_hp_bar = Util.CreateHP(this.transform, m_curr_hp, m_max_hp, new Vector3(0.75f, 0.75f, 1f), new Vector3(0f, 0.8f, 0f), true);
+        m_hp_bar = Util.CreateHP(this.transform, CurrHP, MaxHP, new Vector3(0.75f, 0.75f, 1f), new Vector3(0f, 0.8f, 0f), true);
 
         // 도착지 설정
         SetDestination();
@@ -54,7 +54,7 @@ public class Monster : PawnBase
         }
 
         m_hp_bar.HPBarActive(true);
-        m_hp_bar.SetHP((float)m_curr_hp / m_max_hp);
+        m_hp_bar.SetHP((float)CurrHP / MaxHP);
     }
 
     private void SetDestination()

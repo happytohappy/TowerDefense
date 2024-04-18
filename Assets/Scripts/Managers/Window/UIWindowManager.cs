@@ -75,6 +75,7 @@ public class UIWindowManager : MonoBehaviour
             return;
 
         var closeWindow = llist_Window.Last.Value;
+        closeWindow.OnClose();
         closeWindow.gameObject.SetActive(false);
 
         llist_Window.RemoveLast();

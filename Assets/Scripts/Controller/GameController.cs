@@ -64,8 +64,10 @@ public partial class GameController : MonoBehaviour
     private Vector3 m_hero_position = new Vector3(0f, 0.55f, 0f);
     private Vector3 m_hero_rotation = new Vector3(0f, 180f, 0f);
     private int m_wave_count = 0;
-    private int m_life = 0;
     private List<StageRewardData> m_list_stage_reward = new List<StageRewardData>();
+
+    // AD DATA
+    public Dictionary<EADRewardType, bool> ADReward = new Dictionary<EADRewardType, bool>();
 
     // REWARD DATA
     public List<RewardData> GetRewardData { get; set; } = new List<RewardData>();
@@ -106,6 +108,22 @@ public partial class GameController : MonoBehaviour
         }
     }
 
+    private int m_life;
+    public int Life
+    {
+        get
+        {
+            return m_life;
+        }
+        set
+        {
+            m_life = value;
+
+            if (GUI != null)
+                GUI.SetLifeInfo(m_life);
+        }
+    }
+
     private void Awake()
     {
         m_raycaster = Managers.UICanvas.gameObject.GetComponent<GraphicRaycaster>();
@@ -137,12 +155,15 @@ public partial class GameController : MonoBehaviour
         m_energy = 100;
         m_wave_index = 1;
         m_next_wave = true;
-        m_life = CONST.STAGE_LIFE;
+        Life = CONST.STAGE_LIFE;
 
         LandInfo.Clear();
 
         for (int i = 0; i < m_build_map.Count; i++)
             LandInfo.Add(new LandData(i, false, m_build_map[i].transform, null));
+
+        for (EADRewardType i = EADRewardType.LIFE; i <= EADRewardType.DAMAGE; i++)
+            ADReward.Add(i, true);
     }
 
     public void HeroMerge()
@@ -312,6 +333,7 @@ public partial class GameController : MonoBehaviour
         }
 
         GetRewardData.Clear();
+        ADReward.Clear();
     }
 
 

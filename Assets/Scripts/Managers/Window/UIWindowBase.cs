@@ -17,4 +17,9 @@ public class UIWindowBase : MonoBehaviour
         this.transform.SetAsLastSibling();
         this.Window_Param = wp;
     }
+
+    public virtual void OnClose()
+    {
+
+    }
 }

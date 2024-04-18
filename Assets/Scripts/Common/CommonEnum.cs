@@ -193,3 +193,10 @@ public enum EMissionCondition
     HERO_TIER,              // 특정 티어 이상 영웅 보유
     KILL_BOSS,              // 보스 몬스터 처치
 }
+
+public enum EADRewardType
+{
+    LIFE,
+    ENERGY,
+    DAMAGE
+}
