@@ -44,6 +44,9 @@ public class Monster : PawnBase
 
     public override void OnHit(int in_damage)
     {
+        if (GetState == FSM_STATE.Die)
+            return;
+
         base.OnHit(in_damage);
 
         if (GetState == FSM_STATE.Die)

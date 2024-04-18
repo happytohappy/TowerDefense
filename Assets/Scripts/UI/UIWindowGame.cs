@@ -18,7 +18,6 @@ public class UIWindowGame : UIWindowBase
     [SerializeField] private Animator m_ani_start_round;
     [SerializeField] private ExtentionButton m_btn_unit_add;
 
-    private int m_stage = 1;
     private int m_curr_wave = 1;
     private int m_max_wave;
 

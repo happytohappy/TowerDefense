@@ -162,7 +162,7 @@ public partial class GameController : MonoBehaviour
         m_wave_index = 1;
         m_next_wave = true;
         Life = CONST.STAGE_LIFE;
-        ADAutoFlag = true;
+        ADAutoFlag = false;
 
         LandInfo.Clear();
 
