@@ -40,6 +40,8 @@ public class UIPopupIngameSkill : UIWindowBase
 
     public override void OnClose()
     {
+        base.OnClose();
+
         Time.timeScale = 1.0f;
     }
 

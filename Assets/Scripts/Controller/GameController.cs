@@ -67,6 +67,8 @@ public partial class GameController : MonoBehaviour
     private List<StageRewardData> m_list_stage_reward = new List<StageRewardData>();
 
     // AD DATA
+    public bool ADAutoFlag { get; set; }
+    public Dictionary<EADAutoType, bool> ADAuto = new Dictionary<EADAutoType, bool>();
     public Dictionary<EADRewardType, bool> ADReward = new Dictionary<EADRewardType, bool>();
 
     // REWARD DATA
@@ -102,6 +104,10 @@ public partial class GameController : MonoBehaviour
         set
         {
             m_energy = value;
+
+            // 자동 소환 시도
+            if (ADAuto[EADAutoType.UNIT_ADD])
+                GetInstance.HeroSpawn(ESpawnType.Energy);
 
             if (GUI != null)
                 GUI.SetEnergy(m_energy);
@@ -156,6 +162,7 @@ public partial class GameController : MonoBehaviour
         m_wave_index = 1;
         m_next_wave = true;
         Life = CONST.STAGE_LIFE;
+        ADAutoFlag = true;
 
         LandInfo.Clear();
 
@@ -164,6 +171,9 @@ public partial class GameController : MonoBehaviour
 
         for (EADRewardType i = EADRewardType.LIFE; i <= EADRewardType.DAMAGE; i++)
             ADReward.Add(i, true);
+
+        for (EADAutoType i = EADAutoType.UNIT_ADD; i <= EADAutoType.NEXT_WAVE; i++)
+            ADAuto.Add(i, false);
     }
 
     public void HeroMerge()
@@ -297,9 +307,93 @@ public partial class GameController : MonoBehaviour
         {
             m_first_hero_spawn = false;
             GUI.NextWaveActive();
+
+            if (ADAuto[EADAutoType.NEXT_WAVE])
+                GUI.OnClickWave();
         }
 
+        if (ADAuto[EADAutoType.UNIT_MERGE])
+            CheckAutoMerge();
+
         GUI.OnCheckHeroSynergy();
+    }
+
+    private void CheckAutoMerge()
+    {
+        Dictionary<int, int> HeroSet = new Dictionary<int, int>();
+
+        var SpawnHeroList = LandInfo.FindAll(x => x.m_hero != null).ToList();
+        foreach (var e in SpawnHeroList)
+        {
+            var heroInfo = e.m_hero.GetHeroData.m_info;
+
+            // MAX TIER 는 머지를 할 수가 없다.
+            var nextTier = heroInfo.m_tier + 1;
+            var towerList = Managers.User.GetUserHeroInfoGroupByTier(nextTier);
+            if (towerList == null || towerList.Count == 0)
+                continue;
+    
+            if (HeroSet.ContainsKey(heroInfo.m_kind))
+            {
+                var firstLand = LandInfo[HeroSet[heroInfo.m_kind]];
+                Managers.Resource.Destroy(firstLand.m_hero.gameObject);
+                if (firstLand.m_hero.HudHeroInfo != null) 
+                    Managers.Resource.Destroy(firstLand.m_hero.HudHeroInfo.gameObject);
+                firstLand.m_hero = null;
+                firstLand.m_build = false;
+
+                var secondLand = LandInfo[e.m_land_index];
+                Managers.Resource.Destroy(secondLand.m_hero.gameObject);
+                if (secondLand.m_hero.HudHeroInfo != null) 
+                    Managers.Resource.Destroy(secondLand.m_hero.HudHeroInfo.gameObject);
+                secondLand.m_hero = null;
+                secondLand.m_build = false;
+
+                // 머지
+                HeroSpawn(ESpawnType.Merge, heroInfo.m_tier + 1, LandInfo[e.m_land_index]);
+                CheckAutoMerge();
+                break;
+            }
+            else
+            {
+                HeroSet.Add(heroInfo.m_kind, e.m_land_index);
+            }
+        }
+    }
+
+    public Dictionary<EHeroType, int> GetHeroTypeCount()
+    {
+        Dictionary<EHeroType, int> result = new Dictionary<EHeroType, int>();
+
+        var HeroLand = LandInfo.FindAll(x => x.m_build).ToList();
+        foreach (var e in HeroLand)
+        {
+            var heroType = e.m_hero.GetHeroData.m_info.m_type;
+            if (result.ContainsKey(heroType))
+                result[heroType]++;
+            else
+                result.Add(heroType, 1);
+        }
+
+        return result;
+    }
+
+    public void AutoAllCheck()
+    {
+        // 유닛 소환 부터 체크
+        if (ADAuto[EADAutoType.UNIT_ADD])
+        {
+            while (Energy > CONST.STAGE_ENERGY_BUY)
+                GetInstance.HeroSpawn(ESpawnType.Energy);
+        }
+
+        // 유닛 합성 체크
+        if (ADAuto[EADAutoType.UNIT_MERGE])
+            CheckAutoMerge();
+
+        // 웨이브 시작 체크
+        if (ADAuto[EADAutoType.NEXT_WAVE] && m_first_hero_spawn == false)
+            GUI.OnClickWave();
     }
 
     public void AllDestory()
@@ -334,23 +428,6 @@ public partial class GameController : MonoBehaviour
 
         GetRewardData.Clear();
         ADReward.Clear();
-    }
-
-
-    public Dictionary<EHeroType, int> GetHeroTypeCount()
-    {
-        Dictionary<EHeroType, int> result = new Dictionary<EHeroType, int>();
-
-        var HeroLand = LandInfo.FindAll(x => x.m_build).ToList();
-        foreach (var e in HeroLand)
-        {
-            var heroType = e.m_hero.GetHeroData.m_info.m_type;
-            if (result.ContainsKey(heroType))
-                result[heroType]++;
-            else
-                result.Add(heroType, 1);
-        }
-
-        return result;
+        ADAuto.Clear();
     }
 }

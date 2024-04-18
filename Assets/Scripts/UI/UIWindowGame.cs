@@ -151,6 +151,11 @@ public class UIWindowGame : UIWindowBase
         Time.timeScale = Managers.User.UserData.GameSpeed;
     }
 
+    public void OnClickAuto()
+    {
+        Managers.UI.OpenWindow(WindowID.UIPopupIngameAuto);
+    }
+
     public void SetUnitEnergy()
     {
         m_btn_unit_add.interactable = GameController.GetInstance.Energy >= CONST.STAGE_ENERGY_BUY;

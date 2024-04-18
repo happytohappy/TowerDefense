@@ -200,3 +200,10 @@ public enum EADRewardType
     ENERGY,
     DAMAGE
 }
+
+public enum EADAutoType
+{
+    UNIT_ADD,
+    UNIT_MERGE,
+    NEXT_WAVE
+}

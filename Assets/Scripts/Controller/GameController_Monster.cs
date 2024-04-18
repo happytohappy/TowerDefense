@@ -167,6 +167,10 @@ public partial class GameController
             {
                 GUI.NextWaveActive();
                 GUI.SetWaveInfo(m_wave_index);
+
+                // 자동 넥스트 라운드 시도
+                if (ADAuto[EADAutoType.NEXT_WAVE])
+                    GUI.OnClickWave();
             }
         }
     }
