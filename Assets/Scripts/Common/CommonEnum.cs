@@ -128,6 +128,13 @@ public enum EUnion
     RARITY,         // Èñ±Íµµ
 }
 
+public enum EMonsterType
+{
+    NORMAL,         // ³ë¸»
+    ELITE,          // Á¤¿¹
+    BOSS,           // º¸½º
+}
+
 public enum ETier
 {
     NONE    = 0,    //

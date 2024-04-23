@@ -135,6 +135,16 @@ public class StageRewardData
     public int m_repeat_clear_reward_amount;
 }
 
+public class TreasureInfoData
+{
+    public int m_kind;
+    public int m_buff_kind;
+    public EBuff m_buff_enum;
+    public string m_icon;
+    public string m_name;
+    public string m_comment;
+}
+
 public class TreasureLevelData
 {
     public int m_kind;
@@ -175,6 +185,7 @@ public class BuffInfoData
     public int m_kind;
     public EBuff m_buff;
     public EBuffTarget m_buff_target;
+    public string m_icon;
     public string m_desc;
     public string m_comment;
 }

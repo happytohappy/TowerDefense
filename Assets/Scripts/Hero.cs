@@ -110,14 +110,31 @@ public class Hero : PawnBase
         if (m_target_monster == null)
             return;
 
+        // 근접
         if (string.IsNullOrEmpty(GetHeroData.m_info.m_projectile))
         {
+            // 버프 통합 공격력
             var atkCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_DAMAGE);
-            var result = (int)(GetHeroData.m_stat.m_atk * atkCalculation);
-            m_target_monster.OnHit(result);
+            var atkResult = (int)(GetHeroData.m_stat.m_atk * atkCalculation);
 
-            Util.CreateHudDamage(m_target_monster.transform.position, result.ToString());
+            // 크리티컬 확률 체크
+            var criChanceCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_CHANCE);
+            var criChanceResult = (int)(GetHeroData.m_stat.m_critical_chance + criChanceCalculation);
+
+            var ran = UnityEngine.Random.Range(1, 101);
+            if (ran <= criChanceResult)
+            {
+                // 크리 공격력 적용
+                var criDamageCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_CRITICAL);
+                var criDamageResult = (int)(GetHeroData.m_skill.m_critical * criDamageCalculation);
+                atkResult = (int)(atkResult * (1 + (criDamageCalculation * 0.01f)));
+            }
+
+            m_target_monster.OnHit(atkResult);
+
+            Util.CreateHudDamage(m_target_monster.transform.position, atkResult.ToString());
         }
+        // 원거리
         else
         {
             var go = Managers.Resource.Instantiate($"Projectile/{GetHeroData.m_info.m_projectile}");
@@ -134,6 +151,10 @@ public class Hero : PawnBase
 
     public override void Enter_Attack()
     {
-        m_ani.Play(ANI_ATTACK);
+        m_ani.speed = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_SPEED);
+        m_ani.Ex_Play(ANI_ATTACK, this, () =>
+        {
+            m_ani.speed = 1.0f;
+        });
     }
 }

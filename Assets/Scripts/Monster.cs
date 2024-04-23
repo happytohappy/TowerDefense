@@ -94,7 +94,10 @@ public class Monster : PawnBase
             SetDestination();
         }
 
-        this.transform.Translate(Vector3.forward * Time.smoothDeltaTime * GetMonsterStatusData.m_move_speed);
+        var speedCalculation = Util.GetDeBuffValue(this, EBuff.BUFF_DECREASE_SPEED);
+        var speedResult = (int)(GetMonsterStatusData.m_move_speed * speedCalculation);
+
+        this.transform.Translate(Vector3.forward * Time.smoothDeltaTime * speedResult);
     }
 
     public override void Enter_Die()

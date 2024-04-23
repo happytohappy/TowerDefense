@@ -26,14 +26,14 @@ public partial class TableManager
     public void SetTreasureInfoData(string in_sheet_data)
     {
         // 클래스에 있는 변수들을 순서대로 저장한 배열
-        FieldInfo[] fields = typeof(TreasureLevelData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        FieldInfo[] fields = typeof(TreasureInfoData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
         string[] rows = in_sheet_data.Split('\n');
         string[] columns = rows[0].Split('\t');
         for (int row = 0; row < rows.Length; row++)
         {
             var sheetData = rows[row].Split('\t');
-            TreasureLevelData tableData = new TreasureLevelData();
+            TreasureInfoData tableData = new TreasureInfoData();
             for (int i = 0; i < sheetData.Length; i++)
             {
                 System.Type type = fields[i].FieldType;
@@ -53,7 +53,7 @@ public partial class TableManager
                     fields[i].SetValue(tableData, Enum.Parse(type, sheetData[i]));
             }
 
-            m_dic_treasure_level_data.Add((tableData.m_kind, tableData.m_level), tableData);
+            m_dic_treasure_info_data.Add(tableData.m_kind, tableData);
         }
     }
 }

@@ -2,7 +2,8 @@
 
 public partial class TableManager
 {
-    public Dictionary<(int, int), TreasureLevelData> m_dic_treasure_level_data  = new Dictionary<(int, int), TreasureLevelData>();
+    public Dictionary<int, TreasureInfoData> m_dic_treasure_info_data = new Dictionary<int, TreasureInfoData>();
+    public Dictionary<(int, int), TreasureLevelData> m_dic_treasure_level_data = new Dictionary<(int, int), TreasureLevelData>();
 
     private void InitTreasureTable()
     {
