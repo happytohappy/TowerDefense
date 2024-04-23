@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Monster : PawnBase
 {
@@ -9,8 +10,9 @@ public class Monster : PawnBase
     [SerializeField] private Transform m_pivot = null;
 
     private Vector3 m_destination;
-    private HPBar   m_hp_bar;
-    private int     m_line_index;
+    private HPBar m_hp_bar;
+    private int m_line_index;
+    private SkinnedMeshRenderer[] m_mesh;
 
     public Transform Pivot => m_pivot;
     public HPBar HPBar => m_hp_bar;
@@ -33,6 +35,9 @@ public class Monster : PawnBase
         // 도착지 설정
         SetDestination();
 
+        // 메테리얼 캐싱
+        m_mesh = GetComponentsInChildren<SkinnedMeshRenderer>();
+        
         // 시작
         ChangeState(FSM_STATE.Run);
     }
@@ -48,6 +53,8 @@ public class Monster : PawnBase
             return;
 
         base.OnHit(in_damage);
+
+        StartCoroutine(OnDamage());
 
         if (GetState == FSM_STATE.Die)
         {
@@ -103,6 +110,7 @@ public class Monster : PawnBase
     private void Delete()
     {
         ChangeState(FSM_STATE.None);
+        SetMaterialsColor(Color.white);
 
         if (m_hp_bar != null)
             Managers.Resource.Destroy(m_hp_bar.gameObject);
@@ -110,5 +118,25 @@ public class Monster : PawnBase
         Managers.Resource.Destroy(this.gameObject);
 
         GameController.GetInstance.Monsters.Remove(this);
+    }
+
+    private IEnumerator OnDamage()
+    {
+        SetMaterialsColor(Color.red);
+
+        yield return new WaitForSeconds(0.1f);
+
+        SetMaterialsColor(Color.white);
+    }
+
+    private void SetMaterialsColor(Color in_color)
+    {
+        foreach (var mesh in m_mesh)
+        {
+            foreach (var material in mesh.materials)
+            {
+                material.color = in_color;
+            }
+        }
     }
 }
