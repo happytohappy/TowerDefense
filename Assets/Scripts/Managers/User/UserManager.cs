@@ -31,6 +31,7 @@ public class UserManager : MonoBehaviour
         public Dictionary<int, HeroInfo> DicHaveHero = new Dictionary<int, HeroInfo>();
         public Dictionary<int, List<HeroInfo>> DicHaveHeroGroupByTier = new Dictionary<int, List<HeroInfo>>();
         public Dictionary<int, int> DicInventoryItem = new Dictionary<int, int>();
+        public Dictionary<int, int> DicTreasure = new Dictionary<int, int>();
     }
 
     public CUserData UserData { get; set; } = new CUserData();
