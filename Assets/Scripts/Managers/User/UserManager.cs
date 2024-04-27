@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using BackEnd;
 
 public class UserManager : MonoBehaviour
 {
@@ -210,22 +209,39 @@ public class UserManager : MonoBehaviour
 
     public static void SaveLocalData<T>(T SaveData, LocalKey Key)
     {
-        var binaryFormatter = new BinaryFormatter();
-        var memoryStream = new MemoryStream();
+        MemoryStream memoryStream = null;
+        try
+        {
+            var binaryFormatter = new BinaryFormatter();
+            memoryStream = new MemoryStream();
 
-        binaryFormatter.Serialize(memoryStream, SaveData);
-        PlayerPrefs.SetString(Key.ToString(), Convert.ToBase64String(memoryStream.GetBuffer()));
+            binaryFormatter.Serialize(memoryStream, SaveData);
+            PlayerPrefs.SetString(Key.ToString(), Convert.ToBase64String(memoryStream.GetBuffer()));
+        }
+        finally
+        {
+            memoryStream.Close();
+        }
     }
 
     public static T LoadLocalData<T>(LocalKey key)
     {
-        var data = PlayerPrefs.GetString(key.ToString());
-        
-        var binaryFormatter = new BinaryFormatter();
-        var memoryStream = new MemoryStream(Convert.FromBase64String(data));
+        MemoryStream memoryStream = null;
 
-        // 가져온 데이터를 바이트 배열로 변환하고 사용하기 위해 다시 리스트로 캐스팅 해줍니다.
-        return (T)binaryFormatter.Deserialize(memoryStream);
+        try
+        {
+            var data = PlayerPrefs.GetString(key.ToString());
+
+            var binaryFormatter = new BinaryFormatter();
+            memoryStream = new MemoryStream(Convert.FromBase64String(data));
+
+            // 가져온 데이터를 바이트 배열로 변환하고 사용하기 위해 다시 리스트로 캐스팅 해줍니다.
+            return (T)binaryFormatter.Deserialize(memoryStream);
+        }
+        finally
+        {
+            memoryStream.Close();
+        }
     }
 
     public static string GetLocalDataString<T>(LocalKey key)

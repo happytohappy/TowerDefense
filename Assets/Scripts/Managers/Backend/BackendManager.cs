@@ -27,9 +27,6 @@ public class BackendManager : MonoBehaviour
         if (bro.IsSuccess())
         {
             Debug.Log("게스트 로그인에 성공했습니다");
-
-            // 가챠 테스트
-            GetProbabilitysTest();
         }
         else
         {
@@ -51,30 +48,24 @@ public class BackendManager : MonoBehaviour
     public class ProbabilityItem
     {
         public string itemID;
-        public string itemName;
-        public string hpPower;
         public string percent;
-        public int num;
+
         public override string ToString()
         {
-            return $"itemID : {itemID}\n" +
-            $"itemName : {itemName}\n" +
-            $"hpPower : {hpPower}\n" +
-            $"percent : {percent}\n" +
-            $"num : {num}\n";
+            return $"itemID : {itemID}\n" + $"percent : {percent}\n";
         }
     }
 
-    public void GetProbabilitysTest()
+    public List<ProbabilityItem> GetProbabilitysTest()
     {
-        string selectedProbabilityFileId = "9635";
+        string selectedProbabilityFileId = "10991";
 
-        var bro = Backend.Probability.GetProbabilitys(selectedProbabilityFileId, 10); // 10연차;
+        var bro = Backend.Probability.GetProbabilitys(selectedProbabilityFileId, 1); // 1연차;
 
         if (!bro.IsSuccess())
         {
             Debug.LogError(bro.ToString());
-            return;
+            return null;
         }
 
         LitJson.JsonData json = bro.GetFlattenJSON()["elements"];
@@ -86,10 +77,7 @@ public class BackendManager : MonoBehaviour
             ProbabilityItem item = new ProbabilityItem();
 
             item.itemID = json[i]["itemID"].ToString();
-            item.itemName = json[i]["itemName"].ToString();
-            item.hpPower = json[i]["hpPower"].ToString();
             item.percent = json[i]["percent"].ToString();
-            item.num = int.Parse(json[i]["num"].ToString());
 
             itemList.Add(item);
         }
@@ -98,6 +86,8 @@ public class BackendManager : MonoBehaviour
         {
             Debug.Log(item.ToString());
         }
+
+        return itemList;
     }
 
     public void InsertUserData(string in_data)

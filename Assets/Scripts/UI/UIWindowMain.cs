@@ -73,7 +73,7 @@ public class UIWindowMain : UIWindowBase
         Managers.UI.OpenWindow(WindowID.UIWindowUnit);
     }
 
-    public void OnClickGacha()
+    public void OnClickGachaUnit()
     {
         var gachaReward = Managers.Table.GetGachaHero(1000);
         if (gachaReward == null)
@@ -93,5 +93,16 @@ public class UIWindowMain : UIWindowBase
 #else
         Application.Quit(); // 어플리케이션 종료
 #endif
+    }
+
+    public void OnClickGachaTreasure()
+    {
+        var result = Managers.BackEnd.GetProbabilitysTest();
+        
+        foreach (var e in result)
+        {
+            Managers.User.UpsertInventoryItem(int.Parse(e.itemID), 10);
+
+        }
     }
 }
