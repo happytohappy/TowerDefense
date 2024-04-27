@@ -147,6 +147,26 @@ public class UserManager : MonoBehaviour
             return 0;
     }
 
+    public int GetTreasureInfo(int in_kind)
+    {
+        if (UserData.DicTreasure.ContainsKey(in_kind))
+            return UserData.DicTreasure[in_kind];
+        else
+            return 0;
+    }
+
+    public void UpsertTreasure(int in_kind, int in_amount)
+    {
+        if (UserData.DicTreasure.ContainsKey(in_kind))
+        {
+            UpsertInventoryItem(in_kind, in_amount);
+        }
+        else
+        {
+            UserData.DicTreasure.Add(in_kind, 1);
+        }
+    }
+
     public void UpsertHero(int in_kind)
     {
         // 있는것은 레벨이 증가하는건가?

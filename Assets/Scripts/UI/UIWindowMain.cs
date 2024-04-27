@@ -1,5 +1,5 @@
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 public class UIWindowMain : UIWindowBase
 {
@@ -101,7 +101,7 @@ public class UIWindowMain : UIWindowBase
         
         foreach (var e in result)
         {
-            Managers.User.UpsertInventoryItem(int.Parse(e.itemID), 10);
+            Managers.User.UpsertTreasure(int.Parse(e.itemID), 10);
 
         }
     }

@@ -45,6 +45,12 @@ public enum DebugType
     Error
 }
 
+public enum Atlas
+{
+    Common,
+    Treasure
+}
+
 public enum FSM_STATE
 {
     None,

@@ -343,7 +343,8 @@ GameObject:
   - component: {fileID: 4302079589927604217}
   - component: {fileID: 4478021091348289236}
   - component: {fileID: 6492213472232526951}
-  - component: {fileID: 541084948457725440}
+  - component: {fileID: -2588695987242341381}
+  - component: {fileID: 2118177331086274570}
   m_Layer: 5
   m_Name: Slot_Treasure
   m_TagString: Untagged
@@ -413,7 +414,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &541084948457725440
+--- !u!114 &-2588695987242341381
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -422,7 +423,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1665753733033520203}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: ada0ea4977d79cc48a284eda0eb80ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -432,7 +433,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -457,9 +458,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnitIcon, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 2118177331086274570}
+        m_TargetAssemblyTypeName: Slot_Treasure, Assembly-CSharp
+        m_MethodName: OnClickTreasure
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -469,6 +470,29 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  m_AudioSource: {fileID: 0}
+--- !u!114 &2118177331086274570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665753733033520203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7aabd5352ea1445b835a440f2936d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_image_treasure: {fileID: 1046603998510176533}
+  m_go_dot: {fileID: 1581877427022292145}
+  m_go_select: {fileID: 4030490469037822108}
+  m_list_grade_star:
+  - {fileID: 7861938303276814919}
+  - {fileID: 7382716064887875903}
+  - {fileID: 7454965119391017737}
+  - {fileID: 7832996710330627614}
+  - {fileID: 5899854347736230151}
+  m_go_lock: {fileID: 1033059169310962085}
 --- !u!1 &2711207359251694913
 GameObject:
   m_ObjectHideFlags: 0

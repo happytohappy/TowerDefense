@@ -231,16 +231,16 @@ public static partial class Util
             if (in_grade < 6)
             {
                 if (i < in_grade)
-                    in_star[i].Ex_SetImage(Managers.Sprite.GetSprite(GradeOneByFive));
+                    in_star[i].Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, GradeOneByFive));
                 else
-                    in_star[i].Ex_SetImage(Managers.Sprite.GetSprite(GradeNone));
+                    in_star[i].Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, GradeNone));
             }
             else
             {
                 if (i < in_grade - 5)
-                    in_star[i].Ex_SetImage(Managers.Sprite.GetSprite(GradeSixByTen));
+                    in_star[i].Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, GradeSixByTen));
                 else
-                    in_star[i].Ex_SetImage(Managers.Sprite.GetSprite(GradeOneByFive));
+                    in_star[i].Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, GradeOneByFive));
             }
         }
     }
@@ -269,7 +269,7 @@ public static partial class Util
             case EHeroType.Gladiator: resourceName = "Icon_HeroType_Gladiator"; break;
         }
 
-        return Managers.Sprite.GetSprite(resourceName);
+        return Managers.Sprite.GetSprite(Atlas.Common, resourceName);
     }
 
     public static Sprite GetResourceImage(int in_kind)
@@ -283,7 +283,7 @@ public static partial class Util
             case 4: resourceName = "Icon_Ingame_Energy01"; break;
         }
 
-        return Managers.Sprite.GetSprite(resourceName);
+        return Managers.Sprite.GetSprite(Atlas.Common, resourceName);
     }
 
     public static void SetRarityBG(Image in_grade_bg, ERarity in_rarity)
@@ -295,10 +295,10 @@ public static partial class Util
 
         switch (in_rarity)
         {
-            case ERarity.RARE:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Rare));      break;
-            case ERarity.EPIC:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Epic));      break;
-            case ERarity.LEGEND: in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Legend));    break;
-            case ERarity.MYTH:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Myth));      break;
+            case ERarity.RARE:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Rare));      break;
+            case ERarity.EPIC:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Epic));      break;
+            case ERarity.LEGEND: in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Legend));    break;
+            case ERarity.MYTH:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Myth));      break;
         }
     }
 

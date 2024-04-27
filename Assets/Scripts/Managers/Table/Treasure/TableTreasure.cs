@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 public partial class TableManager
 {
@@ -12,6 +13,19 @@ public partial class TableManager
     private void ClearTreasureTable()
     {
         m_dic_treasure_level_data.Clear();
+    }
+
+    public List<TreasureInfoData> GetTreasureInfoAllData()
+    {
+        return m_dic_treasure_info_data.Values.ToList();
+    }
+
+    public TreasureInfoData GetTreasureInfoData(int in_kind)
+    {
+        if (m_dic_treasure_info_data.ContainsKey(in_kind))
+            return m_dic_treasure_info_data[in_kind];
+        else
+            return null;
     }
 
     public TreasureLevelData GetTreasureLevelData(int in_kind, int in_level)
