@@ -152,6 +152,7 @@ public class TreasureLevelData
     public int m_item_kind;
     public int m_grade_up_piece;
     public int m_buff_level;
+    public int m_mileage;
 }
 
 public class MissionInfoData

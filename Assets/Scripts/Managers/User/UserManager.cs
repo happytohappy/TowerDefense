@@ -46,6 +46,8 @@ public class UserManager : MonoBehaviour
         }
         else
         {
+            UserData = new CUserData();
+
             // 1티어 기본 보유 타워
             UserData.DicHaveHero.Add(1001, new HeroInfo(1001, 1, 1));
             UserData.DicHaveHero.Add(1002, new HeroInfo(1002, 1, 1));
