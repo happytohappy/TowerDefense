@@ -117,6 +117,12 @@ public class Hero : PawnBase
             var atkCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_DAMAGE);
             var atkResult = (int)(GetHeroData.m_stat.m_atk * atkCalculation);
 
+            // 랜덤 가중치 적용
+            atkResult = (int)(atkResult * UnityEngine.Random.Range(0.8f, 1.2f));
+
+            // 상대 방어력
+            atkResult -= m_target_monster.GetMonsterStatusData.m_def;
+
             // 크리티컬 확률 체크
             var criChanceCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_CHANCE);
             var criChanceResult = (int)(GetHeroData.m_stat.m_critical_chance + criChanceCalculation);
@@ -129,6 +135,10 @@ public class Hero : PawnBase
                 var criDamageResult = (int)(GetHeroData.m_skill.m_critical * criDamageCalculation);
                 atkResult = (int)(atkResult * (1 + (criDamageCalculation * 0.01f)));
             }
+
+            // 최소 데미지 보정
+            if (atkResult < 1)
+                atkResult = 1;
 
             m_target_monster.OnHit(atkResult);
 

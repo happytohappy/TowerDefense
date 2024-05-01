@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
+  m_fontSize: 18
   m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 5945059275911187058}
   - component: {fileID: 2210631534792400325}
   - component: {fileID: 7680151503893751429}
+  - component: {fileID: -1976255299270153791}
   m_Layer: 5
   m_Name: Slot_PopupQuest
   m_TagString: Untagged
@@ -342,6 +343,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-1976255299270153791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3328205935294316179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8795c98db8dac4943a00cdd9a8619c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_slot_reward: {fileID: 3915095621030970463}
+  m_text_title: {fileID: 4632898170501332087}
+  m_slider_progress: {fileID: 2635438382058223531}
+  m_text_progress: {fileID: 5831661143535940051}
+  m_btn_get: {fileID: 4224127565424399024}
 --- !u!1 &5278948792353831099
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,7 +835,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
+  m_fontSize: 18
   m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -867,6 +885,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5945059275911187058}
     m_Modifications:
+    - target: {fileID: 652841551354561535, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 652841551354561535, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1121986456053247524, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
       propertyPath: m_Name
       value: Slot_Reward
@@ -972,6 +998,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
+--- !u!114 &3915095621030970463 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7886869981482462830, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
+  m_PrefabInstance: {fileID: 6568215074078009905}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ebe83319b2f76e44b8f30434086b52a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6103754581342372886 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1121986456053247527, guid: 1e99246abb9adef429ed78c69e0c63ed, type: 3}
