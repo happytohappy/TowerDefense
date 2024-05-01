@@ -37,6 +37,9 @@ public class Slot_Treasure : MonoBehaviour
         {
             m_go_dot.Ex_SetActive(Managers.User.GetInventoryItem(treasureLevel.m_item_kind) >= treasureLevel.m_grade_up_piece);
         }
+
+        if (m_treasure_kind == 1)
+            uiTreasure.LastSelect = m_go_select;
     }
 
     public void OnClickTreasure()

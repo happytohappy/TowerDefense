@@ -35,11 +35,11 @@ public class BackendManager : MonoBehaviour
             PlayerPrefs.DeleteAll();
             Managers.User.Init();
 
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit(); // 어플리케이션 종료
-#endif
+//#if UNITY_EDITOR
+//            UnityEditor.EditorApplication.isPlaying = false;
+//#else
+//            Application.Quit(); // 어플리케이션 종료
+//#endif
 
             Debug.Log("게스트 로그인 실패");
         }
