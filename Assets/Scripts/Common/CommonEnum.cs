@@ -187,8 +187,8 @@ public enum EHeroType
 
 public enum EMissionType
 {
-    STAGE,
-    ACHIEVEMENT
+    NORMAL,
+    ACCUMULATE
 }
 
 public enum EMissionCondition
@@ -200,6 +200,7 @@ public enum EMissionCondition
     EQUIP_MERGE,            // 장비 합성
     GACHA_NORMAL,           // 일반 가챠
     GACHA_PREMIUM,          // 프리미엄 가챠
+    CLEAR_STAGE,            // 일반 스테이지 달성
     CLEAR_INFINITE,         // 무한 모드 스테이지 달성
     HERO_SAME,              // 같은 영웅 보유
     HERO_DIFF,              // 서로 다른 영웅 종류 보유
@@ -219,4 +220,10 @@ public enum EADAutoType
     UNIT_ADD,
     UNIT_MERGE,
     NEXT_WAVE
+}
+
+public enum EShopRenew
+{
+    DAY,
+    WEEK,
 }
