@@ -169,6 +169,33 @@ public class MissionInfoData
     public string m_desc;
 }
 
+public class MissionStageData
+{
+    public int m_kind;
+    public int m_index;
+    public EMissionCondition m_mission_condition;
+    public int m_value_1;
+    public int m_value_2;
+    public int m_reward_item_kind;
+    public int m_reward_item_amound;
+    public int m_rate;
+    public string m_title;
+    public string m_desc;
+}
+
+public class MissionAchievementData
+{
+    public int m_kind;
+    public int m_sequence;
+    public EMissionCondition m_mission_condition;
+    public int m_value_1;
+    public int m_value_2;
+    public int m_reward_item_kind;
+    public int m_reward_item_amound;
+    public string m_title;
+    public string m_desc;
+}
+
 public class SynergyInfoData
 {
     public int m_kind;

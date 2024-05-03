@@ -27,6 +27,7 @@ public class GoogleSheetManager : MonoBehaviour
     // Synergy_Info     1669999714
     // Buff_Info        0
     // Buff_Level       1995903818
+    // Stage_Mission    1324865195
 
     public void Init()
     {
@@ -48,6 +49,7 @@ public class GoogleSheetManager : MonoBehaviour
         StartCoroutine(CoRequestGoogleSheet(1669999714,     (value) => Managers.Table.SetSynergyInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(0,              (value) => Managers.Table.SetBuffInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(1995903818,     (value) => Managers.Table.SetBuffLevelData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1324865195,     (value) => Managers.Table.SetMissionStageData(value)));
     }
 
     private IEnumerator CoRequestGoogleSheet(int in_gid, Action<string> in_call_back)
