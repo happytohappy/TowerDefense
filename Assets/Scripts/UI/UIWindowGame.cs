@@ -155,6 +155,14 @@ public class UIWindowGame : UIWindowBase
         Managers.UI.OpenWindow(WindowID.UIPopupIngameAuto);
     }
 
+    public void OnClickQuest()
+    {
+        QuestParam param = new QuestParam();
+        param.m_quest_type = EQuestType.Stage;
+
+        Managers.UI.OpenWindow(WindowID.UIPopupQuest, param);
+    }
+
     public void SetUnitEnergy()
     {
         m_btn_unit_add.interactable = GameController.GetInstance.Energy >= CONST.STAGE_ENERGY_BUY;

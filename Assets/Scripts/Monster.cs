@@ -58,7 +58,7 @@ public class Monster : PawnBase
 
         if (GetState == FSM_STATE.Die)
         {
-            GameController.GetInstance.MonsterKill();
+            GameController.GetInstance.MonsterKill(this);
             m_hp_bar.HPBarActive(false);
             return;
         }

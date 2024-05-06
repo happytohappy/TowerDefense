@@ -45,7 +45,10 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickQuest()
     {
-        Managers.UI.OpenWindow(WindowID.UIPopupQuest);
+        QuestParam param = new QuestParam();
+        param.m_quest_type = EQuestType.Achievement;
+
+        Managers.UI.OpenWindow(WindowID.UIPopupQuest, param);
     }
 
     public void OnClickSetting()

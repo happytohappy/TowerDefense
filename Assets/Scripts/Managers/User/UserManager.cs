@@ -22,6 +22,19 @@ public class UserManager : MonoBehaviour
     }
 
     [Serializable]
+    public class MissionInfo
+    {
+        public int m_kind;
+        public int m_sequence;
+
+        public MissionInfo(int in_kind, int in_sequence)
+        {
+            m_kind = in_kind;
+            m_sequence = in_sequence;
+        }
+    }
+
+    [Serializable]
     public class CUserData
     {
         public int LastClearStage = 0;
@@ -31,6 +44,7 @@ public class UserManager : MonoBehaviour
         public Dictionary<int, List<HeroInfo>> DicHaveHeroGroupByTier = new Dictionary<int, List<HeroInfo>>();
         public Dictionary<int, int> DicInventoryItem = new Dictionary<int, int>();
         public Dictionary<int, int> DicTreasure = new Dictionary<int, int>();
+        public List<MissionInfo> Mission = new List<MissionInfo>();
     }
 
     public CUserData UserData { get; set; } = new CUserData();
@@ -122,6 +136,16 @@ public class UserManager : MonoBehaviour
                 new HeroInfo(5004, 1, 1),
                 new HeroInfo(5005, 1, 1)
             });
+
+            // 기본 미션(업적) 넣어주기
+            UserData.Mission.Add(new MissionInfo(1, 1));
+            UserData.Mission.Add(new MissionInfo(2, 1));
+            UserData.Mission.Add(new MissionInfo(3, 1));
+            UserData.Mission.Add(new MissionInfo(4, 1));
+            UserData.Mission.Add(new MissionInfo(5, 1));
+            UserData.Mission.Add(new MissionInfo(6, 1));
+            UserData.Mission.Add(new MissionInfo(7, 1));
+            UserData.Mission.Add(new MissionInfo(8, 1));
         }    
     }
 
@@ -192,6 +216,11 @@ public class UserManager : MonoBehaviour
         {
             UserData.DicInventoryItem.Add(in_kind, in_amount);
         }
+    }
+
+    public List<MissionInfo> GetMission()
+    {
+        return UserData.Mission;
     }
 
     public void SetGameSpeedUP()

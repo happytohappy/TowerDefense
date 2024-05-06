@@ -280,7 +280,7 @@ public static partial class Util
             case 1: resourceName = "Icon_Common_Gold"; break;
             case 2: resourceName = "Icon_Common_Ruby"; break;
             case 3: resourceName = "Icon_Common_Dia"; break;
-            case 4: resourceName = "Icon_Ingame_Energy01"; break;
+            case 4: resourceName = "Icon_Common_Energy"; break;
         }
 
         return Managers.Sprite.GetSprite(Atlas.Common, resourceName);

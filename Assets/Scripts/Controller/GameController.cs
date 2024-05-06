@@ -81,6 +81,13 @@ public partial class GameController : MonoBehaviour
     public LandData       EndLand     { get; set; } = null;
     public Hud_HeroInfo   HudHeroInfo { get; set; } = null;
 
+    // MISSION DATA
+    public List<MissionStageData> StageMission { get; set; } = new List<MissionStageData>();
+    public HashSet<int> ClearMission { get; set; } = new HashSet<int>();
+    public int MonsterKillCount { get; set; } = 0;
+    public int BossKillCount { get; set; } = 0;
+    public Dictionary<int, int> MergeCount { get; set; } = new Dictionary<int, int>();
+
     private UIWindowGame m_gui = null;
     public UIWindowGame GUI
     {
@@ -174,6 +181,13 @@ public partial class GameController : MonoBehaviour
 
         for (EADAutoType i = EADAutoType.UNIT_ADD; i <= EADAutoType.NEXT_WAVE; i++)
             ADAuto.Add(i, false);
+
+        MonsterKillCount = 0;
+        BossKillCount = 0;
+        MergeCount.Clear();
+        ClearMission.Clear();
+        StageMission.Clear();
+        StageMission = Managers.Table.GetMissionStageData(Managers.User.SelectStage, 6);
     }
 
     public void HeroMerge()
@@ -255,8 +269,8 @@ public partial class GameController : MonoBehaviour
         // 재화 선 체크
         switch (in_type)
         {
-            case ESpawnType.Energy: 
-                if (Energy < CONST.STAGE_ENERGY_BUY) 
+            case ESpawnType.Energy:
+                if (Energy < CONST.STAGE_ENERGY_BUY)
                     return;
                 break;
         }
@@ -316,6 +330,14 @@ public partial class GameController : MonoBehaviour
             CheckAutoMerge();
 
         GUI.OnCheckHeroSynergy();
+
+        if (in_type == ESpawnType.Merge)
+        {
+            if (MergeCount.ContainsKey(userHeroInfo.m_grade))
+                MergeCount[userHeroInfo.m_grade]++;
+            else
+                MergeCount.Add(userHeroInfo.m_grade, 1);
+        }
     }
 
     private void CheckAutoMerge()

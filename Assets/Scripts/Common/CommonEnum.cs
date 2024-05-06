@@ -227,3 +227,9 @@ public enum EShopRenew
     DAY,
     WEEK,
 }
+
+public enum EQuestType
+{
+    Stage,
+    Achievement
+}

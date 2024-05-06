@@ -60,10 +60,20 @@ public partial class GameController
         m_spawn_finish = true;
     }
 
-    public void MonsterKill()
+    public void MonsterKill(Monster in_monster)
     {
         m_monster_kill_count++;
         Energy++;
+
+        switch (in_monster.GetMonsterInfoData.m_monster_type)
+        {
+            case EMonsterType.NORMAL:
+                MonsterKillCount++;
+                break;
+            case EMonsterType.BOSS:
+                BossKillCount++;
+                break;
+        }
 
         GUI.SetUnitEnergy();
         WaveFinishCheck();

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public abstract class WindowParam { }
 
 public class LoadingParam : WindowParam
@@ -15,6 +17,11 @@ public class GachaHeroParam : WindowParam
 public class InGameSkillParam : WindowParam
 {
     public EADRewardType m_reward_type = EADRewardType.ENERGY;
+}
+
+public class QuestParam : WindowParam
+{
+    public EQuestType m_quest_type = EQuestType.Stage;
 }
 
 public class UnitInfoParam : WindowParam
