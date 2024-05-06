@@ -245,3 +245,24 @@ public class BuffLevelData
     public float m_value;
     public string m_comment;
 }
+
+public class TownInfoData
+{
+    public int m_kind;
+    public bool m_ad_reward;
+    public string m_icon;
+    public string m_title;
+    public string m_contents;
+    public string comment;
+}
+
+public class TownLevelData
+{
+    public int m_kind;
+    public int m_level;
+    public int m_timespan;
+    public int m_level_up_kind;
+    public int m_level_up_cost;
+    public int m_reward_kind;
+    public int m_reward_amount;
+}

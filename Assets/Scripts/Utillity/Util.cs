@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
 using System.Collections.Generic;
+using System;
 
 public static partial class Util
 {
@@ -165,6 +166,39 @@ public static partial class Util
         return hudHeroInfo;
     }
 
+    public static Hud_TownInfo CreateHudTownInfo(ETownType in_town_type, Transform in_town, Vector3 in_offset)
+    {
+        string prefabName = string.Empty;
+        switch (in_town_type)
+        {
+            case ETownType.Gold:
+                prefabName = "Hud_Town_Gold";
+                break;
+            case ETownType.Ruby:
+                prefabName = "Hud_Town_Ruby";
+                break;
+            case ETownType.Dia:
+                prefabName = "Hud_Town_Dia";
+                break;
+            case ETownType.Unit:
+                prefabName = "Hud_Town_Unit";
+                break;
+            case ETownType.Equip:
+                prefabName = "Hud_Town_Equip";
+                break;
+        }
+
+        var go = Managers.Resource.Instantiate($"Item/{prefabName}", new Vector3(9999f, 9999f, 9999f), Managers.Widget);
+        var hudTownInfo = go.GetComponent<Hud_TownInfo>();
+        if (hudTownInfo == null)
+            return null;
+
+        hudTownInfo.Target = in_town;
+        hudTownInfo.Set(in_town_type, in_offset);
+
+        return hudTownInfo;
+    }
+
     public static Hud_Damage CreateHudDamage(Vector3 in_position, string in_damage)
     {
         var go = Managers.Resource.Instantiate("Item/Hud_Damage", new Vector3(9999f, 9999f, 9999f), Managers.Widget);
@@ -305,5 +339,46 @@ public static partial class Util
     public static int GetGoods(EGoods in_goods)
     {
         return Managers.User.GetInventoryItem((int)in_goods);
+    }
+
+    public static long UnixTimeNow() 
+    {
+        var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)); return (long)timeSpan.TotalSeconds;
+    }
+
+    public static string RemainingToDate(long in_time)
+    {
+        StringBuilder result = new StringBuilder();
+
+        if (in_time >= 3600)
+        {
+            result.Append($"{string.Format("{0:D2}", in_time / 3600)}:");
+            in_time %= 3600;
+        }
+        else
+        {
+            result.Append($"00:");
+        }
+
+        if (in_time >= 60)
+        {
+            result.Append($"{string.Format("{0:D2}", in_time / 60)}:");
+            in_time %= 60;
+        }
+        else
+        {
+            result.Append($"00:");
+        }
+
+        if (in_time > 0)
+        {
+            result.Append($"{string.Format("{0:D2}", in_time)}");
+        }
+        else
+        {
+            result.Append($"00");
+        }
+
+        return result.ToString();
     }
 }

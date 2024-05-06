@@ -233,3 +233,13 @@ public enum EQuestType
     Stage,
     Achievement
 }
+
+public enum ETownType
+{
+    None,
+    Gold = 1,
+    Ruby = 10,
+    Dia = 20,
+    Unit = 30,
+    Equip = 40,
+}

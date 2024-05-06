@@ -29,6 +29,8 @@ public class GoogleSheetManager : MonoBehaviour
     // Buff_Level       1995903818
     // Stage_Mission    1324865195
     // Achievement_Info 123634346
+    // Village_Info     1419666850
+    // Village_Level    1297306839
 
     public void Init()
     {
@@ -52,6 +54,8 @@ public class GoogleSheetManager : MonoBehaviour
         StartCoroutine(CoRequestGoogleSheet(1995903818,     (value) => Managers.Table.SetBuffLevelData(value)));
         StartCoroutine(CoRequestGoogleSheet(1324865195,     (value) => Managers.Table.SetMissionStageData(value)));
         StartCoroutine(CoRequestGoogleSheet(123634346,      (value) => Managers.Table.SetMissionAchievementData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1419666850,     (value) => Managers.Table.SetTownInfoData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1297306839,     (value) => Managers.Table.SetTownLevelData(value)));
     }
 
     private IEnumerator CoRequestGoogleSheet(int in_gid, Action<string> in_call_back)

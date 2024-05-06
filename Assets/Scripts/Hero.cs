@@ -15,7 +15,6 @@ public class Hero : PawnBase
     public GameObject RangeEffect => m_range_effect;
     public HeroData GetHeroData { get; set; } = null;
 
-
     protected override void Start()
     {
         base.Start();

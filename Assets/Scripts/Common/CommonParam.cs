@@ -34,3 +34,8 @@ public class WaveInfoParam : WindowParam
     public int m_curr_wave = 0;
     public int m_max_wave = 0;
 }
+
+public class TownParam : WindowParam
+{
+    public ETownType m_town_type = ETownType.None;
+}

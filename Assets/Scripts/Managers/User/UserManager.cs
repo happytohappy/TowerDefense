@@ -35,6 +35,21 @@ public class UserManager : MonoBehaviour
     }
 
     [Serializable]
+    public class TownInfo
+    {
+        public int m_town_kind;
+        public int m_town_level;
+        public long m_last_reward_time;     // 나중에 뒤끝 서버 시간으로 쓰는게 좋을듯?
+
+        public TownInfo(int in_town_kind, int in_town_level, long in_last_reward_time)
+        {
+            m_town_kind        = in_town_kind;
+            m_town_level       = in_town_level;
+            m_last_reward_time = in_last_reward_time;
+        }
+    }
+
+    [Serializable]
     public class CUserData
     {
         public int LastClearStage = 0;
@@ -45,6 +60,7 @@ public class UserManager : MonoBehaviour
         public Dictionary<int, int> DicInventoryItem = new Dictionary<int, int>();
         public Dictionary<int, int> DicTreasure = new Dictionary<int, int>();
         public List<MissionInfo> Mission = new List<MissionInfo>();
+        public Dictionary<ETownType, TownInfo> Town = new Dictionary<ETownType, TownInfo>();
     }
 
     public CUserData UserData { get; set; } = new CUserData();
@@ -146,6 +162,13 @@ public class UserManager : MonoBehaviour
             UserData.Mission.Add(new MissionInfo(6, 1));
             UserData.Mission.Add(new MissionInfo(7, 1));
             UserData.Mission.Add(new MissionInfo(8, 1));
+
+            // 기본 건물 레벨 넣어주기
+            UserData.Town.Add(ETownType.Gold, new TownInfo(1, 1, Util.UnixTimeNow()));
+            UserData.Town.Add(ETownType.Ruby, new TownInfo(10, 1, Util.UnixTimeNow()));
+            UserData.Town.Add(ETownType.Dia, new TownInfo(20, 1, Util.UnixTimeNow()));
+            UserData.Town.Add(ETownType.Unit, new TownInfo(30, 1, Util.UnixTimeNow()));
+            UserData.Town.Add(ETownType.Equip, new TownInfo(40, 1, Util.UnixTimeNow()));
         }    
     }
 
