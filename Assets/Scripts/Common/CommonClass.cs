@@ -73,6 +73,7 @@ public class MonsterInfoData
     public string m_path;
     public string m_name;
     public string m_desc;
+    public EMonsterType m_monster_type;
 }
 
 public class MonsterStatusData
@@ -181,6 +182,23 @@ public class MissionStageData
     public int m_rate;
     public string m_title;
     public string m_desc;
+
+    public MissionStageData Clone()
+    {
+        var result = new MissionStageData();
+        result.m_kind = this.m_kind;
+        result.m_index = this.m_index;
+        result.m_mission_condition = this.m_mission_condition;
+        result.m_value_1 = this.m_value_1;
+        result.m_value_2 = this.m_value_2;
+        result.m_reward_item_kind = this.m_reward_item_kind;
+        result.m_reward_item_amound = this.m_reward_item_amound;
+        result.m_rate = this.m_rate;
+        result.m_title = this.m_title;
+        result.m_desc = this.m_desc;
+
+        return result;
+    }
 }
 
 public class MissionAchievementData
