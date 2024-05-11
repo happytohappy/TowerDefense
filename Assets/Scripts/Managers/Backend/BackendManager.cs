@@ -1,4 +1,5 @@
 using BackEnd;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ public class BackendManager : MonoBehaviour
         if (bro.IsSuccess())
         {
             Debug.Log("뒤끝 SDK 초기화 완료 : " + bro);
+
+            // 서버 시간 획득
+            ServerTime();
 
             // 게스트 로그인
             GuestLogin();
@@ -98,5 +102,15 @@ public class BackendManager : MonoBehaviour
         var aaa = Backend.GameData.Insert("User", param);
 
         Debug.LogError(aaa);
+    }
+
+    public void ServerTime()
+    {
+        BackendReturnObject servertime = Backend.Utils.GetServerTime();
+
+        string time = servertime.GetReturnValuetoJSON()["utcTime"].ToString();
+        DateTime parsedDate = DateTime.Parse(time);
+
+        Debug.Log("서버 시간 : " + parsedDate);
     }
 }

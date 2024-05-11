@@ -114,7 +114,6 @@ public class StageInfoData
 {
     public int m_stage;
     public string m_map_model_path;
-    // Ãß°¡
     public int m_mission_group;
     public float m_monster_kill_compensation;
 }
