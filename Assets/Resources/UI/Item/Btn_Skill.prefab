@@ -297,6 +297,7 @@ GameObject:
   - component: {fileID: 3214263207421981506}
   - component: {fileID: 7513567111487148053}
   - component: {fileID: 4564094917876427121}
+  - component: {fileID: 8310789895843915426}
   m_Layer: 5
   m_Name: Btn_Skill
   m_TagString: Untagged
@@ -311,7 +312,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262835584696026576}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -403,8 +404,24 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 7513567111487148053}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
   m_AudioSource: {fileID: 8300000, guid: 6c5c86c7015ede847a187f5583cc7d9e, type: 3}
+--- !u!114 &8310789895843915426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8262835584696026576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 904bea5e61dd7e64eb07903e08078446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_trs_root: {fileID: 4820113928550808347}
+  m_image_skill: {fileID: 7513567111487148053}
+  m_text_level: {fileID: 2316242168048777569}
+  m_go_lock: {fileID: 3089167841249726146}

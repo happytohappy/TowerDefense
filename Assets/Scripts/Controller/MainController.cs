@@ -27,7 +27,10 @@ public class MainController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             if (RayPickUI())
+            {
+                Util.CloseToolTip();
                 return;
+            }
 
             Ray ray = Managers.WorldCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

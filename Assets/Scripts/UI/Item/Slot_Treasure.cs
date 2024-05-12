@@ -31,10 +31,12 @@ public class Slot_Treasure : MonoBehaviour
 
         if (treasureLevel == null || treasureLevel == null)
         {
+            m_image_treasure.Ex_SetColor(Color.black);
             m_go_dot.Ex_SetActive(false);
         }
         else
         {
+            m_image_treasure.Ex_SetColor(Color.white);
             m_go_dot.Ex_SetActive(Managers.User.GetInventoryItem(treasureLevel.m_item_kind) >= treasureLevel.m_grade_up_piece);
         }
 

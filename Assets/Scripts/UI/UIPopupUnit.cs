@@ -23,6 +23,11 @@ public class UIPopupUnit : UIWindowBase
     [SerializeField] private TMP_Text m_text_remove_tier = null;
     [SerializeField] private TMP_Text m_text_remove_energy = null;
 
+    [Header("유닛 스킬")]
+    [SerializeField] private List<Slot_Skill> m_skill = new List<Slot_Skill>();
+
+    public int ToolTipIndex { get; set; }
+
     private int m_kind;
 
     public override void Awake()
@@ -45,6 +50,8 @@ public class UIPopupUnit : UIWindowBase
             Managers.UI.CloseLast();
 
         m_kind = param.m_kind;
+        ToolTipIndex = -1;
+
         RefreshUI();
     }
 
@@ -106,6 +113,8 @@ public class UIPopupUnit : UIWindowBase
             case 7: m_text_remove_energy.Ex_SetText($"{CONST.STAGE_ENERGY_SELL_7}"); break;
             case 8: m_text_remove_energy.Ex_SetText($"{CONST.STAGE_ENERGY_SELL_8}"); break;
         }
+
+        Util.SetSkill(m_skill, m_kind);
     }
 
     public void OnClickUnitRemove()
@@ -130,5 +139,20 @@ public class UIPopupUnit : UIWindowBase
         gui.OnCheckHeroSynergy();
 
         OnClickClose();
+    }
+
+    public void OnClickToolTip(int in_skill_index)
+    {
+        // 이미 열려있는 툴팁이라면
+        if (ToolTipIndex == in_skill_index)
+        {
+            ToolTipIndex = -1;
+            Util.CloseToolTip();
+            return;
+        }
+
+        Util.OpenToolTip(m_skill[in_skill_index].Contents, m_skill[in_skill_index].GetRoot);
+
+        ToolTipIndex = in_skill_index;
     }
 }

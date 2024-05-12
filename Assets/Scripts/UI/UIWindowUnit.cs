@@ -29,7 +29,11 @@ public class UIWindowUnit : UIWindowBase
     [SerializeField] private Image m_image_resource = null;
     [SerializeField] private Image m_img_unit_type = null;
 
+    [Header("유닛 스킬")]
+    [SerializeField] private List<Slot_Skill> m_skill = new List<Slot_Skill>();
+
     private int m_kind;
+    public int ToolTipIndex { get; set; }
 
     public GameObject LastSelect { get; set; }
 
@@ -46,6 +50,8 @@ public class UIWindowUnit : UIWindowBase
         base.OpenUI(wp);
 
         m_kind = 1001;
+        ToolTipIndex = -1;
+
         RefreshUI();
     }
 
@@ -79,6 +85,8 @@ public class UIWindowUnit : UIWindowBase
         var heroInfo = Managers.Table.GetHeroInfoData(in_kind);
         if (heroInfo == null)
             return;
+
+        
 
         m_text_name.Ex_SetText(Util.GetHeroName(m_kind));
         m_Image_hero.Ex_SetImage(Util.GetHeroImage(m_kind));
@@ -139,6 +147,8 @@ public class UIWindowUnit : UIWindowBase
                 m_btn_levelup.interactable = Managers.User.GetInventoryItem(HeroLevel.m_item_kind) >= HeroLevel.m_item_amount;
             }
         }
+
+        Util.SetSkill(m_skill, in_kind);
     }
 
     public void OnClickUnitGradeUp()
@@ -188,5 +198,20 @@ public class UIWindowUnit : UIWindowBase
         param.m_hero_kind = gachaReward.m_item;
 
         Managers.UI.OpenWindow(WindowID.UIPopupUnitBuy, param);
+    }
+
+    public void OnClickToolTip(int in_skill_index)
+    {
+        // 이미 열려있는 툴팁이라면
+        if (ToolTipIndex == in_skill_index)
+        {
+            ToolTipIndex = -1;
+            Util.CloseToolTip();
+            return;
+        }
+
+        Util.OpenToolTip(m_skill[in_skill_index].Contents, m_skill[in_skill_index].GetRoot);
+
+        ToolTipIndex = in_skill_index;
     }
 }

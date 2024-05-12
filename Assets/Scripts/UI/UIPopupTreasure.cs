@@ -75,10 +75,12 @@ public class UIPopupTreasure : UIWindowBase
         if (userTreasure == 0 || treasureLevel == null)
         {
             m_btn_gradeup.Ex_SetActive(false);
+            m_image_treasure.Ex_SetColor(Color.black);
         }
         else
         {
             m_btn_gradeup.Ex_SetActive(true);
+            m_image_treasure.Ex_SetColor(Color.white);
             m_text_gradeup.Ex_SetText($"{Managers.User.GetInventoryItem(treasureLevel.m_item_kind)}/{treasureLevel.m_grade_up_piece}");
             m_btn_gradeup.interactable = Managers.User.GetInventoryItem(treasureLevel.m_item_kind) >= treasureLevel.m_grade_up_piece;
         }

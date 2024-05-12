@@ -32,7 +32,17 @@ public partial class GameController
         }
     }
 
-    public GameObject RayPickUIObject { get { return RayPickUI(); } }
+    public GameObject RayPickUIObject 
+    { 
+        get 
+        {
+            var PickUI = RayPickUI();
+            if (PickUI)
+                Util.CloseToolTip();
+
+            return PickUI; 
+        }
+    }
 
     private void Update_Input()
     {

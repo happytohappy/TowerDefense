@@ -381,4 +381,28 @@ public static partial class Util
 
         return result.ToString();
     }
+
+    public static void SetSkill(List<Slot_Skill> in_skills, int in_kind)
+    {
+        var hero = Managers.User.GetUserHeroInfo(in_kind);
+        HeroGradeData heroGradeData = null;
+
+        if (hero == null)
+            heroGradeData = Managers.Table.GetHeroGradeData(in_kind, 1);
+        else
+            heroGradeData = Managers.Table.GetHeroGradeData(in_kind, hero.m_grade);
+
+        if (heroGradeData == null)
+            return;
+
+        for (int i = 0; i < in_skills.Count; i++)
+        {
+            if (i == 0)
+                in_skills[i].SetSkill(heroGradeData.m_skill_1, 1, hero == null);
+            else if (i == 1)
+                in_skills[i].SetSkill(heroGradeData.m_skill_2, 1, hero == null);
+            else if (i == 2)
+                in_skills[i].SetSkill(heroGradeData.m_skill_3, 1, hero == null);
+        }
+    }
 }
