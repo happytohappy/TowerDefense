@@ -164,11 +164,11 @@ public class UserManager : MonoBehaviour
             UserData.Mission.Add(new MissionInfo(8, 1));
 
             // 기본 건물 레벨 넣어주기
-            UserData.Town.Add(ETownType.Gold, new TownInfo(1, 1, Util.UnixTimeNow()));
-            UserData.Town.Add(ETownType.Ruby, new TownInfo(10, 1, Util.UnixTimeNow()));
-            UserData.Town.Add(ETownType.Dia, new TownInfo(20, 1, Util.UnixTimeNow()));
-            UserData.Town.Add(ETownType.Unit, new TownInfo(30, 1, Util.UnixTimeNow()));
-            UserData.Town.Add(ETownType.Equip, new TownInfo(40, 1, Util.UnixTimeNow()));
+            UserData.Town.Add(ETownType.Gold, new TownInfo(1, 1, Managers.BackEnd.ServerTimeGetUTCTimeStamp()));
+            UserData.Town.Add(ETownType.Ruby, new TownInfo(10, 1, Managers.BackEnd.ServerTimeGetUTCTimeStamp()));
+            UserData.Town.Add(ETownType.Dia, new TownInfo(20, 1, Managers.BackEnd.ServerTimeGetUTCTimeStamp()));
+            UserData.Town.Add(ETownType.Unit, new TownInfo(30, 1, Managers.BackEnd.ServerTimeGetUTCTimeStamp()));
+            UserData.Town.Add(ETownType.Equip, new TownInfo(40, 1, Managers.BackEnd.ServerTimeGetUTCTimeStamp()));
         }    
     }
 

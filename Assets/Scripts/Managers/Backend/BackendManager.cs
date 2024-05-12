@@ -13,9 +13,6 @@ public class BackendManager : MonoBehaviour
         {
             Debug.Log("뒤끝 SDK 초기화 완료 : " + bro);
 
-            // 서버 시간 획득
-            ServerTime();
-
             // 게스트 로그인
             GuestLogin();
         }
@@ -104,12 +101,25 @@ public class BackendManager : MonoBehaviour
         Debug.LogError(aaa);
     }
 
+    public long ServerTimeGetUTCTimeStamp()
+    {
+        BackendReturnObject servertime = Backend.Utils.GetServerTime();
+
+        string time = servertime.GetReturnValuetoJSON()["utcTime"].ToString();
+        DateTime parsedDate = DateTime.Parse(time);
+
+        var timeSpan = parsedDate - new DateTime(1970, 1, 1, 0, 0, 0);
+        return (long)timeSpan.TotalSeconds;
+    }
+
     public void ServerTime()
     {
         BackendReturnObject servertime = Backend.Utils.GetServerTime();
 
         string time = servertime.GetReturnValuetoJSON()["utcTime"].ToString();
         DateTime parsedDate = DateTime.Parse(time);
+
+        var timeSpan = parsedDate - new DateTime(1970, 1, 1, 0, 0, 0);
 
         Debug.Log("서버 시간 : " + parsedDate);
     }

@@ -193,7 +193,7 @@ public class UIPopupTown : UIWindowBase
         if (townLevel == null)
             return;
 
-        userData.m_last_reward_time = Util.UnixTimeNow();
+        userData.m_last_reward_time = Managers.BackEnd.ServerTimeGetUTCTimeStamp();
 
         switch (m_param.m_town_type)
         {
