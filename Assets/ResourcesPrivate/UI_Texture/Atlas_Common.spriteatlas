@@ -57,6 +57,7 @@ SpriteAtlas:
     - d2ff6fb0bd8d4574a9a24dfbff9d86f2: 21300000
     - 1995b9c04bcdb1b4ea5febe4d4530767: 21300000
     - 9ff5c9d01f25cb941af728f27183ee39: 21300000
+    - 999f4e61b9f690b469119ccd11847a9a: 21300000
     - f305897132b26bb428ee25a3858ae021: 21300000
     - 1727fdb18070016468dcfc7a0b77f59f: 21300000
     - b842e4d1cb731a94e82ddc237a69b3be: 21300000
@@ -76,6 +77,7 @@ SpriteAtlas:
     - ef511414d8b8f3242a811556e02d904c: 21300000
     - 8523d444d1215a44e9b61e6cc4afc87c: 21300000
     - d7fbca447eb70b64380ee5a36c9143de: 21300000
+    - 6d1ac1649a79f5b4083e4768c2d03db3: 21300000
     - c244146475824334e81f1bc67950036a: 21300000
     - c46e44c4e8b4f0c439d79014363094e1: 21300000
     - c2a744d4f22e50d4f982bd75e6b02dcf: 21300000
@@ -111,7 +113,9 @@ SpriteAtlas:
     - 911db7daada6f0d449391da7fa78b9c5: 21300000
     - ebb6e46bb78367147be7390b706d174e: 21300000
     - de31dd6b2ec4b464399a3f44368727bf: 21300000
+    - f6eb1a7b9cde8654cab58a6d3f7c9fae: 21300000
     - f70da09b42bda284196272165b1ba56e: 21300000
+    - 8400739b5701c1c448fae382f76b00b5: 21300000
     - ef1877cb5f20c6649b833e438f432d2e: 21300000
     - 671564fb799a2fe468ec9cdd6011bb4c: 21300000
     - 5f8a411c71cb8734b9566433022444f1: 21300000
@@ -138,6 +142,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: d2ff6fb0bd8d4574a9a24dfbff9d86f2, type: 3}
   - {fileID: 21300000, guid: 1995b9c04bcdb1b4ea5febe4d4530767, type: 3}
   - {fileID: 21300000, guid: 9ff5c9d01f25cb941af728f27183ee39, type: 3}
+  - {fileID: 21300000, guid: 999f4e61b9f690b469119ccd11847a9a, type: 3}
   - {fileID: 21300000, guid: f305897132b26bb428ee25a3858ae021, type: 3}
   - {fileID: 21300000, guid: 1727fdb18070016468dcfc7a0b77f59f, type: 3}
   - {fileID: 21300000, guid: b842e4d1cb731a94e82ddc237a69b3be, type: 3}
@@ -157,6 +162,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ef511414d8b8f3242a811556e02d904c, type: 3}
   - {fileID: 21300000, guid: 8523d444d1215a44e9b61e6cc4afc87c, type: 3}
   - {fileID: 21300000, guid: d7fbca447eb70b64380ee5a36c9143de, type: 3}
+  - {fileID: 21300000, guid: 6d1ac1649a79f5b4083e4768c2d03db3, type: 3}
   - {fileID: 21300000, guid: c244146475824334e81f1bc67950036a, type: 3}
   - {fileID: 21300000, guid: c46e44c4e8b4f0c439d79014363094e1, type: 3}
   - {fileID: 21300000, guid: c2a744d4f22e50d4f982bd75e6b02dcf, type: 3}
@@ -192,7 +198,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 911db7daada6f0d449391da7fa78b9c5, type: 3}
   - {fileID: 21300000, guid: ebb6e46bb78367147be7390b706d174e, type: 3}
   - {fileID: 21300000, guid: de31dd6b2ec4b464399a3f44368727bf, type: 3}
+  - {fileID: 21300000, guid: f6eb1a7b9cde8654cab58a6d3f7c9fae, type: 3}
   - {fileID: 21300000, guid: f70da09b42bda284196272165b1ba56e, type: 3}
+  - {fileID: 21300000, guid: 8400739b5701c1c448fae382f76b00b5, type: 3}
   - {fileID: 21300000, guid: ef1877cb5f20c6649b833e438f432d2e, type: 3}
   - {fileID: 21300000, guid: 671564fb799a2fe468ec9cdd6011bb4c, type: 3}
   - {fileID: 21300000, guid: 5f8a411c71cb8734b9566433022444f1, type: 3}
@@ -216,13 +224,14 @@ SpriteAtlas:
   - BG_PopupTreasure01
   - Icon_HeroType_Assassin
   - BG_SlotLock01
-  - BG_Slot_Myth
+  - BG_Slot_A
   - BG_R30
+  - BG_Slot_Legend
   - Icon_Main_InfiniteMode01
   - Picto_Option_Line4
   - Icon_Main_Unit01
   - Picto_Stats_Critical
-  - BG_Slot_Epic
+  - BG_Slot_Rare
   - Icon_HeroType_Lancer
   - Icon_StagePopup_Arrow_L
   - Icon_Ingame_Mission01
@@ -236,7 +245,8 @@ SpriteAtlas:
   - Icon_Main_Equip01
   - Icon_HeroType_Archer
   - Icon_Common_Ruby
-  - BG_Slot_Legend
+  - BG_Slot_Epic
+  - BG_Slot_D
   - Icon_Main_Town01
   - BG_SlotLock02
   - Icon_Main_DailyReward01
@@ -248,7 +258,7 @@ SpriteAtlas:
   - Icon_StagePopup_Arrow_R
   - Icon_HeroType_Shooter
   - Icon_HeroType_Magician
-  - BG_Slot_None
+  - BG_Slot_F
   - BG_R20_Bottom
   - Picto_Stats_ATK
   - Icon_GradeStar_Off
@@ -269,10 +279,12 @@ SpriteAtlas:
   - BG_SlotSelect01
   - Icon_GradeStar_On6-10
   - Picto_Chack_Line6
-  - BG_Slot_Rare
+  - BG_Slot_E
   - Icon_Common_Dia
   - Icon_Main_Shop01
+  - BG_Slot_Myth
   - BG_R20
+  - BG_Slot_SSR
   - Btn_R20_Red_Pressed
   - Gra_RT01
   - Icon_AD01
