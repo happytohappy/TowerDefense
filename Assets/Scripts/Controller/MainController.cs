@@ -22,6 +22,11 @@ public class MainController : MonoBehaviour
         m_pointer_event_data = new PointerEventData(EventSystem.current);
     }
 
+    private void Start()
+    {
+        Managers.Sound.PlayBGM(AudioEnum.MainBGM);
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))

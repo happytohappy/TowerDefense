@@ -6,6 +6,8 @@ public enum AudioEnum
 {
     Hit,
     GameStart,
+    MainBGM,
+    BattleBGM,
 }
 
 [Serializable]
@@ -33,6 +35,15 @@ public class SoundManager : MonoBehaviour
     public void PlayBGM()
     {
         m_AudioSourceBG.Play();
+    }
+
+    public void PlayBGM(AudioEnum in_audio_type)
+    {
+        if (AudioDic.TryGetValue(in_audio_type, out var clip))
+        {
+            m_AudioSourceBG.clip = clip;
+            PlayBGM();
+        }
     }
 
     public void PlaySFX()

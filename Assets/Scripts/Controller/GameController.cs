@@ -145,6 +145,8 @@ public partial class GameController : MonoBehaviour
 
     private void Start()
     {
+        Managers.Sound.PlayBGM(AudioEnum.BattleBGM);
+
         m_wave_count = Managers.Table.GetWaveCount(Managers.User.SelectStage);
         m_list_stage_reward = Managers.Table.GetStageReward(Managers.User.SelectStage);
 
