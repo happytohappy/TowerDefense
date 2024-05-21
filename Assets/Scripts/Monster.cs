@@ -54,6 +54,9 @@ public class Monster : PawnBase
 
         base.OnHit(in_damage);
 
+        var effect = Managers.Resource.Instantiate("Effect/Hit", this.transform.position);
+        Managers.Sound.PlaySFX(AudioEnum.Hit);
+
         StartCoroutine(OnDamage());
 
         if (GetState == FSM_STATE.Die)
