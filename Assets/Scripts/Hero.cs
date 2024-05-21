@@ -109,38 +109,37 @@ public class Hero : PawnBase
         if (m_target_monster == null)
             return;
 
+        // 버프 통합 공격력
+        var atkCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_DAMAGE);
+        var atkResult = (int)(GetHeroData.m_stat.m_atk * atkCalculation);
+
+        // 랜덤 가중치 적용
+        atkResult = (int)(atkResult * UnityEngine.Random.Range(0.8f, 1.2f));
+
+        // 상대 방어력
+        atkResult -= m_target_monster.GetMonsterStatusData.m_def;
+
+        // 크리티컬 확률 체크
+        var criChanceCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_CHANCE);
+        var criChanceResult = (int)(GetHeroData.m_stat.m_critical_chance + criChanceCalculation);
+
+        var ran = UnityEngine.Random.Range(1, 101);
+        if (ran <= criChanceResult)
+        {
+            // 크리 공격력 적용
+            var criDamageCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_CRITICAL);
+            var criDamageResult = (int)(GetHeroData.m_skill.m_critical * criDamageCalculation);
+            atkResult = (int)(atkResult * (1 + (criDamageCalculation * 0.01f)));
+        }
+
+        // 최소 데미지 보정
+        if (atkResult < 1)
+            atkResult = 1;
+
         // 근접
         if (string.IsNullOrEmpty(GetHeroData.m_info.m_projectile))
         {
-            // 버프 통합 공격력
-            var atkCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_DAMAGE);
-            var atkResult = (int)(GetHeroData.m_stat.m_atk * atkCalculation);
-
-            // 랜덤 가중치 적용
-            atkResult = (int)(atkResult * UnityEngine.Random.Range(0.8f, 1.2f));
-
-            // 상대 방어력
-            atkResult -= m_target_monster.GetMonsterStatusData.m_def;
-
-            // 크리티컬 확률 체크
-            var criChanceCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_CHANCE);
-            var criChanceResult = (int)(GetHeroData.m_stat.m_critical_chance + criChanceCalculation);
-
-            var ran = UnityEngine.Random.Range(1, 101);
-            if (ran <= criChanceResult)
-            {
-                // 크리 공격력 적용
-                var criDamageCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_CRITICAL);
-                var criDamageResult = (int)(GetHeroData.m_skill.m_critical * criDamageCalculation);
-                atkResult = (int)(atkResult * (1 + (criDamageCalculation * 0.01f)));
-            }
-
-            // 최소 데미지 보정
-            if (atkResult < 1)
-                atkResult = 1;
-
             m_target_monster.OnHit(atkResult);
-
             Util.CreateHudDamage(m_target_monster.transform.position, atkResult.ToString());
         }
         // 원거리
@@ -148,8 +147,9 @@ public class Hero : PawnBase
         {
             var go = Managers.Resource.Instantiate($"Projectile/{GetHeroData.m_info.m_projectile}");
             var projectile = go.GetComponent<ProjectileBase>();
+
             projectile.transform.position = this.transform.position;
-            projectile.SetData(m_target_monster, GetHeroData.m_stat.m_atk);
+            projectile.SetData(m_target_monster, atkResult);
         }
     }
 
