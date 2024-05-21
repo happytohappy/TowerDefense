@@ -58,17 +58,17 @@ public static partial class Util
                     buffValue += buffLevel.m_value * 0.01f;
                     break;
                 case EBuff.BUFF_INCREASE_SPEED:
-                    buffValue = buffLevel.m_value * 0.01f;
+                    buffValue += buffLevel.m_value * 0.01f;
                     break;
                 case EBuff.BUFF_INCREASE_RANGE:
                     break;
                 case EBuff.BUFF_INCREASE_BOSS:
                     break;
                 case EBuff.BUFF_INCREASE_CRITICAL:
-                    buffValue = buffLevel.m_value * 0.01f;
+                    buffValue += buffLevel.m_value * 0.01f;
                     break;
                 case EBuff.BUFF_INCREASE_CHANCE:
-                    buffValue = buffLevel.m_value * 0.01f;
+                    buffValue += buffLevel.m_value * 0.01f;
                     break;
                 case EBuff.BUFF_DECREASE_DEF:
                     break;
