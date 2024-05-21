@@ -90,6 +90,8 @@ public class UIWindowGame : UIWindowBase
 
     public void OnClickWave()
     {
+        Managers.Sound.PlaySFX(AudioEnum.GameStart);
+
         m_text_start_round.Ex_SetText($"Wave {m_curr_wave}");
         m_ani_start_round.Ex_SetActive(true);
         m_ani_start_round.Ex_Play("Ani_UIWindowGame_Start", this, () =>
