@@ -52,6 +52,7 @@ public class Managers : MonoBehaviour
     {
         GoogleSheet.Init();
         Table.Init();
+        Sound.Init();
         Pool.Init();
         UI.Init();
         BackEnd.Init();
