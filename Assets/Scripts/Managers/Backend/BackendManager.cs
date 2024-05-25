@@ -7,14 +7,13 @@ public class BackendManager : MonoBehaviour
 {
     public void Init()
     {
-        // 뒤끝 초기화
         var bro = Backend.Initialize(true);
         if (bro.IsSuccess())
         {
             Debug.Log("뒤끝 SDK 초기화 완료 : " + bro);
 
-            // 게스트 로그인
-            GuestLogin();
+            // 커스텀 회원가임
+            CustomSignUp();
         }
         else
         {
@@ -22,30 +21,64 @@ public class BackendManager : MonoBehaviour
         }
     }
 
-    public void GuestLogin()
+    public void CustomSignUp()
     {
-        BackendReturnObject bro = Backend.BMember.GuestLogin("게스트 로그인");
-        if (bro.IsSuccess())
+        string result = string.Empty;
+
+        if (PlayerPrefs.HasKey(LocalKey.Account.ToString()))
         {
-            Debug.Log("게스트 로그인에 성공했습니다");
+            result = PlayerPrefs.GetString(LocalKey.Account.ToString());
         }
         else
         {
-            Backend.BMember.DeleteGuestInfo();
+            result = ServerTimeGetUTCTimeStamp().ToString();
 
-            PlayerPrefs.DeleteAll();
+            for (int i = 0; i < 5; i++)
+            {
+                var ran = UnityEngine.Random.Range(65, 91);
+
+                result += (char)ran;
+            }
+
+            BackendReturnObject bro = Backend.BMember.CustomSignUp(result, result);
+            if (bro.IsSuccess())
+            {
+                Debug.Log("회원가입 성공 : " + bro);
+
+                PlayerPrefs.SetString(LocalKey.Account.ToString(), result);
+            }
+            else
+            {
+                Debug.Log("회원가입 실패 : " + bro);
+            }
+        }
+
+        // 커스텀 로그인
+        CustomLogin(result);
+    }
+
+    public void CustomLogin(string in_result)
+    {
+        BackendReturnObject bro = Backend.BMember.CustomLogin(in_result, in_result);
+        if (bro.IsSuccess())
+        {
+            Debug.Log("로그인 성공 : " + bro);
+        }
+        else
+        {
             Managers.User.Init();
 
-//#if UNITY_EDITOR
-//            UnityEditor.EditorApplication.isPlaying = false;
-//#else
-//            Application.Quit(); // 어플리케이션 종료
-//#endif
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit(); // 어플리케이션 종료
+#endif
 
-            Debug.Log("게스트 로그인 실패");
+            Debug.Log("로그인 실패 : " + bro);
         }
     }
 
+    // 가챠
     public class ProbabilityItem
     {
         public string itemID;
@@ -101,6 +134,7 @@ public class BackendManager : MonoBehaviour
         Debug.LogError(aaa);
     }
 
+    // 서버 시간
     public long ServerTimeGetUTCTimeStamp()
     {
         BackendReturnObject servertime = Backend.Utils.GetServerTime();
@@ -110,17 +144,5 @@ public class BackendManager : MonoBehaviour
 
         var timeSpan = parsedDate - new DateTime(1970, 1, 1, 0, 0, 0);
         return (long)timeSpan.TotalSeconds;
-    }
-
-    public void ServerTime()
-    {
-        BackendReturnObject servertime = Backend.Utils.GetServerTime();
-
-        string time = servertime.GetReturnValuetoJSON()["utcTime"].ToString();
-        DateTime parsedDate = DateTime.Parse(time);
-
-        var timeSpan = parsedDate - new DateTime(1970, 1, 1, 0, 0, 0);
-
-        Debug.Log("서버 시간 : " + parsedDate);
     }
 }

@@ -36,6 +36,7 @@ public enum WindowMode
 
 public enum LocalKey
 {
+    Account,
     UserData
 }
 
