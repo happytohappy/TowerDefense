@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
@@ -12,6 +13,7 @@ public class UserManager : MonoBehaviour
         public int m_kind;      // 타워 카인드
         public int m_level;     // 타워 레벨
         public int m_grade;     // 타워 등급
+        public long m_equip_id;
 
         public HeroInfo(int in_kind, int in_level, int in_grade)
         {
@@ -43,9 +45,28 @@ public class UserManager : MonoBehaviour
 
         public TownInfo(int in_town_kind, int in_town_level, long in_last_reward_time)
         {
-            m_town_kind        = in_town_kind;
-            m_town_level       = in_town_level;
+            m_town_kind = in_town_kind;
+            m_town_level = in_town_level;
             m_last_reward_time = in_last_reward_time;
+        }
+    }
+
+    [Serializable]
+    public class EquipInfo
+    {
+        public long m_unique_id;
+        public int m_kind;
+        public bool m_mount;
+        public bool m_new;
+        public EEquipType m_type;
+
+        public EquipInfo(long in_unique_id, int in_kind, bool in_mount, bool in_new, EEquipType in_type)
+        {
+            m_unique_id = in_unique_id;
+            m_kind = in_kind;
+            m_mount = in_mount;
+            m_new = in_new;
+            m_type = in_type;
         }
     }
 
@@ -54,13 +75,14 @@ public class UserManager : MonoBehaviour
     {
         public int LastClearStage = 0;
         public int LastClearWave = 0;
-        public float GameSpeed  = 1.0f;
+        public float GameSpeed = 1.0f;
         public Dictionary<int, HeroInfo> DicHaveHero = new Dictionary<int, HeroInfo>();
         public Dictionary<int, List<HeroInfo>> DicHaveHeroGroupByTier = new Dictionary<int, List<HeroInfo>>();
         public Dictionary<int, int> DicInventoryItem = new Dictionary<int, int>();
         public Dictionary<int, int> DicTreasure = new Dictionary<int, int>();
         public List<MissionInfo> Mission = new List<MissionInfo>();
         public Dictionary<ETownType, TownInfo> Town = new Dictionary<ETownType, TownInfo>();
+        public Dictionary<long, EquipInfo> Equip = new Dictionary<long, EquipInfo>();
     }
 
     public CUserData UserData { get; set; } = new CUserData();
@@ -169,7 +191,42 @@ public class UserManager : MonoBehaviour
             UserData.Town.Add(ETownType.Dia, new TownInfo(20, 1, Managers.BackEnd.ServerTimeGetUTCTimeStamp()));
             UserData.Town.Add(ETownType.Unit, new TownInfo(30, 1, Managers.BackEnd.ServerTimeGetUTCTimeStamp()));
             UserData.Town.Add(ETownType.Equip, new TownInfo(40, 1, Managers.BackEnd.ServerTimeGetUTCTimeStamp()));
-        }    
+
+            // 장비 넣어주기
+            InsertEquip(100000);
+            InsertEquip(100000);
+            InsertEquip(100008);
+            InsertEquip(100100);
+            InsertEquip(100100);
+            InsertEquip(100100);
+        }
+    }
+
+    public long SetUniqueKey()
+    {
+        var strTime = Util.UnixTimeNow().ToString();
+        var strRan = UnityEngine.Random.Range(10000, 99999).ToString();
+        var key = long.Parse(strTime + strRan);
+
+        return key;
+    }
+
+    public void InsertEquip(int m_kind)
+    {
+        var key = SetUniqueKey();
+        if (UserData.Equip.ContainsKey(key))
+        {
+            InsertEquip(m_kind);
+            return;
+        }
+
+        var equip = Managers.Table.GetEquipInfoData(m_kind);
+        UserData.Equip.Add(key, new EquipInfo(key, m_kind, false, true, equip.m_equip_type));
+    }
+
+    public HeroInfo GetEquipMountHero(long in_unique)
+    {
+        return UserData.DicHaveHero.Values.ToList().Find(x => x.m_equip_id == in_unique);
     }
 
     public HeroInfo GetUserHeroInfo(int in_kind)
@@ -244,6 +301,22 @@ public class UserManager : MonoBehaviour
     public List<MissionInfo> GetMission()
     {
         return UserData.Mission;
+    }
+
+    public List<EquipInfo> GetEquipList(EEquipType in_eqyip_type)
+    {
+        if (in_eqyip_type == EEquipType.None)
+            return UserData.Equip.Values.ToList();
+        else
+            return UserData.Equip.Values.ToList().FindAll(x => x.m_type == in_eqyip_type);
+    }
+
+    public EquipInfo GetEquip(long in_unique)
+    {
+        if (UserData.Equip.ContainsKey(in_unique))
+            return UserData.Equip[in_unique];
+        else
+            return null;
     }
 
     public void SetGameSpeedUP()

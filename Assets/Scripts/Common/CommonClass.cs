@@ -268,3 +268,20 @@ public class TownLevelData
     public int m_reward_kind;
     public int m_reward_amount;
 }
+
+public class EquipInfoData
+{
+    public int m_kind;
+    public EEquipType m_equip_type;
+    public EEquipGrade m_equip_grade;
+    public int m_gradeup_per;
+    public int m_atk;
+    public int m_speed;
+    public float m_range;
+    public int m_critical;
+    public int m_critical_chance;
+    public string m_name;
+    public EHeroType m_hero_type;
+    public string m_equip_icon;
+    public string m_comment;
+}

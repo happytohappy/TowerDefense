@@ -63,7 +63,7 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickEquipment()
     {
-        Managers.UI.OpenWindow(WindowID.UIPopupEquipment);
+        Managers.UI.OpenWindow(WindowID.UIWindowEquipment);
     }
 
     public void OnClickTreasure()

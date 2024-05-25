@@ -8,6 +8,7 @@ public enum WindowID
     UIWindowGame,
     UIWindowUnit,
     UIWindowGameResult,
+    UIWindowEquipment,
     UIPopupGame,
     UIPopupShop,
     UIPopupReward,
@@ -48,7 +49,9 @@ public enum DebugType
 public enum Atlas
 {
     Common,
-    Treasure
+    Treasure,
+    Equip,
+    Skill
 }
 
 public enum FSM_STATE
@@ -242,4 +245,30 @@ public enum ETownType
     Dia = 20,
     Unit = 30,
     Equip = 40,
+}
+
+public enum EEquipType
+{
+    None,
+    Glove,
+    Bow,
+    Sword,
+    Dualsword,
+    Wand,
+    Lance,
+    Gun,
+    Shield,
+}
+
+public enum EEquipGrade
+{
+    F,
+    E,
+    D,
+    C,
+    B,
+    A,
+    SS,
+    SR,
+    SSR,
 }

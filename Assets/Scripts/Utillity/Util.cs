@@ -320,6 +320,11 @@ public static partial class Util
         return Managers.Sprite.GetSprite(Atlas.Common, resourceName);
     }
 
+    public static void SetUnitType(Image in_image, EHeroType in_type)
+    {
+        in_image.Ex_SetImage(GetUnitType(in_type));
+    }
+
     public static void SetRarityBG(Image in_grade_bg, ERarity in_rarity)
     {
         string Rare = "BG_Slot_Rare";
@@ -333,6 +338,79 @@ public static partial class Util
             case ERarity.EPIC:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Epic));      break;
             case ERarity.LEGEND: in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Legend));    break;
             case ERarity.MYTH:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Myth));      break;
+        }
+    }
+
+    public static void SetEquipIcon(Image in_image, string in_name)
+    {
+        in_image.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Equip, in_name));
+    }
+
+    public static void SetEquipGradeBG(Image in_grade_bg, EEquipGrade in_grade)
+    {
+        switch (in_grade)
+        {
+            case EEquipGrade.F:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_F"));
+                break;
+            case EEquipGrade.E:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_E"));
+                break;
+            case EEquipGrade.D:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_D"));
+                break;
+            case EEquipGrade.C:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_C"));
+                break;
+            case EEquipGrade.B:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_B"));
+                break;
+            case EEquipGrade.A:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_A"));
+                break;
+            case EEquipGrade.SS:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_SS"));
+                break;
+            case EEquipGrade.SR:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_SR"));
+                break;
+            case EEquipGrade.SSR:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_SSR"));
+                break;
+        }
+    }
+
+    public static void SetEquipGradeTextImage(Image in_grade_bg, EEquipGrade in_grade)
+    {
+        switch (in_grade)
+        {
+            case EEquipGrade.F:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_F"));
+                break;
+            case EEquipGrade.E:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_E"));
+                break;
+            case EEquipGrade.D:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_D"));
+                break;
+            case EEquipGrade.C:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_C"));
+                break;
+            case EEquipGrade.B:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_B"));
+                break;
+            case EEquipGrade.A:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_A"));
+                break;
+            case EEquipGrade.SS:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_SS"));
+                break;
+            case EEquipGrade.SR:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_SR"));
+                break;
+            case EEquipGrade.SSR:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_SSR"));
+                break;
         }
     }
 
