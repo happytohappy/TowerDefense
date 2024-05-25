@@ -33,12 +33,14 @@ public class BackendManager : MonoBehaviour
         {
             result = ServerTimeGetUTCTimeStamp().ToString();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 7; i++)
             {
                 var ran = UnityEngine.Random.Range(65, 91);
-
                 result += (char)ran;
             }
+
+            // ·£´ýÀ¸·Î ÇÑ¹ø ¼¯¾îÁØ´Ù.
+            result = Util.GetShuffleString(result);
 
             BackendReturnObject bro = Backend.BMember.CustomSignUp(result, result);
             if (bro.IsSuccess())
@@ -144,5 +146,11 @@ public class BackendManager : MonoBehaviour
 
         var timeSpan = parsedDate - new DateTime(1970, 1, 1, 0, 0, 0);
         return (long)timeSpan.TotalSeconds;
+    }
+
+    // È¸¿ø Å»Åð
+    public void DeleteAccount()
+    {
+        BackendReturnObject bro = Backend.BMember.WithdrawAccount();
     }
 }

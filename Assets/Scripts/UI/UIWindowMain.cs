@@ -87,9 +87,9 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickReset()
     {
+        Managers.BackEnd.DeleteAccount();
+
         PlayerPrefs.DeleteAll();
-        Managers.User.UserData = new UserManager.CUserData();
-        Managers.User.Init();
 
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

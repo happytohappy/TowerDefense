@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Text;
 using System.Collections.Generic;
 using System;
+using System.Linq;
+using System.Text;
 
 public static partial class Util
 {
@@ -58,6 +60,22 @@ public static partial class Util
         if (component == null)
             component = go.AddComponent<T>();
         return component;
+    }
+
+    public static string GetShuffleString(string in_str)
+    {
+        List<char> array = new List<char>();
+        for (int i = 0; i < in_str.Length; i++)
+            array.Add(in_str[i]);
+
+        System.Random rand = new System.Random();
+        var shuffled = array.OrderBy(_ => rand.Next()).ToList();
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < shuffled.Count; i++)
+            sb.Append(shuffled[i]);
+
+        return sb.ToString();
     }
 
     public static GameObject FindChild(GameObject go, string name = null, bool recursive = false)
