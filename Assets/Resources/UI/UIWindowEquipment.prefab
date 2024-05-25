@@ -953,7 +953,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 787799996459600937}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3951401205032303277}
+        m_TargetAssemblyTypeName: UIWindowEquipment, Assembly-CSharp
+        m_MethodName: OnClickGradeUP
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AudioSource: {fileID: 8300000, guid: 6c5c86c7015ede847a187f5583cc7d9e, type: 3}
 --- !u!1 &782665692158849901
 GameObject:
@@ -1236,7 +1248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3196826837302880179
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3227,7 +3239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1146026847700157103
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3704,7 +3716,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7928660565550121644
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5025,6 +5037,21 @@ MonoBehaviour:
   m_ActiveObject: {fileID: 2862946129405989506}
   m_ScrollRect: {fileID: 0}
   m_BtnNumber: 1
+  m_Callback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3951401205032303277}
+        m_TargetAssemblyTypeName: UIWindowEquipment, Assembly-CSharp
+        m_MethodName: RefreshGradeUP
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4691344403576083218
 GameObject:
   m_ObjectHideFlags: 0
@@ -5428,7 +5455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4279122883872073316
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7784,12 +7811,6 @@ MonoBehaviour:
   m_text_ruby: {fileID: 3394034764129877055}
   m_text_diamond: {fileID: 2532899987859024988}
   m_image_equip_icon: {fileID: 5204751857774653906}
-  m_image_equip_grade: {fileID: 0}
-  m_image_equip_grade_bg: {fileID: 0}
-  m_image_equip_hero_type: {fileID: 1809559626175771709}
-  m_text_equip_name: {fileID: 6409365207180750870}
-  m_unit_slot: {fileID: 6577627649468567747}
-  m_unit_stats: {fileID: 56094601055317354}
   m_grade_layout:
   - {fileID: 4691344403576083218}
   - {fileID: 6592385181865409662}
@@ -7800,6 +7821,18 @@ MonoBehaviour:
   - {fileID: 556978960692348166}
   - {fileID: 3820187164498871240}
   - {fileID: 8120016149793989145}
+  m_image_equip_hero_type: {fileID: 1809559626175771709}
+  m_text_equip_name: {fileID: 6409365207180750870}
+  m_unit_slot: {fileID: 6577627649468567747}
+  m_text_atk: {fileID: 8594037291686821050}
+  m_text_speed: {fileID: 872890227954345371}
+  m_text_range: {fileID: 2213292368933380763}
+  m_text_critical: {fileID: 4084163966458939119}
+  m_text_critical_chance: {fileID: 3501275802219501745}
+  m_equip_left: {fileID: 2837469956684904465}
+  m_equip_right: {fileID: 5206243490166518172}
+  m_text_merge_per: {fileID: 6937414467114171799}
+  m_btn_merge: {fileID: 6507107925513874963}
   m_rect_equip_root: {fileID: 0}
   m_trs_equip_root: {fileID: 8275923684935274589}
   m_go_none_text: {fileID: 3049230605639452619}
@@ -8105,7 +8138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7425028957186339846
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9231,6 +9264,21 @@ MonoBehaviour:
   m_ActiveObject: {fileID: 8287312198987563874}
   m_ScrollRect: {fileID: 0}
   m_BtnNumber: 0
+  m_Callback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3951401205032303277}
+        m_TargetAssemblyTypeName: UIWindowEquipment, Assembly-CSharp
+        m_MethodName: RefreshInfo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8506109728524607498
 GameObject:
   m_ObjectHideFlags: 0
@@ -10114,6 +10162,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4302079589927604217, guid: 502f35f07aed5454889cf1eb6026c19d, type: 3}
   m_PrefabInstance: {fileID: 4214306667014036057}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5206243490166518172 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -991791051960341563, guid: 502f35f07aed5454889cf1eb6026c19d, type: 3}
+  m_PrefabInstance: {fileID: 4214306667014036057}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e847b02b2d623514ca7d90de373b830e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6151007448547578836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10215,6 +10274,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 502f35f07aed5454889cf1eb6026c19d, type: 3}
+--- !u!114 &2837469956684904465 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -991791051960341563, guid: 502f35f07aed5454889cf1eb6026c19d, type: 3}
+  m_PrefabInstance: {fileID: 6151007448547578836}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e847b02b2d623514ca7d90de373b830e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7991859883393817645 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4302079589927604217, guid: 502f35f07aed5454889cf1eb6026c19d, type: 3}

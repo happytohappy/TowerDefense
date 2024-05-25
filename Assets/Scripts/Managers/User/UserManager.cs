@@ -195,6 +195,13 @@ public class UserManager : MonoBehaviour
             // 장비 넣어주기
             InsertEquip(100000);
             InsertEquip(100000);
+            InsertEquip(100000);
+            InsertEquip(100000);
+            InsertEquip(100000);
+            InsertEquip(100000);
+            InsertEquip(100000);
+            InsertEquip(100000);
+            InsertEquip(100000);
             InsertEquip(100008);
             InsertEquip(100100);
             InsertEquip(100100);
@@ -222,6 +229,11 @@ public class UserManager : MonoBehaviour
 
         var equip = Managers.Table.GetEquipInfoData(m_kind);
         UserData.Equip.Add(key, new EquipInfo(key, m_kind, false, true, equip.m_equip_type));
+    }
+
+    public void RemoveEquip(long in_unique)
+    {
+        UserData.Equip.Remove(in_unique);
     }
 
     public HeroInfo GetEquipMountHero(long in_unique)
@@ -303,12 +315,14 @@ public class UserManager : MonoBehaviour
         return UserData.Mission;
     }
 
-    public List<EquipInfo> GetEquipList(EEquipType in_eqyip_type)
+    public List<EquipInfo> GetEquipList()
     {
-        if (in_eqyip_type == EEquipType.None)
-            return UserData.Equip.Values.ToList();
-        else
-            return UserData.Equip.Values.ToList().FindAll(x => x.m_type == in_eqyip_type);
+        return UserData.Equip.Values.ToList();
+    }
+
+    public List<EquipInfo> GetEquipList(int in_kind)
+    {
+        return UserData.Equip.Values.ToList().FindAll(x => x.m_kind == in_kind);
     }
 
     public EquipInfo GetEquip(long in_unique)

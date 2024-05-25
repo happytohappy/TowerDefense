@@ -55,7 +55,7 @@ public class Slot_Equip : MonoBehaviour
         m_go_red.Ex_SetActive(false);
 
         ui.LastSelect.Ex_SetActive(false);
-        ui.SetEquipInfo(m_unique, m_kind);
+        ui.SelectEquip(m_unique, m_kind);
         m_go_select.Ex_SetActive(true);
 
         ui.LastSelect = m_go_select;
