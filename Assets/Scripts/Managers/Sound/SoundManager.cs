@@ -32,6 +32,16 @@ public class SoundManager : MonoBehaviour
             AudioDic.Add(e.m_type, e.m_clip);
     }
 
+    public void SFXVolumChange()
+    {
+        m_AudioSourceSFX.volume = Managers.User.UserData.SFXSoundVolum;
+    }
+
+    public void BGMVolumChange()
+    {
+        m_AudioSourceBG.volume = Managers.User.UserData.BGMSoundVolum;
+    }
+
     public void PlayBGM()
     {
         m_AudioSourceBG.Play();
