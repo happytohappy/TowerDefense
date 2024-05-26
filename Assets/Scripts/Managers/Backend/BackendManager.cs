@@ -68,7 +68,8 @@ public class BackendManager : MonoBehaviour
         }
         else
         {
-            Managers.User.Init();
+            PlayerPrefs.DeleteAll();
+            //Managers.User.Init();
 
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

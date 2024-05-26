@@ -7,6 +7,10 @@ public class GoogleSheetManager : MonoBehaviour
 {
     private const string GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1CDppVzjl5WXTeD0vy6Gsnsek16yf-6AgTettq47xFWE/export?format=tsv&range=A6:Z&gid=";
     private string sheetData;
+    private Action m_callback = null;
+    private int SheetTotalCnt = 0;
+    private int SheetCurrCnt = 0;
+    private bool SheetCheck = false;
 
     // GID
     // CONST            195141331
@@ -33,10 +37,14 @@ public class GoogleSheetManager : MonoBehaviour
     // Village_Level    1297306839
     // Equip_Info       261053514
 
-    public void Init()
+    public void Init(Action in_callback)
     {
+        m_callback = in_callback;
+        SheetTotalCnt = 22;
+        SheetCheck = true;
+
         //StartCoroutine(CoRequestGoogleSheet(195141331,      (value) => Managers.Table.SetConstData(value)));  // ¾Æ´Ñµí,,;
-        StartCoroutine(CoRequestGoogleSheet(846969345,      (value) => Managers.Table.SetHeroInfoData(value)));
+        StartCoroutine(CoRequestGoogleSheet(846969345,      (value) => Managers.Table.SetHeroInfoData(value)));;
         StartCoroutine(CoRequestGoogleSheet(1100293316,     (value) => Managers.Table.SetHeroGradeData(value)));
         StartCoroutine(CoRequestGoogleSheet(703649086,      (value) => Managers.Table.SetHeroLevelData(value)));
         StartCoroutine(CoRequestGoogleSheet(1101510208,     (value) => Managers.Table.SetLocalizationData(value)));
@@ -70,6 +78,19 @@ public class GoogleSheetManager : MonoBehaviour
             {
                 var sheetData = www.downloadHandler.text;
                 in_call_back.Invoke(sheetData);
+                SheetCurrCnt++;
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (SheetCheck)
+        {
+            if (SheetTotalCnt == SheetCurrCnt)
+            {
+                m_callback.Invoke();
+                SheetCheck = false;
             }
         }
     }

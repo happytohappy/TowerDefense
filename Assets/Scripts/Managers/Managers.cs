@@ -50,7 +50,11 @@ public class Managers : MonoBehaviour
 
     public void Init()
     {
-        GoogleSheet.Init();
+        GoogleSheet.Init(AfterInit);
+    }
+
+    private void AfterInit()
+    {
         Table.Init();
         Sound.Init();
         Pool.Init();

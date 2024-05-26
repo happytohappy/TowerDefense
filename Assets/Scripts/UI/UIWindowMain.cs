@@ -85,6 +85,11 @@ public class UIWindowMain : UIWindowBase
         Managers.User.UpsertHero(gachaReward.m_item);
     }
 
+    public void OnClickEquip()
+    {
+        Managers.Table.TempEquipGacha();
+    }
+
     public void OnClickReset()
     {
         Managers.BackEnd.DeleteAccount();

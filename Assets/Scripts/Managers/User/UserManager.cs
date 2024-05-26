@@ -361,7 +361,7 @@ public class UserManager : MonoBehaviour
     // 게임 종료
     private void OnApplicationQuit()
     {
-        SaveLocalData<CUserData>(UserData, LocalKey.UserData);
+        //SaveLocalData<CUserData>(UserData, LocalKey.UserData);
 
         //var data = GetLocalDataString<CUserData>(LocalKey.UserData);
 
