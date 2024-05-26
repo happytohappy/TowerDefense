@@ -22,7 +22,8 @@ public enum WindowID
     UIPopupIngameSkill,
     UIPopupIngameAuto,
     UIPopupUnit,
-    UIPopupSynergy
+    UIPopupSynergy,
+    UIPopupCommon,
 }
 
 [System.Flags]

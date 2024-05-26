@@ -327,6 +327,11 @@ public class UserManager : MonoBehaviour
         return UserData.Equip.Values.ToList().FindAll(x => x.m_kind == in_kind);
     }
 
+    public List<EquipInfo> GetEquipList(EEquipType in_equip_type)
+    {
+        return UserData.Equip.Values.ToList().FindAll(x => x.m_type == in_equip_type);
+    }
+
     public EquipInfo GetEquip(long in_unique)
     {
         if (UserData.Equip.ContainsKey(in_unique))

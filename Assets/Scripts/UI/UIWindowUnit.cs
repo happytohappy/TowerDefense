@@ -28,6 +28,7 @@ public class UIWindowUnit : UIWindowBase
     [SerializeField] private Slider m_slider_gradeup = null;
     [SerializeField] private Image m_image_resource = null;
     [SerializeField] private Image m_img_unit_type = null;
+    [SerializeField] private Slot_Equip m_slot_equip = null;
 
     [Header("유닛 스킬")]
     [SerializeField] private List<Slot_Skill> m_skill = new List<Slot_Skill>();
@@ -86,14 +87,14 @@ public class UIWindowUnit : UIWindowBase
         if (heroInfo == null)
             return;
 
-        
-
         m_text_name.Ex_SetText(Util.GetHeroName(m_kind));
         m_Image_hero.Ex_SetImage(Util.GetHeroImage(m_kind));
         m_img_unit_type.Ex_SetImage(Util.GetUnitType(in_kind));
 
         for (int i = 0; i < m_list_bg.Count; i++)
             m_list_bg[i].Ex_SetActive(i == (int)heroInfo.m_rarity - 1);
+
+        m_slot_equip.gameObject.Ex_SetActive(false);
 
         //내가 보유한 타워의 레벨과 등급을 불러와서
         var hero = Managers.User.GetUserHeroInfo(m_kind);
@@ -110,6 +111,16 @@ public class UIWindowUnit : UIWindowBase
         }
         else
         {
+            if (hero.m_equip_id > 0)
+            {
+                var userEquip = Managers.User.GetEquip(hero.m_equip_id);
+                if (userEquip != null)
+                {
+                    m_slot_equip.gameObject.Ex_SetActive(true);
+                    m_slot_equip.SetData(hero.m_equip_id, userEquip.m_kind, true, false, false);
+                }
+            }
+
             m_Image_hero.Ex_SetColor(Color.white);
             m_Image_lock.Ex_SetActive(false);
             m_text_level.Ex_SetText($"Lv.{hero.m_level}");
@@ -213,5 +224,13 @@ public class UIWindowUnit : UIWindowBase
         Util.OpenToolTip(m_skill[in_skill_index].Contents, m_skill[in_skill_index].GetRoot);
 
         ToolTipIndex = in_skill_index;
+    }
+
+    public void OnClickEquip()
+    {
+        EquipInfoParam param = new EquipInfoParam();
+        param.m_unit_kind = m_kind;
+
+        Managers.UI.OpenWindow(WindowID.UIPopupEquipment, param);
     }
 }

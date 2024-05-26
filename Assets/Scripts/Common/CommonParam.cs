@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 
 public abstract class WindowParam { }
 
@@ -27,6 +27,17 @@ public class QuestParam : WindowParam
 public class UnitInfoParam : WindowParam
 {
     public int m_kind = 0;
+}
+
+public class EquipInfoParam : WindowParam
+{
+    public int m_unit_kind = 0;
+}
+
+public class CommonInfoParam : WindowParam
+{
+    public string m_contents = string.Empty;
+    public Action m_callback = null;
 }
 
 public class WaveInfoParam : WindowParam

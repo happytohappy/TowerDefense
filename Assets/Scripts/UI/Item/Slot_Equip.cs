@@ -33,11 +33,22 @@ public class Slot_Equip : MonoBehaviour
 
         if (in_select)
         {
-            var ui = Managers.UI.GetWindow(WindowID.UIWindowEquipment, false) as UIWindowEquipment;
-            if (ui == null)
-                return;
+            if (Managers.UI.ActiveWindow(WindowID.UIWindowEquipment))
+            {
+                var ui = Managers.UI.GetWindow(WindowID.UIWindowEquipment, false) as UIWindowEquipment;
+                if (ui == null)
+                    return;
 
-            ui.LastSelect = m_go_select;
+                ui.LastSelect = m_go_select;
+            }
+            else if (Managers.UI.ActiveWindow(WindowID.UIPopupEquipment))
+            {
+                var ui = Managers.UI.GetWindow(WindowID.UIPopupEquipment, false) as UIPopupEquipment;
+                if (ui == null)
+                    return;
+
+                ui.LastSelect = m_go_select;
+            }
         }
     }
 
@@ -47,17 +58,32 @@ public class Slot_Equip : MonoBehaviour
         if (equip == null)
             return;
 
-        var ui = Managers.UI.GetWindow(WindowID.UIWindowEquipment, false) as UIWindowEquipment;
-        if (ui == null)
-            return;
-
         equip.m_new = false;
         m_go_red.Ex_SetActive(false);
 
-        ui.LastSelect.Ex_SetActive(false);
-        ui.SelectEquip(m_unique, m_kind);
-        m_go_select.Ex_SetActive(true);
+        if (Managers.UI.ActiveWindow(WindowID.UIWindowEquipment))
+        {
+            var ui = Managers.UI.GetWindow(WindowID.UIWindowEquipment, false) as UIWindowEquipment;
+            if (ui == null)
+                return;
 
-        ui.LastSelect = m_go_select;
+            ui.LastSelect.Ex_SetActive(false);
+            ui.SelectEquip(m_unique, m_kind);
+            m_go_select.Ex_SetActive(true);
+
+            ui.LastSelect = m_go_select;
+        }
+        else if (Managers.UI.ActiveWindow(WindowID.UIPopupEquipment))
+        {
+            var ui = Managers.UI.GetWindow(WindowID.UIPopupEquipment, false) as UIPopupEquipment;
+            if (ui == null)
+                return;
+
+            ui.LastSelect.Ex_SetActive(false);
+            ui.SelectEquip(m_unique, m_kind);
+            m_go_select.Ex_SetActive(true);
+
+            ui.LastSelect = m_go_select;
+        }
     }
 }
