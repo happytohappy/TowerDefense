@@ -20,6 +20,7 @@ public class HeroInfoData
     public string m_name;
     public string m_desc;
     public EHeroType m_type;
+    public EEquipType m_equip_type;
     public int m_tier;
     public ERarity m_rarity;
     public string m_projectile;
