@@ -76,6 +76,8 @@ public class UserManager : MonoBehaviour
         public int LastClearStage = 0;
         public int LastClearWave = 0;
         public float GameSpeed = 1.0f;
+        public float SFXSoundVolum = 1.0f;
+        public float BGMSoundVolum = 1.0f;
         public Dictionary<int, HeroInfo> DicHaveHero = new Dictionary<int, HeroInfo>();
         public Dictionary<int, List<HeroInfo>> DicHaveHeroGroupByTier = new Dictionary<int, List<HeroInfo>>();
         public Dictionary<int, int> DicInventoryItem = new Dictionary<int, int>();
