@@ -23,9 +23,21 @@ public class UIWindowUnit : UIWindowBase
     [SerializeField] private List<Image> m_list_grade_star = new List<Image>();
     [SerializeField] private TMP_Text m_text_level = null;
     [SerializeField] private Image m_Image_equipment = null;
+
+    [Header("유닛 Stat")]
     [SerializeField] private TMP_Text m_text_damage = null;
     [SerializeField] private TMP_Text m_text_speed = null;
     [SerializeField] private TMP_Text m_text_range = null;
+    [SerializeField] private TMP_Text m_text_critical = null;
+    [SerializeField] private TMP_Text m_text_critical_chance = null;
+
+    [Header("장비 추가 Stat")]
+    [SerializeField] private TMP_Text m_text_equip_damage = null;
+    [SerializeField] private TMP_Text m_text_equip_speed = null;
+    [SerializeField] private TMP_Text m_text_equip_range = null;
+    [SerializeField] private TMP_Text m_text_equip_critical = null;
+    [SerializeField] private TMP_Text m_text_equip_critical_chance = null;
+
     [SerializeField] private List<GameObject> m_list_bg = new List<GameObject>();
     [SerializeField] private ExtentionButton m_btn_gradeup = null;
     [SerializeField] private ExtentionButton m_btn_levelup = null;
@@ -118,6 +130,19 @@ public class UIWindowUnit : UIWindowBase
             Util.SetGradeStar(m_list_grade_star, 1);
             m_btn_gradeup.Ex_SetActive(false);
             m_btn_levelup.Ex_SetActive(false);
+
+            var heroLevelInfo = Managers.Table.GetHeroLevelData(in_kind, 1);
+            m_text_damage.Ex_SetText($"{heroLevelInfo.m_atk}");
+            m_text_speed.Ex_SetText($"{heroLevelInfo.m_speed}");
+            m_text_range.Ex_SetText($"{heroLevelInfo.m_range}");
+            m_text_critical.Ex_SetText($"{heroLevelInfo.m_critical}");
+            m_text_critical_chance.Ex_SetText($"{heroLevelInfo.m_critical_chance}");
+
+            m_text_equip_damage.Ex_SetText(string.Empty); // (+100.0)
+            m_text_equip_speed.Ex_SetText(string.Empty);
+            m_text_equip_range.Ex_SetText(string.Empty);
+            m_text_equip_critical.Ex_SetText(string.Empty);
+            m_text_equip_critical_chance.Ex_SetText(string.Empty);
         }
         else
         {
@@ -138,9 +163,18 @@ public class UIWindowUnit : UIWindowBase
             Util.SetGradeStar(m_list_grade_star, hero.m_grade);
 
             var heroLevelInfo = Managers.Table.GetHeroLevelData(in_kind, hero.m_level);
-            m_text_damage.Ex_SetText(heroLevelInfo.m_atk.ToString());
-            m_text_speed.Ex_SetText(heroLevelInfo.m_speed.ToString());
-            m_text_range.Ex_SetText(heroLevelInfo.m_range.ToString());
+            m_text_damage.Ex_SetText($"{heroLevelInfo.m_atk}");
+            m_text_speed.Ex_SetText($"{heroLevelInfo.m_speed}");
+            m_text_range.Ex_SetText($"{heroLevelInfo.m_range}");
+            m_text_critical.Ex_SetText($"{heroLevelInfo.m_critical}");
+            m_text_critical_chance.Ex_SetText($"{heroLevelInfo.m_critical_chance}");
+
+            m_text_equip_damage.Ex_SetText(string.Empty); // (+100.0)
+            m_text_equip_speed.Ex_SetText(string.Empty);
+            m_text_equip_range.Ex_SetText(string.Empty);
+            m_text_equip_critical.Ex_SetText(string.Empty);
+            m_text_equip_critical_chance.Ex_SetText(string.Empty);
+
             m_btn_gradeup.Ex_SetActive(true);
             m_btn_levelup.Ex_SetActive(true);
 

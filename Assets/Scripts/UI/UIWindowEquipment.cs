@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 using System.Collections.Generic;
 using TMPro;
 
@@ -23,6 +24,7 @@ public class UIWindowEquipment : UIWindowBase
     [SerializeField] private List<GameObject> m_grade_layout = new List<GameObject>();
     [SerializeField] private Image m_image_equip_hero_type = null;
     [SerializeField] private TMP_Text m_text_equip_name = null;
+    [SerializeField] private GameObject m_go_none_equip = null;
 
     [Header("Unit")]
     [SerializeField] private UnitIcon m_unit_slot = null;
@@ -66,7 +68,7 @@ public class UIWindowEquipment : UIWindowBase
         m_equip_tab = EquipTab.Info;
 
         RefreshUI();
-        RefreshEquip();
+        RefreshInfo();
     }
 
     public void OnClickClose()
@@ -109,10 +111,21 @@ public class UIWindowEquipment : UIWindowBase
         if (equipList.Count == 0)
         {
             m_go_none_text.Ex_SetActive(true);
+            m_go_none_equip.Ex_SetActive(true);
+
+            m_text_atk.Ex_SetText("0");
+            m_text_speed.Ex_SetText("0");
+            m_text_range.Ex_SetText("0");
+            m_text_critical.Ex_SetText("0");
+            m_text_critical_chance.Ex_SetText("0");
             return;
         }
 
+        Util.EquipSort(ref equipList);
+
         m_go_none_text.Ex_SetActive(false);
+        m_go_none_equip.Ex_SetActive(false);
+
         bool first = true;
         foreach (var e in equipList)
         {
@@ -152,8 +165,11 @@ public class UIWindowEquipment : UIWindowBase
         if (equipList.Count == 0)
         {
             m_go_none_text.Ex_SetActive(true);
+            m_btn_merge.interactable = false;
             return;
         }
+
+        Util.EquipSort(ref equipList);
 
         int mountCnt = 0;        
         m_go_none_text.Ex_SetActive(false);

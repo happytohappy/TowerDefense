@@ -58,15 +58,19 @@ public class UserManager : MonoBehaviour
         public int m_kind;
         public bool m_mount;
         public bool m_new;
+        public EEquipGrade m_grade;
         public EEquipType m_type;
 
-        public EquipInfo(long in_unique_id, int in_kind, bool in_mount, bool in_new, EEquipType in_type)
+        public EquipInfo(long in_unique_id, int in_kind, bool in_mount, bool in_new)
         {
+            var tableEquip = Managers.Table.GetEquipInfoData(in_kind);
+
             m_unique_id = in_unique_id;
             m_kind = in_kind;
             m_mount = in_mount;
             m_new = in_new;
-            m_type = in_type;
+            m_grade = tableEquip.m_equip_grade;
+            m_type = tableEquip.m_equip_type;
         }
     }
 
@@ -195,19 +199,19 @@ public class UserManager : MonoBehaviour
             UserData.Town.Add(ETownType.Equip, new TownInfo(40, 1, Managers.BackEnd.ServerTimeGetUTCTimeStamp()));
 
             // 장비 넣어주기
-            InsertEquip(100000);
-            InsertEquip(100000);
-            InsertEquip(100000);
-            InsertEquip(100000);
-            InsertEquip(100000);
-            InsertEquip(100000);
-            InsertEquip(100000);
-            InsertEquip(100000);
-            InsertEquip(100000);
-            InsertEquip(100008);
-            InsertEquip(100100);
-            InsertEquip(100100);
-            InsertEquip(100100);
+            //InsertEquip(100000);
+            //InsertEquip(100000);
+            //InsertEquip(100000);
+            //InsertEquip(100000);
+            //InsertEquip(100000);
+            //InsertEquip(100000);
+            //InsertEquip(100000);
+            //InsertEquip(100000);
+            //InsertEquip(100000);
+            //InsertEquip(100008);
+            //InsertEquip(100100);
+            //InsertEquip(100100);
+            //InsertEquip(100100);
         }
     }
 
@@ -230,7 +234,7 @@ public class UserManager : MonoBehaviour
         }
 
         var equip = Managers.Table.GetEquipInfoData(m_kind);
-        UserData.Equip.Add(key, new EquipInfo(key, m_kind, false, true, equip.m_equip_type));
+        UserData.Equip.Add(key, new EquipInfo(key, m_kind, false, true));
     }
 
     public void RemoveEquip(long in_unique)

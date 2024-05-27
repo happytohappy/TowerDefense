@@ -13,6 +13,7 @@ public class UIPopupEquipment : UIWindowBase
     [SerializeField] private List<GameObject> m_grade_layout = new List<GameObject>();
     [SerializeField] private Image m_image_equip_hero_type = null;
     [SerializeField] private TMP_Text m_text_equip_name = null;
+    [SerializeField] private GameObject m_go_none_equip = null;
 
     [Header("Unit")]
     [SerializeField] private UnitIcon m_unit_slot = null;
@@ -83,14 +84,34 @@ public class UIPopupEquipment : UIWindowBase
         if (userInfo == null)
             return;
 
+        var userHero = Managers.User.GetUserHeroInfo(m_unit_kind);
+        if (userHero == null)
+            return;
+
         var equipList = Managers.User.GetEquipList(userInfo.m_equip_type);
         if (equipList.Count == 0)
         {
             m_go_none_text.Ex_SetActive(true);
+            m_go_none_equip.Ex_SetActive(true);
+
+            // ¿Â∫Ò Ω∫≈»
+            m_text_atk.Ex_SetText("0");
+            m_text_speed.Ex_SetText("0");
+            m_text_range.Ex_SetText("0");
+            m_text_critical.Ex_SetText("0");
+            m_text_critical_chance.Ex_SetText("0");
+
+            m_go_equip.Ex_SetActive(true);
+            m_go_unequip.Ex_SetActive(false);
+
+            m_btn_equip.interactable = false;
             return;
         }
 
+        Util.EquipSort(ref equipList, userHero.m_equip_id);
+
         m_go_none_text.Ex_SetActive(false);
+        m_go_none_equip.Ex_SetActive(false);
         bool first = true;
         foreach (var e in equipList)
         {
@@ -131,11 +152,11 @@ public class UIPopupEquipment : UIWindowBase
         }
 
         // ¿Â∫Ò Ω∫≈»
-        m_text_atk.Ex_SetText($"+{equip.m_atk}");
-        m_text_speed.Ex_SetText($"+{equip.m_speed}");
-        m_text_range.Ex_SetText($"+{equip.m_range}");
-        m_text_critical.Ex_SetText($"+{equip.m_critical}");
-        m_text_critical_chance.Ex_SetText($"+{equip.m_critical_chance}");
+        m_text_atk.Ex_SetText($"{equip.m_atk}");
+        m_text_speed.Ex_SetText($"{equip.m_speed}");
+        m_text_range.Ex_SetText($"{equip.m_range}");
+        m_text_critical.Ex_SetText($"{equip.m_critical}");
+        m_text_critical_chance.Ex_SetText($"{equip.m_critical_chance}");
 
         Util.SetEquipIcon(m_image_equip_icon, equip.m_equip_icon);
         Util.SetUnitType(m_image_equip_hero_type, equip.m_hero_type);
