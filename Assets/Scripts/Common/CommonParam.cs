@@ -50,3 +50,10 @@ public class TownParam : WindowParam
 {
     public ETownType m_town_type = ETownType.None;
 }
+
+
+public class EquipResultParam : WindowParam
+{
+    public bool m_success = false;
+    public int m_equip_kind = 0;
+}

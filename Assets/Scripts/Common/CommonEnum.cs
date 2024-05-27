@@ -9,6 +9,7 @@ public enum WindowID
     UIWindowUnit,
     UIWindowGameResult,
     UIWindowEquipment,
+    UIWindowEquipmentResult,
     UIPopupGame,
     UIPopupShop,
     UIPopupReward,

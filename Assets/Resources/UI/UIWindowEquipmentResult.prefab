@@ -121,9 +121,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIWindowGameResult, Assembly-CSharp
-        m_MethodName: OnClickCancel
+      - m_Target: {fileID: 8015536705824827918}
+        m_TargetAssemblyTypeName: UIWindowEquipmentResult, Assembly-CSharp
+        m_MethodName: OnClickClose
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3829,6 +3829,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6712918325758415786}
   - component: {fileID: 7787921637329956794}
+  - component: {fileID: 8015536705824827918}
   m_Layer: 5
   m_Name: UIWindowEquipmentResult
   m_TagString: Untagged
@@ -3871,6 +3872,27 @@ MonoBehaviour:
   ConformX: 1
   ConformY: 1
   Logging: 0
+--- !u!114 &8015536705824827918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6712918325758415787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9b529b4bccf664aa76dda827f685e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_text_equip_name: {fileID: 2590591327798364872}
+  m_equip_slot: {fileID: 4857898233777599146}
+  m_go_success: {fileID: 2005872216700164350}
+  m_go_fail: {fileID: 3096552237399712964}
+  m_text_atk: {fileID: 3165506065630408118}
+  m_text_speed: {fileID: 5626502506854898384}
+  m_text_range: {fileID: 9122892620948923981}
+  m_text_critical: {fileID: 4666086639544755782}
+  m_text_critical_chance: {fileID: 1110635557754785428}
 --- !u!1 &6990208992561790043
 GameObject:
   m_ObjectHideFlags: 0
@@ -5413,3 +5435,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4302079589927604217, guid: 502f35f07aed5454889cf1eb6026c19d, type: 3}
   m_PrefabInstance: {fileID: 3555253254402185583}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4857898233777599146 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -991791051960341563, guid: 502f35f07aed5454889cf1eb6026c19d, type: 3}
+  m_PrefabInstance: {fileID: 3555253254402185583}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e847b02b2d623514ca7d90de373b830e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

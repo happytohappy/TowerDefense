@@ -215,19 +215,27 @@ public class UIWindowEquipment : UIWindowBase
         foreach (var e in m_merge_equip_list)
             Managers.User.RemoveEquip(e);
 
+        EquipResultParam param = new EquipResultParam();
+
         // 확률 통과 못하면 리턴
         var ran = UnityEngine.Random.Range(1, 101);
         if (ran <= nextEquip.m_gradeup_per)
         {
             // 성공
             Managers.User.InsertEquip(nextEquip.m_kind);
+
+            param.m_success = true;
+            param.m_equip_kind = nextEquip.m_kind;
         }
         else
         {
             // 실패
+            param.m_success = false;
         }
 
         RefreshGradeUP();
+
+        Managers.UI.OpenWindow(WindowID.UIWindowEquipmentResult, param);
     }
 
     public void SetEquipInfo(long in_unique, int in_kind)

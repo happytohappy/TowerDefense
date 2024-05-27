@@ -7,6 +7,12 @@ public class UIWindowUnit : UIWindowBase
 {
     private const string UNIT_TIER_GROUP_PATH = "UI/Item/UnitTierGroup";
 
+    [Header("Goods")]
+    [SerializeField] private TMP_Text m_text_gold = null;
+    [SerializeField] private TMP_Text m_text_ruby = null;
+    [SerializeField] private TMP_Text m_text_diamond = null;
+
+    [Header("Slot Root")]
     [SerializeField] private Transform m_trs_root = null;
     [SerializeField] private RectTransform m_rect_root = null;
 
@@ -63,6 +69,10 @@ public class UIWindowUnit : UIWindowBase
 
     public void RefreshUI()
     {
+        m_text_gold.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Gold))}");
+        m_text_ruby.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Ruby))}");
+        m_text_diamond.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Diamond))}");
+
         m_rect_root.Ex_SetValue(0f);
 
         for (int i = 0; i < m_trs_root.childCount; i++)
