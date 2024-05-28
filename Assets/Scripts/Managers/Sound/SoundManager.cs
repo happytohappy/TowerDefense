@@ -30,6 +30,9 @@ public class SoundManager : MonoBehaviour
     {
         foreach (var e in m_AudioClip)
             AudioDic.Add(e.m_type, e.m_clip);
+
+        SFXVolumChange();
+        BGMVolumChange();
     }
 
     public void SFXVolumChange()

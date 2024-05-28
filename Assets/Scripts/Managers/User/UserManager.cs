@@ -82,6 +82,10 @@ public class UserManager : MonoBehaviour
         public float GameSpeed = 1.0f;
         public float SFXSoundVolum = 1.0f;
         public float BGMSoundVolum = 1.0f;
+        public bool DailyRewardPremium = false;
+        public bool DailyAllReward = false;
+        public int DailyRewardKIND = 1;
+        public DateTime DailyRewardDateTime;
         public Dictionary<int, HeroInfo> DicHaveHero = new Dictionary<int, HeroInfo>();
         public Dictionary<int, List<HeroInfo>> DicHaveHeroGroupByTier = new Dictionary<int, List<HeroInfo>>();
         public Dictionary<int, int> DicInventoryItem = new Dictionary<int, int>();
@@ -212,7 +216,32 @@ public class UserManager : MonoBehaviour
             //InsertEquip(100100);
             //InsertEquip(100100);
             //InsertEquip(100100);
+
+            // 일일보상 넣어주기
+            InitDailyReward();
         }
+
+        if (UserData.DailyAllReward)
+        {
+            var serverDate = Managers.BackEnd.ServerDateTime();
+            if (Managers.User.UserData.DailyRewardDateTime.Year == serverDate.Year && Managers.User.UserData.DailyRewardDateTime.Month == serverDate.Month && Managers.User.UserData.DailyRewardDateTime.Day == serverDate.Day)
+            {
+                // 오늘 마지막 보상을 받은 것, 할 거 없음
+            }
+            else
+            {
+                InitDailyReward();
+            }
+        }
+    }
+
+    public void InitDailyReward()
+    {
+        var serverDate = Managers.BackEnd.ServerDateTime();
+        UserData.DailyAllReward = false;
+        UserData.DailyRewardPremium = false;
+        UserData.DailyRewardKIND = 1;
+        UserData.DailyRewardDateTime = serverDate.AddDays(-1);
     }
 
     public long SetUniqueKey()

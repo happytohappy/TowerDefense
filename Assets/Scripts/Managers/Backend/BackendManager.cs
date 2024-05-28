@@ -149,6 +149,16 @@ public class BackendManager : MonoBehaviour
         return (long)timeSpan.TotalSeconds;
     }
 
+    public DateTime ServerDateTime()
+    {
+        BackendReturnObject servertime = Backend.Utils.GetServerTime();
+
+        string time = servertime.GetReturnValuetoJSON()["utcTime"].ToString();
+        DateTime parsedDate = DateTime.Parse(time);
+
+        return parsedDate;
+    }
+
     // È¸¿ø Å»Åð
     public void DeleteAccount()
     {

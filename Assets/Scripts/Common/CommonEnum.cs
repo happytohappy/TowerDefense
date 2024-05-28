@@ -25,6 +25,7 @@ public enum WindowID
     UIPopupUnit,
     UIPopupSynergy,
     UIPopupCommon,
+    UIPopupLanguage,
 }
 
 [System.Flags]

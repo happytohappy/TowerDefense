@@ -40,4 +40,9 @@ public class UIPopupSetting : UIWindowBase
 
         Managers.Sound.BGMVolumChange();
     }
+
+    public void OnClickLanguage()
+    {
+        Managers.UI.OpenWindow(WindowID.UIPopupLanguage);
+    }
 }

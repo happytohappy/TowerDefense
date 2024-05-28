@@ -19,6 +19,11 @@ public class UIWindowMain : UIWindowBase
     {
         base.OpenUI(wp);
 
+        RefreshUI();
+    }
+
+    public void RefreshUI()
+    {
         m_text_gold.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Gold))}");
         m_text_ruby.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Ruby))}");
         m_text_diamond.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Diamond))}");

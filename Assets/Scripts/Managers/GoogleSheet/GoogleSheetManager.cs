@@ -36,11 +36,12 @@ public class GoogleSheetManager : MonoBehaviour
     // Village_Info     1419666850
     // Village_Level    1297306839
     // Equip_Info       261053514
+    // Attendance_Info  1165366195
 
     public void Init(Action in_callback)
     {
         m_callback = in_callback;
-        SheetTotalCnt = 22;
+        SheetTotalCnt = 23;
         SheetCheck = true;
 
         //StartCoroutine(CoRequestGoogleSheet(195141331,      (value) => Managers.Table.SetConstData(value)));  // ¾Æ´Ñµí,,;
@@ -66,6 +67,7 @@ public class GoogleSheetManager : MonoBehaviour
         StartCoroutine(CoRequestGoogleSheet(1419666850,     (value) => Managers.Table.SetTownInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(1297306839,     (value) => Managers.Table.SetTownLevelData(value)));
         StartCoroutine(CoRequestGoogleSheet(261053514,      (value) => Managers.Table.SetEquipInfoData(value)));
+        StartCoroutine(CoRequestGoogleSheet(1165366195,     (value) => Managers.Table.SetAttendanceInfoData(value)));
     }
 
     private IEnumerator CoRequestGoogleSheet(int in_gid, Action<string> in_call_back)

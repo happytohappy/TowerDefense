@@ -286,3 +286,12 @@ public class EquipInfoData
     public string m_equip_icon;
     public string m_comment;
 }
+
+public class AttendanceInfoData
+{
+    public int m_kind;
+    public int m_free_reward_kind;
+    public int m_free_reward_amount;
+    public int m_premium_reward_kind;
+    public int m_premium_reward_amount;
+}

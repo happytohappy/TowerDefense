@@ -56,12 +56,12 @@ public class Managers : MonoBehaviour
     private void AfterInit()
     {
         Table.Init();
-        Sound.Init();
         Pool.Init();
         UI.Init();
         BackEnd.Init();
         AD.Init();
         User.Init();
+        Sound.Init();
     }
 
     public void Clear()
