@@ -15,6 +15,8 @@ public class Hero : PawnBase
     public GameObject RangeEffect => m_range_effect;
     public HeroData GetHeroData { get; set; } = null;
 
+    public float Range => GetHeroData.m_stat.m_range + Util.GetEquipStat(GetHeroData.m_info.m_kind, EStat.Range);
+
     protected override void Start()
     {
         base.Start();
@@ -22,7 +24,7 @@ public class Hero : PawnBase
         m_hero_drag = false;
 
         m_range_effect.Ex_SetActive(false);
-        m_range_effect.transform.localScale = new Vector3(GetHeroData.m_stat.m_range, GetHeroData.m_stat.m_range, 1f);
+        m_range_effect.transform.localScale = new Vector3(Range, Range, 1f);
 
         // 인포 셋팅
         m_hud_hero_info = Util.CreateHudHeroInfo(this, new Vector3(0f, -0.2f, 0f));
@@ -41,7 +43,7 @@ public class Hero : PawnBase
         if (m_target_monster != null)
         {
             var dis = Vector3.Distance(m_target_monster.transform.position, this.transform.position);
-            if (dis > GetHeroData.m_stat.m_range)
+            if (dis > Range)
                 m_target_monster = null;
             else if (m_target_monster.GetState == FSM_STATE.None || m_target_monster.GetState == FSM_STATE.Die)
                 m_target_monster = null;
@@ -80,7 +82,7 @@ public class Hero : PawnBase
                 continue;
 
             var dis = Vector3.Distance(monster.transform.position, this.transform.position);
-            if (dis > GetHeroData.m_stat.m_range)
+            if (dis > Range)
                 continue;
 
             if (dis < nearDis)
@@ -109,9 +111,15 @@ public class Hero : PawnBase
         if (m_target_monster == null)
             return;
 
+        // 기본 공격력
+        var atkResult = GetHeroData.m_stat.m_atk;
+
+        // 장비 공격력
+        atkResult += (int)Util.GetEquipStat(GetHeroData.m_info.m_kind, EStat.ATK);
+
         // 버프 통합 공격력
         var atkCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_DAMAGE);
-        var atkResult = (int)(GetHeroData.m_stat.m_atk * atkCalculation);
+        atkResult = (int)(atkResult * atkCalculation);
 
         // 랜덤 가중치 적용
         atkResult = (int)(atkResult * UnityEngine.Random.Range(0.8f, 1.2f));
@@ -120,27 +128,39 @@ public class Hero : PawnBase
         atkResult -= m_target_monster.GetMonsterStatusData.m_def;
 
         // 크리티컬 확률 체크
+        // 기본 크리티컬 확률
+        var criChanceResult = GetHeroData.m_stat.m_critical_chance;
+
+        // 장비 합산 크리티컬 확률
+        criChanceResult += (int)Util.GetEquipStat(GetHeroData.m_info.m_kind, EStat.CriticalChance);
+
         var criChanceCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_CHANCE);
-        var criChanceResult = (int)(GetHeroData.m_stat.m_critical_chance + criChanceCalculation);
+        criChanceResult = (int)(criChanceResult * criChanceCalculation);
 
         var ran = UnityEngine.Random.Range(1, 101);
         if (ran <= criChanceResult)
         {
             // 크리 공격력 적용
+            // 기본 크리티컬 공격률
+            var criDamageResult = GetHeroData.m_skill.m_critical;
+
+            // 장비 합산 크리티컬 공격률
+            criDamageResult += (int)Util.GetEquipStat(GetHeroData.m_info.m_kind, EStat.Critical);
+
             var criDamageCalculation = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_CRITICAL);
-            var criDamageResult = (int)(GetHeroData.m_skill.m_critical * criDamageCalculation);
-            atkResult = (int)(atkResult * (1 + (criDamageCalculation * 0.01f)));
+            criDamageResult = (int)(criDamageResult * criDamageCalculation);
+
+            atkResult = (int)(atkResult * (1 + (criDamageResult * 0.01f)));
         }
 
         // 최소 데미지 보정
-        if (atkResult < 1)
-            atkResult = 1;
+        atkResult = Mathf.Max(atkResult, 1);
 
         // 근접
         if (string.IsNullOrEmpty(GetHeroData.m_info.m_projectile))
         {
             m_target_monster.OnHit(atkResult);
-            Util.CreateHudDamage(m_target_monster.transform.position, atkResult.ToString());
+            Util.CreateHudDamage(m_target_monster.transform.position, Util.CommaText(atkResult));
         }
         // 원거리
         else
@@ -160,7 +180,7 @@ public class Hero : PawnBase
 
     public override void Enter_Attack()
     {
-        m_ani.speed = Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_SPEED);
+        m_ani.speed = Util.GetEquipStat(GetHeroData.m_info.m_kind, EStat.Speed) + Util.GetBuffValue(GetHeroData, EBuff.BUFF_INCREASE_SPEED);
         m_ani.Ex_Play(ANI_ATTACK, this, () =>
         {
             m_ani.speed = 1.0f;

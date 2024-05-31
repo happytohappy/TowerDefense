@@ -118,6 +118,12 @@ public class UIWindowUnit : UIWindowBase
 
         m_slot_equip.gameObject.Ex_SetActive(false);
 
+        m_text_equip_damage.Ex_SetText(string.Empty); // (+100.0)
+        m_text_equip_speed.Ex_SetText(string.Empty);
+        m_text_equip_range.Ex_SetText(string.Empty);
+        m_text_equip_critical.Ex_SetText(string.Empty);
+        m_text_equip_critical_chance.Ex_SetText(string.Empty);
+
         //내가 보유한 타워의 레벨과 등급을 불러와서
         var hero = Managers.User.GetUserHeroInfo(m_kind);
         if (hero == null)
@@ -137,25 +143,9 @@ public class UIWindowUnit : UIWindowBase
             m_text_range.Ex_SetText($"{heroLevelInfo.m_range}");
             m_text_critical.Ex_SetText($"{heroLevelInfo.m_critical}");
             m_text_critical_chance.Ex_SetText($"{heroLevelInfo.m_critical_chance}");
-
-            m_text_equip_damage.Ex_SetText(string.Empty); // (+100.0)
-            m_text_equip_speed.Ex_SetText(string.Empty);
-            m_text_equip_range.Ex_SetText(string.Empty);
-            m_text_equip_critical.Ex_SetText(string.Empty);
-            m_text_equip_critical_chance.Ex_SetText(string.Empty);
         }
         else
         {
-            if (hero.m_equip_id > 0)
-            {
-                var userEquip = Managers.User.GetEquip(hero.m_equip_id);
-                if (userEquip != null)
-                {
-                    m_slot_equip.gameObject.Ex_SetActive(true);
-                    m_slot_equip.SetData(hero.m_equip_id, userEquip.m_kind, true, false, false);
-                }
-            }
-
             m_Image_hero.Ex_SetColor(Color.white);
             m_Image_lock.Ex_SetActive(false);
             m_text_level.Ex_SetText($"Lv.{hero.m_level}");
@@ -169,11 +159,31 @@ public class UIWindowUnit : UIWindowBase
             m_text_critical.Ex_SetText($"{heroLevelInfo.m_critical}");
             m_text_critical_chance.Ex_SetText($"{heroLevelInfo.m_critical_chance}");
 
-            m_text_equip_damage.Ex_SetText(string.Empty); // (+100.0)
-            m_text_equip_speed.Ex_SetText(string.Empty);
-            m_text_equip_range.Ex_SetText(string.Empty);
-            m_text_equip_critical.Ex_SetText(string.Empty);
-            m_text_equip_critical_chance.Ex_SetText(string.Empty);
+            if (hero.m_equip_id > 0)
+            {
+                var userEquip = Managers.User.GetEquip(hero.m_equip_id);
+                if (userEquip != null)
+                {
+                    m_slot_equip.gameObject.Ex_SetActive(true);
+                    m_slot_equip.SetData(hero.m_equip_id, userEquip.m_kind, true, false, false);
+
+                    var tableEquip = Managers.Table.GetEquipInfoData(userEquip.m_kind);
+                    if (tableEquip.m_atk > 0)
+                        m_text_equip_damage.Ex_SetText($"(+{tableEquip.m_atk})");
+
+                    if (tableEquip.m_speed > 0)
+                        m_text_equip_speed.Ex_SetText($"(+{tableEquip.m_speed})");
+
+                    if (tableEquip.m_range > 0)
+                        m_text_equip_range.Ex_SetText($"(+{tableEquip.m_range})");
+
+                    if (tableEquip.m_critical > 0)
+                        m_text_equip_critical.Ex_SetText($"(+{tableEquip.m_critical})");
+
+                    if (tableEquip.m_critical_chance > 0)
+                        m_text_equip_critical_chance.Ex_SetText($"(+{tableEquip.m_critical_chance})");
+                }
+            }
 
             m_btn_gradeup.Ex_SetActive(true);
             m_btn_levelup.Ex_SetActive(true);

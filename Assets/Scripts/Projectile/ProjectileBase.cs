@@ -51,7 +51,7 @@ public class ProjectileBase : MonoBehaviour
 
             m_update = false;
 
-            Util.CreateHudDamage(m_monster.transform.position, m_ATK.ToString());
+            Util.CreateHudDamage(m_monster.transform.position, Util.CommaText(m_ATK));
 
             m_monster.OnHit(m_ATK);
             m_monster = null;

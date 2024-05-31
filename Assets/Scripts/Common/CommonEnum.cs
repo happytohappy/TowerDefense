@@ -91,6 +91,15 @@ public enum ESpawnType
     AD
 }
 
+public enum EStat
+{
+    ATK,
+    Speed,
+    Range,
+    Critical,
+    CriticalChance,
+}
+
 public enum EBuffTarget
 {
     ME,             //³ª¸¸
