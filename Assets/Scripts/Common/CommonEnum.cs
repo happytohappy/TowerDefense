@@ -281,6 +281,7 @@ public enum EEquipGrade
     C,
     B,
     A,
+    S,
     SS,
     SR,
     SSR,
