@@ -3,9 +3,13 @@ using TMPro;
 
 public class UIWindowMain : UIWindowBase
 {
-    [SerializeField] private TMP_Text m_text_gold;
-    [SerializeField] private TMP_Text m_text_ruby;
-    [SerializeField] private TMP_Text m_text_diamond;
+    [Header("재화")]
+    [SerializeField] private TMP_Text m_text_gold = null;
+    [SerializeField] private TMP_Text m_text_ruby = null;
+    [SerializeField] private TMP_Text m_text_diamond = null;
+
+    [Header("레드닷")]
+    [SerializeField] private GameObject m_go_attendance = null;
 
     public override void Awake()
     {
@@ -24,9 +28,11 @@ public class UIWindowMain : UIWindowBase
 
     public void RefreshUI()
     {
-        m_text_gold.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Gold))}");
-        m_text_ruby.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Ruby))}");
-        m_text_diamond.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Diamond))}");
+        Util.SetGoods(EGoods.Gold, m_text_gold);
+        Util.SetGoods(EGoods.Ruby, m_text_ruby);
+        Util.SetGoods(EGoods.Diamond, m_text_diamond);
+
+        m_go_attendance.Ex_SetActive(Util.RedDotAttendance());
     }
 
     public void OnClickGame()
@@ -61,11 +67,6 @@ public class UIWindowMain : UIWindowBase
         Managers.UI.OpenWindow(WindowID.UIPopupSetting);
     }
 
-    public void OnClickTown()
-    {
-        Managers.UI.OpenWindow(WindowID.UIPopupTown);
-    }
-
     public void OnClickEquipment()
     {
         Managers.UI.OpenWindow(WindowID.UIWindowEquipment);
@@ -81,6 +82,7 @@ public class UIWindowMain : UIWindowBase
         Managers.UI.OpenWindow(WindowID.UIWindowUnit);
     }
 
+    // 여기부터는 테스트 버튼
     public void OnClickGachaUnit()
     {
         var gachaReward = Managers.Table.GetGachaHero(1000);

@@ -22,4 +22,9 @@ public class UIWindowBase : MonoBehaviour
     {
 
     }
+
+    public virtual void OnClickClose()
+    {
+        Managers.UI.CloseLast();
+    }
 }

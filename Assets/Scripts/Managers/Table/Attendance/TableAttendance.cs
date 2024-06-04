@@ -3,6 +3,7 @@
 public partial class TableManager
 {
     private Dictionary<int, AttendanceInfoData> m_dic_attendance_info_data = new Dictionary<int, AttendanceInfoData>();
+
     private void InitAttendanceTable()
     {
         InitAttendanceInfoTable();

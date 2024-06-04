@@ -74,8 +74,15 @@ public enum EInputType
     Press
 }
 
+public enum EContent
+{
+    None,
+    Attendance,
+}
+
 public enum EGoods
 {
+    None = 0,
     Gold = 1,
     Ruby = 2,
     Diamond = 3,

@@ -6,44 +6,20 @@ using TMPro;
 
 public static partial class Util
 {
-    public static void Ex_SetActive(this Image in_image, bool in_active)
+    public static void Ex_SetActive(this Behaviour in_behaviour, bool in_active)
     {
-        if (in_image == null)
+        if (in_behaviour == null)
             return;
 
-        in_image.gameObject.SetActive(in_active);
+        in_behaviour.gameObject.SetActive(in_active);
     }
 
-    public static void Ex_SetActive(this GameObject in_gameobject, bool in_active)
+    public static void Ex_SetActive(this GameObject in_game_object, bool in_active)
     {
-        if (in_gameobject == null)
+        if (in_game_object == null)
             return;
 
-        in_gameobject.SetActive(in_active);
-    }
-
-    public static void Ex_SetActive(this ExtentionButton in_ex_button, bool in_active)
-    {
-        if (in_ex_button == null)
-            return;
-
-        in_ex_button.gameObject.SetActive(in_active);
-    }
-
-    public static void Ex_SetActive(this TMP_Text in_text, bool in_active)
-    {
-        if (in_text == null)
-            return;
-
-        in_text.gameObject.SetActive(in_active);
-    }
-
-    public static void Ex_SetActive(this Animator in_animator, bool in_active)
-    {
-        if (in_animator == null)
-            return;
-
-        in_animator.gameObject.SetActive(in_active);
+        in_game_object.SetActive(in_active);
     }
 
     public static void Ex_SetValue(this RectTransform in_scroll_rect, float in_value)

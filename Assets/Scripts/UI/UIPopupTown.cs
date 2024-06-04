@@ -158,10 +158,6 @@ public class UIPopupTown : UIWindowBase
         UIRefresh();
     }
 
-    public void OnClickClose()
-    {
-        Managers.UI.CloseLast();
-    }
 
     public void OnClickLevelUP()
     {

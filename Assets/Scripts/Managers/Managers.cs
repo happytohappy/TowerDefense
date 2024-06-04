@@ -29,6 +29,7 @@ public class Managers : MonoBehaviour
     [SerializeField] private ResourceManager m_Resource = null;
     [SerializeField] private UserManager m_User = null;
     [SerializeField] private BackendManager m_BackEnd = null;
+    [SerializeField] private ObserverManager m_Observer = null;
     [SerializeField] private SpriteManager m_Sprite = null;
     [SerializeField] private ADManager m_AD = null;
 
@@ -47,6 +48,7 @@ public class Managers : MonoBehaviour
     public static BackendManager BackEnd => GetInstance.m_BackEnd;
     public static SpriteManager Sprite => GetInstance.m_Sprite;
     public static ADManager AD => GetInstance.m_AD;
+    public static ObserverManager Observer => GetInstance.m_Observer;
 
     public void Init()
     {

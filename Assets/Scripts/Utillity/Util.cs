@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Text;
 using System.Collections.Generic;
-using System;
 using System.Linq;
-using System.Text;
+using TMPro;
 
 public static partial class Util
 {
@@ -154,6 +154,16 @@ public static partial class Util
                 break;
         }
 #endif
+    }
+
+    /// <summary>
+    /// 재화 셋팅
+    /// </summary>
+    /// <param name="in_goods"></param>
+    /// <param name="in_text"></param>
+    public static void SetGoods(EGoods in_goods, TMP_Text in_text)
+    {
+        in_text.Ex_SetText($"{CommaText(GetGoods(in_goods))}");
     }
 
     public static HPBar CreateHP(Transform in_transform, float in_curr_hp, float in_max_hp, Vector3 in_scale, Vector3 in_offset, bool in_active = false)

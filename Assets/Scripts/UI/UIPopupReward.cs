@@ -1,7 +1,6 @@
+using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
-using static UserManager;
 
 public class UIPopupReward : UIWindowBase
 {
@@ -29,22 +28,12 @@ public class UIPopupReward : UIWindowBase
 
     private void RefreshUI()
     {
+        var todayReward = Util.TodayDailyReward();
+
         m_go_active.Ex_SetActive(Managers.User.UserData.DailyRewardPremium);
         m_btn_buy.interactable = !Managers.User.UserData.DailyRewardPremium;
-        m_btn_get.interactable = true;
-        m_btn_ad.interactable = true;
-
-        var serverDate = Managers.BackEnd.ServerDateTime();
-        if (Managers.User.UserData.DailyRewardDateTime.Year == serverDate.Year && Managers.User.UserData.DailyRewardDateTime.Month == serverDate.Month && Managers.User.UserData.DailyRewardDateTime.Day == serverDate.Day)
-        {
-            m_btn_get.interactable = false;
-            m_btn_ad.interactable = false;
-        }
-        else
-        {
-            m_btn_get.interactable = true;
-            m_btn_ad.interactable = true;
-        }
+        m_btn_get.interactable = !todayReward;
+        m_btn_ad.interactable = !todayReward;
 
         int index = 0;
         var repo = Managers.Table.GetAllAttendanceInfoData();
@@ -55,19 +44,11 @@ public class UIPopupReward : UIWindowBase
         }
     }
 
-    public void OnClickClose()
-    {
-        Managers.UI.CloseLast();
-    }
-
     public void OnClickBuy()
     {
-        Managers.User.UserData.DailyRewardPremium = true;
+        // TODO. 인앱 결제 연동 후 처리에 이게 들어가야 함
 
-        bool todayReward = false;
-        var serverDate = Managers.BackEnd.ServerDateTime();
-        if (Managers.User.UserData.DailyRewardDateTime.Year == serverDate.Year && Managers.User.UserData.DailyRewardDateTime.Month == serverDate.Month && Managers.User.UserData.DailyRewardDateTime.Day == serverDate.Day)
-            todayReward = true;
+        Managers.User.UserData.DailyRewardPremium = true;
 
         var repo = Managers.Table.GetAllAttendanceInfoData();
         foreach (var e in repo)
@@ -80,79 +61,27 @@ public class UIPopupReward : UIWindowBase
 
                 Managers.User.UpsertInventoryItem(attendanceData.m_premium_reward_kind, attendanceData.m_premium_reward_amount);
             }
-
-            if (todayReward)
-            {
-                if (e.Key == Managers.User.UserData.DailyRewardKIND)
-                {
-                    var attendanceData = Managers.Table.GetAttendanceInfoData(e.Key);
-                    if (attendanceData == null)
-                        continue;
-
-                    Managers.User.UpsertInventoryItem(attendanceData.m_premium_reward_kind, attendanceData.m_premium_reward_amount);
-                }
-            }
         }
 
-        MainGoodsRefresh();
         RefreshUI();
     }
 
     public void OnClickGet()
     {
-        var serverDate = Managers.BackEnd.ServerDateTime();
-        if (Managers.User.UserData.DailyRewardDateTime.Year == serverDate.Year && Managers.User.UserData.DailyRewardDateTime.Month == serverDate.Month && Managers.User.UserData.DailyRewardDateTime.Day == serverDate.Day)
-            return;
+        Util.AttendanceReward(false);
 
-        var attendanceData = Managers.Table.GetAttendanceInfoData(Managers.User.UserData.DailyRewardKIND);
-        if (attendanceData == null)
-            return;
-
-        Managers.User.UpsertInventoryItem(attendanceData.m_free_reward_kind, attendanceData.m_free_reward_amount);
-
-        if (Managers.User.UserData.DailyRewardPremium)
-            Managers.User.UpsertInventoryItem(attendanceData.m_premium_reward_kind, attendanceData.m_premium_reward_amount);
-
-        Managers.User.UserData.DailyRewardDateTime = serverDate;
-
-        if (Managers.User.UserData.DailyRewardKIND == 7)
-            Managers.User.UserData.DailyAllReward = true;
-
-        MainGoodsRefresh();
         RefreshUI();
+        Managers.Observer.UpdateObserverRedDot(EContent.Attendance);
     }
 
     public void OnClickAd()
     {
-        var serverDate = Managers.BackEnd.ServerDateTime();
-        if (Managers.User.UserData.DailyRewardDateTime.Year == serverDate.Year && Managers.User.UserData.DailyRewardDateTime.Month == serverDate.Month && Managers.User.UserData.DailyRewardDateTime.Day == serverDate.Day)
-            return;
-
-        var attendanceData = Managers.Table.GetAttendanceInfoData(Managers.User.UserData.DailyRewardKIND);
-        if (attendanceData == null)
-            return;
-
         Managers.AD.ShowAd(() =>
         {
-            Managers.User.UpsertInventoryItem(attendanceData.m_free_reward_kind, attendanceData.m_free_reward_amount * 2);
+            Util.AttendanceReward(true);
 
-            if (Managers.User.UserData.DailyRewardPremium)
-                Managers.User.UpsertInventoryItem(attendanceData.m_premium_reward_kind, attendanceData.m_premium_reward_amount * 2);
-
-            Managers.User.UserData.DailyRewardDateTime = serverDate;
-
-            if (Managers.User.UserData.DailyRewardKIND == 7)
-                Managers.User.UserData.DailyAllReward = true;
-
-            MainGoodsRefresh();
             RefreshUI();
+            Managers.Observer.UpdateObserverRedDot(EContent.Attendance);
         });       
-    }
-
-    private void MainGoodsRefresh()
-    {
-        var gui = Managers.UI.GetWindow(WindowID.UIWindowMain, false) as UIWindowMain;
-        if (gui != null)
-            gui.RefreshUI();
     }
 }

@@ -1,9 +1,9 @@
 using UnityEngine;
 using System;
+using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 
 public class UserManager : MonoBehaviour
 {
@@ -41,7 +41,7 @@ public class UserManager : MonoBehaviour
     {
         public int m_town_kind;
         public int m_town_level;
-        public long m_last_reward_time;     // 나중에 뒤끝 서버 시간으로 쓰는게 좋을듯?
+        public long m_last_reward_time;
 
         public TownInfo(int in_town_kind, int in_town_level, long in_last_reward_time)
         {
@@ -77,28 +77,28 @@ public class UserManager : MonoBehaviour
     [Serializable]
     public class CUserData
     {
-        public int LastClearStage = 0;
-        public int LastClearWave = 0;
-        public float GameSpeed = 1.0f;
-        public float SFXSoundVolum = 1.0f;
-        public float BGMSoundVolum = 1.0f;
-        public bool DailyRewardPremium = false;
-        public bool DailyAllReward = false;
-        public int DailyRewardKIND = 1;
-        public DateTime DailyRewardDateTime;
-        public Dictionary<int, HeroInfo> DicHaveHero = new Dictionary<int, HeroInfo>();
-        public Dictionary<int, List<HeroInfo>> DicHaveHeroGroupByTier = new Dictionary<int, List<HeroInfo>>();
-        public Dictionary<int, int> DicInventoryItem = new Dictionary<int, int>();
-        public Dictionary<int, int> DicTreasure = new Dictionary<int, int>();
-        public List<MissionInfo> Mission = new List<MissionInfo>();
-        public Dictionary<ETownType, TownInfo> Town = new Dictionary<ETownType, TownInfo>();
-        public Dictionary<long, EquipInfo> Equip = new Dictionary<long, EquipInfo>();
+        public int LastClearStage = 0;                                                                          // 클리어한 마지막 스테이지
+        public int LastClearWave = 0;                                                                           // 클리어한 마지막 웨이브
+        public float GameSpeed = 1.0f;                                                                          // 게임 스피드
+        public float SFXSoundVolum = 1.0f;                                                                      // 효과음 볼륨
+        public float BGMSoundVolum = 1.0f;                                                                      // 배경음 볼륨
+        public bool DailyRewardPremium = false;                                                                 // 일일 보상 패스 구매 유무           
+        public bool DailyAllReward = false;                                                                     // 일주일 보상을 모두 받았는지
+        public int DailyRewardKIND = 1;                                                                         // 며칠 보상을 받을 차례인지
+        public DateTime DailyRewardDateTime;                                                                    // 마지막 보상을 받은 날짜
+        public Dictionary<int, HeroInfo> HaveHero = new Dictionary<int, HeroInfo>();                            // 보유 영웅
+        public Dictionary<int, List<HeroInfo>> HaveHeroGroupByTier = new Dictionary<int, List<HeroInfo>>();     // 보유 영웅 티어별 소팅
+        public Dictionary<int, int> InventoryItem = new Dictionary<int, int>();                                 // 보유 아이템
+        public Dictionary<int, int> Treasure = new Dictionary<int, int>();                                      // 보유 보물
+        public List<MissionInfo> Mission = new List<MissionInfo>();                                             // 보유 미션
+        public Dictionary<ETownType, TownInfo> Town = new Dictionary<ETownType, TownInfo>();                    // 타운
+        public Dictionary<long, EquipInfo> Equip = new Dictionary<long, EquipInfo>();                           // 장비
     }
 
     public CUserData UserData { get; set; } = new CUserData();
     public int SelectStage { get; set; } = 0;
 
-    private bool m_paused;
+    private bool Paused;
 
     public void Init()
     {
@@ -111,12 +111,12 @@ public class UserManager : MonoBehaviour
             UserData = new CUserData();
 
             // 1티어 기본 보유 타워
-            UserData.DicHaveHero.Add(1001, new HeroInfo(1001, 1, 1));
-            UserData.DicHaveHero.Add(1002, new HeroInfo(1002, 1, 1));
-            UserData.DicHaveHero.Add(1003, new HeroInfo(1003, 1, 1));
-            UserData.DicHaveHero.Add(1004, new HeroInfo(1004, 1, 1));
-            UserData.DicHaveHero.Add(1005, new HeroInfo(1005, 1, 1));
-            UserData.DicHaveHeroGroupByTier.Add(1, new List<HeroInfo>()
+            UserData.HaveHero.Add(1001, new HeroInfo(1001, 1, 1));
+            UserData.HaveHero.Add(1002, new HeroInfo(1002, 1, 1));
+            UserData.HaveHero.Add(1003, new HeroInfo(1003, 1, 1));
+            UserData.HaveHero.Add(1004, new HeroInfo(1004, 1, 1));
+            UserData.HaveHero.Add(1005, new HeroInfo(1005, 1, 1));
+            UserData.HaveHeroGroupByTier.Add(1, new List<HeroInfo>()
             {
                 new HeroInfo(1001, 1, 1),
                 new HeroInfo(1002, 1, 1),
@@ -126,12 +126,12 @@ public class UserManager : MonoBehaviour
             });
 
             // 2티어 기본 보유 타워                                      
-            UserData.DicHaveHero.Add(2001, new HeroInfo(2001, 1, 1));
-            UserData.DicHaveHero.Add(2002, new HeroInfo(2002, 1, 1));
-            UserData.DicHaveHero.Add(2003, new HeroInfo(2003, 1, 1));
-            UserData.DicHaveHero.Add(2004, new HeroInfo(2004, 1, 1));
-            UserData.DicHaveHero.Add(2005, new HeroInfo(2005, 1, 1));
-            UserData.DicHaveHeroGroupByTier.Add(2, new List<HeroInfo>()
+            UserData.HaveHero.Add(2001, new HeroInfo(2001, 1, 1));
+            UserData.HaveHero.Add(2002, new HeroInfo(2002, 1, 1));
+            UserData.HaveHero.Add(2003, new HeroInfo(2003, 1, 1));
+            UserData.HaveHero.Add(2004, new HeroInfo(2004, 1, 1));
+            UserData.HaveHero.Add(2005, new HeroInfo(2005, 1, 1));
+            UserData.HaveHeroGroupByTier.Add(2, new List<HeroInfo>()
             {
                 new HeroInfo(2001, 1, 1),
                 new HeroInfo(2002, 1, 1),
@@ -141,12 +141,12 @@ public class UserManager : MonoBehaviour
             });
 
             // 3티어 기본 보유 타워
-            UserData.DicHaveHero.Add(3001, new HeroInfo(3001, 1, 1));
-            UserData.DicHaveHero.Add(3002, new HeroInfo(3002, 1, 1));
-            UserData.DicHaveHero.Add(3003, new HeroInfo(3003, 1, 1));
-            UserData.DicHaveHero.Add(3004, new HeroInfo(3004, 1, 1));
-            UserData.DicHaveHero.Add(3005, new HeroInfo(3005, 1, 1));
-            UserData.DicHaveHeroGroupByTier.Add(3, new List<HeroInfo>()
+            UserData.HaveHero.Add(3001, new HeroInfo(3001, 1, 1));
+            UserData.HaveHero.Add(3002, new HeroInfo(3002, 1, 1));
+            UserData.HaveHero.Add(3003, new HeroInfo(3003, 1, 1));
+            UserData.HaveHero.Add(3004, new HeroInfo(3004, 1, 1));
+            UserData.HaveHero.Add(3005, new HeroInfo(3005, 1, 1));
+            UserData.HaveHeroGroupByTier.Add(3, new List<HeroInfo>()
             {
                 new HeroInfo(3001, 1, 1),
                 new HeroInfo(3002, 1, 1),
@@ -156,12 +156,12 @@ public class UserManager : MonoBehaviour
             });
 
             // 4티어 기본 보유 타워
-            UserData.DicHaveHero.Add(4001, new HeroInfo(4001, 1, 1));
-            UserData.DicHaveHero.Add(4002, new HeroInfo(4002, 1, 1));
-            UserData.DicHaveHero.Add(4003, new HeroInfo(4003, 1, 1));
-            UserData.DicHaveHero.Add(4004, new HeroInfo(4004, 1, 1));
-            UserData.DicHaveHero.Add(4005, new HeroInfo(4005, 1, 1));
-            UserData.DicHaveHeroGroupByTier.Add(4, new List<HeroInfo>()
+            UserData.HaveHero.Add(4001, new HeroInfo(4001, 1, 1));
+            UserData.HaveHero.Add(4002, new HeroInfo(4002, 1, 1));
+            UserData.HaveHero.Add(4003, new HeroInfo(4003, 1, 1));
+            UserData.HaveHero.Add(4004, new HeroInfo(4004, 1, 1));
+            UserData.HaveHero.Add(4005, new HeroInfo(4005, 1, 1));
+            UserData.HaveHeroGroupByTier.Add(4, new List<HeroInfo>()
             {
                 new HeroInfo(4001, 1, 1),
                 new HeroInfo(4002, 1, 1),
@@ -171,12 +171,12 @@ public class UserManager : MonoBehaviour
             });
 
             // 5티어 기본 보유 타워
-            UserData.DicHaveHero.Add(5001, new HeroInfo(5001, 1, 1));
-            UserData.DicHaveHero.Add(5002, new HeroInfo(5002, 1, 1));
-            UserData.DicHaveHero.Add(5003, new HeroInfo(5003, 1, 1));
-            UserData.DicHaveHero.Add(5004, new HeroInfo(5004, 1, 1));
-            UserData.DicHaveHero.Add(5005, new HeroInfo(5005, 1, 1));
-            UserData.DicHaveHeroGroupByTier.Add(5, new List<HeroInfo>()
+            UserData.HaveHero.Add(5001, new HeroInfo(5001, 1, 1));
+            UserData.HaveHero.Add(5002, new HeroInfo(5002, 1, 1));
+            UserData.HaveHero.Add(5003, new HeroInfo(5003, 1, 1));
+            UserData.HaveHero.Add(5004, new HeroInfo(5004, 1, 1));
+            UserData.HaveHero.Add(5005, new HeroInfo(5005, 1, 1));
+            UserData.HaveHeroGroupByTier.Add(5, new List<HeroInfo>()
             {
                 new HeroInfo(5001, 1, 1),
                 new HeroInfo(5002, 1, 1),
@@ -223,12 +223,7 @@ public class UserManager : MonoBehaviour
 
         if (UserData.DailyAllReward)
         {
-            var serverDate = Managers.BackEnd.ServerDateTime();
-            if (Managers.User.UserData.DailyRewardDateTime.Year == serverDate.Year && Managers.User.UserData.DailyRewardDateTime.Month == serverDate.Month && Managers.User.UserData.DailyRewardDateTime.Day == serverDate.Day)
-            {
-                // 오늘 마지막 보상을 받은 것, 할 거 없음
-            }
-            else
+            if (Util.TodayDailyReward() == false)
             {
                 InitDailyReward();
             }
@@ -273,76 +268,80 @@ public class UserManager : MonoBehaviour
 
     public HeroInfo GetEquipMountHero(long in_unique)
     {
-        return UserData.DicHaveHero.Values.ToList().Find(x => x.m_equip_id == in_unique);
+        return UserData.HaveHero.Values.ToList().Find(x => x.m_equip_id == in_unique);
     }
 
     public HeroInfo GetUserHeroInfo(int in_kind)
     {
-        if (UserData.DicHaveHero.ContainsKey(in_kind))
-            return UserData.DicHaveHero[in_kind];
+        if (UserData.HaveHero.ContainsKey(in_kind))
+            return UserData.HaveHero[in_kind];
         else
             return null;
     }
 
     public List<HeroInfo> GetUserHeroInfoGroupByTier(int in_tier)
     {
-        if (UserData.DicHaveHeroGroupByTier.ContainsKey(in_tier))
-            return UserData.DicHaveHeroGroupByTier[in_tier];
+        if (UserData.HaveHeroGroupByTier.ContainsKey(in_tier))
+            return UserData.HaveHeroGroupByTier[in_tier];
         else
             return null;
     }
 
     public int GetInventoryItem(int in_kind)
     {
-        if (UserData.DicInventoryItem.ContainsKey(in_kind))
-            return UserData.DicInventoryItem[in_kind];
+        if (UserData.InventoryItem.ContainsKey(in_kind))
+            return UserData.InventoryItem[in_kind];
         else
             return 0;
     }
 
     public int GetTreasureInfo(int in_kind)
     {
-        if (UserData.DicTreasure.ContainsKey(in_kind))
-            return UserData.DicTreasure[in_kind];
+        if (UserData.Treasure.ContainsKey(in_kind))
+            return UserData.Treasure[in_kind];
         else
             return 0;
     }
 
     public void UpsertTreasure(int in_kind, int in_amount)
     {
-        if (UserData.DicTreasure.ContainsKey(in_kind))
+        if (UserData.Treasure.ContainsKey(in_kind))
         {
             UpsertInventoryItem(in_kind, in_amount);
         }
         else
         {
-            UserData.DicTreasure.Add(in_kind, 1);
+            UserData.Treasure.Add(in_kind, 1);
         }
     }
 
     public void UpsertHero(int in_kind)
     {
         // 있는것은 레벨이 증가하는건가?
-        if (UserData.DicHaveHero.ContainsKey(in_kind))
+        if (UserData.HaveHero.ContainsKey(in_kind))
         {
             UpsertInventoryItem(in_kind, 1);
         }
         else
         {
-            UserData.DicHaveHero.Add(in_kind, new HeroInfo(in_kind, 1, 1));
+            UserData.HaveHero.Add(in_kind, new HeroInfo(in_kind, 1, 1));
         }
     }
 
     public void UpsertInventoryItem(int in_kind, int in_amount)
     {
-        if (UserData.DicInventoryItem.ContainsKey(in_kind))
+        if (UserData.InventoryItem.ContainsKey(in_kind))
         {
-            UserData.DicInventoryItem[in_kind] += in_amount;
+            UserData.InventoryItem[in_kind] += in_amount;
         }
         else
         {
-            UserData.DicInventoryItem.Add(in_kind, in_amount);
+            UserData.InventoryItem.Add(in_kind, in_amount);
         }
+
+        // 재화라면 업데이트
+        if (in_kind >= (int)EGoods.Gold && in_kind <= (int)EGoods.Diamond)
+            Managers.Observer.UpdateObserverGoods((EGoods)in_kind);
     }
 
     public List<MissionInfo> GetMission()
@@ -385,13 +384,13 @@ public class UserManager : MonoBehaviour
     {
         if (pause)
         {
-            m_paused = true;
+            Paused = true;
         }
         else
         {
-            if (m_paused)
+            if (Paused)
             {
-                m_paused = false;
+                Paused = false;
 
                 SaveLocalData<CUserData>(UserData, LocalKey.UserData);
             }

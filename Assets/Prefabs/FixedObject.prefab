@@ -118,6 +118,50 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1037987727940834279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6711772854438516148}
+  - component: {fileID: 6755552821052953585}
+  m_Layer: 0
+  m_Name: Observer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6711772854438516148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037987727940834279}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7972433157254808894}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6755552821052953585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037987727940834279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4a4e51d7cfa07947ad7d188c402f61b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2675239696556262627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,6 +1340,7 @@ Transform:
   - {fileID: 7972433156858142210}
   - {fileID: 5819425182852125582}
   - {fileID: 8245593445252980694}
+  - {fileID: 6711772854438516148}
   - {fileID: 8903999665719816376}
   - {fileID: 5252388426008007447}
   m_Father: {fileID: 7972433156850696894}
@@ -1325,6 +1370,7 @@ MonoBehaviour:
   m_Resource: {fileID: 7972433156858142211}
   m_User: {fileID: 1923145439132330465}
   m_BackEnd: {fileID: 7208018339862668163}
+  m_Observer: {fileID: 6755552821052953585}
   m_Sprite: {fileID: 2365503064544460436}
   m_AD: {fileID: 7538890155636827008}
 --- !u!1 &7972433157280380587
