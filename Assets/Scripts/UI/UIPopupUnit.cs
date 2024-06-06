@@ -83,8 +83,8 @@ public class UIPopupUnit : UIWindowBase
         if (heroInfo == null)
             return;
 
-        m_text_name.Ex_SetText(Util.GetHeroName(m_kind));
-        m_Image_hero.Ex_SetImage(Util.GetHeroImage(m_kind));
+        Util.SetHeroName(m_text_name, m_kind);
+        Util.SetHeroImage(m_Image_hero, m_kind);
         m_img_unit_type.Ex_SetImage(Util.GetUnitType(m_kind));
 
         for (int i = 0; i < m_list_bg.Count; i++)

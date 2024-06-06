@@ -1,60 +1,35 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
+using TMPro;
 
 public class UIWindowUnit : UIWindowBase
 {
     private const string UNIT_TIER_GROUP_PATH = "UI/Item/UnitTierGroup";
 
-    [Header("Goods")]
+    [Header("재화")]
     [SerializeField] private TMP_Text m_text_gold = null;
     [SerializeField] private TMP_Text m_text_ruby = null;
     [SerializeField] private TMP_Text m_text_diamond = null;
 
-    [Header("Slot Root")]
+    [Header("슬롯 루트")]
     [SerializeField] private Transform m_trs_root = null;
     [SerializeField] private RectTransform m_rect_root = null;
 
-    [Header("유닛 상세 정보")]
-    [SerializeField] private TMP_Text m_text_name = null;
-    [SerializeField] private Image m_Image_hero = null;
-    [SerializeField] private Image m_Image_lock = null;
-    [SerializeField] private List<Image> m_list_grade_star = new List<Image>();
-    [SerializeField] private TMP_Text m_text_level = null;
-    [SerializeField] private Image m_Image_equipment = null;
+    [Header("영웅 정보")]
+    [SerializeField] private HeroBaseInfo m_hero_base_info = null;
 
-    [Header("유닛 Stat")]
-    [SerializeField] private TMP_Text m_text_damage = null;
-    [SerializeField] private TMP_Text m_text_speed = null;
-    [SerializeField] private TMP_Text m_text_range = null;
-    [SerializeField] private TMP_Text m_text_critical = null;
-    [SerializeField] private TMP_Text m_text_critical_chance = null;
-
-    [Header("장비 추가 Stat")]
-    [SerializeField] private TMP_Text m_text_equip_damage = null;
-    [SerializeField] private TMP_Text m_text_equip_speed = null;
-    [SerializeField] private TMP_Text m_text_equip_range = null;
-    [SerializeField] private TMP_Text m_text_equip_critical = null;
-    [SerializeField] private TMP_Text m_text_equip_critical_chance = null;
-
-    [SerializeField] private List<GameObject> m_list_bg = new List<GameObject>();
+    [Header("영웅 강화")]
     [SerializeField] private ExtentionButton m_btn_gradeup = null;
     [SerializeField] private ExtentionButton m_btn_levelup = null;
     [SerializeField] private TMP_Text m_text_gradeup = null;
     [SerializeField] private TMP_Text m_text_levelup = null;
     [SerializeField] private Slider m_slider_gradeup = null;
     [SerializeField] private Image m_image_resource = null;
-    [SerializeField] private Image m_img_unit_type = null;
-    [SerializeField] private Slot_Equip m_slot_equip = null;
-
-    [Header("유닛 스킬")]
-    [SerializeField] private List<Slot_Skill> m_skill = new List<Slot_Skill>();
 
     private int m_kind;
-    public int ToolTipIndex { get; set; }
+    private GameObject m_last_select = null;
 
-    public GameObject LastSelect { get; set; }
+    public int ToolTipIndex { get; set; }
 
     public override void Awake()
     {
@@ -71,198 +46,137 @@ public class UIWindowUnit : UIWindowBase
         m_kind = 1001;
         ToolTipIndex = -1;
 
-        RefreshUI();
+        // 재화 갱신
+        RefreshGoods();
+
+        // 영웅 리스트
+        RefreshHeroList();
     }
 
-    public void OnClickClose()
+    public void RefreshGoods()
     {
-        Managers.UI.CloseLast();
+        Util.SetGoods(EGoods.Gold, m_text_gold);
+        Util.SetGoods(EGoods.Ruby, m_text_ruby);
+        Util.SetGoods(EGoods.Diamond, m_text_diamond);
     }
 
-    public void RefreshUI()
+    private void RefreshHeroList()
     {
-        m_text_gold.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Gold))}");
-        m_text_ruby.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Ruby))}");
-        m_text_diamond.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Diamond))}");
-
+        // 영웅 슬롯 초기화
         m_rect_root.Ex_SetValue(0f);
-
         for (int i = 0; i < m_trs_root.childCount; i++)
             Managers.Resource.Destroy(m_trs_root.GetChild(i).gameObject);
 
+        // 영웅 슬롯 리스트 갱신
         for (int tier = 1; tier <= 8; tier++)
         {
             var tierGroup = Managers.Resource.Instantiate(UNIT_TIER_GROUP_PATH, Vector3.zero, m_trs_root);
             var sc = tierGroup.GetComponent<UnitTierGroup>();
 
-            sc.SetTierUnit(tier);
-        }
+            sc.SetTierUnit(tier, (kind, select) =>
+            {
+                m_last_select.Ex_SetActive(false);
+                m_last_select = select;
 
-        // 첫번째 타워 보여주기
-        SetUnitInfo(m_kind);
+                SetHeroInfo(kind);
+            });
+        }
     }
 
-    public void SetUnitInfo(int in_kind)
+    public void SetHeroInfo(int in_kind)
     {
         m_kind = in_kind;
-        var heroInfo = Managers.Table.GetHeroInfoData(in_kind);
-        if (heroInfo == null)
-            return;
 
-        m_text_name.Ex_SetText(Util.GetHeroName(m_kind));
-        m_Image_hero.Ex_SetImage(Util.GetHeroImage(m_kind));
-        m_img_unit_type.Ex_SetImage(Util.GetUnitType(in_kind));
+        // 영웅 정보 셋팅
+        m_hero_base_info.SetData(in_kind);
 
-        for (int i = 0; i < m_list_bg.Count; i++)
-            m_list_bg[i].Ex_SetActive(i == (int)heroInfo.m_rarity - 1);
-
-        m_slot_equip.gameObject.Ex_SetActive(false);
-
-        m_text_equip_damage.Ex_SetText(string.Empty); // (+100.0)
-        m_text_equip_speed.Ex_SetText(string.Empty);
-        m_text_equip_range.Ex_SetText(string.Empty);
-        m_text_equip_critical.Ex_SetText(string.Empty);
-        m_text_equip_critical_chance.Ex_SetText(string.Empty);
-
-        //내가 보유한 타워의 레벨과 등급을 불러와서
-        var hero = Managers.User.GetUserHeroInfo(m_kind);
-        if (hero == null)
+        var userHero = Managers.User.GetUserHeroInfo(in_kind);
+        if (userHero == null)
         {
-            // 타워 보유하지 않은 셋팅 해주면 됨
-            m_Image_hero.Ex_SetColor(Color.black);
-            m_Image_lock.Ex_SetActive(true);
-            m_text_level.Ex_SetText("Lv.1");
-            m_Image_equipment.Ex_SetActive(false);
-            Util.SetGradeStar(m_list_grade_star, 1);
             m_btn_gradeup.Ex_SetActive(false);
             m_btn_levelup.Ex_SetActive(false);
-
-            var heroLevelInfo = Managers.Table.GetHeroLevelData(in_kind, 1);
-            m_text_damage.Ex_SetText($"{heroLevelInfo.m_atk}");
-            m_text_speed.Ex_SetText($"{heroLevelInfo.m_speed}");
-            m_text_range.Ex_SetText($"{heroLevelInfo.m_range}");
-            m_text_critical.Ex_SetText($"{heroLevelInfo.m_critical}");
-            m_text_critical_chance.Ex_SetText($"{heroLevelInfo.m_critical_chance}");
         }
         else
         {
-            m_Image_hero.Ex_SetColor(Color.white);
-            m_Image_lock.Ex_SetActive(false);
-            m_text_level.Ex_SetText($"Lv.{hero.m_level}");
-            m_Image_equipment.Ex_SetActive(true);
-            Util.SetGradeStar(m_list_grade_star, hero.m_grade);
-
-            var heroLevelInfo = Managers.Table.GetHeroLevelData(in_kind, hero.m_level);
-            m_text_damage.Ex_SetText($"{heroLevelInfo.m_atk}");
-            m_text_speed.Ex_SetText($"{heroLevelInfo.m_speed}");
-            m_text_range.Ex_SetText($"{heroLevelInfo.m_range}");
-            m_text_critical.Ex_SetText($"{heroLevelInfo.m_critical}");
-            m_text_critical_chance.Ex_SetText($"{heroLevelInfo.m_critical_chance}");
-
-            if (hero.m_equip_id > 0)
-            {
-                var userEquip = Managers.User.GetEquip(hero.m_equip_id);
-                if (userEquip != null)
-                {
-                    m_slot_equip.gameObject.Ex_SetActive(true);
-                    m_slot_equip.SetData(hero.m_equip_id, userEquip.m_kind, true, false, false);
-
-                    var tableEquip = Managers.Table.GetEquipInfoData(userEquip.m_kind);
-                    if (tableEquip.m_atk > 0)
-                        m_text_equip_damage.Ex_SetText($"(+{tableEquip.m_atk})");
-
-                    if (tableEquip.m_speed > 0)
-                        m_text_equip_speed.Ex_SetText($"(+{tableEquip.m_speed})");
-
-                    if (tableEquip.m_range > 0)
-                        m_text_equip_range.Ex_SetText($"(+{tableEquip.m_range})");
-
-                    if (tableEquip.m_critical > 0)
-                        m_text_equip_critical.Ex_SetText($"(+{tableEquip.m_critical})");
-
-                    if (tableEquip.m_critical_chance > 0)
-                        m_text_equip_critical_chance.Ex_SetText($"(+{tableEquip.m_critical_chance})");
-                }
-            }
-
-            m_btn_gradeup.Ex_SetActive(true);
-            m_btn_levelup.Ex_SetActive(true);
-
-            var HeroGrade = Managers.Table.GetHeroGradeData(in_kind, hero.m_grade + 1);
-            if (HeroGrade == null)
+            var heroGrade = Managers.Table.GetHeroGradeData(in_kind, userHero.m_grade + 1);
+            if (heroGrade == null)
             {
                 m_btn_gradeup.Ex_SetActive(false);
             }
             else
             {
-                m_text_gradeup.Ex_SetText($"{Managers.User.GetInventoryItem(HeroGrade.m_item_kind)}/{HeroGrade.m_grade_up_piece}");
-                m_slider_gradeup.Ex_SetValue(Managers.User.GetInventoryItem(HeroGrade.m_item_kind) / HeroGrade.m_grade_up_piece);
-                m_btn_gradeup.interactable = Managers.User.GetInventoryItem(HeroGrade.m_item_kind) >= HeroGrade.m_grade_up_piece;
+                m_btn_gradeup.Ex_SetActive(true);
+                m_text_gradeup.Ex_SetText($"{Managers.User.GetInventoryItem(heroGrade.m_item_kind)}/{heroGrade.m_grade_up_piece}");
+                m_slider_gradeup.Ex_SetValue(Managers.User.GetInventoryItem(heroGrade.m_item_kind) / heroGrade.m_grade_up_piece);
+                m_btn_gradeup.interactable = Managers.User.GetInventoryItem(heroGrade.m_item_kind) >= heroGrade.m_grade_up_piece;
             }
 
-            var HeroLevel = Managers.Table.GetHeroLevelData(in_kind, hero.m_level + 1);
-            if (HeroLevel == null)
+            var heroLevel = Managers.Table.GetHeroLevelData(in_kind, userHero.m_level + 1);
+            if (heroLevel == null)
             {
                 m_btn_levelup.Ex_SetActive(false);
             }
             else
             {
-                m_image_resource.Ex_SetImage(Util.GetResourceImage(HeroLevel.m_item_kind));
-                m_text_levelup.Ex_SetText(Util.CommaText(HeroLevel.m_item_amount));
-                m_btn_levelup.interactable = Managers.User.GetInventoryItem(HeroLevel.m_item_kind) >= HeroLevel.m_item_amount;
+                m_btn_levelup.Ex_SetActive(true);
+                m_image_resource.Ex_SetImage(Util.GetResourceImage(heroLevel.m_item_kind));
+                m_text_levelup.Ex_SetText(Util.CommaText(heroLevel.m_item_amount));
+                m_btn_levelup.interactable = Managers.User.GetInventoryItem(heroLevel.m_item_kind) >= heroLevel.m_item_amount;
             }
         }
-
-        Util.SetSkill(m_skill, in_kind);
     }
 
     public void OnClickUnitGradeUp()
     {
-        var hero = Managers.User.GetUserHeroInfo(m_kind);
-        if (hero == null)
+        var userHero = Managers.User.GetUserHeroInfo(m_kind);
+        if (userHero == null)
             return;
 
-        // 현재 등급을 10을 맥스라고 가정
-        if (hero.m_grade >= 10)
+        var heroGrade = Managers.Table.GetHeroGradeData(m_kind, userHero.m_grade + 1);
+        if (heroGrade == null)
             return;
 
-        var HeroGrade = Managers.Table.GetHeroGradeData(m_kind, hero.m_grade + 1);
-        if (Managers.User.GetInventoryItem(m_kind) < HeroGrade.m_grade_up_piece)
+        if (Managers.User.GetInventoryItem(m_kind) < heroGrade.m_grade_up_piece)
             return;
 
-        hero.m_grade++;
-        Managers.User.UpsertInventoryItem(m_kind, HeroGrade.m_grade_up_piece);
+        // 히어로 Grade 증가
+        userHero.m_grade++;
+        
+        // 사용 재화 감소
+        Managers.User.UpsertInventoryItem(heroGrade.m_item_kind, -heroGrade.m_grade_up_piece);
 
-        RefreshUI();
+        // UI 갱신
+        RefreshGoods();
+        SetHeroInfo(m_kind);
     }
 
     public void OnClickUnitLevelUp()
     {
-        var hero = Managers.User.GetUserHeroInfo(m_kind);
-        if (hero == null)
+        var userHero = Managers.User.GetUserHeroInfo(m_kind);
+        if (userHero == null)
             return;
 
-        // 현재 레벨을 10을 맥스라고 가정
-        if (hero.m_level >= 10)
+        var heroLevel = Managers.Table.GetHeroLevelData(m_kind, userHero.m_level + 1);
+        if (heroLevel == null)
             return;
 
-        hero.m_level++;
-        RefreshUI();
+        // 레벨 증가
+        userHero.m_level++;
+
+        // 사용 재화 감소
+        Managers.User.UpsertInventoryItem(heroLevel.m_item_kind, -heroLevel.m_item_amount);
+
+        // UI 갱신
+        RefreshGoods();
+        SetHeroInfo(m_kind);
     }
 
-    public void OnClickUnitBuy()
+    public void OnClickEquip()
     {
-        var gachaReward = Managers.Table.GetGachaHero(1000);
-        if (gachaReward == null)
-            return;
+        EquipInfoParam param = new EquipInfoParam();
+        param.m_unit_kind = m_kind;
 
-        Managers.User.UpsertHero(gachaReward.m_item);
-        RefreshUI();
-
-        GachaHeroParam param = new GachaHeroParam();
-        param.m_hero_kind = gachaReward.m_item;
-
-        Managers.UI.OpenWindow(WindowID.UIPopupUnitBuy, param);
+        Managers.UI.OpenWindow(WindowID.UIPopupEquipment, param);
     }
 
     public void OnClickToolTip(int in_skill_index)
@@ -275,16 +189,8 @@ public class UIWindowUnit : UIWindowBase
             return;
         }
 
-        Util.OpenToolTip(m_skill[in_skill_index].Contents, m_skill[in_skill_index].GetRoot);
+        //Util.OpenToolTip(m_skill[in_skill_index].Contents, m_skill[in_skill_index].GetRoot);
 
         ToolTipIndex = in_skill_index;
-    }
-
-    public void OnClickEquip()
-    {
-        EquipInfoParam param = new EquipInfoParam();
-        param.m_unit_kind = m_kind;
-
-        Managers.UI.OpenWindow(WindowID.UIPopupEquipment, param);
     }
 }

@@ -271,7 +271,7 @@ public class UIWindowEquipment : UIWindowBase
             if (hero != null)
             {
                 var heroInfo = Managers.Table.GetHeroInfoData(hero.m_kind);
-                m_unit_slot.SetHaveUnit(hero.m_kind, heroInfo.m_rarity, hero.m_grade, hero.m_level);
+                m_unit_slot.SetHaveUnit(hero.m_kind, heroInfo.m_rarity, hero.m_grade, hero.m_level, null);
                 m_unit_slot.gameObject.Ex_SetActive(true);
             }
         }

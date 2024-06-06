@@ -146,7 +146,7 @@ public class UIPopupEquipment : UIWindowBase
             if (hero != null)
             {
                 var heroInfo = Managers.Table.GetHeroInfoData(hero.m_kind);
-                m_unit_slot.SetHaveUnit(hero.m_kind, heroInfo.m_rarity, hero.m_grade, hero.m_level);
+                m_unit_slot.SetHaveUnit(hero.m_kind, heroInfo.m_rarity, hero.m_grade, hero.m_level, null);
                 m_unit_slot.gameObject.Ex_SetActive(true);
             }
         }
@@ -206,7 +206,7 @@ public class UIPopupEquipment : UIWindowBase
             if (ui == null)
                 return;
 
-            ui.SetUnitInfo(m_unit_kind);
+            ui.SetHeroInfo(m_unit_kind);
         }
     }
 
@@ -269,7 +269,7 @@ public class UIPopupEquipment : UIWindowBase
             if (ui == null)
                 return;
 
-            ui.SetUnitInfo(m_unit_kind);
+            ui.SetHeroInfo(m_unit_kind);
         }
     }
 }

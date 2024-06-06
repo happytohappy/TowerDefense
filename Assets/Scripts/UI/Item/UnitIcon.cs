@@ -1,7 +1,8 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections.Generic;
+using TMPro;
 
 public class UnitIcon : MonoBehaviour
 {
@@ -15,14 +16,17 @@ public class UnitIcon : MonoBehaviour
     [SerializeField] private Image m_img_unit_type = null;
 
     private int m_kind;
+    private Action<int, GameObject> m_callback = null;
 
-    public void SetHaveUnit(int in_kind, ERarity in_rarity, int in_grade, int in_level)
+    public void SetHaveUnit(int in_kind, ERarity in_rarity, int in_grade, int in_level, Action<int, GameObject> in_callback)
     {
+        m_callback = in_callback;
+
         m_kind = in_kind;
         m_go_select.Ex_SetActive(false);
         Util.SetGradeStar(m_list_star, in_grade);
         m_img_unit.Ex_SetColor(Color.white);
-        m_img_unit.Ex_SetImage(Util.GetHeroImage(in_kind));
+        Util.SetHeroImage(m_img_unit, in_kind);
         m_img_unit_type.Ex_SetImage(Util.GetUnitType(in_kind));
         Util.SetRarityBG(m_img_grade_bg, in_rarity);
         m_go_lock.Ex_SetActive(false);
@@ -45,22 +49,19 @@ public class UnitIcon : MonoBehaviour
 
         if (in_kind == 1001)
         {
-            var ui = Managers.UI.GetWindow(WindowID.UIWindowUnit, false) as UIWindowUnit;
-            if (ui == null)
-                return;
-
-            ui.LastSelect = m_go_select;
-            m_go_select.Ex_SetActive(true);
+            OnClickHeroInfo();
         }
     }
 
-    public void SetNoneUnit(int in_kind, ERarity in_rarity)
+    public void SetNoneUnit(int in_kind, ERarity in_rarity, Action<int, GameObject> in_callback)
     {
+        m_callback = in_callback;
+
         m_kind = in_kind;
         m_go_select.Ex_SetActive(false);
         Util.SetGradeStar(m_list_star, 1);
         m_img_unit.Ex_SetColor(Color.black);
-        m_img_unit.Ex_SetImage(Util.GetHeroImage(in_kind));
+        Util.SetHeroImage(m_img_unit, in_kind);
         m_img_unit_type.Ex_SetImage(Util.GetUnitType(in_kind));
         Util.SetRarityBG(m_img_grade_bg, in_rarity);
         m_go_lock.Ex_SetActive(true);
@@ -74,7 +75,7 @@ public class UnitIcon : MonoBehaviour
         m_go_select.Ex_SetActive(false);
         Util.SetGradeStar(m_list_star, in_grade);
         m_img_unit.Ex_SetColor(Color.white);
-        m_img_unit.Ex_SetImage(Util.GetHeroImage(in_kind));
+        Util.SetHeroImage(m_img_unit, in_kind);
         m_img_unit_type.Ex_SetImage(Util.GetUnitType(in_kind));
         Util.SetRarityBG(m_img_grade_bg, in_rarity);
         m_go_lock.Ex_SetActive(false);
@@ -84,14 +85,8 @@ public class UnitIcon : MonoBehaviour
 
     public void OnClickHeroInfo()
     {
-        var ui = Managers.UI.GetWindow(WindowID.UIWindowUnit, false) as UIWindowUnit;
-        if (ui == null)
-            return;
-
-        ui.LastSelect.Ex_SetActive(false);
-        ui.SetUnitInfo(m_kind);
         m_go_select.Ex_SetActive(true);
 
-        ui.LastSelect = m_go_select;
+        m_callback?.Invoke(m_kind, m_go_select);
     }
 }

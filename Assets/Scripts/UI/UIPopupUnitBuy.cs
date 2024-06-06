@@ -40,9 +40,9 @@ public class UIPopupUnitBuy : UIWindowBase
     private void RefreshUI(int in_kind)
     {
         // 타워 보유하지 않은 셋팅 해주면 됨
-        m_text_name.Ex_SetText(Util.GetHeroName(in_kind));
+        Util.SetHeroName(m_text_name, in_kind);
         m_text_rarity.Ex_SetText(Util.GetHeroRarityToString(in_kind));
-        m_Image_hero.Ex_SetImage(Util.GetHeroImage(in_kind));;
+        Util.SetHeroImage(m_Image_hero, in_kind);
         m_text_tier.Ex_SetText($"Class {Util.GetHeroTier(in_kind)}");
 
         var hero = Managers.User.GetUserHeroInfo(in_kind);
@@ -61,13 +61,8 @@ public class UIPopupUnitBuy : UIWindowBase
         Managers.User.UpsertHero(gachaReward.m_item);
         RefreshUI(gachaReward.m_item);
 
-        var uiUnitPopup = Managers.UI.GetWindow(WindowID.UIWindowUnit, false) as UIWindowUnit;
-        if (uiUnitPopup != null)
-            uiUnitPopup.RefreshUI();
-    }
-
-    public void OnClickClose()
-    {
-        Managers.UI.CloseLast();
+        //var uiUnitPopup = Managers.UI.GetWindow(WindowID.UIWindowUnit, false) as UIWindowUnit;
+        //if (uiUnitPopup != null)
+        //    uiUnitPopup.RefreshUI();
     }
 }
