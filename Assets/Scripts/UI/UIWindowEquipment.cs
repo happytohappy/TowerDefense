@@ -132,7 +132,7 @@ public class UIWindowEquipment : UIWindowBase
             var equipSlot = Managers.Resource.Instantiate(EQUIP_SLOT_PATH, Vector3.zero, m_trs_equip_root);
             var item = equipSlot.GetComponentInChildren<Slot_Equip>();
 
-            item.SetData(e.m_unique_id, e.m_kind, e.m_mount, e.m_new, first);
+            item.SetData(e.m_unique_id, e.m_kind, e.m_mount, e.m_new, first, null);
             if (first)
             {
                 SetEquipInfo(e.m_unique_id, e.m_kind);
@@ -184,19 +184,19 @@ public class UIWindowEquipment : UIWindowBase
                 if (mountCnt == 0)
                 {
                     m_merge_kind = e.m_kind;
-                    m_equip_left.SetData(e.m_unique_id, e.m_kind, e.m_mount, false, false);
+                    m_equip_left.SetData(e.m_unique_id, e.m_kind, e.m_mount, false, false, null);
                     m_equip_left.gameObject.Ex_SetActive(true);
                     mountCnt++;
                 }
                 else if (mountCnt == 1)
                 {
-                    m_equip_right.SetData(e.m_unique_id, e.m_kind, e.m_mount, false, false);
+                    m_equip_right.SetData(e.m_unique_id, e.m_kind, e.m_mount, false, false, null);
                     m_equip_right.gameObject.Ex_SetActive(true);
                     mountCnt++;
                 }
             }
             
-            item.SetData(e.m_unique_id, e.m_kind, e.m_mount, false, select);
+            item.SetData(e.m_unique_id, e.m_kind, e.m_mount, false, select, null);
         }
 
         if (mountCnt == 2)
@@ -265,15 +265,11 @@ public class UIWindowEquipment : UIWindowBase
             return;
 
         m_unit_slot.gameObject.Ex_SetActive(false);
-        if (userEquip.m_mount)
+        var hero = Managers.User.GetEquipMountHero(in_unique);
+        if (hero != null)
         {
-            var hero = Managers.User.GetEquipMountHero(in_unique);
-            if (hero != null)
-            {
-                var heroInfo = Managers.Table.GetHeroInfoData(hero.m_kind);
-                m_unit_slot.SetHaveUnit(hero.m_kind, heroInfo.m_rarity, hero.m_grade, hero.m_level, null);
-                m_unit_slot.gameObject.Ex_SetActive(true);
-            }
+            m_unit_slot.gameObject.Ex_SetActive(true);
+            m_unit_slot.SetData(hero.m_kind);
         }
 
         // ¿Â∫Ò Ω∫≈»

@@ -35,6 +35,8 @@ public class HeroBaseInfo : MonoBehaviour
     [SerializeField] private TMP_Text m_text_equip_critical = null;
     [SerializeField] private TMP_Text m_text_equip_critical_chance = null;
 
+    public int m_tooltip_index = -1;
+
     public void SetData(int in_kind)
     {
         bool haveHero = false;
@@ -94,7 +96,7 @@ public class HeroBaseInfo : MonoBehaviour
             if (tableEquip != null)
             {
                 m_slot_equip.Ex_SetActive(true);
-                m_slot_equip.SetData(equipID, userEquip.m_kind, true, false, false);
+                m_slot_equip.SetData(equipID, userEquip.m_kind, true, false, false, null);
 
                 if (tableEquip.m_atk > 0)
                     m_text_equip_damage.Ex_SetText($"(+{tableEquip.m_atk})");
@@ -116,5 +118,21 @@ public class HeroBaseInfo : MonoBehaviour
         // 배경 작업
         for (int i = 0; i < m_list_bg.Count; i++)
             m_list_bg[i].Ex_SetActive(i == (int)heroInfo.m_rarity - 1);
+    }
+
+    public void OnClickToolTip(int in_skill_index)
+    {
+        // 이미 열려있는 툴팁이라면
+        if (m_tooltip_index == in_skill_index)
+        {
+            m_tooltip_index = -1;
+            Util.CloseToolTip();
+            return;
+        }
+
+        Util.OpenToolTip(m_slot_skill[in_skill_index].Contents, m_slot_skill[in_skill_index].GetRoot, () =>
+        {
+            m_tooltip_index = -1;
+        });
     }
 }

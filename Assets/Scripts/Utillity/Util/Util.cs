@@ -239,36 +239,12 @@ public static partial class Util
         return hudDamage;
     }
 
-    
-
-    public static string GetHeroRarityToString(int in_kind)
-    {
-        var heroInfo = Managers.Table.GetHeroInfoData(in_kind);
-        if (heroInfo == null)
-            return string.Empty;
-
-        return heroInfo.m_rarity.ToString();
-    }
-
-    public static int GetHeroTier(int in_kind)
-    {
-        var heroInfo = Managers.Table.GetHeroInfoData(in_kind);
-        if (heroInfo == null)
-            return 0;
-
-        return heroInfo.m_tier;
-    }
-
     public static void ChangeLayersRecursively(Transform in_trans, string in_layer_name)
     {
         in_trans.gameObject.layer = LayerMask.NameToLayer(in_layer_name);
         foreach (Transform child in in_trans)
             ChangeLayersRecursively(child, in_layer_name);
     }
-
-    
-
-   
 
     public static Sprite GetResourceImage(int in_kind)
     {
@@ -282,101 +258,7 @@ public static partial class Util
         }
 
         return Managers.Sprite.GetSprite(Atlas.Common, resourceName);
-    }
-
-    public static void SetUnitType(Image in_image, EHeroType in_type)
-    {
-        in_image.Ex_SetImage(GetUnitType(in_type));
-    }
-
-    public static void SetRarityBG(Image in_grade_bg, ERarity in_rarity)
-    {
-        string Rare = "BG_Slot_Rare";
-        string Epic = "BG_Slot_Epic";
-        string Legend = "BG_Slot_Legend";
-        string Myth = "BG_Slot_Myth";
-
-        switch (in_rarity)
-        {
-            case ERarity.RARE:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Rare));      break;
-            case ERarity.EPIC:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Epic));      break;
-            case ERarity.LEGEND: in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Legend));    break;
-            case ERarity.MYTH:   in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Myth));      break;
-        }
-    }
-
-    public static void SetEquipIcon(Image in_image, string in_name)
-    {
-        in_image.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Equip, in_name));
-    }
-
-    public static void SetEquipGradeBG(Image in_grade_bg, EEquipGrade in_grade)
-    {
-        switch (in_grade)
-        {
-            case EEquipGrade.F:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_F"));
-                break;
-            case EEquipGrade.E:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_E"));
-                break;
-            case EEquipGrade.D:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_D"));
-                break;
-            case EEquipGrade.C:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_C"));
-                break;
-            case EEquipGrade.B:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_B"));
-                break;
-            case EEquipGrade.A:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_A"));
-                break;
-            case EEquipGrade.SS:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_SS"));
-                break;
-            case EEquipGrade.SR:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_SR"));
-                break;
-            case EEquipGrade.SSR:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_SSR"));
-                break;
-        }
-    }
-
-    public static void SetEquipGradeTextImage(Image in_grade_bg, EEquipGrade in_grade)
-    {
-        switch (in_grade)
-        {
-            case EEquipGrade.F:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_F"));
-                break;
-            case EEquipGrade.E:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_E"));
-                break;
-            case EEquipGrade.D:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_D"));
-                break;
-            case EEquipGrade.C:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_C"));
-                break;
-            case EEquipGrade.B:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_B"));
-                break;
-            case EEquipGrade.A:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_A"));
-                break;
-            case EEquipGrade.SS:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_SS"));
-                break;
-            case EEquipGrade.SR:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_SR"));
-                break;
-            case EEquipGrade.SSR:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_SSR"));
-                break;
-        }
-    }
+    }   
 
     public static int GetGoods(EGoods in_goods)
     {
@@ -422,52 +304,5 @@ public static partial class Util
         }
 
         return result.ToString();
-    }
-
-    
-    public static void EquipSort(ref List<UserManager.EquipInfo> in_equip_list, long in_unique_id = 0)
-    {
-        in_equip_list.Sort((equip_1, equip_2) =>
-        {
-            // 첫번째 조건
-            if (equip_1.m_unique_id == in_unique_id && equip_2.m_unique_id != in_unique_id)
-                return -1;
-            else if (equip_1.m_unique_id != in_unique_id && equip_2.m_unique_id == in_unique_id)
-                return 1;
-            else
-            {
-                // 두번째 조건 : 장착중인 장비
-                if (equip_1.m_unique_id > 0 && equip_2.m_unique_id == 0)
-                    return -1;
-                else if (equip_1.m_unique_id == 0 && equip_2.m_unique_id > 0)
-                    return 1;
-                else
-                {
-                    // 세번째 조건 : 뉴 마크
-                    if (equip_1.m_new && !equip_2.m_new)
-                        return -1;
-                    else if (!equip_1.m_new && equip_2.m_new)
-                        return 1;
-                    else
-                    {
-                        // 네번째 조건 : 장비 등급
-                        if (equip_1.m_grade > equip_2.m_grade)
-                            return -1;
-                        else if (equip_1.m_grade < equip_2.m_grade)
-                            return 1;
-                        else
-                        {
-                            // 다섯번째 조건 : 카인드
-                            if (equip_1.m_kind < equip_2.m_kind)
-                                return -1;
-                            if (equip_1.m_kind > equip_2.m_kind)
-                                return 1;
-                            else
-                                return 0;
-                        }
-                    }
-                }
-            }
-        });
     }
 }

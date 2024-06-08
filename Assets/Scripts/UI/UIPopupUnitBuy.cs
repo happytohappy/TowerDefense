@@ -40,16 +40,16 @@ public class UIPopupUnitBuy : UIWindowBase
     private void RefreshUI(int in_kind)
     {
         // 타워 보유하지 않은 셋팅 해주면 됨
-        Util.SetHeroName(m_text_name, in_kind);
-        m_text_rarity.Ex_SetText(Util.GetHeroRarityToString(in_kind));
-        Util.SetHeroImage(m_Image_hero, in_kind);
-        m_text_tier.Ex_SetText($"Class {Util.GetHeroTier(in_kind)}");
+        //Util.SetHeroName(m_text_name, in_kind);
+        //m_text_rarity.Ex_SetText(Util.GetHeroRarityToString(in_kind));
+        //Util.SetHeroImage(m_Image_hero, in_kind);
+        //m_text_tier.Ex_SetText($"Class {Util.GetHeroTier(in_kind)}");
 
-        var hero = Managers.User.GetUserHeroInfo(in_kind);
-        var heroLevelInfo = Managers.Table.GetHeroLevelData(in_kind, hero.m_level);
-        m_text_damage.Ex_SetText(heroLevelInfo.m_atk.ToString());
-        m_text_speed.Ex_SetText(heroLevelInfo.m_speed.ToString());
-        m_text_range.Ex_SetText(heroLevelInfo.m_range.ToString());
+        //var hero = Managers.User.GetUserHeroInfo(in_kind);
+        //var heroLevelInfo = Managers.Table.GetHeroLevelData(in_kind, hero.m_level);
+        //m_text_damage.Ex_SetText(heroLevelInfo.m_atk.ToString());
+        //m_text_speed.Ex_SetText(heroLevelInfo.m_speed.ToString());
+        //m_text_range.Ex_SetText(heroLevelInfo.m_range.ToString());
     }
 
     public void OnClickUnitBuy()

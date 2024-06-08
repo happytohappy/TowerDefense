@@ -1,9 +1,9 @@
+using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
 
 public class Slot_PopupSynergy : MonoBehaviour
 {
@@ -81,10 +81,8 @@ public class Slot_PopupSynergy : MonoBehaviour
                 var go = Managers.Resource.Instantiate(SLOT_POPUP_SYNERGY_UNIT_ICON_PATH, Vector3.zero, m_trs_root);
                 go.transform.SetAsFirstSibling();
 
-                var userHero = Managers.User.GetUserHeroInfo(e.m_hero.GetHeroData.m_info.m_kind);
-
                 var sc = go.GetComponent<UnitIcon>();
-                sc.SetSimpleUnit(e.m_hero.GetHeroData.m_info.m_kind, e.m_hero.GetHeroData.m_info.m_rarity, userHero.m_grade, userHero.m_level);
+                sc.SetData(e.m_hero.GetHeroData.m_info.m_kind);
             }
         }    
     }

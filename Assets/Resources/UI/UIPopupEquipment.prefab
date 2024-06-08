@@ -5202,6 +5202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6712918325758415786}
   - component: {fileID: 4011674443731004578}
+  - component: {fileID: 2940487974655183694}
   - component: {fileID: 1636648794469088366}
   m_Layer: 5
   m_Name: UIPopupEquipment
@@ -5243,7 +5244,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 675888d155acda64a9bd69f9c07165cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_equip_base_info: {fileID: 2940487974655183694}
+  m_rect_equip_root: {fileID: 4264542304867998830}
+  m_trs_equip_root: {fileID: 8471192283212162466}
+  m_go_none_equip: {fileID: 7056622376894113888}
+  m_go_none_text: {fileID: 4629098438235239776}
+  m_go_equip: {fileID: 3686470536038343146}
+  m_go_unequip: {fileID: 7039613191881922558}
+  m_btn_equip: {fileID: 3258051420608955498}
+--- !u!114 &2940487974655183694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6712918325758415787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac9058b7ec966254da2778ae3316e50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_image_equip_icon: {fileID: 3571468876546595943}
+  m_image_equip_hero_type: {fileID: 6968844181078956424}
+  m_text_equip_name: {fileID: 2402729271574109603}
   m_grade_layout:
   - {fileID: 8267603395321617897}
   - {fileID: 5488102719980446505}
@@ -5254,21 +5277,12 @@ MonoBehaviour:
   - {fileID: 5283880062546762757}
   - {fileID: 2447396622368394291}
   - {fileID: 4856647408029073041}
-  m_image_equip_hero_type: {fileID: 6968844181078956424}
-  m_text_equip_name: {fileID: 2402729271574109603}
-  m_go_none_equip: {fileID: 7056622376894113888}
   m_unit_slot: {fileID: 5828271867100601792}
   m_text_atk: {fileID: 1356163543125541914}
   m_text_speed: {fileID: 4774399885091938995}
   m_text_range: {fileID: 202655255110264309}
   m_text_critical: {fileID: 2260564983313159792}
   m_text_critical_chance: {fileID: 634270862281929683}
-  m_rect_equip_root: {fileID: 4264542304867998830}
-  m_trs_equip_root: {fileID: 8471192283212162466}
-  m_go_none_text: {fileID: 4629098438235239776}
-  m_go_equip: {fileID: 3686470536038343146}
-  m_go_unequip: {fileID: 7039613191881922558}
-  m_btn_equip: {fileID: 3258051420608955498}
 --- !u!114 &1636648794469088366
 MonoBehaviour:
   m_ObjectHideFlags: 0

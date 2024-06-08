@@ -1,44 +1,28 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Linq;
-using System.Collections.Generic;
+using System;
 
 public class UIPopupEquipment : UIWindowBase
 {
     private const string EQUIP_SLOT_PATH = "UI/Item/Slot_UnitEquip_Scale70";
 
-    [Header("Equip Main")]
-    [SerializeField] private Image m_image_equip_icon = null;
-    [SerializeField] private List<GameObject> m_grade_layout = new List<GameObject>();
-    [SerializeField] private Image m_image_equip_hero_type = null;
-    [SerializeField] private TMP_Text m_text_equip_name = null;
-    [SerializeField] private GameObject m_go_none_equip = null;
+    [Header("장비 메인")]
+    [SerializeField] private EquipBaseInfo m_equip_base_info = null;
 
-    [Header("Unit")]
-    [SerializeField] private UnitIcon m_unit_slot = null;
-
-    [Header("Stat")]
-    [SerializeField] private TMP_Text m_text_atk = null;
-    [SerializeField] private TMP_Text m_text_speed = null;
-    [SerializeField] private TMP_Text m_text_range = null;
-    [SerializeField] private TMP_Text m_text_critical = null;
-    [SerializeField] private TMP_Text m_text_critical_chance = null;
-
-    [Header("Equip List")]
+    [Header("장비 리스트")]
     [SerializeField] private RectTransform m_rect_equip_root = null;
     [SerializeField] private Transform m_trs_equip_root = null;
+    [SerializeField] private GameObject m_go_none_equip = null;
     [SerializeField] private GameObject m_go_none_text = null;
 
-    [Header("Button")]
+    [Header("장비 장착 & 해제")]
     [SerializeField] private GameObject m_go_equip = null;
     [SerializeField] private GameObject m_go_unequip = null;
     [SerializeField] private ExtentionButton m_btn_equip = null;
 
-    private int m_unit_kind;
+    EquipInfoParam m_param;
+    private int m_equip_kind;
     private long m_equip_id;
-
-    public GameObject LastSelect { get; set; }
+    private GameObject m_last_select;
 
     public override void Awake()
     {
@@ -56,35 +40,24 @@ public class UIPopupEquipment : UIWindowBase
             return;
         }
 
-        var param = in_param as EquipInfoParam;
-        if (param == null)
+        m_param = in_param as EquipInfoParam;
+        if (m_param == null)
         {
             Managers.UI.CloseLast();
             return;
         }
 
-        m_unit_kind = param.m_unit_kind;
-
-        RefreshEquip();
+        // 장비 리스트
+        RefreshEquipList();
     }
 
-    public void OnClickClose()
+    private void RefreshEquipList()
     {
-        Managers.UI.CloseLast();
-    }
-
-    private void RefreshEquip()
-    {
-        m_rect_equip_root.Ex_SetValue(0f);
-
-        for (int i = 0; i < m_trs_equip_root.childCount; i++)
-            Managers.Resource.Destroy(m_trs_equip_root.GetChild(i).gameObject);
-
-        var userInfo = Managers.Table.GetHeroInfoData(m_unit_kind);
+        var userInfo = Managers.Table.GetHeroInfoData(m_param.m_hero_kind);
         if (userInfo == null)
             return;
 
-        var userHero = Managers.User.GetUserHeroInfo(m_unit_kind);
+        var userHero = Managers.User.GetUserHeroInfo(m_param.m_hero_kind);
         if (userHero == null)
             return;
 
@@ -94,76 +67,52 @@ public class UIPopupEquipment : UIWindowBase
             m_go_none_text.Ex_SetActive(true);
             m_go_none_equip.Ex_SetActive(true);
 
-            // 장비 스탯
-            m_text_atk.Ex_SetText("0");
-            m_text_speed.Ex_SetText("0");
-            m_text_range.Ex_SetText("0");
-            m_text_critical.Ex_SetText("0");
-            m_text_critical_chance.Ex_SetText("0");
-
             m_go_equip.Ex_SetActive(true);
             m_go_unequip.Ex_SetActive(false);
 
             m_btn_equip.interactable = false;
-            return;
         }
-
-        Util.EquipSort(ref equipList, userHero.m_equip_id);
-
-        m_go_none_text.Ex_SetActive(false);
-        m_go_none_equip.Ex_SetActive(false);
-        bool first = true;
-        foreach (var e in equipList)
+        else
         {
-            var equipSlot = Managers.Resource.Instantiate(EQUIP_SLOT_PATH, Vector3.zero, m_trs_equip_root);
-            var item = equipSlot.GetComponentInChildren<Slot_Equip>();
+            m_go_none_text.Ex_SetActive(false);
+            m_go_none_equip.Ex_SetActive(false);
 
-            item.SetData(e.m_unique_id, e.m_kind, e.m_mount, e.m_new, first);
-            if (first)
+            // 장비 슬롯 초기화
+            m_rect_equip_root.Ex_SetValue(0f);
+            for (int i = 0; i < m_trs_equip_root.childCount; i++)
+                Managers.Resource.Destroy(m_trs_equip_root.GetChild(i).gameObject);
+
+            // 장비 정렬
+            Util.EquipSort(ref equipList, userHero.m_equip_id);
+         
+            bool first = true;
+            foreach (var e in equipList)
             {
-                SetEquipInfo(e.m_unique_id, e.m_kind);
+                var equipSlot = Managers.Resource.Instantiate(EQUIP_SLOT_PATH, Vector3.zero, m_trs_equip_root);
+                var item = equipSlot.GetComponentInChildren<Slot_Equip>();
+
+                item.SetData(e.m_unique_id, e.m_kind, e.m_mount, e.m_new, first, (equip_kind, equip_id, select) =>
+                {
+                    m_last_select.Ex_SetActive(false);
+                    m_last_select = select;
+
+                    SetEquipInfo(equip_id, equip_kind);
+                });
                 first = false;
             }
         }
     }
 
-    public void SetEquipInfo(long in_unique, int in_kind)
+    public void SetEquipInfo(long in_equipunique, int in_equip_kind)
     {
-        m_equip_id = in_unique;
-
-        var userEquip = Managers.User.GetEquip(in_unique);
+        var userEquip = Managers.User.GetEquip(in_equipunique);
         if (userEquip == null)
             return;
 
-        var equip = Managers.Table.GetEquipInfoData(in_kind);
-        if (equip == null)
-            return;
+        m_equip_id = in_equipunique;
+        m_equip_kind = in_equip_kind;
 
-        m_unit_slot.gameObject.Ex_SetActive(false);
-        if (userEquip.m_mount)
-        {
-            var hero = Managers.User.GetEquipMountHero(in_unique);
-            if (hero != null)
-            {
-                var heroInfo = Managers.Table.GetHeroInfoData(hero.m_kind);
-                m_unit_slot.SetHaveUnit(hero.m_kind, heroInfo.m_rarity, hero.m_grade, hero.m_level, null);
-                m_unit_slot.gameObject.Ex_SetActive(true);
-            }
-        }
-
-        // 장비 스탯
-        m_text_atk.Ex_SetText($"{equip.m_atk}");
-        m_text_speed.Ex_SetText($"{equip.m_speed}");
-        m_text_range.Ex_SetText($"{equip.m_range}");
-        m_text_critical.Ex_SetText($"{equip.m_critical}");
-        m_text_critical_chance.Ex_SetText($"{equip.m_critical_chance}");
-
-        Util.SetEquipIcon(m_image_equip_icon, equip.m_equip_icon);
-        Util.SetUnitType(m_image_equip_hero_type, equip.m_hero_type);
-        m_text_equip_name.Ex_SetText(equip.m_equip_type.ToString());
-
-        for (int i = 0; i < m_grade_layout.Count; i++)
-            m_grade_layout[i].Ex_SetActive(i == (int)equip.m_equip_grade);
+        m_equip_base_info.SetData(m_equip_id, m_equip_kind);
 
         if (userEquip.m_mount)
         {
@@ -174,55 +123,41 @@ public class UIPopupEquipment : UIWindowBase
         {
             m_go_equip.Ex_SetActive(true);
             m_go_unequip.Ex_SetActive(false);
-
-            var unit = Managers.User.GetUserHeroInfo(m_unit_kind);
-            m_btn_equip.interactable = unit.m_equip_id == 0;
+            m_btn_equip.interactable = true;
         }
-    }
-
-    public void SelectEquip(long in_unique, int in_kind)
-    {
-        SetEquipInfo(in_unique, in_kind);
     }
 
     public void OnClickEquip()
     {
+        var userHero = Managers.User.GetUserHeroInfo(m_param.m_hero_kind);
+        if (userHero == null)
+            return;
+
         var userEquip = Managers.User.GetEquip(m_equip_id);
         if (userEquip == null)
             return;
 
-        var unit = Managers.User.GetUserHeroInfo(m_unit_kind);
-        if (unit == null)
-            return;
+        // 기존에 착용하고 있던 장비는 해제 상태로 변경
+        var userPreEquip = Managers.User.GetEquip(userHero.m_equip_id);
+        if (userEquip != null)
+            userEquip.m_mount = false;
 
-        unit.m_equip_id = m_equip_id;
+        userHero.m_equip_id = m_equip_id;
         userEquip.m_mount = true;
 
-        RefreshEquip();
-
-        if (Managers.UI.ActiveWindow(WindowID.UIWindowUnit))
-        {
-            var ui = Managers.UI.GetWindow(WindowID.UIWindowUnit, false) as UIWindowUnit;
-            if (ui == null)
-                return;
-
-            ui.SetHeroInfo(m_unit_kind);
-        }
+        RefreshEquipList();
+        m_param.m_callback?.Invoke();
     }
 
     public void OnClickUnEquip()
     {
-        var userEquip = Managers.User.GetEquip(m_equip_id);
-        if (userEquip == null)
+        var userHero = Managers.User.GetEquipMountHero(m_equip_id);
+        if (userHero == null)
             return;
 
-        var unit = Managers.User.GetUserHeroInfo(m_unit_kind);
-        if (unit == null)
-            return;
-
-        if (unit.m_equip_id == m_equip_id)
+        if (userHero.m_equip_id == m_equip_id)
         {
-            UnEquipProcess();
+            UnEquipProcess(userHero);
         }
         else
         {
@@ -230,46 +165,21 @@ public class UIPopupEquipment : UIWindowBase
             param.m_contents = "니꺼 아닌데 진짜 해제 시킬거임???";
             param.m_callback = () =>
             {
-                var userEquip = Managers.User.GetEquip(m_equip_id);
-                if (userEquip == null)
-                    return;
-
-                var hero = Managers.User.GetEquipMountHero(m_equip_id);
-                if (hero == null)
-                    return;
-
-                hero.m_equip_id = 0;
-                userEquip.m_mount = false;
-
-                RefreshEquip();
+                UnEquipProcess(userHero);
             };
 
             Managers.UI.OpenWindow(WindowID.UIPopupCommon, param);
         }
     }
 
-    private void UnEquipProcess()
+    private void UnEquipProcess(UserManager.HeroInfo in_hero)
     {
         var userEquip = Managers.User.GetEquip(m_equip_id);
-        if (userEquip == null)
-            return;
 
-        var unit = Managers.User.GetUserHeroInfo(m_unit_kind);
-        if (unit == null)
-            return;
-
-        unit.m_equip_id = 0;
+        in_hero.m_equip_id = 0;
         userEquip.m_mount = false;
 
-        RefreshEquip();
-
-        if (Managers.UI.ActiveWindow(WindowID.UIWindowUnit))
-        {
-            var ui = Managers.UI.GetWindow(WindowID.UIWindowUnit, false) as UIWindowUnit;
-            if (ui == null)
-                return;
-
-            ui.SetHeroInfo(m_unit_kind);
-        }
+        RefreshEquipList();
+        m_param.m_callback?.Invoke();
     }
 }

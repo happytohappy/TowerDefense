@@ -74,6 +74,14 @@ public static partial class Util
         }
     }
 
+    public static void SetUnitType(Image in_image, EHeroType in_type)
+    {
+        if (in_image == null)
+            return;
+
+        in_image.Ex_SetImage(GetUnitType(in_type));
+    }
+
     public static Sprite GetUnitType(EHeroType in_type)
     {
         string resourceName = string.Empty;
@@ -90,6 +98,22 @@ public static partial class Util
         }
 
         return Managers.Sprite.GetSprite(Atlas.Common, resourceName);
+    }
+
+    public static void SetRarityBG(Image in_grade_bg, ERarity in_rarity)
+    {
+        string Rare = "BG_Slot_Rare";
+        string Epic = "BG_Slot_Epic";
+        string Legend = "BG_Slot_Legend";
+        string Myth = "BG_Slot_Myth";
+
+        switch (in_rarity)
+        {
+            case ERarity.RARE: in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Rare)); break;
+            case ERarity.EPIC: in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Epic)); break;
+            case ERarity.LEGEND: in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Legend)); break;
+            case ERarity.MYTH: in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, Myth)); break;
+        }
     }
 
     public static void SetSkill(List<Slot_Skill> in_skills, int in_kind)

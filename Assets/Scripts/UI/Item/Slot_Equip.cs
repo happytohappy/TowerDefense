@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class Slot_Equip : MonoBehaviour
 {
@@ -13,8 +14,9 @@ public class Slot_Equip : MonoBehaviour
 
     private long m_unique;
     private int m_kind;
+    private Action<int, long, GameObject> m_callback;
 
-    public void SetData(long in_unique, int in_kind, bool in_mount, bool in_new, bool in_select)
+    public void SetData(long in_unique, int in_kind, bool in_mount, bool in_new, bool in_select, Action<int, long, GameObject> in_callback)
     {
         var equip = Managers.Table.GetEquipInfoData(in_kind);
         if (equip == null)
@@ -22,6 +24,7 @@ public class Slot_Equip : MonoBehaviour
 
         m_unique = in_unique;
         m_kind = in_kind;
+        m_callback = in_callback;
 
         Util.SetEquipIcon(m_image_icon, equip.m_equip_icon);
         Util.SetEquipGradeBG(m_image_bg, equip.m_equip_grade);
@@ -32,58 +35,13 @@ public class Slot_Equip : MonoBehaviour
         m_go_red.Ex_SetActive(in_new);
 
         if (in_select)
-        {
-            if (Managers.UI.ActiveWindow(WindowID.UIWindowEquipment))
-            {
-                var ui = Managers.UI.GetWindow(WindowID.UIWindowEquipment, false) as UIWindowEquipment;
-                if (ui == null)
-                    return;
-
-                ui.LastSelect = m_go_select;
-            }
-            else if (Managers.UI.ActiveWindow(WindowID.UIPopupEquipment))
-            {
-                var ui = Managers.UI.GetWindow(WindowID.UIPopupEquipment, false) as UIPopupEquipment;
-                if (ui == null)
-                    return;
-
-                ui.LastSelect = m_go_select;
-            }
-        }
+            m_callback?.Invoke(m_kind, m_unique, m_go_select);
     }
 
     public void OnClickEquip()
     {
-        var equip = Managers.User.GetEquip(m_unique);
-        if (equip == null)
-            return;
+        m_go_select.Ex_SetActive(true);
 
-        equip.m_new = false;
-        m_go_red.Ex_SetActive(false);
-
-        if (Managers.UI.ActiveWindow(WindowID.UIWindowEquipment))
-        {
-            var ui = Managers.UI.GetWindow(WindowID.UIWindowEquipment, false) as UIWindowEquipment;
-            if (ui == null)
-                return;
-
-            ui.LastSelect.Ex_SetActive(false);
-            ui.SelectEquip(m_unique, m_kind);
-            m_go_select.Ex_SetActive(true);
-
-            ui.LastSelect = m_go_select;
-        }
-        else if (Managers.UI.ActiveWindow(WindowID.UIPopupEquipment))
-        {
-            var ui = Managers.UI.GetWindow(WindowID.UIPopupEquipment, false) as UIPopupEquipment;
-            if (ui == null)
-                return;
-
-            ui.LastSelect.Ex_SetActive(false);
-            ui.SelectEquip(m_unique, m_kind);
-            m_go_select.Ex_SetActive(true);
-
-            ui.LastSelect = m_go_select;
-        }
+        m_callback?.Invoke(m_kind, m_unique, m_go_select);
     }
 }

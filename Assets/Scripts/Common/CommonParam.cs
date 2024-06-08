@@ -31,7 +31,8 @@ public class UnitInfoParam : WindowParam
 
 public class EquipInfoParam : WindowParam
 {
-    public int m_unit_kind = 0;
+    public int m_hero_kind = 0;
+    public Action m_callback = null;
 }
 
 public class CommonInfoParam : WindowParam

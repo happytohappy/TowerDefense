@@ -27,9 +27,7 @@ public class UIWindowUnit : UIWindowBase
     [SerializeField] private Image m_image_resource = null;
 
     private int m_kind;
-    private GameObject m_last_select = null;
-
-    public int ToolTipIndex { get; set; }
+    private GameObject m_last_select;
 
     public override void Awake()
     {
@@ -44,7 +42,7 @@ public class UIWindowUnit : UIWindowBase
         base.OpenUI(wp);
 
         m_kind = 1001;
-        ToolTipIndex = -1;
+        m_last_select = null;
 
         // 재화 갱신
         RefreshGoods();
@@ -75,10 +73,20 @@ public class UIWindowUnit : UIWindowBase
 
             sc.SetTierUnit(tier, (kind, select) =>
             {
-                m_last_select.Ex_SetActive(false);
-                m_last_select = select;
+                if (m_kind == kind)
+                {
+                    if (m_last_select == null)
+                    {
+                        SetHeroInfo(kind);
+                        m_last_select = select;
+                    }
+                    return;
+                }
 
                 SetHeroInfo(kind);
+
+                m_last_select.Ex_SetActive(false);
+                m_last_select = select;
             });
         }
     }
@@ -174,23 +182,12 @@ public class UIWindowUnit : UIWindowBase
     public void OnClickEquip()
     {
         EquipInfoParam param = new EquipInfoParam();
-        param.m_unit_kind = m_kind;
+        param.m_hero_kind = m_kind;
+        param.m_callback = () =>
+        {
+            SetHeroInfo(m_kind);
+        };
 
         Managers.UI.OpenWindow(WindowID.UIPopupEquipment, param);
-    }
-
-    public void OnClickToolTip(int in_skill_index)
-    {
-        // 이미 열려있는 툴팁이라면
-        if (ToolTipIndex == in_skill_index)
-        {
-            ToolTipIndex = -1;
-            Util.CloseToolTip();
-            return;
-        }
-
-        //Util.OpenToolTip(m_skill[in_skill_index].Contents, m_skill[in_skill_index].GetRoot);
-
-        ToolTipIndex = in_skill_index;
     }
 }

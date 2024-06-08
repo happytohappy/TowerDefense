@@ -10,9 +10,9 @@ public class UserManager : MonoBehaviour
     [Serializable]
     public class HeroInfo
     {
-        public int m_kind;      // 타워 카인드
-        public int m_level;     // 타워 레벨
-        public int m_grade;     // 타워 등급
+        public int m_kind;      // 영웅 카인드
+        public int m_level;     // 영웅 레벨
+        public int m_grade;     // 영웅 등급
         public long m_equip_id;
 
         public HeroInfo(int in_kind, int in_level, int in_grade)

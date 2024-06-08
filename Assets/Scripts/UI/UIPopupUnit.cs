@@ -151,7 +151,7 @@ public class UIPopupUnit : UIWindowBase
             return;
         }
 
-        Util.OpenToolTip(m_skill[in_skill_index].Contents, m_skill[in_skill_index].GetRoot);
+        Util.OpenToolTip(m_skill[in_skill_index].Contents, m_skill[in_skill_index].GetRoot, null);
 
         ToolTipIndex = in_skill_index;
     }
