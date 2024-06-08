@@ -7,15 +7,12 @@ public class PoolManager : MonoBehaviour
     private class Pool
     {
         public GameObject Original { get; private set; }
-        public Transform Root { get; set; }
 
         private Stack<Poolable> m_PoolStack = new Stack<Poolable>();
 
         public void Init(GameObject original, int count = 5)
         {
             Original = original;
-            Root = new GameObject().transform;
-            Root.name = $"{Original.name}_Root";
 
             for (int i = 0; i < count; i++)
                 Push(Create());
@@ -33,8 +30,8 @@ public class PoolManager : MonoBehaviour
             if (poolable == null)
                 return;
 
-            poolable.transform.parent = Root;
-            poolable.gameObject.SetActive(false);
+            poolable.transform.parent = Managers.Pool.transform;
+            poolable.Ex_SetActive(false);
             poolable.IsUsing = false;
 
             m_PoolStack.Push(poolable);
@@ -49,7 +46,7 @@ public class PoolManager : MonoBehaviour
             else
                 poolable = Create();
 
-            poolable.gameObject.SetActive(true);
+            poolable.Ex_SetActive(true);
             poolable.transform.parent = parent;
             poolable.IsUsing = true;
 
@@ -70,7 +67,6 @@ public class PoolManager : MonoBehaviour
     {
         Pool pool = new Pool();
         pool.Init(original, count);
-        pool.Root.parent = m_Root;
 
         m_Pool.Add(original.name, pool);
     }

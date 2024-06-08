@@ -1680,6 +1680,7 @@ GameObject:
   - component: {fileID: 6203075057445198340}
   - component: {fileID: 1074065644477704026}
   - component: {fileID: 3394034764129877055}
+  - component: {fileID: 6322174068586628492}
   m_Layer: 5
   m_Name: Text_Count
   m_TagString: Untagged
@@ -1803,6 +1804,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6322174068586628492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345383866839263500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e4b765282004d43b1b34c003e0433c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_goods: 2
+  m_text: {fileID: 3394034764129877055}
 --- !u!1 &1418265253920798190
 GameObject:
   m_ObjectHideFlags: 0
@@ -5084,10 +5099,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5849623847506359488}
-        m_TargetAssemblyTypeName: ParentTab, Assembly-CSharp
-        m_MethodName: SelectTab
-        m_Mode: 3
+      - m_Target: {fileID: 3951401205032303277}
+        m_TargetAssemblyTypeName: UIWindowEquipment, Assembly-CSharp
+        m_MethodName: OnClickUIGradeUp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5108,26 +5123,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71aefa236f072be4090523d3674c7321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_BtnNumber: 1
   m_NormalSprite: {fileID: 0}
   m_SelectSprite: {fileID: 265226536022669673}
   m_ActiveObject: {fileID: 2862946129405989506}
   m_ScrollRect: {fileID: 0}
-  m_BtnNumber: 1
-  m_Callback:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3951401205032303277}
-        m_TargetAssemblyTypeName: UIWindowEquipment, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &4691344403576083218
 GameObject:
   m_ObjectHideFlags: 0
@@ -5215,6 +5215,7 @@ GameObject:
   - component: {fileID: 2414929968360726710}
   - component: {fileID: 2497742054028264799}
   - component: {fileID: 2532899987859024988}
+  - component: {fileID: 6146531663383291130}
   m_Layer: 5
   m_Name: Text_Count
   m_TagString: Untagged
@@ -5338,6 +5339,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6146531663383291130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4801165561621350239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e4b765282004d43b1b34c003e0433c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_goods: 3
+  m_text: {fileID: 2532899987859024988}
 --- !u!1 &4858042762571505831
 GameObject:
   m_ObjectHideFlags: 0
@@ -7882,6 +7897,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6712918325758415786}
   - component: {fileID: 3951401205032303277}
+  - component: {fileID: 1395325353828360761}
   - component: {fileID: 1437456374731627321}
   m_Layer: 5
   m_Name: UIWindowEquipment
@@ -7927,7 +7943,31 @@ MonoBehaviour:
   m_text_gold: {fileID: 4626242198674749355}
   m_text_ruby: {fileID: 3394034764129877055}
   m_text_diamond: {fileID: 2532899987859024988}
+  m_equip_base_info: {fileID: 1395325353828360761}
+  m_parent_tab: {fileID: 5849623847506359488}
+  m_rect_equip_root: {fileID: 2297196566532551495}
+  m_trs_equip_root: {fileID: 8275923684935274589}
+  m_go_none_equip: {fileID: 2698510640974558628}
+  m_go_none_text: {fileID: 3049230605639452619}
+  m_equip_left: {fileID: 2837469956684904465}
+  m_equip_right: {fileID: 5206243490166518172}
+  m_text_merge_per: {fileID: 6937414467114171799}
+  m_btn_merge: {fileID: 6507107925513874963}
+--- !u!114 &1395325353828360761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6712918325758415787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac9058b7ec966254da2778ae3316e50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_image_equip_icon: {fileID: 5204751857774653906}
+  m_image_equip_hero_type: {fileID: 1809559626175771709}
+  m_text_equip_name: {fileID: 6409365207180750870}
   m_grade_layout:
   - {fileID: 4691344403576083218}
   - {fileID: 6592385181865409662}
@@ -7938,22 +7978,12 @@ MonoBehaviour:
   - {fileID: 556978960692348166}
   - {fileID: 3820187164498871240}
   - {fileID: 8120016149793989145}
-  m_image_equip_hero_type: {fileID: 1809559626175771709}
-  m_text_equip_name: {fileID: 6409365207180750870}
-  m_go_none_equip: {fileID: 2698510640974558628}
   m_unit_slot: {fileID: 6577627649468567747}
   m_text_atk: {fileID: 8594037291686821050}
   m_text_speed: {fileID: 872890227954345371}
   m_text_range: {fileID: 2213292368933380763}
   m_text_critical: {fileID: 4084163966458939119}
   m_text_critical_chance: {fileID: 3501275802219501745}
-  m_equip_left: {fileID: 2837469956684904465}
-  m_equip_right: {fileID: 5206243490166518172}
-  m_text_merge_per: {fileID: 6937414467114171799}
-  m_btn_merge: {fileID: 6507107925513874963}
-  m_rect_equip_root: {fileID: 2297196566532551495}
-  m_trs_equip_root: {fileID: 8275923684935274589}
-  m_go_none_text: {fileID: 3049230605639452619}
 --- !u!114 &1437456374731627321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8131,6 +8161,7 @@ GameObject:
   - component: {fileID: 663681233739885741}
   - component: {fileID: 6698251784778229232}
   - component: {fileID: 4626242198674749355}
+  - component: {fileID: 3876725885837072616}
   m_Layer: 5
   m_Name: Text_Count
   m_TagString: Untagged
@@ -8254,6 +8285,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3876725885837072616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011281159787109552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e4b765282004d43b1b34c003e0433c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_goods: 1
+  m_text: {fileID: 4626242198674749355}
 --- !u!1 &7107000998332189365
 GameObject:
   m_ObjectHideFlags: 0
@@ -9369,10 +9414,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5849623847506359488}
-        m_TargetAssemblyTypeName: ParentTab, Assembly-CSharp
-        m_MethodName: SelectTab
-        m_Mode: 3
+      - m_Target: {fileID: 3951401205032303277}
+        m_TargetAssemblyTypeName: UIWindowEquipment, Assembly-CSharp
+        m_MethodName: OnClickUIInfo
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9393,26 +9438,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71aefa236f072be4090523d3674c7321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_BtnNumber: 0
   m_NormalSprite: {fileID: 0}
   m_SelectSprite: {fileID: 4023116608392258484}
   m_ActiveObject: {fileID: 8287312198987563874}
   m_ScrollRect: {fileID: 0}
-  m_BtnNumber: 0
-  m_Callback:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3951401205032303277}
-        m_TargetAssemblyTypeName: UIWindowEquipment, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &8506109728524607498
 GameObject:
   m_ObjectHideFlags: 0

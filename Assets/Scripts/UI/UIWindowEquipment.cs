@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
-using System.Linq;
 using System.Collections.Generic;
 using TMPro;
 
@@ -14,44 +12,39 @@ public class UIWindowEquipment : UIWindowBase
 {
     private const string EQUIP_SLOT_PATH = "UI/Item/Slot_UnitEquip_Scale70";
 
-    [Header("Goods")]
+    [Header("재화")]
     [SerializeField] private TMP_Text m_text_gold = null;
     [SerializeField] private TMP_Text m_text_ruby = null;
     [SerializeField] private TMP_Text m_text_diamond = null;
 
-    [Header("Equip Main")]
-    [SerializeField] private Image m_image_equip_icon = null;
-    [SerializeField] private List<GameObject> m_grade_layout = new List<GameObject>();
-    [SerializeField] private Image m_image_equip_hero_type = null;
-    [SerializeField] private TMP_Text m_text_equip_name = null;
+    [Header("장비 메인")]
+    [SerializeField] private EquipBaseInfo m_equip_base_info = null;
+
+    [Header("탭")]
+    [SerializeField] private ParentTab m_parent_tab = null;
+
+    [Header("장비 리스트")]
+    [SerializeField] private RectTransform m_rect_equip_root = null;
+    [SerializeField] private Transform m_trs_equip_root = null;
     [SerializeField] private GameObject m_go_none_equip = null;
+    [SerializeField] private GameObject m_go_none_text = null;
 
-    [Header("Unit")]
-    [SerializeField] private UnitIcon m_unit_slot = null;
-
-    [Header("Stat")]
-    [SerializeField] private TMP_Text m_text_atk = null;
-    [SerializeField] private TMP_Text m_text_speed = null;
-    [SerializeField] private TMP_Text m_text_range = null;
-    [SerializeField] private TMP_Text m_text_critical = null;
-    [SerializeField] private TMP_Text m_text_critical_chance = null;
-
-    [Header("Grade UP")]
+    [Header("장비 합성")]
     [SerializeField] private Slot_Equip m_equip_left = null;
     [SerializeField] private Slot_Equip m_equip_right = null;
     [SerializeField] private TMP_Text m_text_merge_per = null;
     [SerializeField] private ExtentionButton m_btn_merge = null;
 
-    [Header("Equip List")]
-    [SerializeField] private RectTransform m_rect_equip_root = null;
-    [SerializeField] private Transform m_trs_equip_root = null;
-    [SerializeField] private GameObject m_go_none_text = null;
-
     private EquipTab m_equip_tab = EquipTab.Info;
-    private List<long> m_merge_equip_list = new List<long>();
-    private int m_merge_kind;
+   
+    // Info 변수
+    private long m_equip_id;
+    private GameObject m_last_select;
 
-    public GameObject LastSelect { get; set; }
+    // Merge 변수
+    private int m_merge_kind;
+    private List<long> m_merge_equip_list = new List<long>();
+    private List<UserManager.EquipInfo> m_equip_list = new List<UserManager.EquipInfo>();
 
     public override void Awake()
     {
@@ -65,117 +58,149 @@ public class UIWindowEquipment : UIWindowBase
     {
         base.OpenUI(wp);
 
-        m_equip_tab = EquipTab.Info;
-
         RefreshUI();
-        RefreshInfo();
-    }
 
-    public void OnClickClose()
-    {
-        Managers.UI.CloseLast();
+        OnClickUIInfo();
     }
 
     private void RefreshUI()
     {
-        m_text_gold.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Gold))}");
-        m_text_ruby.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Ruby))}");
-        m_text_diamond.Ex_SetText($"{Util.CommaText(Util.GetGoods(EGoods.Diamond))}");
+        Util.SetGoods(EGoods.Gold, m_text_gold);
+        Util.SetGoods(EGoods.Ruby, m_text_ruby);
+        Util.SetGoods(EGoods.Diamond, m_text_diamond);
     }
 
-    public void RefreshInfo()
+    private void TabClickInit()
     {
-        m_equip_tab = EquipTab.Info;
-
-        RefreshEquip();
-    }
-
-    public void RefreshGradeUP()
-    {
-        m_equip_tab = EquipTab.GradeUP;
-
+        m_equip_id = 0;
+        m_last_select = null;
         m_merge_kind = 0;
         m_merge_equip_list.Clear();
-
-        RefreshEquipGradeUP();
+        m_equip_list.Clear();
     }
 
-    private void RefreshEquip()
+    public void OnClickUIInfo()
     {
-        m_rect_equip_root.Ex_SetValue(0f);
+        TabClickInit();
 
-        for (int i = 0; i < m_trs_equip_root.childCount; i++)
-            Managers.Resource.Destroy(m_trs_equip_root.GetChild(i).gameObject);
+        m_equip_tab = EquipTab.Info;
+        m_parent_tab.SelectTab((int)m_equip_tab);
 
+        RefreshEquipList_Info();
+    }
+
+    public void OnClickUIGradeUp()
+    {
+        TabClickInit();
+
+        m_equip_tab = EquipTab.GradeUP;
+        m_parent_tab.SelectTab((int)m_equip_tab);
+
+        RefreshEquipList_GradUp();
+    }
+
+    private void RefreshEquipList_Info()
+    {
         var equipList = Managers.User.GetEquipList();
         if (equipList.Count == 0)
         {
             m_go_none_text.Ex_SetActive(true);
             m_go_none_equip.Ex_SetActive(true);
-
-            m_text_atk.Ex_SetText("0");
-            m_text_speed.Ex_SetText("0");
-            m_text_range.Ex_SetText("0");
-            m_text_critical.Ex_SetText("0");
-            m_text_critical_chance.Ex_SetText("0");
             return;
         }
 
-        Util.EquipSort(ref equipList);
-
         m_go_none_text.Ex_SetActive(false);
         m_go_none_equip.Ex_SetActive(false);
+
+        // 장비 슬롯 초기화
+        m_rect_equip_root.Ex_SetValue(0f);
+        var cnt = m_trs_equip_root.childCount;
+        for (int i = 0; i < cnt; i++)
+            Managers.Resource.Destroy(m_trs_equip_root.GetChild(0).gameObject);
+
+        Util.EquipSort(ref equipList);
 
         bool first = true;
         foreach (var e in equipList)
         {
             var equipSlot = Managers.Resource.Instantiate(EQUIP_SLOT_PATH, Vector3.zero, m_trs_equip_root);
+            equipSlot.transform.localScale = Vector3.one;
+
             var item = equipSlot.GetComponentInChildren<Slot_Equip>();
 
-            item.SetData(e.m_unique_id, e.m_kind, e.m_mount, e.m_new, first, null);
+            item.SetData(e.m_unique_id, e.m_kind, e.m_mount, e.m_new, first, (equip_kind, equip_unique, select) =>
+            {
+                if (m_equip_id == equip_unique)
+                {
+                    if (m_last_select == null)
+                    {
+                        m_equip_id = equip_unique;
+                        m_equip_base_info.SetData(equip_unique, equip_kind);
+                        m_last_select = select;
+                    }
+                    return;
+                }
+
+                m_equip_id = equip_unique;
+                m_equip_base_info.SetData(equip_unique, equip_kind);
+                m_last_select.Ex_SetActive(false);
+                m_last_select = select;
+            });
+
             if (first)
             {
-                SetEquipInfo(e.m_unique_id, e.m_kind);
                 first = false;
+                item.OnClickEquip();
             }
         }
     }
 
-    private void RefreshEquipGradeUP()
+    private void RefreshEquipList_GradUp()
     {
-        m_rect_equip_root.Ex_SetValue(0f);
-
-        for (int i = 0; i < m_trs_equip_root.childCount; i++)
-            Managers.Resource.Destroy(m_trs_equip_root.GetChild(i).gameObject);
-
-        m_equip_left.gameObject.Ex_SetActive(false);
-        m_equip_right.gameObject.Ex_SetActive(false);
-
-        List<UserManager.EquipInfo> equipList = new List<UserManager.EquipInfo>();
-        if (m_merge_equip_list.Count == 0)
-        {
-            equipList = Managers.User.GetEquipList();
-        }
-        else
-        {
-            var userEquip = Managers.User.GetEquip(m_merge_equip_list[0]);
-            equipList = Managers.User.GetEquipList(userEquip.m_kind);
-        }
-       
+        // 장비가 하나도 없다면
+        var equipList = Managers.User.GetEquipList();
         if (equipList.Count == 0)
         {
             m_go_none_text.Ex_SetActive(true);
+            m_go_none_equip.Ex_SetActive(true);
             m_btn_merge.interactable = false;
             return;
         }
 
-        Util.EquipSort(ref equipList);
+        m_go_none_text.Ex_SetActive(false);
+        m_go_none_equip.Ex_SetActive(false);
+
+        // 장비 슬롯 초기화
+        m_rect_equip_root.Ex_SetValue(0f);
+        var cnt = m_trs_equip_root.childCount;
+        for (int i = 0; i < cnt; i++)
+            Managers.Resource.Destroy(m_trs_equip_root.GetChild(0).gameObject);
+
+        // 좌우 슬롯 초기화
+        m_equip_left.gameObject.Ex_SetActive(false);
+        m_equip_right.gameObject.Ex_SetActive(false);
+
+        if (m_merge_equip_list.Count == 0)
+        {
+            // 선택된 장비가 없다면 전체 장비
+            m_equip_list.AddRange(equipList);
+        }
+        else
+        {
+            // 선택된 장비가 있다면 같은 종류의 장비만
+            var userEquip = Managers.User.GetEquip(m_merge_equip_list[0]);
+            m_equip_list = Managers.User.GetEquipList(userEquip.m_kind);
+        }
+
+        var firstUniqueID = m_merge_equip_list.Count > 0 ? m_merge_equip_list[0] : 0;
+        Util.EquipSortMerge(ref m_equip_list, firstUniqueID);
 
         int mountCnt = 0;        
-        m_go_none_text.Ex_SetActive(false);
-        foreach (var e in equipList)
+        foreach (var e in m_equip_list)
         {
             var equipSlot = Managers.Resource.Instantiate(EQUIP_SLOT_PATH, Vector3.zero, m_trs_equip_root);
+            equipSlot.transform.localScale = Vector3.one;
+
             var item = equipSlot.GetComponentInChildren<Slot_Equip>();
 
             var select = m_merge_equip_list.Contains(e.m_unique_id);
@@ -196,7 +221,20 @@ public class UIWindowEquipment : UIWindowBase
                 }
             }
             
-            item.SetData(e.m_unique_id, e.m_kind, e.m_mount, false, select, null);
+            item.SetData(e.m_unique_id, e.m_kind, e.m_mount, false, select, (equip_kind, equip_unique, select) =>
+            {
+                if (m_merge_equip_list.Contains(equip_unique))
+                    m_merge_equip_list.Remove(equip_unique);
+                else if (m_merge_equip_list.Count < 2)
+                    m_merge_equip_list.Add(equip_unique);
+                else
+                {
+                    item.DisableSelect();
+                    return;
+                }
+
+                RefreshEquipList_GradUp();
+            });
         }
 
         if (mountCnt == 2)
@@ -249,59 +287,8 @@ public class UIWindowEquipment : UIWindowBase
             param.m_success = false;
         }
 
-        RefreshGradeUP();
+        OnClickUIGradeUp();
 
         Managers.UI.OpenWindow(WindowID.UIWindowEquipmentResult, param);
-    }
-
-    public void SetEquipInfo(long in_unique, int in_kind)
-    {
-        var userEquip = Managers.User.GetEquip(in_unique);
-        if (userEquip == null)
-            return;
-
-        var equip = Managers.Table.GetEquipInfoData(in_kind);
-        if (equip == null)
-            return;
-
-        m_unit_slot.gameObject.Ex_SetActive(false);
-        var hero = Managers.User.GetEquipMountHero(in_unique);
-        if (hero != null)
-        {
-            m_unit_slot.gameObject.Ex_SetActive(true);
-            m_unit_slot.SetData(hero.m_kind);
-        }
-
-        // 장비 스탯
-        m_text_atk.Ex_SetText($"+{equip.m_atk}");
-        m_text_speed.Ex_SetText($"+{equip.m_speed}");
-        m_text_range.Ex_SetText($"+{equip.m_range}");
-        m_text_critical.Ex_SetText($"+{equip.m_critical}");
-        m_text_critical_chance.Ex_SetText($"+{equip.m_critical_chance}");
-
-        Util.SetEquipIcon(m_image_equip_icon, equip.m_equip_icon);
-        Util.SetUnitType(m_image_equip_hero_type, equip.m_hero_type);
-        m_text_equip_name.Ex_SetText(equip.m_equip_type.ToString());
-
-        for (int i = 0; i < m_grade_layout.Count; i++)
-            m_grade_layout[i].Ex_SetActive(i == (int)equip.m_equip_grade);
-    }
-
-    public void SelectEquip(long in_unique, int in_kind)
-    {
-        switch (m_equip_tab)
-        {
-            case EquipTab.Info:
-                SetEquipInfo(in_unique, in_kind);
-                break;
-            case EquipTab.GradeUP:
-                if (m_merge_equip_list.Contains(in_unique))
-                    m_merge_equip_list.Remove(in_unique);
-                else if(m_merge_equip_list.Count < 2)
-                    m_merge_equip_list.Add(in_unique);
-
-                RefreshEquipGradeUP();
-                break;
-        }
     }
 } 

@@ -143,16 +143,6 @@ public class UIPopupUnit : UIWindowBase
 
     public void OnClickToolTip(int in_skill_index)
     {
-        // 이미 열려있는 툴팁이라면
-        if (ToolTipIndex == in_skill_index)
-        {
-            ToolTipIndex = -1;
-            Util.CloseToolTip();
-            return;
-        }
-
-        Util.OpenToolTip(m_skill[in_skill_index].Contents, m_skill[in_skill_index].GetRoot, null);
-
-        ToolTipIndex = in_skill_index;
+        Util.OpenToolTip(m_skill[in_skill_index].Contents, m_skill[in_skill_index].GetRoot);
     }
 }

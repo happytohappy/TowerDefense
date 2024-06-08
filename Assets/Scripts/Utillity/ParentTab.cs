@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class ParentTab : MonoBehaviour
 {
     [SerializeField] private List<ChildTab> m_ChildTab = new List<ChildTab>();
-
-    private void Start()
-    {
-        SelectTab(0);
-    }
 
     public void SelectTab(int _Number)
     {
@@ -21,7 +16,6 @@ public class ParentTab : MonoBehaviour
                 m_ChildTab[i].SelectSprite.Ex_SetActive(true);
                 m_ChildTab[i].ActiveObject.Ex_SetActive(true);
                 m_ChildTab[i].ScrollRect.Ex_SetValue(0f);
-                m_ChildTab[i].BtnEvent.Invoke();
             }
             else
             {

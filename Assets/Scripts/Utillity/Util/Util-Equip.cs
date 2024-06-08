@@ -1,6 +1,4 @@
-using UnityEngine;
 using UnityEngine.UI;
-using System.Text;
 using System.Collections.Generic;
 
 public static partial class Util
@@ -153,8 +151,54 @@ public static partial class Util
                             if (equip_1.m_kind > equip_2.m_kind)
                                 return 1;
                             else
-                                return 0;
+                            {
+                                // 여섯번째 조건 : 장비 번호
+                                if (equip_1.m_unique_id < equip_2.m_unique_id)
+                                    return -1;
+                                if (equip_1.m_unique_id > equip_2.m_unique_id)
+                                    return 1;
+                                else
+                                    return 0;
+                            }
                         }
+                    }
+                }
+            }
+        });
+    }
+
+    public static void EquipSortMerge(ref List<UserManager.EquipInfo> in_equip_list, long in_unique_id = 0)
+    {
+        in_equip_list.Sort((equip_1, equip_2) =>
+        {
+            // 첫번째 조건
+            if (equip_1.m_unique_id == in_unique_id && equip_2.m_unique_id != in_unique_id)
+                return -1;
+            else if (equip_1.m_unique_id != in_unique_id && equip_2.m_unique_id == in_unique_id)
+                return 1;
+            else
+            {
+                // 두번째 조건 : 장비 등급
+                if (equip_1.m_grade > equip_2.m_grade)
+                    return -1;
+                else if (equip_1.m_grade < equip_2.m_grade)
+                    return 1;
+                else
+                {
+                    // 세번째 조건 : 카인드
+                    if (equip_1.m_kind < equip_2.m_kind)
+                        return -1;
+                    if (equip_1.m_kind > equip_2.m_kind)
+                        return 1;
+                    else
+                    {
+                        // 네섯번째 조건 : 장비 번호
+                        if (equip_1.m_unique_id < equip_2.m_unique_id)
+                            return -1;
+                        if (equip_1.m_unique_id > equip_2.m_unique_id)
+                            return 1;
+                        else
+                            return 0;
                     }
                 }
             }

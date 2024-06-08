@@ -78,6 +78,7 @@ public class UIWindowUnit : UIWindowBase
                     if (m_last_select == null)
                     {
                         SetHeroInfo(kind);
+
                         m_last_select = select;
                     }
                     return;

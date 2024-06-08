@@ -48,6 +48,6 @@ public class ResourceManager : MonoBehaviour
             return;
         }
 
-        Object.Destroy(go);
+        GameObject.Destroy(go);
     }
 }

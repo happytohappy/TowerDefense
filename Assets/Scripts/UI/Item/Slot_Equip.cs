@@ -33,9 +33,6 @@ public class Slot_Equip : MonoBehaviour
         m_go_mount.Ex_SetActive(in_mount);
         m_go_select.Ex_SetActive(in_select);
         m_go_red.Ex_SetActive(in_new);
-
-        if (in_select)
-            m_callback?.Invoke(m_kind, m_unique, m_go_select);
     }
 
     public void OnClickEquip()
@@ -43,5 +40,10 @@ public class Slot_Equip : MonoBehaviour
         m_go_select.Ex_SetActive(true);
 
         m_callback?.Invoke(m_kind, m_unique, m_go_select);
+    }
+
+    public void DisableSelect()
+    {
+        m_go_select.Ex_SetActive(false);
     }
 }

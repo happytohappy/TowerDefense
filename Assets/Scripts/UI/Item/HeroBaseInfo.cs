@@ -122,17 +122,6 @@ public class HeroBaseInfo : MonoBehaviour
 
     public void OnClickToolTip(int in_skill_index)
     {
-        // 이미 열려있는 툴팁이라면
-        if (m_tooltip_index == in_skill_index)
-        {
-            m_tooltip_index = -1;
-            Util.CloseToolTip();
-            return;
-        }
-
-        Util.OpenToolTip(m_slot_skill[in_skill_index].Contents, m_slot_skill[in_skill_index].GetRoot, () =>
-        {
-            m_tooltip_index = -1;
-        });
+        Util.OpenToolTip(m_slot_skill[in_skill_index].Contents, m_slot_skill[in_skill_index].GetRoot);
     }
 }

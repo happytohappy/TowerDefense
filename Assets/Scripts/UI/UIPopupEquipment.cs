@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 
 public class UIPopupEquipment : UIWindowBase
 {
@@ -71,45 +70,63 @@ public class UIPopupEquipment : UIWindowBase
             m_go_unequip.Ex_SetActive(false);
 
             m_btn_equip.interactable = false;
+            return;
         }
-        else
-        {
-            m_go_none_text.Ex_SetActive(false);
-            m_go_none_equip.Ex_SetActive(false);
+        
+        m_go_none_text.Ex_SetActive(false);
+        m_go_none_equip.Ex_SetActive(false);
 
-            // 장비 슬롯 초기화
-            m_rect_equip_root.Ex_SetValue(0f);
-            for (int i = 0; i < m_trs_equip_root.childCount; i++)
-                Managers.Resource.Destroy(m_trs_equip_root.GetChild(i).gameObject);
+        // 장비 슬롯 초기화
+        m_rect_equip_root.Ex_SetValue(0f);
+        var cnt = m_trs_equip_root.childCount;
+        for (int i = 0; i < cnt; i++)
+            Managers.Resource.Destroy(m_trs_equip_root.GetChild(0).gameObject);
 
-            // 장비 정렬
-            Util.EquipSort(ref equipList, userHero.m_equip_id);
+        // 장비 정렬
+        Util.EquipSort(ref equipList, userHero.m_equip_id);
          
-            bool first = true;
-            foreach (var e in equipList)
+        bool first = true;
+        foreach (var e in equipList)
+        {
+            var equipSlot = Managers.Resource.Instantiate(EQUIP_SLOT_PATH, Vector3.zero, m_trs_equip_root);
+            equipSlot.transform.localScale = Vector3.one;
+
+            var item = equipSlot.GetComponentInChildren<Slot_Equip>();
+
+            item.SetData(e.m_unique_id, e.m_kind, e.m_mount, e.m_new, first, (equip_kind, equip_unique, select) =>
             {
-                var equipSlot = Managers.Resource.Instantiate(EQUIP_SLOT_PATH, Vector3.zero, m_trs_equip_root);
-                var item = equipSlot.GetComponentInChildren<Slot_Equip>();
-
-                item.SetData(e.m_unique_id, e.m_kind, e.m_mount, e.m_new, first, (equip_kind, equip_id, select) =>
+                if (m_equip_id == equip_unique)
                 {
-                    m_last_select.Ex_SetActive(false);
-                    m_last_select = select;
+                    if (m_last_select == null)
+                    {
+                        SetEquipInfo(equip_unique, equip_kind);
 
-                    SetEquipInfo(equip_id, equip_kind);
-                });
+                        m_last_select = select;
+                    }
+                    return;
+                }
+
+                SetEquipInfo(equip_unique, equip_kind);
+
+                m_last_select.Ex_SetActive(false);
+                m_last_select = select;
+            });
+
+            if (first)
+            {
                 first = false;
+                item.OnClickEquip();
             }
         }
     }
 
-    public void SetEquipInfo(long in_equipunique, int in_equip_kind)
+    public void SetEquipInfo(long in_equip_unique, int in_equip_kind)
     {
-        var userEquip = Managers.User.GetEquip(in_equipunique);
+        var userEquip = Managers.User.GetEquip(in_equip_unique);
         if (userEquip == null)
             return;
 
-        m_equip_id = in_equipunique;
+        m_equip_id = in_equip_unique;
         m_equip_kind = in_equip_kind;
 
         m_equip_base_info.SetData(m_equip_id, m_equip_kind);
