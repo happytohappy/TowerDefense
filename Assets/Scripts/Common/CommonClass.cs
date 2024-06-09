@@ -239,6 +239,26 @@ public class BuffInfoData
     public string m_comment;
 }
 
+public class RecruitInfoData
+{
+    public int m_kind;
+    public int m_reward_kind;
+    public int m_reward_amount;
+    public float m_rate;
+}
+
+public class ItemInfoData
+{
+    public int m_kind;
+    public EItemType m_item_type;
+    public int value_1;
+    public string m_title;
+    public string m_desc;
+    public string m_icon;
+    public string m_comment;
+}
+
+
 public class BuffLevelData
 {
     public int m_kind;

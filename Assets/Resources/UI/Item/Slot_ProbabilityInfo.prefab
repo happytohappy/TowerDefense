@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3387342141941605042}
   - component: {fileID: 2930099416711982222}
   - component: {fileID: 1477461715280378314}
+  - component: {fileID: -2301173441846972500}
   m_Layer: 5
   m_Name: Slot_ProbabilityInfo
   m_TagString: Untagged
@@ -79,6 +80,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-2301173441846972500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806574881304522320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec85e7336a568004aa1691971bef033a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_slot_hero: {fileID: 8988674751375610248}
+  m_slot_equip: {fileID: 7378261090278316092}
+  m_text_name: {fileID: 8485954762374719520}
+  m_text_probabiliy: {fileID: 2885274224526543820}
 --- !u!1 &2784322371740871931
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +482,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4302079589927604217, guid: 502f35f07aed5454889cf1eb6026c19d, type: 3}
   m_PrefabInstance: {fileID: 1466108688872649721}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7378261090278316092 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -991791051960341563, guid: 502f35f07aed5454889cf1eb6026c19d, type: 3}
+  m_PrefabInstance: {fileID: 1466108688872649721}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e847b02b2d623514ca7d90de373b830e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6799533051417373950
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -671,3 +699,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4302079589927604217, guid: b7c4552f16ff2f44dab9e611031c179e, type: 3}
   m_PrefabInstance: {fileID: 6799533051417373950}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8988674751375610248 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2513847824874388854, guid: b7c4552f16ff2f44dab9e611031c179e, type: 3}
+  m_PrefabInstance: {fileID: 6799533051417373950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2023f83e9a54a2a47a86dbf696683073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -22,12 +22,17 @@ public static partial class Util
         in_game_object.SetActive(in_active);
     }
 
-    public static void Ex_SetValue(this RectTransform in_scroll_rect, float in_value)
+    public static void Ex_SetValue(this RectTransform in_scroll_rect, EScrollDir in_dir, float in_value)
     {
         if (in_scroll_rect == null)
             return;
 
-        in_scroll_rect.anchoredPosition = new Vector2(0f, 0f);
+        if (in_dir == EScrollDir.Horizontal)
+            in_scroll_rect.anchoredPosition = new Vector2(in_value, 0f);
+        else if (in_dir == EScrollDir.Vertical)
+            in_scroll_rect.anchoredPosition = new Vector2(0f, in_value);
+        else
+            in_scroll_rect.anchoredPosition = new Vector2(in_value, in_value);
     }
 
     public static void Ex_SetColor(this Image in_image, Color in_color)

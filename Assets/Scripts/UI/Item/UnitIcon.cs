@@ -52,6 +52,23 @@ public class UnitIcon : MonoBehaviour
         m_go_red_dot.Ex_SetActive(false);
     }
 
+    public void SetDataRecruit(int in_kind)
+    {
+        var heroInfo = Managers.Table.GetHeroInfoData(in_kind);
+        if (heroInfo == null)
+            return;
+
+        m_go_select.Ex_SetActive(false);
+        Util.SetGradeStar(m_list_star, 1);
+        m_img_unit.Ex_SetColor(Color.white);
+        Util.SetHeroImage(m_img_unit, in_kind);
+        Util.SetUnitType(m_img_unit_type, in_kind);
+        Util.SetRarityBG(m_img_grade_bg, heroInfo.m_rarity);
+        m_go_lock.Ex_SetActive(false);
+        m_text_level.Ex_SetText($"Lv.1");
+        m_go_red_dot.Ex_SetActive(false);
+    }
+
     public void SetDataInfo(Action<int, GameObject> in_callback)
     {
         m_callback = in_callback;

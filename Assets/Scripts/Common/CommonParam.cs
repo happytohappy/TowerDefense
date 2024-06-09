@@ -35,6 +35,12 @@ public class EquipInfoParam : WindowParam
     public Action m_callback = null;
 }
 
+public class ProbabilityParam : WindowParam
+{
+    public string m_title = string.Empty;
+    public int m_kind = 0;
+}
+
 public class CommonInfoParam : WindowParam
 {
     public string m_contents = string.Empty;

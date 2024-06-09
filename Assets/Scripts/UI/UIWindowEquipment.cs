@@ -113,7 +113,7 @@ public class UIWindowEquipment : UIWindowBase
         m_go_none_equip.Ex_SetActive(false);
 
         // 장비 슬롯 초기화
-        m_rect_equip_root.Ex_SetValue(0f);
+        m_rect_equip_root.Ex_SetValue(EScrollDir.Vertical, 0f);
         var cnt = m_trs_equip_root.childCount;
         for (int i = 0; i < cnt; i++)
             Managers.Resource.Destroy(m_trs_equip_root.GetChild(0).gameObject);
@@ -171,7 +171,7 @@ public class UIWindowEquipment : UIWindowBase
         m_go_none_equip.Ex_SetActive(false);
 
         // 장비 슬롯 초기화
-        m_rect_equip_root.Ex_SetValue(0f);
+        m_rect_equip_root.Ex_SetValue(EScrollDir.Vertical, 0f);
         var cnt = m_trs_equip_root.childCount;
         for (int i = 0; i < cnt; i++)
             Managers.Resource.Destroy(m_trs_equip_root.GetChild(0).gameObject);

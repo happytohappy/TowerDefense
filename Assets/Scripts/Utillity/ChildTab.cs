@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.UI.Button;
 
 public class ChildTab : MonoBehaviour
 {

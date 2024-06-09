@@ -42,11 +42,7 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickShop(int in_tab_number)
     {
-        var ui = Managers.UI.OpenWindow(WindowID.UIPopupShop) as UIPopupShop;
-        if (ui == null)
-            return;
-
-        ui.ParentTab.SelectTab(in_tab_number);
+        Managers.UI.OpenWindow(WindowID.UIPopupShop);
     }
 
     public void OnClickReward()

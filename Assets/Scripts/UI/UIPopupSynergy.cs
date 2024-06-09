@@ -24,14 +24,9 @@ public class UIPopupSynergy : UIWindowBase
         RefreshUI();
     }
 
-    public void OnClickClose()
-    {
-        Managers.UI.CloseLast();
-    }
-
     public void RefreshUI()
     {
-        m_rect_root.Ex_SetValue(0f);
+        m_rect_root.Ex_SetValue(EScrollDir.Vertical, 0f);
 
         for (int i = 0; i < m_trs_root.childCount; i++)
             Managers.Resource.Destroy(m_trs_root.GetChild(i).gameObject);

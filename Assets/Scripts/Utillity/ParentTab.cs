@@ -15,7 +15,7 @@ public class ParentTab : MonoBehaviour
                 m_ChildTab[i].NormalSprite.Ex_SetActive(false);
                 m_ChildTab[i].SelectSprite.Ex_SetActive(true);
                 m_ChildTab[i].ActiveObject.Ex_SetActive(true);
-                m_ChildTab[i].ScrollRect.Ex_SetValue(0f);
+                m_ChildTab[i].ScrollRect.Ex_SetValue(EScrollDir.None, 0f);
             }
             else
             {

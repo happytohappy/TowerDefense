@@ -18,6 +18,7 @@ public enum WindowID
     UIPopupTown,
     UIPopupPause,
     UIPopupEquipment,
+    UIPopupProbabilityInfo,
     UIPopupTreasure,
     UIPopupUnitBuy,
     UIPopupIngameSkill,
@@ -74,10 +75,39 @@ public enum EInputType
     Press
 }
 
+public enum EItemType
+{
+    GOLD,
+    RUBY,
+    DIAMOND,
+    ENERGY,
+    AD_REMOVE,
+    HERO,
+    EQUIP,
+    TREASURE
+}
+
+public enum EScrollDir
+{
+    None,
+    Horizontal,
+    Vertical,
+}
+
 public enum EContent
 {
     None,
     Attendance,
+}
+
+public enum EShopTab
+{
+    Recruit,
+    Special,
+    Package,
+    Week,
+    Day,
+    Dia
 }
 
 public enum EGoods
