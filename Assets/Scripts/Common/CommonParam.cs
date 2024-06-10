@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public abstract class WindowParam { }
 
@@ -63,4 +64,9 @@ public class EquipResultParam : WindowParam
 {
     public bool m_success = false;
     public int m_equip_kind = 0;
+}
+
+public class RecruitParam : WindowParam
+{
+    public List<(EItemType, int)> m_recruit_list = new List<(EItemType, int)>();
 }

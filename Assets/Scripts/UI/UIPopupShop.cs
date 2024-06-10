@@ -101,4 +101,46 @@ public class UIPopupShop : UIWindowBase
 
         Managers.UI.OpenWindow(WindowID.UIPopupProbabilityInfo, param);
     }
+
+    public void OnClickRecruitPremium(int in_count)
+    {
+        RecruitParam param = new RecruitParam();
+
+        for (int i = 0; i < in_count; i++)
+        {
+            var gachaReward = Managers.Table.GetGachaHero(1000);
+            if (gachaReward == null)
+                continue;
+
+            var item = Managers.Table.GetItemInfoData(gachaReward.m_item);
+            if (item == null)
+                continue;
+
+            Managers.User.UpsertHero(gachaReward.m_item);
+            param.m_recruit_list.Add((item.m_item_type, item.m_kind));
+        }
+
+        Managers.UI.OpenWindow(WindowID.UIWindowRecruit, param);
+    }
+
+    public void OnClickRecruitNormal(int in_count)
+    {
+        RecruitParam param = new RecruitParam();
+
+        for (int i = 0; i < in_count; i++)
+        {
+            var gachaReward = Managers.Table.GetGachaHero(2000);
+            if (gachaReward == null)
+                continue;
+
+            var item = Managers.Table.GetItemInfoData(gachaReward.m_item);
+            if (item == null)
+                continue;
+
+            Managers.User.UpsertHero(gachaReward.m_item);
+            param.m_recruit_list.Add((item.m_item_type, item.m_kind));
+        }
+
+        Managers.UI.OpenWindow(WindowID.UIWindowRecruit, param);
+    }
 }

@@ -677,9 +677,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIWindowGameResult, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 527843715828251942}
+        m_TargetAssemblyTypeName: UIWindowRecruit, Assembly-CSharp
+        m_MethodName: OnClickOpenAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -811,9 +811,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIWindowGameResult, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 527843715828251942}
+        m_TargetAssemblyTypeName: UIWindowRecruit, Assembly-CSharp
+        m_MethodName: OnClickCancel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1673,6 +1673,7 @@ GameObject:
   - component: {fileID: 6118686644273995211}
   - component: {fileID: 6079719846559782794}
   - component: {fileID: 571020661671540727}
+  - component: {fileID: 7408531305945808851}
   m_Layer: 5
   m_Name: Text_Count
   m_TagString: Untagged
@@ -1796,6 +1797,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7408531305945808851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6126685334288862320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e4b765282004d43b1b34c003e0433c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_goods: 2
+  m_text: {fileID: 571020661671540727}
 --- !u!1 &6333030500136917716
 GameObject:
   m_ObjectHideFlags: 0
@@ -1918,9 +1933,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIWindowGame, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 527843715828251942}
+        m_TargetAssemblyTypeName: UIWindowRecruit, Assembly-CSharp
+        m_MethodName: OnClickRecruit_10
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1942,6 +1957,7 @@ GameObject:
   - component: {fileID: 1631888943858860664}
   - component: {fileID: 6377957448426080766}
   - component: {fileID: 5940962531921140294}
+  - component: {fileID: 6547033945408310468}
   m_Layer: 5
   m_Name: Text_Count
   m_TagString: Untagged
@@ -2065,6 +2081,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6547033945408310468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387645425835047151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e4b765282004d43b1b34c003e0433c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_goods: 1
+  m_text: {fileID: 5940962531921140294}
 --- !u!1 &6434366531204737041
 GameObject:
   m_ObjectHideFlags: 0
@@ -2795,9 +2825,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIWindowGame, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 527843715828251942}
+        m_TargetAssemblyTypeName: UIWindowRecruit, Assembly-CSharp
+        m_MethodName: OnClickRecruit_1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3020,6 +3050,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6991663326228933586}
+  - component: {fileID: 527843715828251942}
   - component: {fileID: 7720228025729169385}
   m_Layer: 5
   m_Name: UIWindowRecruit
@@ -3050,6 +3081,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &527843715828251942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8317508681980809257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5707959e2a471aa4797fc4040047fff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_text_gold: {fileID: 5940962531921140294}
+  m_text_ruby: {fileID: 571020661671540727}
+  m_text_diamond: {fileID: 2765535464772486151}
+  m_trs_root: {fileID: 2607417826316637607}
+  m_rect_root: {fileID: 2607417826316637607}
+  m_ani: {fileID: 1569585180499484449}
+  m_go_open_all: {fileID: 1950478221662058255}
+  m_go_cancel: {fileID: 2012330283074196155}
+  m_go_recruit_1: {fileID: 7315418736597189954}
+  m_go_recruit_10: {fileID: 6333030500136917716}
 --- !u!114 &7720228025729169385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3141,6 +3194,7 @@ GameObject:
   - component: {fileID: 4997390867445911036}
   - component: {fileID: 6580734997538829083}
   - component: {fileID: 2765535464772486151}
+  - component: {fileID: 2592229821865607248}
   m_Layer: 5
   m_Name: Text_Count
   m_TagString: Untagged
@@ -3264,6 +3318,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2592229821865607248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8654869566440209922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e4b765282004d43b1b34c003e0433c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_goods: 3
+  m_text: {fileID: 2765535464772486151}
 --- !u!1 &8752863254350228819
 GameObject:
   m_ObjectHideFlags: 0

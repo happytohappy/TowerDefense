@@ -7,6 +7,7 @@ public enum WindowID
     UIWindowMain,
     UIWindowGame,
     UIWindowUnit,
+    UIWindowRecruit,
     UIWindowGameResult,
     UIWindowEquipment,
     UIWindowEquipmentResult,
