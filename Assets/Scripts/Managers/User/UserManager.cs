@@ -75,6 +75,21 @@ public class UserManager : MonoBehaviour
     }
 
     [Serializable]
+    public class RecruitInfo
+    {
+        public long m_last_reward_time;
+        public int m_reward_max_count;
+        public int m_reward_count;
+
+        public RecruitInfo(long in_last_reward_time, int in_reward_max_count, int in_reward_count)
+        {
+            m_last_reward_time = in_last_reward_time;
+            m_reward_max_count = in_reward_max_count;
+            m_reward_count = in_reward_count;
+        }
+    }
+
+    [Serializable]
     public class CUserData
     {
         public int LastClearStage = 0;                                                                          // 클리어한 마지막 스테이지
@@ -93,6 +108,7 @@ public class UserManager : MonoBehaviour
         public List<MissionInfo> Mission = new List<MissionInfo>();                                             // 보유 미션
         public Dictionary<ETownType, TownInfo> Town = new Dictionary<ETownType, TownInfo>();                    // 타운
         public Dictionary<long, EquipInfo> Equip = new Dictionary<long, EquipInfo>();                           // 장비
+        public Dictionary<ERecruitType, RecruitInfo> Recruit = new Dictionary<ERecruitType, RecruitInfo>();     // 가챠
     }
 
     public CUserData UserData { get; set; } = new CUserData();
@@ -201,6 +217,10 @@ public class UserManager : MonoBehaviour
             UserData.Town.Add(ETownType.Dia, new TownInfo(20, 1, Managers.BackEnd.ServerTimeGetUTCTimeStamp()));
             UserData.Town.Add(ETownType.Unit, new TownInfo(30, 1, Managers.BackEnd.ServerTimeGetUTCTimeStamp()));
             UserData.Town.Add(ETownType.Equip, new TownInfo(40, 1, Managers.BackEnd.ServerTimeGetUTCTimeStamp()));
+
+            // 뽑기 정보
+            UserData.Recruit.Add(ERecruitType.Normal, new RecruitInfo(Managers.BackEnd.ServerTimeGetUTCTimeStamp(), CONST.AD_NORMAL_COUNT, 0));
+            UserData.Recruit.Add(ERecruitType.Premium, new RecruitInfo(Managers.BackEnd.ServerTimeGetUTCTimeStamp(), CONST.AD_PREMIUM_COUNT, 0));
 
             // 장비 넣어주기
             //InsertEquip(100000);

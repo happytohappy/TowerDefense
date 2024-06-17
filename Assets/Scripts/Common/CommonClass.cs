@@ -90,15 +90,16 @@ public class MonsterStatusData
 
 public class GachaInfoData
 {
-    public int m_kind;
     public int m_gacha_kind;
-    public string m_image;
-    public int m_text_page;
-    public int m_consumption;
+    public int m_gacha_index;
+    public ERecruitType m_recruit_type;
+    public int m_recruit_count;
+    public int m_recruit_bonus;
+    public int m_consumption_kind;
     public int m_consumption_amount;
-    public int m_gacha_count;
-    public int m_reward;
-    public int m_reward_bonus;
+    public string m_banner_image;
+    public int m_text_page;
+
 }
 
 public class GachaRewardData

@@ -1,24 +1,11 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Reflection;
-using System.Collections.Generic;
 
 public partial class TableManager
 {
     private void InitGachaInfo()
     {
-        TextAsset TextFile = Resources.Load<TextAsset>("Table/Gacha_Group");
-        string CSVText = TextFile.text;
-        List<string> valueArray = Util.CSVSplitData(CSVText);
-        for (int i = 2; i < valueArray.Count; i++)
-        {
-            string[] words = valueArray[i].Split(',');
-            GachaInfoData GachaGroupData = new GachaInfoData();
-            GachaGroupData.m_kind = int.Parse(words[0]);
-            GachaGroupData.m_reward = int.Parse(words[2]);
-
-            m_dic_gacha_group_data.Add(GachaGroupData.m_kind, GachaGroupData);
-        }
+        
     }
 
     public void SetGachaInfoData(string in_sheet_data)
@@ -51,7 +38,8 @@ public partial class TableManager
                     fields[i].SetValue(tableData, Enum.Parse(type, sheetData[i]));
             }
 
-            m_dic_gacha_group_data.Add(tableData.m_gacha_kind, tableData);
+            var key = (tableData.m_recruit_type, tableData.m_gacha_index);
+            m_dic_gacha_info_data.Add(key, tableData);
         }
     }
 }

@@ -1,11 +1,27 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 
 public class UIWindowShop : UIWindowBase
 {
+    [Serializable]
+    public class RecruitInfo
+    {
+        public ERecruitType m_recruit_type;
+        public TMP_Text m_text_ad_count;
+        public GameObject m_go_ad;
+        public TMP_Text m_text_ad_time;
+        public TMP_Text m_recruit_count_1;
+        public Image m_recruit_goods_1;
+        public TMP_Text m_recruit_price_1;
+        public TMP_Text m_recruit_count_2;
+        public Image m_recruit_goods_2;
+        public TMP_Text m_recruit_price_2;
+    }
+
     [Header("¿Á»≠")]
     [SerializeField] private TMP_Text m_text_gold = null;
     [SerializeField] private TMP_Text m_text_ruby = null;
@@ -19,6 +35,9 @@ public class UIWindowShop : UIWindowBase
 
     [Header("≈«")]
     [SerializeField] private ParentTab m_parent_tab = null;
+
+    [Header("Recruit")]
+    [SerializeField] private List<RecruitInfo> m_recruit_list = new List<RecruitInfo>();
 
     private EShopTab m_tab = EShopTab.Recruit;
     private List<int> m_swipe_pos = new List<int>();
@@ -36,7 +55,8 @@ public class UIWindowShop : UIWindowBase
     {
         base.OpenUI(wp);
 
-        RefreshUI();
+        RefreshGoods();
+        RefreshRecruit();
 
         m_scroll_rect.horizontal = true;
         m_view_port_center = new Vector2(m_view_port.rect.width * 0.5f, m_view_port.rect.height * 0.5f);
@@ -50,11 +70,23 @@ public class UIWindowShop : UIWindowBase
         m_swipe_pos.Add(5660);
     }
 
-    private void RefreshUI()
+    private void RefreshGoods()
     {
         Util.SetGoods(EGoods.Gold, m_text_gold);
         Util.SetGoods(EGoods.Ruby, m_text_ruby);
         Util.SetGoods(EGoods.Diamond, m_text_diamond);
+    }
+
+    private void RefreshRecruit()
+    {
+        // Recruit
+        foreach (var e in m_recruit_list)
+        {
+            if (Managers.User.UserData.Recruit.TryGetValue(e.m_recruit_type, out var data))
+            {
+                e.m_text_ad_count.text = $"{data.m_reward_max_count}/{data.m_reward_count}";
+            }
+        }
     }
 
     public void OnScroll(Vector2 in_vector)
