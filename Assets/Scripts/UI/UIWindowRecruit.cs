@@ -1,10 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 
 public class UIWindowRecruit : UIWindowBase
 {
     private const string SLOT_RECRUIT_PATH = "UI/Item/Slot_Recruit";
+    private const string ANI_RECRUIT_BTN   = "Ani_UIWindowRecruit_Btn";
 
     [Header("재화")]
     [SerializeField] private TMP_Text m_text_gold = null;
@@ -22,7 +24,12 @@ public class UIWindowRecruit : UIWindowBase
     [SerializeField] private GameObject m_go_recruit_1 = null;
     [SerializeField] private GameObject m_go_recruit_10 = null;
 
-    RecruitParam m_param = null;
+    private RecruitParam m_param;
+    private WaitForSeconds m_wait = new WaitForSeconds(0.1f);
+    private List<Slot_Recruit> m_recruit_list = new List<Slot_Recruit>();
+    private int m_item_count;
+    private int m_create_count;
+    private int m_open_count;
 
     public override void Awake()
     {
@@ -49,11 +56,22 @@ public class UIWindowRecruit : UIWindowBase
             return;
         }
 
+        // 초기화
+        Init();
+
         // 재화 갱신
         RefreshGoods();
 
         // 뽑기 카드
         RefreshRecruitList();
+    }
+
+    private void Init()
+    {
+        m_recruit_list.Clear();
+        m_item_count = m_param.m_recruit_list.Count;
+        m_open_count = 0;
+        m_create_count = 0;
     }
 
     private void RefreshGoods()
@@ -67,40 +85,79 @@ public class UIWindowRecruit : UIWindowBase
     {
         // 슬롯 초기화
         m_rect_root.Ex_SetValue(EScrollDir.Vertical, 0f);
-        for (int i = 0; i < m_trs_root.childCount; i++)
-            Managers.Resource.Destroy(m_trs_root.GetChild(i).gameObject);
+        var cnt = m_trs_root.childCount;
+        for (int i = 0; i < cnt; i++)
+            Managers.Resource.Destroy(m_trs_root.GetChild(0).gameObject);
+
+        foreach (var e in m_param.m_recruit_list)
+        {
+            var slot = Managers.Resource.Instantiate(SLOT_RECRUIT_PATH, Vector3.zero, m_trs_root);
+            slot.transform.localScale = Vector3.one;
+            slot.Ex_SetActive(false);
+
+            var sc = slot.GetComponent<Slot_Recruit>();
+            
+            sc.SetData(e.Item1, e.Item2, 0, () =>
+            {
+                m_open_count++;
+                if (m_item_count == m_open_count)
+                {
+                    m_go_open_all.Ex_SetActive(false);
+                    m_go_cancel.Ex_SetActive(true);
+                    m_go_recruit_1.Ex_SetActive(true);
+                    m_go_recruit_10.Ex_SetActive(true);
+                    m_ani.Ex_Play(ANI_RECRUIT_BTN);
+                }
+            });
+
+            m_recruit_list.Add(sc);
+            m_create_count++;
+        }
 
         m_go_open_all.Ex_SetActive(true);
         m_go_cancel.Ex_SetActive(false);
         m_go_recruit_1.Ex_SetActive(false);
         m_go_recruit_10.Ex_SetActive(false);
-        m_ani.Ex_Play("Ani_UIWindowRecruit_Btn");
+        m_ani.Ex_Play(ANI_RECRUIT_BTN);
 
         StartCoroutine(CoRefreshRecruitList());
     }
 
     private IEnumerator CoRefreshRecruitList()
     {
-        foreach (var e in m_param.m_recruit_list)
+        foreach (var e in m_recruit_list)
         {
-            var slot = Managers.Resource.Instantiate(SLOT_RECRUIT_PATH, Vector3.zero, m_trs_root);
-            var sc = slot.GetComponent<Slot_Recruit>();
+            e.Ex_SetActive(true);
 
-            sc.SetData(e.Item1, e.Item2, 0);
+            yield return m_wait;
+        }
+    }
 
-            yield return new WaitForSeconds(0.1f);
+    public void OnClickOpenAll()
+    {
+        // 아이템 만들기전 이라면 리턴
+        if (m_create_count == 0)
+            return;
+
+        // 아이템 만드는중 이라면 리턴
+        if (m_item_count != m_create_count)
+            return;
+
+        StopAllCoroutines();
+        foreach (var e in m_recruit_list)
+        {
+            if (e.GetOpen)
+            {
+                e.Ex_SetActive(true);
+                e.OnClickOpen();
+            }
         }
 
         m_go_open_all.Ex_SetActive(false);
         m_go_cancel.Ex_SetActive(true);
         m_go_recruit_1.Ex_SetActive(true);
         m_go_recruit_10.Ex_SetActive(true);
-        m_ani.Ex_Play("Ani_UIWindowRecruit_Btn");
-    }
-
-    public void OnClickOpenAll()
-    {
-        Managers.UI.CloseLast();
+        m_ani.Ex_Play(ANI_RECRUIT_BTN);
     }
 
     public void OnClickCancel()
@@ -110,11 +167,37 @@ public class UIWindowRecruit : UIWindowBase
 
     public void OnClickRecruit_1()
     {
+        var recruitList = Util.Recruit(m_param.m_recruit_type, 10);
+        if (recruitList == null || recruitList.Count == 0)
+            return;
 
+        m_param.m_recruit_list = recruitList;
+
+        // 초기화
+        Init();
+
+        // 재화 갱신
+        RefreshGoods();
+
+        // 뽑기 카드
+        RefreshRecruitList();
     }
 
     public void OnClickRecruit_10()
     {
+        var recruitList = Util.Recruit(m_param.m_recruit_type, 30);
+        if (recruitList == null || recruitList.Count == 0)
+            return;
 
+        m_param.m_recruit_list = recruitList;
+
+        // 초기화
+        Init();
+
+        // 재화 갱신
+        RefreshGoods();
+
+        // 뽑기 카드
+        RefreshRecruitList();
     }
 }

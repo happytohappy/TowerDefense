@@ -1732,8 +1732,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4038790009241636979}
         m_TargetAssemblyTypeName: UIPopupShop, Assembly-CSharp
-        m_MethodName: OnClickDia
-        m_Mode: 1
+        m_MethodName: OnClickTab
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5119,8 +5119,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4038790009241636979}
         m_TargetAssemblyTypeName: UIPopupShop, Assembly-CSharp
-        m_MethodName: OnClickRecruit
-        m_Mode: 1
+        m_MethodName: OnClickTab
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6204,8 +6204,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4038790009241636979}
         m_TargetAssemblyTypeName: UIPopupShop, Assembly-CSharp
-        m_MethodName: OnClickSpecial
-        m_Mode: 1
+        m_MethodName: OnClickTab
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -13125,7 +13125,19 @@ MonoBehaviour:
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4038790009241636979}
+        m_TargetAssemblyTypeName: UIWindowShop, Assembly-CSharp
+        m_MethodName: OnScroll
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5828794054901002662
 GameObject:
   m_ObjectHideFlags: 0
@@ -15883,8 +15895,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4038790009241636979}
         m_TargetAssemblyTypeName: UIPopupShop, Assembly-CSharp
-        m_MethodName: OnClickDay
-        m_Mode: 1
+        m_MethodName: OnClickTab
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -16401,7 +16413,7 @@ GameObject:
   - component: {fileID: 6712918325758415786}
   - component: {fileID: 4038790009241636979}
   m_Layer: 5
-  m_Name: UIPopupShop
+  m_Name: UIWindowShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16444,7 +16456,16 @@ MonoBehaviour:
   m_text_gold: {fileID: 3912441252527259989}
   m_text_ruby: {fileID: 1699421574324658491}
   m_text_diamond: {fileID: 8117625946793285616}
+  m_scroll_rect: {fileID: 9170628025888849105}
+  m_view_port: {fileID: 3236877164579643714}
   m_rect_root: {fileID: 110803928552861508}
+  m_scroll_item:
+  - {fileID: 2887054157706450551}
+  - {fileID: 8098197439836542422}
+  - {fileID: 6211435150699583661}
+  - {fileID: 2875826780701064860}
+  - {fileID: 3349864771165053046}
+  - {fileID: 2956500300463046508}
   m_parent_tab: {fileID: 310093955439435723}
 --- !u!1 &6729558920131435535
 GameObject:
@@ -17865,8 +17886,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4038790009241636979}
         m_TargetAssemblyTypeName: UIPopupShop, Assembly-CSharp
-        m_MethodName: OnClickPackage
-        m_Mode: 1
+        m_MethodName: OnClickTab
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -19160,8 +19181,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4038790009241636979}
         m_TargetAssemblyTypeName: UIPopupShop, Assembly-CSharp
-        m_MethodName: OnClickWeek
-        m_Mode: 1
+        m_MethodName: OnClickTab
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

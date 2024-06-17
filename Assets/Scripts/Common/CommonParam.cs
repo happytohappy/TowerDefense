@@ -68,5 +68,6 @@ public class EquipResultParam : WindowParam
 
 public class RecruitParam : WindowParam
 {
+    public ERecruitType m_recruit_type = ERecruitType.None;
     public List<(EItemType, int)> m_recruit_list = new List<(EItemType, int)>();
 }
