@@ -32,6 +32,7 @@ public class Managers : MonoBehaviour
     [SerializeField] private ObserverManager m_Observer = null;
     [SerializeField] private SpriteManager m_Sprite = null;
     [SerializeField] private ADManager m_AD = null;
+    [SerializeField] private IAPManager m_IAP = null;
 
     public static Canvas UICanvas => GetInstance.m_UIRootCan;
     public static Transform Widget => GetInstance.m_Widget;
@@ -49,6 +50,7 @@ public class Managers : MonoBehaviour
     public static SpriteManager Sprite => GetInstance.m_Sprite;
     public static ADManager AD => GetInstance.m_AD;
     public static ObserverManager Observer => GetInstance.m_Observer;
+    public static IAPManager IAP => GetInstance.m_IAP;
 
     public void Init()
     {
@@ -64,6 +66,7 @@ public class Managers : MonoBehaviour
         AD.Init();
         User.Init();
         Sound.Init();
+        IAP.Init();
     }
 
     public void Clear()

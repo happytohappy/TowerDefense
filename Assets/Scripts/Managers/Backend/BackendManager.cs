@@ -95,7 +95,7 @@ public class BackendManager : MonoBehaviour
 
     public List<ProbabilityItem> GetProbabilitysTest()
     {
-        string selectedProbabilityFileId = "10991";
+        string selectedProbabilityFileId = "11425";
 
         var bro = Backend.Probability.GetProbabilitys(selectedProbabilityFileId, 1); // 1¿¬Â÷;
 
