@@ -1,11 +1,13 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class Slot_Recruit : MonoBehaviour
 {
-    private const string ANI_BACK_0 = "Ani_UIWindowRecruit_Open01";
-    private const string ANI_BACK_1 = "Ani_UIWindowRecruit_Open02";
-    private const string ANI_BACK_2 = "Ani_UIWindowRecruit_Open03";
+    private const string ANI_BACK_0     = "Ani_UIWindowRecruit_Open01";
+    private const string ANI_BACK_1     = "Ani_UIWindowRecruit_Open02";
+    private const string ANI_BACK_2     = "Ani_UIWindowRecruit_Open03";
+    private const string ANI_RECRUIT_IN = "Ani_UIWindowRecruit_In";
 
     [SerializeField] private Animator m_ani = null;
     [SerializeField] private Slot_Equip m_slot_equip = null;
@@ -14,11 +16,15 @@ public class Slot_Recruit : MonoBehaviour
 
     private int m_back;
     private bool m_open;
+    private Action m_callback;
 
-    public void SetData(EItemType in_item_type, int in_item_kind, int in_back)
+    public bool GetOpen => m_open;
+
+    public void SetData(EItemType in_item_type, int in_item_kind, int in_back, Action in_callback)
     {
         m_open = true;
         m_back = in_back;
+        m_callback = in_callback;
         m_slot_equip.Ex_SetActive(false);
         m_slot_hero.Ex_SetActive(false);
 
@@ -38,6 +44,11 @@ public class Slot_Recruit : MonoBehaviour
         }
     }
 
+    public void PlayAni()
+    {
+        m_ani.Play(ANI_RECRUIT_IN);
+    }
+
     public void OnClickOpen()
     {
         if (m_open == false)
@@ -51,5 +62,7 @@ public class Slot_Recruit : MonoBehaviour
             case 1: m_ani.Ex_Play(ANI_BACK_1); break;
             case 2: m_ani.Ex_Play(ANI_BACK_2); break;
         }
+
+        m_callback?.Invoke();
     }
 }

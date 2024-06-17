@@ -32,7 +32,6 @@ public class PoolManager : MonoBehaviour
 
             poolable.transform.parent = Managers.Pool.transform;
             poolable.Ex_SetActive(false);
-            poolable.IsUsing = false;
 
             m_PoolStack.Push(poolable);
         }
@@ -48,7 +47,6 @@ public class PoolManager : MonoBehaviour
 
             poolable.Ex_SetActive(true);
             poolable.transform.parent = parent;
-            poolable.IsUsing = true;
 
             return poolable;
         }

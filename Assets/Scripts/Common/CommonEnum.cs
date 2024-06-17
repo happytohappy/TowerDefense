@@ -12,7 +12,7 @@ public enum WindowID
     UIWindowEquipment,
     UIWindowEquipmentResult,
     UIPopupGame,
-    UIPopupShop,
+    UIWindowShop,
     UIPopupReward,
     UIPopupQuest,
     UIPopupSetting,
@@ -74,6 +74,13 @@ public enum EInputType
     None,
     Click,
     Press
+}
+
+public enum ERecruitType
+{
+    None,
+    Normal,
+    Premium
 }
 
 public enum EItemType
