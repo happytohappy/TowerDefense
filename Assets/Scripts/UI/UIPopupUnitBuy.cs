@@ -54,7 +54,7 @@ public class UIPopupUnitBuy : UIWindowBase
 
     public void OnClickUnitBuy()
     {
-        var gachaReward = Managers.Table.GetGachaHero(1000);
+        var gachaReward = Managers.Table.GetGachaReward(1000);
         if (gachaReward == null)
             return;
 

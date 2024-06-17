@@ -11,9 +11,9 @@ public class Slot_ProbabilityInfo : MonoBehaviour
     [SerializeField] private TMP_Text m_text_name = null;
     [SerializeField] private TMP_Text m_text_probabiliy = null;
 
-    public void SetData(RecruitInfoData in_data)
+    public void SetData(GachaRewardData in_data)
     {
-        var item = Managers.Table.GetItemInfoData(in_data.m_reward_kind);
+        var item = Managers.Table.GetItemInfoData(in_data.m_item);
         if (item == null)
             return;
 

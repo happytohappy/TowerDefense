@@ -26,7 +26,7 @@ public partial class TableManager
             return null;
     }
 
-    public List<GachaRewardData> GetGachaRewardsData(int in_kind)
+    public List<GachaRewardData> GetGachaRewardData(int in_kind)
     {
         if (m_dic_gacha_reward_data.ContainsKey(in_kind))
             return m_dic_gacha_reward_data[in_kind];
@@ -34,24 +34,20 @@ public partial class TableManager
             return null;
     }
 
-    public GachaRewardData GetGachaHero(int in_kind)
+    public GachaRewardData GetGachaReward(int in_kind)
     {
-        //var gachaGroup = GetGachaGroupData(in_kind);
-        //if (gachaGroup == null)
-        //    return null;
+        var gachaRewards = GetGachaRewardData(in_kind);
+        if (gachaRewards == null)
+            return null;
 
-        //var gachaRewards = GetGachaRewardsData(gachaGroup.m_reward);
-        //if (gachaRewards == null)
-        //    return null;
-
-        //var gachaIndex = UnityEngine.Random.Range(0, 10000);
-        //foreach (var gachaReward in gachaRewards)
-        //{
-        //    if (gachaIndex >= gachaReward.m_rate_min && gachaIndex < gachaReward.m_rate_max)
-        //    {
-        //        return gachaReward;
-        //    }
-        //}
+        var gachaIndex = UnityEngine.Random.Range(0, 10000);
+        foreach (var gachaReward in gachaRewards)
+        {
+            if (gachaIndex >= gachaReward.m_rate_min && gachaIndex < gachaReward.m_rate_max)
+            {
+                return gachaReward;
+            }
+        }
 
         return null;
     }

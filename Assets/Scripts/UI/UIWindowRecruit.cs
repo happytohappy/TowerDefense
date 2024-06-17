@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -23,6 +24,14 @@ public class UIWindowRecruit : UIWindowBase
     [SerializeField] private GameObject m_go_cancel = null;
     [SerializeField] private GameObject m_go_recruit_1 = null;
     [SerializeField] private GameObject m_go_recruit_10 = null;
+
+    [Header("뽑기")]
+    [SerializeField] private TMP_Text m_recruit_count_1;
+    [SerializeField] private Image m_recruit_goods_1;
+    [SerializeField] private TMP_Text m_recruit_price_1;
+    [SerializeField] private TMP_Text m_recruit_count_2;
+    [SerializeField] private Image m_recruit_goods_2;
+    [SerializeField] private TMP_Text m_recruit_price_2;
 
     private RecruitParam m_param;
     private WaitForSeconds m_wait = new WaitForSeconds(0.1f);
@@ -72,6 +81,22 @@ public class UIWindowRecruit : UIWindowBase
         m_item_count = m_param.m_recruit_list.Count;
         m_open_count = 0;
         m_create_count = 0;
+
+        var tableData_1 = Managers.Table.GetGachaInfoData(m_param.m_recruit_type, 1);
+        if (tableData_1 == null)
+            return;
+
+        var tableData_2 = Managers.Table.GetGachaInfoData(m_param.m_recruit_type, 2);
+        if (tableData_2 == null)
+            return;
+
+        m_recruit_count_1.Ex_SetText($"{tableData_1.m_recruit_count}회");
+        m_recruit_goods_1.Ex_SetImage(Util.GetResourceImage(tableData_1.m_consumption_kind));
+        m_recruit_price_1.Ex_SetText(Util.CommaText(tableData_1.m_consumption_amount));
+
+        m_recruit_count_2.Ex_SetText($"{tableData_2.m_recruit_count}회");
+        m_recruit_goods_2.Ex_SetImage(Util.GetResourceImage(tableData_2.m_consumption_kind));
+        m_recruit_price_2.Ex_SetText(Util.CommaText(tableData_2.m_consumption_amount));
     }
 
     private void RefreshGoods()
@@ -165,27 +190,13 @@ public class UIWindowRecruit : UIWindowBase
         Managers.UI.CloseLast();
     }
 
-    public void OnClickRecruit_1()
+    public void OnClickRecruit(int in_index)
     {
-        var recruitList = Util.Recruit(m_param.m_recruit_type, 10);
-        if (recruitList == null || recruitList.Count == 0)
+        var recruitData = Managers.Table.GetGachaInfoData(m_param.m_recruit_type, in_index);
+        if (recruitData == null)
             return;
 
-        m_param.m_recruit_list = recruitList;
-
-        // 초기화
-        Init();
-
-        // 재화 갱신
-        RefreshGoods();
-
-        // 뽑기 카드
-        RefreshRecruitList();
-    }
-
-    public void OnClickRecruit_10()
-    {
-        var recruitList = Util.Recruit(m_param.m_recruit_type, 30);
+        var recruitList = Util.Recruit(m_param.m_recruit_type, recruitData.m_recruit_count);
         if (recruitList == null || recruitList.Count == 0)
             return;
 

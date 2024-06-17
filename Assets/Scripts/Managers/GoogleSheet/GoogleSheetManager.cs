@@ -13,39 +13,37 @@ public class GoogleSheetManager : MonoBehaviour
     private bool SheetCheck = false;
 
     // GID
-    // CONST            195141331
-    // Hero_Info        846969345
-    // Hero_Grade       1100293316
-    // Hero_Level       703649086
-    // Localization     1101510208
-    // Monster_Info     1943578647
-    // Monster_Status   1100538500
-    // Gacha_Info       1085540121
-    // Gacha_Reward     397372995
-    // Stage_Info       1399009269
-    // Stage_Wave       1189025789
-    // Stage_Reward     715738274
-    // Treasure_Level   494813664
-    // Treasure_Info    1233941213
-    // Mission_Info     866950427
-    // Synergy_Info     1669999714
-    // Buff_Info        0
-    // Buff_Level       1995903818
-    // Stage_Mission    1324865195
-    // Achievement_Info 123634346
-    // Village_Info     1419666850
-    // Village_Level    1297306839
-    // Equip_Info       261053514
-    // Attendance_Info  1165366195
-    // Item_Info        1125811871
-
-    // Gacha_Reward     397372995
-    // Gacha_Reward_200 645389960
+    // CONST                    195141331
+    // Hero_Info                846969345
+    // Hero_Grade               1100293316
+    // Hero_Level               703649086
+    // Localization             1101510208
+    // Monster_Info             1943578647
+    // Monster_Status           1100538500
+    // Gacha_Info               1085540121
+    // Gacha_Reward_Normal      397372995
+    // Gacha_Reward_Premium     645389960
+    // Stage_Info               1399009269
+    // Stage_Wave               1189025789
+    // Stage_Reward             715738274
+    // Treasure_Level           494813664
+    // Treasure_Info            1233941213
+    // Mission_Info             866950427
+    // Synergy_Info             1669999714
+    // Buff_Info                0
+    // Buff_Level               1995903818
+    // Stage_Mission            1324865195
+    // Achievement_Info         123634346
+    // Village_Info             1419666850
+    // Village_Level            1297306839
+    // Equip_Info               261053514
+    // Attendance_Info          1165366195
+    // Item_Info                1125811871
 
     public void Init(Action in_callback)
     {
         m_callback = in_callback;
-        SheetTotalCnt = 26;
+        SheetTotalCnt = 25;
         SheetCheck = true;
 
         //StartCoroutine(CoRequestGoogleSheet(195141331,      (value) => Managers.Table.SetConstData(value)));  // ¾Æ´Ñµí,,;
@@ -57,6 +55,7 @@ public class GoogleSheetManager : MonoBehaviour
         StartCoroutine(CoRequestGoogleSheet(1100538500,     (value) => Managers.Table.SetMonsterStatusData(value)));
         StartCoroutine(CoRequestGoogleSheet(1085540121,     (value) => Managers.Table.SetGachaInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(397372995,      (value) => Managers.Table.SetGachaRewardData(value)));
+        StartCoroutine(CoRequestGoogleSheet(645389960,      (value) => Managers.Table.SetGachaRewardData(value)));
         StartCoroutine(CoRequestGoogleSheet(1399009269,     (value) => Managers.Table.SetStageInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(1189025789,     (value) => Managers.Table.SetStageWaveData(value)));
         StartCoroutine(CoRequestGoogleSheet(715738274,      (value) => Managers.Table.SetStageRewardData(value)));
@@ -73,9 +72,6 @@ public class GoogleSheetManager : MonoBehaviour
         StartCoroutine(CoRequestGoogleSheet(261053514,      (value) => Managers.Table.SetEquipInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(1165366195,     (value) => Managers.Table.SetAttendanceInfoData(value)));
         StartCoroutine(CoRequestGoogleSheet(1125811871,     (value) => Managers.Table.SetItemInfoData(value)));
-
-        StartCoroutine(CoRequestGoogleSheet(397372995,      (value) => Managers.Table.SetRecruitInfoData(value)));
-        StartCoroutine(CoRequestGoogleSheet(645389960,      (value) => Managers.Table.SetRecruitInfoData(value)));
     }
 
     private IEnumerator CoRequestGoogleSheet(int in_gid, Action<string> in_call_back)

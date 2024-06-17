@@ -13,6 +13,7 @@ public class UIWindowShop : UIWindowBase
         public ERecruitType m_recruit_type;
         public TMP_Text m_text_ad_count;
         public GameObject m_go_ad;
+        public ExtentionButton m_button_ad;
         public TMP_Text m_text_ad_time;
         public TMP_Text m_recruit_count_1;
         public Image m_recruit_goods_1;
@@ -37,7 +38,8 @@ public class UIWindowShop : UIWindowBase
     [SerializeField] private ParentTab m_parent_tab = null;
 
     [Header("Recruit")]
-    [SerializeField] private List<RecruitInfo> m_recruit_list = new List<RecruitInfo>();
+    [SerializeField] private RecruitInfo m_recruit_premium = null;
+    [SerializeField] private RecruitInfo m_recruit_nomral = null;
 
     private EShopTab m_tab = EShopTab.Recruit;
     private List<int> m_swipe_pos = new List<int>();
@@ -79,14 +81,61 @@ public class UIWindowShop : UIWindowBase
 
     private void RefreshRecruit()
     {
-        // Recruit
-        foreach (var e in m_recruit_list)
-        {
-            if (Managers.User.UserData.Recruit.TryGetValue(e.m_recruit_type, out var data))
-            {
-                e.m_text_ad_count.text = $"{data.m_reward_max_count}/{data.m_reward_count}";
-            }
-        }
+        var nowTime = Managers.BackEnd.ServerTimeGetUTCTimeStamp();
+
+        // Premium Recruit
+        Managers.User.UserData.Recruit.TryGetValue(ERecruitType.Premium, out var premiumData);
+        if (premiumData == null)
+            return;
+
+        var premiumTableData_1 = Managers.Table.GetGachaInfoData(ERecruitType.Premium, 1);
+        if (premiumTableData_1 == null)
+            return;
+
+        var premiumTableData_2 = Managers.Table.GetGachaInfoData(ERecruitType.Premium, 2);
+        if (premiumTableData_2 == null)
+            return;
+
+        bool premiumAD = nowTime >= premiumData.m_last_reward_time + CONST.AD_PREMIUM_TIME;;
+        
+        m_recruit_premium.m_text_ad_count.text = $"{premiumData.m_reward_count}/{premiumData.m_reward_max_count}";
+        m_recruit_premium.m_button_ad.interactable = premiumAD;
+        m_recruit_premium.m_go_ad.Ex_SetActive(!premiumAD);
+
+        m_recruit_premium.m_recruit_count_1.Ex_SetText($"{premiumTableData_1.m_recruit_count}ȸ");
+        m_recruit_premium.m_recruit_goods_1.Ex_SetImage(Util.GetResourceImage(premiumTableData_1.m_consumption_kind));
+        m_recruit_premium.m_recruit_price_1.Ex_SetText(Util.CommaText(premiumTableData_1.m_consumption_amount));
+
+        m_recruit_premium.m_recruit_count_2.Ex_SetText($"{premiumTableData_2.m_recruit_count}ȸ");
+        m_recruit_premium.m_recruit_goods_2.Ex_SetImage(Util.GetResourceImage(premiumTableData_2.m_consumption_kind));
+        m_recruit_premium.m_recruit_price_2.Ex_SetText(Util.CommaText(premiumTableData_2.m_consumption_amount));
+
+        // Normal Recruit
+        Managers.User.UserData.Recruit.TryGetValue(ERecruitType.Normal, out var normalData);
+        if (normalData == null)
+            return;
+
+        var normalDataTableData_1 = Managers.Table.GetGachaInfoData(ERecruitType.Normal, 1);
+        if (normalDataTableData_1 == null)
+            return;
+
+        var normalDataTableData_2 = Managers.Table.GetGachaInfoData(ERecruitType.Normal, 2);
+        if (normalDataTableData_2 == null)
+            return;
+
+        bool normalAD = nowTime >= normalData.m_last_reward_time + CONST.AD_NORMAL_TIME; ;
+
+        m_recruit_nomral.m_text_ad_count.text = $"{normalData.m_reward_count}/{normalData.m_reward_max_count}";
+        m_recruit_nomral.m_button_ad.interactable = normalAD;
+        m_recruit_nomral.m_go_ad.Ex_SetActive(!normalAD);
+
+        m_recruit_nomral.m_recruit_count_1.Ex_SetText($"{normalDataTableData_1.m_recruit_count}ȸ");
+        m_recruit_nomral.m_recruit_goods_1.Ex_SetImage(Util.GetResourceImage(normalDataTableData_1.m_consumption_kind));
+        m_recruit_nomral.m_recruit_price_1.Ex_SetText(Util.CommaText(normalDataTableData_1.m_consumption_amount));
+
+        m_recruit_nomral.m_recruit_count_2.Ex_SetText($"{normalDataTableData_2.m_recruit_count}ȸ");
+        m_recruit_nomral.m_recruit_goods_2.Ex_SetImage(Util.GetResourceImage(normalDataTableData_2.m_consumption_kind));
+        m_recruit_nomral.m_recruit_price_2.Ex_SetText(Util.CommaText(normalDataTableData_2.m_consumption_amount));
     }
 
     public void OnScroll(Vector2 in_vector)
@@ -179,9 +228,13 @@ public class UIWindowShop : UIWindowBase
         Managers.UI.OpenWindow(WindowID.UIPopupProbabilityInfo, param);
     }
 
-    public void OnClickRecruitNormal(int in_count)
+    public void OnClickRecruitNormal(int in_index)
     {
-        var recruitList = Util.Recruit(ERecruitType.Normal, in_count);
+        var recruitData = Managers.Table.GetGachaInfoData(ERecruitType.Normal, in_index);
+        if (recruitData == null)
+            return;
+
+        var recruitList = Util.Recruit(ERecruitType.Normal, recruitData.m_recruit_count);
         if (recruitList == null || recruitList.Count == 0)
             return;
 
@@ -192,14 +245,18 @@ public class UIWindowShop : UIWindowBase
         Managers.UI.OpenWindow(WindowID.UIWindowRecruit, param);
     }
 
-    public void OnClickRecruitPremium(int in_count)
+    public void OnClickRecruitPremium(int in_index)
     {
-        var recruitList = Util.Recruit(ERecruitType.Premium, in_count);
+        var recruitData = Managers.Table.GetGachaInfoData(ERecruitType.Premium, in_index);
+        if (recruitData == null)
+            return;
+
+        var recruitList = Util.Recruit(ERecruitType.Premium, recruitData.m_recruit_count);
         if (recruitList == null || recruitList.Count == 0)
             return;
 
         RecruitParam param = new RecruitParam();
-        param.m_recruit_type = ERecruitType.Normal;
+        param.m_recruit_type = ERecruitType.Premium;
         param.m_recruit_list.AddRange(recruitList);
 
         Managers.UI.OpenWindow(WindowID.UIWindowRecruit, param);

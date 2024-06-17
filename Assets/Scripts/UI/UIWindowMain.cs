@@ -81,7 +81,7 @@ public class UIWindowMain : UIWindowBase
     // 여기부터는 테스트 버튼
     public void OnClickGachaUnit()
     {
-        var gachaReward = Managers.Table.GetGachaHero(1000);
+        var gachaReward = Managers.Table.GetGachaReward(1000);
         if (gachaReward == null)
             return;
     

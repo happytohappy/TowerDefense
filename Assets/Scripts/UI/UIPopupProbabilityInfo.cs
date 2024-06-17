@@ -51,7 +51,7 @@ public class UIPopupProbabilityInfo : UIWindowBase
         var scTitle = titleSlot.GetComponent<Slot_ProbabilityInfoTitle>();
         scTitle.SetData("РЏДж");
 
-        var repo = Managers.Table.GetRecruitInfoData(m_param.m_kind);
+        var repo = Managers.Table.GetGachaRewardData(m_param.m_kind);
         if (repo == null)
             return;
 

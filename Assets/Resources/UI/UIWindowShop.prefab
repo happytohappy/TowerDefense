@@ -648,7 +648,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 30
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3640,7 +3640,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 10
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -7388,13 +7388,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4038790009241636979}
-        m_TargetAssemblyTypeName: UIPopupShop, Assembly-CSharp
+        m_TargetAssemblyTypeName: UIWindowShop, Assembly-CSharp
         m_MethodName: OnClickRecruitPremium
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 10
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -16467,10 +16467,11 @@ MonoBehaviour:
   - {fileID: 3349864771165053046}
   - {fileID: 2956500300463046508}
   m_parent_tab: {fileID: 310093955439435723}
-  m_recruit_list:
-  - m_recruit_type: 2
+  m_recruit_premium:
+    m_recruit_type: 2
     m_text_ad_count: {fileID: 1059337459764772787}
     m_go_ad: {fileID: 8618024671322626550}
+    m_button_ad: {fileID: 7699140405700392053}
     m_text_ad_time: {fileID: 3883526735691404393}
     m_recruit_count_1: {fileID: 172136022785782742}
     m_recruit_goods_1: {fileID: 1898592790480647442}
@@ -16478,9 +16479,11 @@ MonoBehaviour:
     m_recruit_count_2: {fileID: 3003824072647051593}
     m_recruit_goods_2: {fileID: 2738725402774508596}
     m_recruit_price_2: {fileID: 1942376799717072035}
-  - m_recruit_type: 1
+  m_recruit_nomral:
+    m_recruit_type: 1
     m_text_ad_count: {fileID: 5039836932047099546}
     m_go_ad: {fileID: 7498147991698257973}
+    m_button_ad: {fileID: 611043693999289723}
     m_text_ad_time: {fileID: 1018950586477004249}
     m_recruit_count_1: {fileID: 1815305218362951878}
     m_recruit_goods_1: {fileID: 8593097469859750088}
@@ -19638,13 +19641,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4038790009241636979}
-        m_TargetAssemblyTypeName: UIPopupShop, Assembly-CSharp
+        m_TargetAssemblyTypeName: UIWindowShop, Assembly-CSharp
         m_MethodName: OnClickRecruitPremium
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 30
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

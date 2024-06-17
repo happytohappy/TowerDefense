@@ -23,7 +23,7 @@ public static partial class Util
         List<(EItemType, int)> recruitList = new List<(EItemType, int)>();
         for (int i = 0; i < in_count; i++)
         {
-            var gachaReward = Managers.Table.GetGachaHero(recruitKind);
+            var gachaReward = Managers.Table.GetGachaReward(recruitKind);
             if (gachaReward == null)
                 continue;
 
