@@ -20,6 +20,8 @@ public class ADManager : MonoBehaviour
 
 #if UNITY_ANDROID
         adUnitId = "ca-app-pub-3940256099942544/5224354917";
+#elif UNITY_IPHONE
+        adUnitId = "ca-app-pub-3940256099942544/1712485313";
 #else
         adUnitId = "unexpected_platform";
 #endif
