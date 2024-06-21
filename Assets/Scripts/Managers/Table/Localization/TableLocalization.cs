@@ -93,7 +93,17 @@ public partial class TableManager : MonoBehaviour
                     fields[i].SetValue(tableData, Enum.Parse(type, sheetData[i]));
             }
 
-            m_dic_localization_data.Add(tableData.LAN_KEY, tableData);
+            if (tableData.LAN_KEY == "//")
+                break;
+
+            if (m_dic_localization_data.ContainsKey(tableData.LAN_KEY))
+            {
+                Debug.LogError($"Key 중복 : {tableData.LAN_KEY}");
+            }
+            else
+            {
+                m_dic_localization_data.Add(tableData.LAN_KEY, tableData);
+            }
         }
     }
 }

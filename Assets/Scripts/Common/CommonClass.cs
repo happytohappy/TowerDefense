@@ -98,7 +98,7 @@ public class GachaInfoData
     public int m_consumption_kind;
     public int m_consumption_amount;
     public string m_banner_image;
-    public int m_text_page;
+    public string m_text_page;
 
 }
 

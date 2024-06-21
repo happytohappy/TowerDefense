@@ -267,6 +267,7 @@ public enum EMissionCondition
     HERO_DIFF,              // 서로 다른 영웅 종류 보유
     HERO_TIER,              // 특정 티어 이상 영웅 보유
     KILL_BOSS,              // 보스 몬스터 처치
+    AD_WATCH
 }
 
 public enum EADRewardType
