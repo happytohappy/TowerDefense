@@ -34,11 +34,6 @@ public class UIPopupGame : UIWindowBase
         SetWaveInfo();
     }
 
-    public void OnClickClose()
-    {
-        Managers.UI.CloseLast();
-    }
-
     public void OnClickGame()
     {
         Managers.UI.CloseLast();
@@ -106,7 +101,7 @@ public class UIPopupGame : UIWindowBase
         }
 
         m_go_front.Ex_SetActive(m_curr_stage > 1);
-        m_go_back.Ex_SetActive(m_curr_stage < m_max_stage);
+        m_go_back.Ex_SetActive(m_curr_stage < Managers.User.UserData.LastClearStage + 2);
     }
 
     public void OnClickStageChange(int in_value)
@@ -122,7 +117,7 @@ public class UIPopupGame : UIWindowBase
         }
         else if (in_value == 1)
         {
-            if (m_curr_stage >= m_max_stage)
+            if (m_curr_stage >= m_max_stage || m_curr_stage >= Managers.User.UserData.LastClearStage + 2)
                 return;
 
             m_curr_stage++;

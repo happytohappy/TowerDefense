@@ -90,7 +90,12 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickEquip()
     {
-        Managers.Table.TempEquipGacha();
+        var tableEquip = Managers.Table.GetAllEquipInfoData();
+        if (tableEquip == null)
+            return;
+
+        foreach (var e in tableEquip)
+            Managers.User.InsertEquip(e.Value.m_kind);
     }
 
     public void OnClickReset()

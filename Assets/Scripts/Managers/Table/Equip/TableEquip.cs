@@ -93,6 +93,11 @@ public partial class TableManager
             return null;
     }
 
+    public Dictionary<int, EquipInfoData> GetAllEquipInfoData()
+    {
+        return m_dic_equip_info_data;
+    }
+
     public void TempEquipGacha()
     {
         for (int i = 0; i < 10; i++)

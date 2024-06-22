@@ -67,14 +67,17 @@ public static partial class Util
             case EEquipGrade.A:
                 in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_A"));
                 break;
-            case EEquipGrade.SS:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_SS"));
+            case EEquipGrade.S:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_S"));
                 break;
             case EEquipGrade.SR:
                 in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_SR"));
                 break;
             case EEquipGrade.SSR:
                 in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_SSR"));
+                break;
+            case EEquipGrade.SSR_P:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "Icon_Slot_Equip_SSR_Plus"));
                 break;
         }
     }
@@ -101,14 +104,17 @@ public static partial class Util
             case EEquipGrade.A:
                 in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_A"));
                 break;
-            case EEquipGrade.SS:
-                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_SS"));
+            case EEquipGrade.S:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_S"));
                 break;
             case EEquipGrade.SR:
                 in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_SR"));
                 break;
             case EEquipGrade.SSR:
                 in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_SSR"));
+                break;
+            case EEquipGrade.SSR_P:
+                in_grade_bg.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Common, "BG_Slot_Equip_SSR_Plus"));
                 break;
         }
     }

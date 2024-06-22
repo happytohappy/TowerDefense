@@ -328,7 +328,7 @@ public enum EEquipGrade
     B,
     A,
     S,
-    SS,
     SR,
     SSR,
+    SSR_P,
 }
