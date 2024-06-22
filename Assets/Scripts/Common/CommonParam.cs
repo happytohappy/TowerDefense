@@ -71,3 +71,8 @@ public class RecruitParam : WindowParam
     public ERecruitType m_recruit_type = ERecruitType.None;
     public List<(EItemType, int)> m_recruit_list = new List<(EItemType, int)>();
 }
+
+public class ShopParam : WindowParam
+{
+    public EShopTab m_tab = EShopTab.Recruit;
+}

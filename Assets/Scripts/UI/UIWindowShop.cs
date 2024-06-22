@@ -53,9 +53,22 @@ public class UIWindowShop : UIWindowBase
         base.Awake();
     }
 
-    public override void OpenUI(WindowParam wp)
+    public override void OpenUI(WindowParam in_param)
     {
-        base.OpenUI(wp);
+        base.OpenUI(in_param);
+
+        if (in_param == null)
+        {
+            Managers.UI.CloseLast();
+            return;
+        }
+
+        var m_param = in_param as ShopParam;
+        if (m_param == null)
+        {
+            Managers.UI.CloseLast();
+            return;
+        }
 
         RefreshGoods();
         RefreshRecruit();
@@ -70,6 +83,8 @@ public class UIWindowShop : UIWindowBase
         m_swipe_pos.Add(3804);
         m_swipe_pos.Add(4635);
         m_swipe_pos.Add(5660);
+
+        OnClickTabQuick((int)m_param.m_tab);
     }
 
     private void RefreshGoods()
@@ -173,6 +188,23 @@ public class UIWindowShop : UIWindowBase
             m_tab = newTab;
             m_parent_tab.SelectTab(centerIndex);
         }
+    }
+
+    public void OnClickTabQuick(int index)
+    {
+        if ((int)m_tab == index)
+            return;
+
+        m_tab = (EShopTab)index;
+
+        float targetPositionX = m_swipe_pos[index] - m_view_port.rect.width * 0.5f;
+        float scrollX = targetPositionX / (m_rect_root.rect.width - m_view_port.rect.width);
+        scrollX = Mathf.Clamp(scrollX, 0f, 1f);
+        var targetPos = -scrollX * (m_rect_root.rect.width - m_view_port.rect.width);
+
+        StopAllCoroutines();
+        m_rect_root.Ex_SetValue(EScrollDir.Horizontal, targetPos);
+        m_parent_tab.SelectTab(index);
     }
 
     public void OnClickTab(int index)

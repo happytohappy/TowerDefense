@@ -42,7 +42,12 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickShop(int in_tab_number)
     {
-        Managers.UI.OpenWindow(WindowID.UIWindowShop);
+        EShopTab shopTab = (EShopTab)in_tab_number;
+
+        var param = new ShopParam();
+        param.m_tab = shopTab;
+
+        Managers.UI.OpenWindow(WindowID.UIWindowShop, param);
     }
 
     public void OnClickReward()

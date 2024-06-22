@@ -23,19 +23,30 @@ public class UIPopupIngameSkill : UIWindowBase
         Time.timeScale = 0f;
 
         if (in_param == null)
+        {
             Managers.UI.CloseLast();
+            Time.timeScale = 1f;
+            return;
+        }
 
         m_param = in_param as InGameSkillParam;
         if (m_param == null)
+        {
             Managers.UI.CloseLast();
+            Time.timeScale = 1f;
+            return;
+        }
 
         for (int i = 0; i < m_list_icon.Count; i++)
             m_list_icon[i].Ex_SetActive(i == (int)m_param.m_reward_type);
 
         if (GameController.GetInstance.ADReward.ContainsKey(m_param.m_reward_type))
-            m_btn_ad.interactable = GameController.GetInstance.ADReward[m_param.m_reward_type];  
+            m_btn_ad.interactable = GameController.GetInstance.ADReward[m_param.m_reward_type];
         else
+        { 
             Managers.UI.CloseLast();
+            Time.timeScale = 1f;
+        }
     }
 
     public override void OnClose()
