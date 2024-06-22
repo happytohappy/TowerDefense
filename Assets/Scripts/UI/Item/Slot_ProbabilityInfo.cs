@@ -6,6 +6,7 @@ public class Slot_ProbabilityInfo : MonoBehaviour
     [Header("ΩΩ∑‘")]
     [SerializeField] private UnitIcon m_slot_hero = null;
     [SerializeField] private Slot_Equip m_slot_equip = null;
+    [SerializeField] private Slot_Treasure m_slot_treasure = null;
 
     [Header("≈ÿΩ∫∆Æ")]
     [SerializeField] private TMP_Text m_text_name = null;
@@ -19,6 +20,7 @@ public class Slot_ProbabilityInfo : MonoBehaviour
 
         m_slot_hero.Ex_SetActive(false);
         m_slot_equip.Ex_SetActive(false);
+        m_slot_treasure.Ex_SetActive(false); 
 
         switch (item.m_item_type)
         {
@@ -41,6 +43,8 @@ public class Slot_ProbabilityInfo : MonoBehaviour
                 m_slot_equip.SetData(0, item.m_kind, false , false, false, null);
                 break;
             case EItemType.TREASURE:
+                m_slot_treasure.Ex_SetActive(true);
+                m_slot_treasure.SetData(item.m_kind);
                 break;
             default:
                 break;
