@@ -40,23 +40,47 @@ public class UIPopupProbabilityInfo : UIWindowBase
 
     private void RefreshList()
     {
+        EItemType itemType = EItemType.None;
+
         // ΩΩ∑‘ √ ±‚»≠
         m_rect_root.Ex_SetValue(EScrollDir.Vertical, 0f);
         for (int i = 0; i < m_trs_root.childCount; i++)
             Managers.Resource.Destroy(m_trs_root.GetChild(i).gameObject);
 
-        var titleSlot = Managers.Resource.Instantiate(TITLE_SLOT_PATH, Vector3.zero, m_trs_root);
-        titleSlot.transform.localScale = Vector3.one;
-
-        var scTitle = titleSlot.GetComponent<Slot_ProbabilityInfoTitle>();
-        scTitle.SetData("¿Ø¥÷");
-
         var repo = Managers.Table.GetGachaRewardData(m_param.m_kind);
         if (repo == null)
             return;
 
+        Util.EquipSortMerge(ref repo);
         foreach (var e in repo)
         {
+            var item = Managers.Table.GetItemInfoData(e.m_item);
+            if (item == null)
+                continue;
+
+            if (itemType != item.m_item_type)
+            {
+                itemType = item.m_item_type;
+
+                var titleSlot = Managers.Resource.Instantiate(TITLE_SLOT_PATH, Vector3.zero, m_trs_root);
+                titleSlot.transform.localScale = Vector3.one;
+
+                var scTitle = titleSlot.GetComponent<Slot_ProbabilityInfoTitle>();
+
+                switch (itemType)
+                {
+                    case EItemType.HERO:
+                        scTitle.SetData("¿Ø¥÷");
+                        break;
+                    case EItemType.EQUIP:
+                        scTitle.SetData("¿Â∫Ò");
+                        break;
+                    case EItemType.TREASURE:
+                        scTitle.SetData("∫∏π∞");
+                        break;
+                }               
+            }
+
             var slot = Managers.Resource.Instantiate(SLOT_PATH, Vector3.zero, m_trs_root);
             slot.transform.localScale = Vector3.one;
 

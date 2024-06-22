@@ -85,6 +85,7 @@ public enum ERecruitType
 
 public enum EItemType
 {
+    None,
     GOLD,
     RUBY,
     DIAMOND,
