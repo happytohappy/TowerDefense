@@ -67,9 +67,9 @@ public class UIPopupTreasure : UIWindowBase
         var treasureLevel = Managers.Table.GetTreasureLevelData(in_treasure, userTreasure);
 
         m_image_treasure.Ex_SetImage(Managers.Sprite.GetSprite(Atlas.Treasure, treasureInfo.m_icon));
-        m_text_name.Ex_SetText(treasureInfo.m_name);
+        m_text_name.Ex_SetText(Util.SpecialString(Managers.Table.GetLanguage(treasureInfo.m_name)));
         Util.SetGradeStar(m_list_grade_star, userTreasure);
-        //m_text_desc.Ex_SetText(treasureInfo.m_comment);
+        m_text_desc.Ex_SetText(Util.SpecialString(Managers.Table.GetLanguage(treasureInfo.m_comment)));
         m_go_lock.Ex_SetActive(userTreasure == 0);
 
         if (userTreasure == 0 || treasureLevel == null)

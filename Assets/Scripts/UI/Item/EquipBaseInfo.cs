@@ -29,7 +29,7 @@ public class EquipBaseInfo : MonoBehaviour
 
         Util.SetEquipIcon(m_image_equip_icon, equip.m_equip_icon);
         Util.SetUnitType(m_image_equip_hero_type, equip.m_hero_type);
-        m_text_equip_name.Ex_SetText(equip.m_equip_type.ToString());
+        m_text_equip_name.Ex_SetText(Util.GetItemTypeLocal(equip.m_equip_type));
 
         for (int i = 0; i < m_grade_layout.Count; i++)
             m_grade_layout[i].Ex_SetActive(i == (int)equip.m_equip_grade);

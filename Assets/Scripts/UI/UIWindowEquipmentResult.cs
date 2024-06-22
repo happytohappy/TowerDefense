@@ -69,7 +69,7 @@ public class UIWindowEquipmentResult : UIWindowBase
         if (tableEquip == null)
             return;
 
-        m_text_equip_name.Ex_SetText($"{tableEquip.m_equip_grade} {tableEquip.m_name}");
+        m_text_equip_name.Ex_SetText($"{tableEquip.m_equip_grade} {Util.SpecialString(Managers.Table.GetLanguage(tableEquip.m_name))}");
         m_equip_slot.SetData(0, in_equip_kind, false, false, false, null);
 
         // ¿Â∫Ò Ω∫≈»

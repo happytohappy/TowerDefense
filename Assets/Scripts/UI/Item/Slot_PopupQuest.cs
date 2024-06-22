@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using static UserManager;
 
 public class Slot_PopupQuest : MonoBehaviour
 {
@@ -23,7 +24,11 @@ public class Slot_PopupQuest : MonoBehaviour
         m_is_reward = false;
 
         m_slot_reward.SetReward(in_data.m_reward_item_kind, in_data.m_reward_item_amound, false, string.Empty);
-        m_text_title.Ex_SetText(in_data.m_title);
+
+        if (in_data.m_value_2 == 0)
+            m_text_title.Ex_SetText(string.Format(Util.SpecialString(Managers.Table.GetLanguage(in_data.m_desc)), in_data.m_value_1));
+        else
+            m_text_title.Ex_SetText(string.Format(Util.SpecialString(Managers.Table.GetLanguage(in_data.m_desc)), in_data.m_value_1, in_data.m_value_2));
 
         switch (in_data.m_mission_condition)
         {
@@ -132,7 +137,11 @@ public class Slot_PopupQuest : MonoBehaviour
         m_is_reward = false;
 
         m_slot_reward.SetReward(in_data.m_reward_item_kind, in_data.m_reward_item_amound, false, string.Empty);
-        m_text_title.Ex_SetText(in_data.m_title);
+
+        if (in_data.m_value_2 == 0)
+            m_text_title.Ex_SetText(string.Format(Util.SpecialString(Managers.Table.GetLanguage(in_data.m_desc)), in_data.m_value_1));
+        else
+            m_text_title.Ex_SetText(string.Format(Util.SpecialString(Managers.Table.GetLanguage(in_data.m_desc)), in_data.m_value_1, in_data.m_value_2));
 
         switch (in_data.m_mission_condition)
         {

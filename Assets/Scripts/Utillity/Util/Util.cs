@@ -305,4 +305,38 @@ public static partial class Util
 
         return result.ToString();
     }
+
+    public static string GetItemTypeLocal(EEquipType in_equip_type)
+    {
+        var str = string.Empty;
+        switch (in_equip_type)
+        {
+            case EEquipType.Glove:
+                str = SpecialString(Managers.Table.GetLanguage("UI_EQUIP_CATEGORY_GLOVE"));
+                break;
+            case EEquipType.Bow:
+                str = SpecialString(Managers.Table.GetLanguage("UI_EQUIP_CATEGORY_BOW"));
+                break;
+            case EEquipType.Sword:
+                str = SpecialString(Managers.Table.GetLanguage("UI_EQUIP_CATEGORY_SWORD"));
+                break;
+            case EEquipType.Dualsword:
+                str = SpecialString(Managers.Table.GetLanguage("UI_EQUIP_CATEGORY_DUAL"));
+                break;
+            case EEquipType.Wand:
+                str = SpecialString(Managers.Table.GetLanguage("UI_EQUIP_CATEGORY_WAND"));
+                break;
+            case EEquipType.Lance:
+                str = SpecialString(Managers.Table.GetLanguage("UI_EQUIP_CATEGORY_LANCE"));
+                break;
+            case EEquipType.Gun:
+                str = SpecialString(Managers.Table.GetLanguage("UI_EQUIP_CATEGORY_GUN"));
+                break;
+            case EEquipType.Shield:
+                str = SpecialString(Managers.Table.GetLanguage("UI_EQUIP_CATEGORY_SHIELD"));
+                break;
+        }
+
+        return str;
+    }
 }

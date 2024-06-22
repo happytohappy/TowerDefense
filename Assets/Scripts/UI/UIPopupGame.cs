@@ -51,7 +51,8 @@ public class UIPopupGame : UIWindowBase
 
         m_wave_count = Managers.Table.GetWaveCount(m_curr_stage);
 
-        m_text_stage.Ex_SetText($"Stage {string.Format("{0:D2}", m_curr_stage)}");
+        m_text_stage.Ex_SetText(string.Format(Util.SpecialString(Managers.Table.GetLanguage("UI_STAGE_INFO_TITLE")), m_curr_stage));
+        
 
         var rewardList = Managers.Table.GetStageReward(m_curr_stage);
         if (Managers.User.UserData.LastClearStage > m_curr_stage - 1)

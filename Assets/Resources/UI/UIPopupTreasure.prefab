@@ -1822,6 +1822,7 @@ GameObject:
   - component: {fileID: 9113396202125894538}
   - component: {fileID: 5548027093634379220}
   - component: {fileID: 923500023127673731}
+  - component: {fileID: 4554939145353146255}
   m_Layer: 5
   m_Name: Text_GradeUp
   m_TagString: Untagged
@@ -1945,6 +1946,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4554939145353146255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3944292489532113606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70a11e40e1776344fa6ce7437cd3b9a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_text: {fileID: 923500023127673731}
+  m_lan_key: UI_HERO_GRADEUP_BUTTON
 --- !u!1 &4746679039903190903
 GameObject:
   m_ObjectHideFlags: 0
