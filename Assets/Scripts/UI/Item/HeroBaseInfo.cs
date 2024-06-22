@@ -35,8 +35,6 @@ public class HeroBaseInfo : MonoBehaviour
     [SerializeField] private TMP_Text m_text_equip_critical = null;
     [SerializeField] private TMP_Text m_text_equip_critical_chance = null;
 
-    public int m_tooltip_index = -1;
-
     public void SetData(int in_kind)
     {
         bool haveHero = false;
