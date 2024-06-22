@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class UIPopupQuest : UIWindowBase
@@ -36,11 +37,6 @@ public class UIPopupQuest : UIWindowBase
                 RefreshUI_Achievement();
                 break;
         }
-    }
-
-    public void OnClickClose()
-    {
-        Managers.UI.CloseLast();
     }
 
     public void RefreshUI_Stage()

@@ -25,9 +25,12 @@ public class Hud_TownInfo : MonoBehaviour
     {
         m_town_type = in_town_type;
 
+        if (Managers.User.UserData.Town.TryGetValue(in_town_type, out var userTown) == false)
+            return;
+
         var townInfo = Managers.Table.GetTownInfoData((int)in_town_type);
         if (townInfo != null)
-            m_text_name.Ex_SetText(townInfo.m_title);
+            m_text_name.Ex_SetText(string.Format(Util.SpecialString(Managers.Table.GetLanguage(townInfo.m_title)), userTown.m_town_level));
 
         m_offset = in_offset;
     }

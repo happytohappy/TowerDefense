@@ -126,9 +126,22 @@ public class UIPopupTown : UIWindowBase
             if (e.m_town_type == m_param.m_town_type)
             {
                 e.m_root.Ex_SetActive(true);
-                e.m_title.Ex_SetText($"Lv.{userData.m_town_level} {townInfo.m_title}");
+                e.m_title.Ex_SetText(string.Format(Util.SpecialString(Managers.Table.GetLanguage(townInfo.m_title)), userData.m_town_level));
                 e.m_slot_reward.SetAmount(townLevel.m_reward_amount);
-                e.m_contents.Ex_SetText(townInfo.m_contents);
+
+                var str = Util.RemainingToDate(townLevel.m_timespan);
+                switch (e.m_town_type)
+                {
+                    case ETownType.Gold:
+                    case ETownType.Ruby:
+                    case ETownType.Dia:
+                        e.m_contents.Ex_SetText(string.Format(Util.SpecialString(Managers.Table.GetLanguage(townInfo.m_contents)), str, townLevel.m_reward_amount));
+                        break;
+                    case ETownType.Unit:
+                    case ETownType.Equip:
+                        e.m_contents.Ex_SetText(string.Format(Util.SpecialString(Managers.Table.GetLanguage(townInfo.m_contents)), str));
+                        break;
+                }               
             }
             else
             {
@@ -144,7 +157,7 @@ public class UIPopupTown : UIWindowBase
     {
         while (true)
         {
-            var nowTime = Util.UnixTimeNow();
+            var nowTime = Managers.BackEnd.ServerTimeGetUTCTimeStamp();
             if (nowTime >= in_user_info.m_last_reward_time + in_town_level.m_timespan)
                 break;
 
