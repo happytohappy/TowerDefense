@@ -95,21 +95,14 @@ public class UIPopupEquipment : UIWindowBase
 
             item.SetData(e.m_unique_id, e.m_kind, e.m_mount, e.m_new, first, (equip_kind, equip_unique, select) =>
             {
+                // 요기서는 같은 장비를 클릭하면 아무 것도 처리 하지 않아야 한다.
                 if (m_equip_id == equip_unique)
-                {
-                    if (m_last_select == null)
-                    {
-                        SetEquipInfo(equip_unique, equip_kind);
-
-                        m_last_select = select;
-                    }
                     return;
-                }
-
-                SetEquipInfo(equip_unique, equip_kind);
 
                 m_last_select.Ex_SetActive(false);
                 m_last_select = select;
+
+                SetEquipInfo(equip_unique, equip_kind);
             });
 
             if (first)
@@ -150,17 +143,23 @@ public class UIPopupEquipment : UIWindowBase
         if (userHero == null)
             return;
 
-        var userEquip = Managers.User.GetEquip(m_equip_id);
-        if (userEquip == null)
+        // 존재하는 장비인지 체크
+        var userHaveEquip = Managers.User.GetEquip(m_equip_id);
+        if (userHaveEquip == null)
             return;
 
         // 기존에 착용하고 있던 장비는 해제 상태로 변경
         var userPreEquip = Managers.User.GetEquip(userHero.m_equip_id);
-        if (userEquip != null)
-            userEquip.m_mount = false;
+        if (userPreEquip != null)
+            userPreEquip.m_mount = false;
 
         userHero.m_equip_id = m_equip_id;
-        userEquip.m_mount = true;
+        userHaveEquip.m_mount = true;
+
+        // 마지막 클릭 제거
+        m_last_select.Ex_SetActive(false);
+        m_last_select = null;
+        m_equip_id = 0;
 
         RefreshEquipList();
         m_param.m_callback?.Invoke();
@@ -172,7 +171,7 @@ public class UIPopupEquipment : UIWindowBase
         if (userHero == null)
             return;
 
-        if (userHero.m_equip_id == m_equip_id)
+        if (userHero.m_kind == m_param.m_hero_kind)
         {
             UnEquipProcess(userHero);
         }
@@ -195,6 +194,11 @@ public class UIPopupEquipment : UIWindowBase
 
         in_hero.m_equip_id = 0;
         userEquip.m_mount = false;
+
+        // 마지막 클릭 제거
+        m_last_select.Ex_SetActive(false);
+        m_last_select = null;
+        m_equip_id = 0;
 
         RefreshEquipList();
         m_param.m_callback?.Invoke();
