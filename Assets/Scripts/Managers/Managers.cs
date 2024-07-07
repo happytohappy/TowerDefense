@@ -77,12 +77,4 @@ public class Managers : MonoBehaviour
         UI.Clear();
         Pool.Clear();
     }
-
-    private void Update()
-    {
-        //if (Input.touchCount == 3)
-        //{
-        //    Debug.LogError("3개 동시 터치");
-        //}
-    }
 }

@@ -38,6 +38,11 @@ public class UIWindowMain : UIWindowBase
         {
             OnClickReset();
         }
+
+        if (Input.touchCount == 3)
+        {
+            OnClickReset();
+        }
     }
 
     private void CheckTutorial()
