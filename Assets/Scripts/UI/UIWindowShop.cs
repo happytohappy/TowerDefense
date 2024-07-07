@@ -41,6 +41,9 @@ public class UIWindowShop : UIWindowBase
     [SerializeField] private RecruitInfo m_recruit_premium = null;
     [SerializeField] private RecruitInfo m_recruit_nomral = null;
 
+    [Header("튜토리얼")]
+    [SerializeField] private GameObject m_go_recruit = null;
+
     private EShopTab m_tab = EShopTab.Recruit;
     private List<int> m_swipe_pos = new List<int>();
     private Vector2 m_view_port_center;
@@ -48,7 +51,7 @@ public class UIWindowShop : UIWindowBase
     public override void Awake()
     {
         Window_ID = WindowID.UIWindowShop;
-        Window_Mode = WindowMode.WindowOverlay | WindowMode.WindowJustClose;
+        Window_Mode = WindowMode.WindowClose;
 
         base.Awake();
     }
@@ -85,6 +88,17 @@ public class UIWindowShop : UIWindowBase
         m_swipe_pos.Add(5660);
 
         OnClickTabQuick((int)m_param.m_tab);
+
+        CheckTutorial();
+    }
+
+    private void CheckTutorial()
+    {
+        if (Managers.User.UserData.ClearTutorial.Contains(1))
+            return;
+
+        // 뽑기 하기
+        Managers.Tutorial.TutorialStart(m_go_recruit);
     }
 
     private void RefreshGoods()
@@ -260,8 +274,37 @@ public class UIWindowShop : UIWindowBase
         Managers.UI.OpenWindow(WindowID.UIPopupProbabilityInfo, param);
     }
 
+    private void TutorialRecruit(ERecruitType in_type)
+    {
+        // 재화 차감 해야됨
+
+        List<(EItemType, int)> tutorialRecruit = new List<(EItemType, int)>()
+        {
+            (EItemType.HERO, CONST.TUTORIAL_RECRUIT_HERO)
+        };
+
+        Managers.User.UpsertHero(CONST.TUTORIAL_RECRUIT_HERO);
+
+        RecruitParam param = new RecruitParam();
+        param.m_recruit_type = in_type;
+        param.m_recruit_list.AddRange(tutorialRecruit);
+
+        Managers.UI.OpenWindow(WindowID.UIWindowRecruit, param);
+
+        Managers.Tutorial.TutorialEnd();
+        Managers.Tutorial.TutorialClear(1);
+        return;
+    }
+
     public void OnClickRecruitNormal(int in_index)
     {
+        // 튜토리얼 중이라면
+        if (Managers.Tutorial.TutorialProgress)
+        {
+            TutorialRecruit(ERecruitType.Normal);
+            return;
+        }
+           
         var recruitData = Managers.Table.GetGachaInfoData(ERecruitType.Normal, in_index);
         if (recruitData == null)
             return;
@@ -279,6 +322,13 @@ public class UIWindowShop : UIWindowBase
 
     public void OnClickRecruitPremium(int in_index)
     {
+        // 튜토리얼 중이라면
+        if (Managers.Tutorial.TutorialProgress)
+        {
+            TutorialRecruit(ERecruitType.Premium);
+            return;
+        }
+
         var recruitData = Managers.Table.GetGachaInfoData(ERecruitType.Premium, in_index);
         if (recruitData == null)
             return;
@@ -286,6 +336,8 @@ public class UIWindowShop : UIWindowBase
         var recruitList = Util.Recruit(ERecruitType.Premium, recruitData.m_recruit_count);
         if (recruitList == null || recruitList.Count == 0)
             return;
+
+        // 재화 차감 해야됨
 
         RecruitParam param = new RecruitParam();
         param.m_recruit_type = ERecruitType.Premium;

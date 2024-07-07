@@ -33,6 +33,7 @@ public class Managers : MonoBehaviour
     [SerializeField] private SpriteManager m_Sprite = null;
     [SerializeField] private ADManager m_AD = null;
     [SerializeField] private IAPManager m_IAP = null;
+    [SerializeField] private TutorialManager m_Tutorial = null;
 
     public static Canvas UICanvas => GetInstance.m_UIRootCan;
     public static Transform Widget => GetInstance.m_Widget;
@@ -51,6 +52,7 @@ public class Managers : MonoBehaviour
     public static ADManager AD => GetInstance.m_AD;
     public static ObserverManager Observer => GetInstance.m_Observer;
     public static IAPManager IAP => GetInstance.m_IAP;
+    public static TutorialManager Tutorial => GetInstance.m_Tutorial;
 
     public void Init()
     {

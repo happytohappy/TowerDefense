@@ -92,6 +92,7 @@ public class UserManager : MonoBehaviour
     [Serializable]
     public class CUserData
     {
+        public HashSet<int> ClearTutorial = new HashSet<int>();                                                 // 클리어한 튜토리얼
         public int LastClearStage = 0;                                                                          // 클리어한 마지막 스테이지
         public int LastClearWave = 0;                                                                           // 클리어한 마지막 웨이브
         public float GameSpeed = 1.0f;                                                                          // 게임 스피드
@@ -111,6 +112,7 @@ public class UserManager : MonoBehaviour
         public Dictionary<ERecruitType, RecruitInfo> Recruit = new Dictionary<ERecruitType, RecruitInfo>();     // 가챠
     }
 
+    public bool InitUserData = false;
     public CUserData UserData { get; set; } = new CUserData();
     public int SelectStage { get; set; } = 0;
 
@@ -248,6 +250,13 @@ public class UserManager : MonoBehaviour
                 InitDailyReward();
             }
         }
+
+
+
+        // 미리 넣어줄 데이터
+        UpsertHero(1001);
+
+        UpsertInventoryItem(1, 500);
     }
 
     public void InitDailyReward()
@@ -420,7 +429,10 @@ public class UserManager : MonoBehaviour
     // 게임 종료
     private void OnApplicationQuit()
     {
-        //SaveLocalData<CUserData>(UserData, LocalKey.UserData);
+        if (InitUserData)
+            return;
+
+        SaveLocalData<CUserData>(UserData, LocalKey.UserData);
 
         //var data = GetLocalDataString<CUserData>(LocalKey.UserData);
 

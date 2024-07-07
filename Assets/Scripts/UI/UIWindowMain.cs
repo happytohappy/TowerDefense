@@ -11,6 +11,10 @@ public class UIWindowMain : UIWindowBase
     [Header("∑πµÂ¥Â")]
     [SerializeField] private GameObject m_go_attendance = null;
 
+    [Header("∆©≈‰∏ÆæÛ")]
+    [SerializeField] private GameObject m_go_tutorial_shop = null;
+    [SerializeField] private GameObject m_go_tutorial_unit = null;
+
     public override void Awake()
     {
         Window_ID = WindowID.UIWindowMain;
@@ -24,6 +28,44 @@ public class UIWindowMain : UIWindowBase
         base.OpenUI(wp);
 
         RefreshUI();
+
+        CheckTutorial();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            OnClickReset();
+        }
+    }
+
+    private void CheckTutorial()
+    {
+        do
+        {
+            if (Managers.User.UserData.ClearTutorial.Contains(1) == false)
+            {
+                // ªÛ¡° ¡¯¿‘
+                Managers.Tutorial.TutorialStart(m_go_tutorial_shop);
+                break;
+            }
+
+            if (Managers.User.UserData.ClearTutorial.Contains(2) == false)
+            {
+                // øµøı ¡¯¿‘
+                Managers.Tutorial.TutorialStart(m_go_tutorial_unit);
+                break;
+            }
+
+            if (Managers.User.UserData.ClearTutorial.Contains(3) == false)
+            {
+                // øµøı ¡¯¿‘
+                Managers.Tutorial.TutorialStart(m_go_tutorial_unit);
+                break;
+            }
+        }
+        while (false);
     }
 
     public void RefreshUI()
@@ -42,6 +84,8 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickShop(int in_tab_number)
     {
+        Managers.Tutorial.TutorialEnd();
+
         EShopTab shopTab = (EShopTab)in_tab_number;
 
         var param = new ShopParam();
@@ -80,6 +124,8 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickUnit()
     {
+        Managers.Tutorial.TutorialEnd();
+
         Managers.UI.OpenWindow(WindowID.UIWindowUnit);
     }
 
@@ -105,6 +151,8 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickReset()
     {
+        Managers.User.InitUserData = true;
+
         Managers.BackEnd.DeleteAccount();
 
         PlayerPrefs.DeleteAll();

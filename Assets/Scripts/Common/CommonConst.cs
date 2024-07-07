@@ -31,4 +31,5 @@ public static class CONST
     public static int AD_NORMAL_TIME          = 1;	    // 일반 뽑기 일 광고 갱신 시간
     public static int AD_PREMIUM_COUNT        = 1;	    // 프리미엄 뽑기 일 광고 횟수 제한
     public static int AD_PREMIUM_TIME         = 1;	    // 프리미엄 뽑기 일 광고 갱신 시간
+    public static int TUTORIAL_RECRUIT_HERO   = 1001;	// 뽑기 튜토리얼 KIND
 }

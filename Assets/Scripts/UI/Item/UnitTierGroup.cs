@@ -25,6 +25,11 @@ public class UnitTierGroup : MonoBehaviour
             var sc = hero.GetComponent<UnitIcon>();
             sc.SetData(tierUnit.m_kind);
             sc.SetDataInfo(in_callback);
+
+            if (Managers.User.UserData.ClearTutorial.Contains(2) == false && tierUnit.m_kind == CONST.TUTORIAL_RECRUIT_HERO)
+                Managers.Tutorial.TutorialStart(hero);
+            else if (Managers.User.UserData.ClearTutorial.Contains(3) == false && tierUnit.m_kind == CONST.TUTORIAL_RECRUIT_HERO)
+                Managers.Tutorial.TutorialStart(hero);
         }
     }
 }

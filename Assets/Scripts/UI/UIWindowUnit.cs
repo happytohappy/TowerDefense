@@ -26,6 +26,11 @@ public class UIWindowUnit : UIWindowBase
     [SerializeField] private Slider m_slider_gradeup = null;
     [SerializeField] private Image m_image_resource = null;
 
+    [Header("튜토리얼")]
+    [SerializeField] private GameObject m_go_tutorial_grade = null;
+    [SerializeField] private GameObject m_go_tutorial_level = null;
+
+    private int m_tuto_index;
     private int m_kind;
     private GameObject m_last_select;
 
@@ -41,6 +46,7 @@ public class UIWindowUnit : UIWindowBase
     {
         base.OpenUI(wp);
 
+        m_tuto_index = 0;
         m_kind = 1001;
         m_last_select = null;
 
@@ -73,11 +79,21 @@ public class UIWindowUnit : UIWindowBase
 
             sc.SetTierUnit(tier, (kind, select) =>
             {
+                if (Managers.Tutorial.TutorialProgress)
+                {
+                    Managers.Tutorial.TutorialEnd();
+
+                    if (Managers.User.UserData.ClearTutorial.Contains(2) == false)
+                        Managers.Tutorial.TutorialStart(m_go_tutorial_grade);
+                    else if (Managers.User.UserData.ClearTutorial.Contains(3) == false)
+                        Managers.Tutorial.TutorialStart(m_go_tutorial_level);
+                }
+
                 if (m_kind == kind)
                 {
                     if (m_last_select == null)
                     {
-                        SetHeroInfo(kind);
+                        SetHeroInfo(kind, true);
 
                         m_last_select = select;
                     }
@@ -92,7 +108,7 @@ public class UIWindowUnit : UIWindowBase
         }
     }
 
-    public void SetHeroInfo(int in_kind)
+    public void SetHeroInfo(int in_kind, bool in_first = false)
     {
         m_kind = in_kind;
 
@@ -148,6 +164,14 @@ public class UIWindowUnit : UIWindowBase
         if (Managers.User.GetInventoryItem(m_kind) < heroGrade.m_grade_up_piece)
             return;
 
+        if (Managers.User.UserData.ClearTutorial.Contains(2) == false)
+        {
+            Managers.Tutorial.TutorialEnd();
+            Managers.Tutorial.TutorialClear(2);
+
+            Managers.Tutorial.TutorialStart(m_go_tutorial_level);
+        }
+
         // 히어로 Grade 증가
         userHero.m_grade++;
         
@@ -168,6 +192,12 @@ public class UIWindowUnit : UIWindowBase
         var heroLevel = Managers.Table.GetHeroLevelData(m_kind, userHero.m_level + 1);
         if (heroLevel == null)
             return;
+
+        if (Managers.User.UserData.ClearTutorial.Contains(3) == false)
+        {
+            Managers.Tutorial.TutorialEnd();
+            Managers.Tutorial.TutorialClear(3);
+        }
 
         // 레벨 증가
         userHero.m_level++;

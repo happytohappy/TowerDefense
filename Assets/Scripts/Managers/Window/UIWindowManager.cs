@@ -96,7 +96,7 @@ public class UIWindowManager : MonoBehaviour
         for (int i = 0; i < Managers.UICanvas.transform.childCount; i++)
         {
             var ui = Managers.UICanvas.transform.GetChild(i);
-            if (ui == null || ui.name.Equals("Widget"))
+            if (ui == null || ui.name.Equals("Widget") || ui.name.Equals("Tutorial Fade"))
                 continue;
 
             Destroy(ui.gameObject);
