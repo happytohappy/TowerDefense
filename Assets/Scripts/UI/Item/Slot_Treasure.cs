@@ -14,7 +14,7 @@ public class Slot_Treasure : MonoBehaviour
 
     public void SetData(int in_treasure)
     {
-        var uiTreasure = Managers.UI.GetWindow(WindowID.UIPopupTreasure, false) as UIPopupTreasure;
+        var uiTreasure = Managers.UI.GetWindow(WindowID.UIWindowTreasure, false) as UIWindowTreasure;
         if (uiTreasure == null)
             return;
 
@@ -46,7 +46,7 @@ public class Slot_Treasure : MonoBehaviour
 
     public void OnClickTreasure()
     {
-        var uiTreasure = Managers.UI.GetWindow(WindowID.UIPopupTreasure, false) as UIPopupTreasure;
+        var uiTreasure = Managers.UI.GetWindow(WindowID.UIWindowTreasure, false) as UIWindowTreasure;
         if (uiTreasure == null)
             return;
 

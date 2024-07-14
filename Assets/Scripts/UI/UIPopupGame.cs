@@ -12,6 +12,12 @@ public class UIPopupGame : UIWindowBase
     [SerializeField] private List<Slot_Reward> m_list_first_reward = new List<Slot_Reward>();
     [SerializeField] private List<Slot_Reward> m_list_repeat_reward = new List<Slot_Reward>();
 
+    [Header("튜토리얼")]
+    [SerializeField] private GameObject m_go_tutorial_desc_1 = null;
+    [SerializeField] private GameObject m_go_tutorial_desc_2 = null;
+    [SerializeField] private GameObject m_go_tutorial_desc_3 = null;
+    [SerializeField] private GameObject m_go_tutorial_start = null;
+
     private int m_curr_stage;
     private int m_max_stage;
     private int m_wave_count;
@@ -32,10 +38,27 @@ public class UIPopupGame : UIWindowBase
         m_max_stage = Managers.Table.GetStageCount();
 
         SetWaveInfo();
+
+        CheckTutorial();
+    }
+
+    private void CheckTutorial()
+    {
+        if (Managers.User.UserData.ClearTutorial.Contains(5))
+            return;
+
+        // 설명
+        Managers.Tutorial.TutorialStart(m_go_tutorial_desc_1.gameObject, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#NONE TEXT 스테이지 설명");
     }
 
     public void OnClickGame()
     {
+        if (Managers.Tutorial.TutorialProgress)
+        {
+            Managers.Tutorial.TutorialEnd();
+            Managers.Tutorial.TutorialClear(5);
+        }
+
         Managers.UI.CloseLast();
 
         LoadingParam param = new LoadingParam();
@@ -124,5 +147,23 @@ public class UIPopupGame : UIWindowBase
             m_curr_stage++;
             SetWaveInfo();
         }
+    }
+
+    public void OnClickTutoDesc_1()
+    {
+        Managers.Tutorial.TutorialEnd();
+        Managers.Tutorial.TutorialStart(m_go_tutorial_start.gameObject, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#NONE TEXT 시작 설명");
+    }
+
+    public void OnClickTutoDesc_2()
+    {
+        Managers.Tutorial.TutorialEnd();
+        Managers.Tutorial.TutorialStart(m_go_tutorial_desc_3.gameObject, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#NONE TEXT 스테이지 설명");
+    }
+
+    public void OnClickTutoDesc_3()
+    {
+        Managers.Tutorial.TutorialEnd();
+        Managers.Tutorial.TutorialStart(m_go_tutorial_start.gameObject, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#NONE TEXT 시작 설명");
     }
 }

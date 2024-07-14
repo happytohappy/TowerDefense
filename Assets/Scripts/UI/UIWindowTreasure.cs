@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UIPopupTreasure : UIWindowBase
+public class UIWindowTreasure : UIWindowBase
 {
     private const string GROUP_TREASURE_PATH = "UI/Item/Group_Treasure";
    
@@ -23,13 +23,17 @@ public class UIPopupTreasure : UIWindowBase
     [SerializeField] private ExtentionButton m_btn_gradeup = null;
     [SerializeField] private TMP_Text m_text_gradeup = null;
 
+    [Header("튜토리얼")]
+    [SerializeField] private ExtentionButton m_go_treasure = null;
+    [SerializeField] private ExtentionButton m_go_desc = null;
+
     public int SelectTreasure { get; set; }
     public GameObject LastSelect { get; set; }
 
     public override void Awake()
     {
-        Window_ID = WindowID.UIPopupTreasure;
-        Window_Mode = WindowMode.WindowOverlay | WindowMode.WindowJustClose;
+        Window_ID = WindowID.UIWindowTreasure;
+        Window_Mode = WindowMode.WindowClose;
 
         base.Awake();
     }
@@ -40,6 +44,21 @@ public class UIPopupTreasure : UIWindowBase
 
         SelectTreasure = 1;
         RefreshUI();
+
+        CheckTutorial();
+    }
+
+    private void CheckTutorial()
+    {
+        m_go_treasure.Ex_SetActive(false);
+        m_go_desc.Ex_SetActive(false);
+
+        if (Managers.User.UserData.ClearTutorial.Contains(8))
+            return;
+
+        // 보물 설명
+        m_go_treasure.Ex_SetActive(true);
+        Managers.Tutorial.TutorialStart(m_go_treasure.gameObject, ETutorialDir.Center, new Vector3(0f, 135f, 0f), "#NONE TEXT 보물 설명");
     }
 
     public void RefreshUI()
@@ -86,8 +105,17 @@ public class UIPopupTreasure : UIWindowBase
         }
     }
 
-    public void OnClickClose()
+    public void OnClickTutoTreasure()
     {
-        Managers.UI.CloseLast();
+        Managers.Tutorial.TutorialEnd();
+
+        m_go_desc.Ex_SetActive(true);
+        Managers.Tutorial.TutorialStart(m_go_desc.gameObject, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#NONE TEXT 보물 설명");
+    }
+
+    public void OnClickTutoDesc()
+    {
+        Managers.Tutorial.TutorialEnd();
+        Managers.Tutorial.TutorialClear(8);
     }
 }

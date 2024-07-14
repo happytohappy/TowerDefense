@@ -30,7 +30,6 @@ public class UIWindowUnit : UIWindowBase
     [SerializeField] private GameObject m_go_tutorial_grade = null;
     [SerializeField] private GameObject m_go_tutorial_level = null;
 
-    private int m_tuto_index;
     private int m_kind;
     private GameObject m_last_select;
 
@@ -46,7 +45,6 @@ public class UIWindowUnit : UIWindowBase
     {
         base.OpenUI(wp);
 
-        m_tuto_index = 0;
         m_kind = 1001;
         m_last_select = null;
 

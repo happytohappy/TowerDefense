@@ -10,6 +10,10 @@ public class UIPopupQuest : UIWindowBase
 
     [SerializeField] private GameObject m_empty = null;
 
+    [Header("튜토리얼")]
+    [SerializeField] private ExtentionButton m_go_desc = null;
+    [SerializeField] private ExtentionButton m_go_icon = null;
+
     private QuestParam m_param = null;
 
     public override void Awake()
@@ -35,8 +39,22 @@ public class UIPopupQuest : UIWindowBase
                 break;
             case EQuestType.Achievement:
                 RefreshUI_Achievement();
+                CheckTutorialAchievement();
                 break;
         }
+    }
+
+    private void CheckTutorialAchievement()
+    {
+        m_go_desc.Ex_SetActive(false);
+        m_go_icon.Ex_SetActive(false);
+
+        if (Managers.User.UserData.ClearTutorial.Contains(10))
+            return;
+
+        // 설명
+        m_go_desc.Ex_SetActive(true);
+        Managers.Tutorial.TutorialStart(m_go_desc.gameObject, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#NONE TEXT 미션 설명");
     }
 
     public void RefreshUI_Stage()
@@ -91,5 +109,18 @@ public class UIPopupQuest : UIWindowBase
 
             sc.SetData(data);
         }
+    }
+
+    public void OnClickTutoDesc()
+    {
+        Managers.Tutorial.TutorialEnd();
+        m_go_icon.Ex_SetActive(true);
+        Managers.Tutorial.TutorialStart(m_go_icon.gameObject, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#NONE TEXT 퀘스트 설명");
+    }
+
+    public void OnClickTutoReward()
+    {
+        Managers.Tutorial.TutorialEnd();
+        Managers.Tutorial.TutorialClear(10);
     }
 }

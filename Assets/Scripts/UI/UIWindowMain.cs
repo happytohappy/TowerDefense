@@ -14,6 +14,7 @@ public class UIWindowMain : UIWindowBase
     [Header("튜토리얼")]
     [SerializeField] private GameObject m_go_tutorial_shop = null;
     [SerializeField] private GameObject m_go_tutorial_unit = null;
+    [SerializeField] private GameObject m_go_tutorial_stage = null;
 
     public override void Awake()
     {
@@ -52,7 +53,7 @@ public class UIWindowMain : UIWindowBase
             if (Managers.User.UserData.ClearTutorial.Contains(1) == false)
             {
                 // 상점 진입
-                Managers.Tutorial.TutorialStart(m_go_tutorial_shop);
+                Managers.Tutorial.TutorialStart(m_go_tutorial_shop, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#상점 클릭");
                 break;
             }
 
@@ -67,6 +68,13 @@ public class UIWindowMain : UIWindowBase
             {
                 // 영웅 진입
                 Managers.Tutorial.TutorialStart(m_go_tutorial_unit);
+                break;
+            }
+
+            if (Managers.User.UserData.ClearTutorial.Contains(5) == false)
+            {
+                // 스테이지 진입
+                Managers.Tutorial.TutorialStart(m_go_tutorial_stage);
                 break;
             }
         }
@@ -84,6 +92,8 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickGame()
     {
+        Managers.Tutorial.TutorialEnd();
+
         Managers.UI.OpenWindow(WindowID.UIPopupGame);
     }
 
@@ -124,7 +134,7 @@ public class UIWindowMain : UIWindowBase
 
     public void OnClickTreasure()
     {
-        Managers.UI.OpenWindow(WindowID.UIPopupTreasure);
+        Managers.UI.OpenWindow(WindowID.UIWindowTreasure);
     }
 
     public void OnClickUnit()

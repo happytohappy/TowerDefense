@@ -35,6 +35,11 @@ public class UIWindowEquipment : UIWindowBase
     [SerializeField] private TMP_Text m_text_merge_per = null;
     [SerializeField] private ExtentionButton m_btn_merge = null;
 
+    [Header("튜토리얼")]
+    [SerializeField] private ExtentionButton m_go_stat = null;
+    [SerializeField] private GameObject m_go_merge = null;
+    [SerializeField] private ExtentionButton m_go_merge_desc = null;
+
     private EquipTab m_equip_tab = EquipTab.Info;
    
     // Info 변수
@@ -49,7 +54,7 @@ public class UIWindowEquipment : UIWindowBase
     public override void Awake()
     {
         Window_ID = WindowID.UIWindowEquipment;
-        Window_Mode = WindowMode.WindowOverlay | WindowMode.WindowJustClose;
+        Window_Mode = WindowMode.WindowClose;
 
         base.Awake();
     }
@@ -61,6 +66,21 @@ public class UIWindowEquipment : UIWindowBase
         RefreshUI();
 
         OnClickUIInfo();
+
+        CheckTutorial();
+    }
+
+    private void CheckTutorial()
+    {
+        m_go_stat.Ex_SetActive(false);
+        m_go_merge_desc.Ex_SetActive(false);
+
+        if (Managers.User.UserData.ClearTutorial.Contains(7))
+            return;
+
+        // 스탯 설명
+        m_go_stat.Ex_SetActive(true);
+        Managers.Tutorial.TutorialStart(m_go_stat.gameObject, ETutorialDir.Center, new Vector3(0f, 135f, 0f), "#NONE TEXT 스탯 설명");
     }
 
     private void RefreshUI()
@@ -91,6 +111,13 @@ public class UIWindowEquipment : UIWindowBase
 
     public void OnClickUIGradeUp()
     {
+        if (Managers.Tutorial.TutorialProgress)
+        {
+            Managers.Tutorial.TutorialEnd();
+            m_go_merge_desc.Ex_SetActive(true);
+            Managers.Tutorial.TutorialStart(m_go_merge_desc.gameObject, ETutorialDir.Center, new Vector3(0f, 0f, 0f), "#NONE TEXT 머지 설명");
+        }
+        
         TabClickInit();
 
         m_equip_tab = EquipTab.GradeUP;
@@ -290,5 +317,17 @@ public class UIWindowEquipment : UIWindowBase
         OnClickUIGradeUp();
 
         Managers.UI.OpenWindow(WindowID.UIWindowEquipmentResult, param);
+    }
+
+    public void OnClickTutorialStat()
+    {
+        Managers.Tutorial.TutorialEnd();
+        Managers.Tutorial.TutorialStart(m_go_merge, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#NONE TEXT 머지 클릭");
+    }
+
+    public void OnClickTutorialMergeDesc()
+    {
+        Managers.Tutorial.TutorialEnd();
+        Managers.Tutorial.TutorialClear(7);
     }
 } 

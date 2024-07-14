@@ -11,8 +11,9 @@ public enum WindowID
     UIWindowGameResult,
     UIWindowEquipment,
     UIWindowEquipmentResult,
-    UIPopupGame,
+    UIWindowTreasure,
     UIWindowShop,
+    UIPopupGame,
     UIPopupReward,
     UIPopupQuest,
     UIPopupSetting,
@@ -20,7 +21,6 @@ public enum WindowID
     UIPopupPause,
     UIPopupEquipment,
     UIPopupProbabilityInfo,
-    UIPopupTreasure,
     UIPopupUnitBuy,
     UIPopupIngameSkill,
     UIPopupIngameAuto,
@@ -74,6 +74,14 @@ public enum EInputType
     None,
     Click,
     Press
+}
+
+public enum ETutorialDir
+{
+    None,
+    Left,
+    Right,
+    Center
 }
 
 public enum ERecruitType

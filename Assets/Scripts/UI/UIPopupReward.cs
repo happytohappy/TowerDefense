@@ -11,6 +11,10 @@ public class UIPopupReward : UIWindowBase
     [SerializeField] private GameObject m_go_active = null;
     [SerializeField] private TMP_Text m_text_price = null;
 
+    [Header("튜토리얼")]
+    [SerializeField] private GameObject m_go_normal = null;
+    [SerializeField] private GameObject m_go_premium = null;
+
     public override void Awake()
     {
         Window_ID = WindowID.UIPopupReward;
@@ -24,6 +28,17 @@ public class UIPopupReward : UIWindowBase
         base.OpenUI(wp);
 
         RefreshUI();
+
+        CheckTutorial();
+    }
+
+    private void CheckTutorial()
+    {
+        if (Managers.User.UserData.ClearTutorial.Contains(9))
+            return;
+
+        // 일반 보상 설명
+        Managers.Tutorial.TutorialStart(m_go_normal, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#NONE TEXT 일일 보상 설명");
     }
 
     private void RefreshUI()
@@ -68,6 +83,15 @@ public class UIPopupReward : UIWindowBase
 
     public void OnClickGet()
     {
+        if (Managers.Tutorial.TutorialProgress)
+        {
+            Managers.Tutorial.TutorialEnd();
+
+            m_go_premium.Ex_SetActive(true);
+            Managers.Tutorial.TutorialStart(m_go_premium, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#NONE TEXT 프리미엄 설명");
+            return;
+        }
+
         Util.AttendanceReward(false);
 
         RefreshUI();
@@ -83,5 +107,11 @@ public class UIPopupReward : UIWindowBase
             RefreshUI();
             Managers.Observer.UpdateObserverRedDot(EContent.Attendance);
         });       
+    }
+
+    public void OnClickTutoPremium()
+    {
+        Managers.Tutorial.TutorialEnd();
+        Managers.Tutorial.TutorialClear(9);
     }
 }
