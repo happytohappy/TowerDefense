@@ -166,7 +166,7 @@ public class Hero : PawnBase
         else
         {
             var go = Managers.Resource.Instantiate($"Projectile/{GetHeroData.m_info.m_projectile}");
-            var projectile = go.GetComponent<ProjectileBase>();
+            var projectile = go.GetComponent<HS_ProjectileMover2D>();
 
             projectile.transform.position = this.transform.position;
             projectile.SetData(m_target_monster, atkResult);

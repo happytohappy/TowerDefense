@@ -34,6 +34,10 @@ public class UIPopupTown : UIWindowBase
     private bool m_is_reward;
     private WaitForSeconds m_wait = new WaitForSeconds(1.0f);
 
+    [Header("튜토리얼")]
+    [SerializeField] private GameObject m_go_desc = null;
+    [SerializeField] private GameObject m_go_get = null;
+
     public override void Awake()
     {
         Window_ID = WindowID.UIPopupTown;
@@ -60,6 +64,29 @@ public class UIPopupTown : UIWindowBase
         }
 
         UIRefresh();
+
+        CheckTutorial();
+    }
+
+    private void CheckTutorial()
+    {
+        if (Managers.User.UserData.ClearTutorial.Contains(4))
+            return;
+
+        var mainUI = Managers.UI.GetWindow(WindowID.UIWindowMain, false) as UIWindowMain;
+        mainUI.TownTutorialEnd();
+
+        // 일반 보상 설명
+        m_go_desc.Ex_SetActive(true);
+        Managers.Tutorial.TutorialStart(m_go_desc, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#NONE TEXT 광산 보상 설명");
+    }
+
+    public override void OnClose()
+    {
+        base.OnClose();
+
+        var mainUI = Managers.UI.GetWindow(WindowID.UIWindowMain, false) as UIWindowMain;
+        mainUI.CheckTutorial();
     }
 
     private void UIRefresh()
@@ -226,5 +253,21 @@ public class UIPopupTown : UIWindowBase
         }
 
         UIRefresh();
+    }
+
+    public void OnClickTutoReward()
+    {
+        m_go_desc.Ex_SetActive(false);
+        Managers.Tutorial.TutorialEnd();
+
+        m_go_get.Ex_SetActive(true);
+        Managers.Tutorial.TutorialStart(m_go_get.gameObject, ETutorialDir.Center, new Vector3(0f, 100f, 0f), "#NONE TEXT 보상 받기 설명");
+    }
+
+    public void OnClickTutoGet()
+    {
+        m_go_get.Ex_SetActive(false);
+        Managers.Tutorial.TutorialEnd();
+        Managers.Tutorial.TutorialClear(4);
     }
 }

@@ -32,4 +32,5 @@ public static class CONST
     public static int AD_PREMIUM_COUNT        = 1;	    // 프리미엄 뽑기 일 광고 횟수 제한
     public static int AD_PREMIUM_TIME         = 1;	    // 프리미엄 뽑기 일 광고 갱신 시간
     public static int TUTORIAL_RECRUIT_HERO   = 1001;	// 뽑기 튜토리얼 KIND
+    public static int TUTORIAL_STAGE_HERO_1   = 1001;   // 스테이지 튜토리얼 KIND
 }

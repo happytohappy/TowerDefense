@@ -142,7 +142,8 @@ public enum ESpawnType
     Merge,
     Energy,
     Ruby,
-    AD
+    AD,
+    Tuto,
 }
 
 public enum EStat

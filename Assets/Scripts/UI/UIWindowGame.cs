@@ -18,8 +18,15 @@ public class UIWindowGame : UIWindowBase
     [SerializeField] private Animator m_ani_start_round;
     [SerializeField] private ExtentionButton m_btn_unit_add;
 
+    [Header("튜토리얼")]
+    [SerializeField] private GameObject m_go_wave_life = null;
+    [SerializeField] private GameObject m_go_summon = null;
+    [SerializeField] private GameObject m_go_buff = null;
+    [SerializeField] private GameObject m_go_hero = null;
+    
     private int m_curr_wave = 1;
     private int m_max_wave;
+    private bool m_buff_tuto = false;
 
     public override void Awake()
     {
@@ -45,6 +52,24 @@ public class UIWindowGame : UIWindowBase
 
         m_text_life.Ex_SetText($"{CONST.STAGE_LIFE}/{CONST.STAGE_LIFE}");
         m_text_speed.Ex_SetText($"x{Managers.User.UserData.GameSpeed}");
+
+        CheckTutorial();
+    }
+
+    private void CheckTutorial()
+    {
+        if (Managers.User.UserData.ClearTutorial.Contains(6))
+            return;
+
+        // 웨이브 설명
+        m_go_wave_life.Ex_SetActive(true);
+        Managers.Tutorial.TutorialStart(m_go_wave_life, ETutorialDir.Center, new Vector3(0f, -100f, 0f), "#NONE TEXT 웨이브 설명");
+    }
+
+    public void NextTutorial()
+    {
+        m_buff_tuto = true;
+        Managers.Tutorial.TutorialStart(m_go_summon, ETutorialDir.Center, new Vector3(0f, -100f, 0f), "#NONE TEXT 소환 설명");
     }
 
     public void SetEnergy(int in_energy)
@@ -122,7 +147,27 @@ public class UIWindowGame : UIWindowBase
 
     public void OnClickCreateTower()
     {
-        GameController.GetInstance.HeroSpawn(ESpawnType.Energy);
+        if (Managers.Tutorial.TutorialProgress)
+        {
+            GameController.GetInstance.HeroSpawn(ESpawnType.Tuto);
+            Managers.Tutorial.TutorialEnd();
+
+            if (m_buff_tuto == false)
+            {
+                Managers.Tutorial.TutorialStart(m_go_buff, ETutorialDir.Center, new Vector3(0f, -100f, 0f), "#NONE TEXT 버프 설명");
+            }
+            else
+            {
+                // 영웅 넛지
+                m_go_hero.Ex_SetActive(true);
+
+                // 포지션 잡아야됨 ㅠㅠ
+                Managers.Tutorial.TutorialStart(m_go_hero);
+            }
+        }
+        else
+            GameController.GetInstance.HeroSpawn(ESpawnType.Energy);
+
         SetUnitEnergy();
     }
 
@@ -133,6 +178,9 @@ public class UIWindowGame : UIWindowBase
 
     public void OnClickSkill(int in_number)
     {
+        if (Managers.Tutorial.TutorialProgress)
+            Managers.Tutorial.TutorialEnd();
+
         InGameSkillParam param = new InGameSkillParam();
         param.m_reward_type = (EADRewardType)in_number;
 
@@ -184,5 +232,19 @@ public class UIWindowGame : UIWindowBase
             var sc = slotSynergy.GetComponent<Slot_Synergy>();
             sc.SetSynergy(e.Key, e.Value);
         }
+    }
+
+    public void OnClickTutoWave()
+    {
+        m_go_wave_life.Ex_SetActive(false);
+        Managers.Tutorial.TutorialEnd();
+
+        Managers.Tutorial.TutorialStart(m_go_summon, ETutorialDir.Center, new Vector3(0f, -100f, 0f), "#NONE TEXT 소환 설명");
+    }
+
+    public void OnClickTutoHero()
+    {
+        m_go_hero.Ex_SetActive(false);
+        Managers.Tutorial.TutorialEnd();
     }
 }

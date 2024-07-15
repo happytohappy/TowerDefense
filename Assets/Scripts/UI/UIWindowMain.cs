@@ -14,6 +14,7 @@ public class UIWindowMain : UIWindowBase
     [Header("튜토리얼")]
     [SerializeField] private GameObject m_go_tutorial_shop = null;
     [SerializeField] private GameObject m_go_tutorial_unit = null;
+    [SerializeField] private GameObject m_go_tutorial_town = null;
     [SerializeField] private GameObject m_go_tutorial_stage = null;
 
     public override void Awake()
@@ -46,7 +47,7 @@ public class UIWindowMain : UIWindowBase
         }
     }
 
-    private void CheckTutorial()
+    public void CheckTutorial()
     {
         do
         {
@@ -71,6 +72,14 @@ public class UIWindowMain : UIWindowBase
                 break;
             }
 
+            if (Managers.User.UserData.ClearTutorial.Contains(4) == false)
+            {
+                // 타운 진입
+                m_go_tutorial_town.Ex_SetActive(true);
+                Managers.Tutorial.TutorialStart(m_go_tutorial_town);
+                break;
+            }
+
             if (Managers.User.UserData.ClearTutorial.Contains(5) == false)
             {
                 // 스테이지 진입
@@ -88,6 +97,13 @@ public class UIWindowMain : UIWindowBase
         Util.SetGoods(EGoods.Diamond, m_text_diamond);
 
         m_go_attendance.Ex_SetActive(Util.RedDotAttendance());
+    }
+
+    public void TownTutorialEnd()
+    {
+        m_go_tutorial_town.Ex_SetActive(false);
+
+        Managers.Tutorial.TutorialEnd();
     }
 
     public void OnClickGame()

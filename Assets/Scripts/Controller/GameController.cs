@@ -291,7 +291,17 @@ public partial class GameController : MonoBehaviour
             return;
 
         // 여기 까지 왔다면 소환 시작
-        var userHeroInfo = heroList[UnityEngine.Random.Range(0, heroList.Count)];
+        UserManager.HeroInfo userHeroInfo = null;
+        if (in_type == ESpawnType.Tuto)
+        {
+            // 튜토리얼이라면 정해진 영웅 소환
+            userHeroInfo = heroList.Find(x => x.m_kind == CONST.TUTORIAL_STAGE_HERO_1);
+        }
+        else
+        {
+            userHeroInfo = heroList[UnityEngine.Random.Range(0, heroList.Count)];
+        }
+
         var heroInfoData = Managers.Table.GetHeroInfoData(userHeroInfo.m_kind);
 
         var heroLevelData = Managers.Table.GetHeroLevelData(userHeroInfo.m_kind, userHeroInfo.m_level);
@@ -314,6 +324,7 @@ public partial class GameController : MonoBehaviour
         switch (in_type)
         {
             case ESpawnType.Energy:
+            case ESpawnType.Tuto:
                 Energy -= CONST.STAGE_ENERGY_BUY;
                 break;
         }
