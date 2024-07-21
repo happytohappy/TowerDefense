@@ -140,6 +140,12 @@ public partial class GameController
         {
             if (hit.transform.gameObject.CompareTag("Hero"))
             {
+                var uiGame = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
+                if (uiGame != null)
+                {
+                    uiGame.OnClickTutoHero();
+                }
+
                 SelectHero = hit.transform.gameObject.GetComponent<Hero>();
                 SelectHero.HudHeroInfo.ShowHeroInfo();
                 HudHeroInfo = SelectHero.HudHeroInfo;

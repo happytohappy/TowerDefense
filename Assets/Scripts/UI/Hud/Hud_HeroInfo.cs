@@ -36,6 +36,17 @@ public class Hud_HeroInfo : MonoBehaviour
         var SpawnHeroList = GameController.GetInstance.LandInfo.FindAll(x => x.m_hero != null).ToList();
         var SameHero = SpawnHeroList.FindAll(x => x.m_hero.GetHeroData.m_info.m_kind == Target.GetHeroData.m_info.m_kind).ToList();
         m_btn_merge.Ex_SetActive(SameHero.Count >= 2);
+
+        CheckTutorial();
+    }
+
+    private void CheckTutorial()
+    {
+        if (Managers.User.UserData.ClearTutorial.Contains(6))
+            return;
+
+        // 머지 버튼
+        Managers.Tutorial.TutorialStart(m_btn_merge.gameObject, ETutorialDir.Center, new Vector3(0f, -100f, 0f), "#NONE TEXT 합성 설명");
     }
 
     public void CloseHeroInfo()
@@ -66,5 +77,16 @@ public class Hud_HeroInfo : MonoBehaviour
 
         var gui = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
         gui.OnCheckHeroSynergy();
+
+        if (Managers.Tutorial.TutorialProgress)
+        {
+            Managers.Tutorial.TutorialEnd();
+
+            var uiGame = Managers.UI.GetWindow(WindowID.UIWindowGame, false) as UIWindowGame;
+            if (uiGame != null)
+            {
+                uiGame.OnClickTutoMissionStart();
+            }
+        }
     }
 }

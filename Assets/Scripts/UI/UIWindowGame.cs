@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Linq;
 using TMPro;
 
 public class UIWindowGame : UIWindowBase
@@ -23,7 +24,9 @@ public class UIWindowGame : UIWindowBase
     [SerializeField] private GameObject m_go_summon = null;
     [SerializeField] private GameObject m_go_buff = null;
     [SerializeField] private GameObject m_go_hero = null;
-    
+    [SerializeField] private GameObject m_go_mission = null;
+    [SerializeField] private GameObject m_go_start = null;
+
     private int m_curr_wave = 1;
     private int m_max_wave;
     private bool m_buff_tuto = false;
@@ -115,6 +118,14 @@ public class UIWindowGame : UIWindowBase
 
     public void OnClickWave()
     {
+        if (Managers.Tutorial.TutorialProgress)
+        {
+            m_go_start.Ex_SetActive(false);
+            Managers.Tutorial.TutorialEnd();
+
+            Managers.Tutorial.TutorialClear(6);
+        }
+
         Managers.Sound.PlaySFX(AudioEnum.GameStart);
 
         m_text_start_round.Ex_SetText($"Wave {m_curr_wave}");
@@ -161,12 +172,21 @@ public class UIWindowGame : UIWindowBase
                 // 영웅 넛지
                 m_go_hero.Ex_SetActive(true);
 
-                // 포지션 잡아야됨 ㅠㅠ
                 Managers.Tutorial.TutorialStart(m_go_hero);
+
+                var spawnLand = GameController.GetInstance.LandInfo.FindAll(x => x.m_build).ToList();
+                var hero = spawnLand.Find(x => x.m_hero.GetHeroData.m_info.m_kind == CONST.TUTORIAL_STAGE_HERO_1);
+
+                var position = Managers.WorldCam.WorldToViewportPoint(hero.m_trans.position);
+                var view_position = Managers.UICam.ViewportToWorldPoint(position);
+                m_go_hero.transform.position = new Vector3(view_position.x, view_position.y, 0f);
+                m_go_hero.transform.localPosition = m_go_hero.transform.localPosition + new Vector3(0f, 50f, 0f);
             }
         }
         else
+        {
             GameController.GetInstance.HeroSpawn(ESpawnType.Energy);
+        }
 
         SetUnitEnergy();
     }
@@ -207,6 +227,17 @@ public class UIWindowGame : UIWindowBase
 
     public void OnClickQuest()
     {
+        if (Managers.Tutorial.TutorialProgress)
+        {
+            m_go_mission.Ex_SetActive(false);
+            Managers.Tutorial.TutorialEnd();
+
+            m_go_start.Ex_SetActive(true);
+            Managers.Tutorial.TutorialStart(m_go_start, ETutorialDir.Center, new Vector3(0f, -100f, 0f), "#NONE TEXT 시작 설명");
+
+            return;
+        }
+
         QuestParam param = new QuestParam();
         param.m_quest_type = EQuestType.Stage;
 
@@ -246,5 +277,11 @@ public class UIWindowGame : UIWindowBase
     {
         m_go_hero.Ex_SetActive(false);
         Managers.Tutorial.TutorialEnd();
+    }
+
+    public void OnClickTutoMissionStart()
+    {
+        m_go_mission.Ex_SetActive(true);
+        Managers.Tutorial.TutorialStart(m_go_mission, ETutorialDir.Center, new Vector3(0f, -100f, 0f), "#NONE TEXT 미션 설명");
     }
 }

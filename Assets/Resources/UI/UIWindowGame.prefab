@@ -387,7 +387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.003921569}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -447,9 +447,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8358167946263531618}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIWindowGame, Assembly-CSharp
-        m_MethodName: OnClickTutoWave
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5489,6 +5489,9 @@ MonoBehaviour:
   m_go_wave_life: {fileID: 5803883723517507332}
   m_go_summon: {fileID: 4800398783812274026}
   m_go_buff: {fileID: 3723741670353870191}
+  m_go_hero: {fileID: 531825635403088280}
+  m_go_mission: {fileID: 8394622200802837993}
+  m_go_start: {fileID: 4951665037390373878}
 --- !u!114 &7787921637329956794
 MonoBehaviour:
   m_ObjectHideFlags: 0
