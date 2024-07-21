@@ -19,10 +19,12 @@ namespace Abu
         
         TutorialHole hole;
 
+        public TutorialFadeImage TutorialFade => tutorialFade;
+
         /// <summary>
         /// Tutorial hole.
         /// </summary>
-        TutorialHole Hole
+        public TutorialHole Hole
         {
             get
             {
@@ -46,13 +48,13 @@ namespace Abu
 
         void OnDisable()
         {
-            if(tutorialFade != null)
+            if (tutorialFade != null)
                 tutorialFade.RemoveHole(Hole);
         }
 
         void OnDestroy()
         {
-            if(tutorialFade != null)
+            if (tutorialFade != null)
                 tutorialFade.RemoveHole(Hole);
         }
 
@@ -60,11 +62,11 @@ namespace Abu
 
         void OnValidate()
         {
-            if (tutorialFade == null)
-                tutorialFade = FindObjectOfType<TutorialFadeImage>();
-            
-            if(isActiveAndEnabled && tutorialFade != null)
-                tutorialFade.AddHole(Hole);
+            //if (tutorialFade == null)
+            //    tutorialFade = FindObjectOfType<TutorialFadeImage>();
+
+            //if (isActiveAndEnabled && tutorialFade != null)
+            //    tutorialFade.AddHole(Hole);
         }
 #endif
     }

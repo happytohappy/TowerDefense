@@ -91,7 +91,7 @@
         protected override void OnValidate()
         {
             base.OnValidate();
-            
+
             SetDirtyMaterial();
         }
 
@@ -100,7 +100,7 @@
         {
             GameObject gameObject = new GameObject("Tutorial Fade", typeof(TutorialFadeImage));
             gameObject.transform.SetParent(UnityEditor.Selection.activeTransform);
-            
+
             RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
