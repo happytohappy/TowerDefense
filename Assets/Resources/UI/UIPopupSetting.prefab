@@ -1323,7 +1323,7 @@ GameObject:
   - component: {fileID: 6636827613223980338}
   - component: {fileID: 8763181616918512548}
   - component: {fileID: 6577076984245272428}
-  - component: {fileID: 846738805433888458}
+  - component: {fileID: 8377165502844308920}
   m_Layer: 5
   m_Name: Btn_ID
   m_TagString: Untagged
@@ -1376,7 +1376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.8156863, g: 0.7607843, b: 0.72156864, a: 0.8}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1392,7 +1392,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &846738805433888458
+--- !u!114 &8377165502844308920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1401,7 +1401,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6036357349275072663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: ada0ea4977d79cc48a284eda0eb80ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -1411,7 +1411,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1432,13 +1432,13 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 6577076984245272428}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AdMobManager, Assembly-CSharp
-        m_MethodName: ShowAds
+      - m_Target: {fileID: 2955811139556181953}
+        m_TargetAssemblyTypeName: UIPopupSetting, Assembly-CSharp
+        m_MethodName: OnClickCopy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1448,6 +1448,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  m_AudioSource: {fileID: 0}
 --- !u!1 &6086998478143932740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1651,6 +1652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_slider_sfx_volum: {fileID: 4775131317893076960}
   m_slider_bgm_volum: {fileID: 2539536578351351254}
+  m_text_id: {fileID: 9206000102604386001}
 --- !u!1 &7153239669683024073
 GameObject:
   m_ObjectHideFlags: 0
