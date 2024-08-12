@@ -39,7 +39,7 @@ public class HeroGradeData
     public int m_skill_3;
     public int m_skill_3_level;
     public int m_ATK;
-    public int m_speed;
+    public float m_speed;
     public float m_range;
     public int m_critical;
     public int m_critical_chance;
